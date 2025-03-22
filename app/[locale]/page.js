@@ -5,6 +5,7 @@ import Hero1 from "@/components/home1/Hero1";
 import RecentProjects from "@/components/home1/RecentProjects";
 import Layout from "@/layout/Layout";
 import SideBar from "@/layout/SideBar";
+import { sideBarToggle } from "@/utility";
 import { useTranslations } from "next-intl";
 import Head from "next/head";
 import Link from "next/link";
@@ -12,6 +13,8 @@ import { Accordion } from "react-bootstrap";
 const IndexOnePage = ({ params }) => {
   const t = useTranslations(); 
   const { locale, slug } = params;
+
+
   return (
     <Layout className="home-one" footer={1} noHeader>
       <Head>
@@ -51,7 +54,7 @@ const IndexOnePage = ({ params }) => {
                           <a>
                             <img
                               src="/assets/images/logos/logo-white.png"
-                              alt={t("mobile_logo_alt")}
+                              alt={t("navbar.mobile_logo_alt")}
                               title={t("logo_title")}
                             />
                           </a>
@@ -86,7 +89,7 @@ const IndexOnePage = ({ params }) => {
                           <a href="#project">{t("navbar.help")}</a>
                         </li>
                         <li>
-                          <a href="#pricing">{t("navbar.help")}</a>
+                          <a href="#pricing">{t("navbar.authenticate")}</a>
                         </li>
                         <li>
                           <a href="#contact">{t("navbar.contact")}</a>
@@ -265,7 +268,8 @@ const IndexOnePage = ({ params }) => {
     <div className="row row-cols-xl-6 row-cols-lg-4 row-cols-md-3 row-cols-sm-2 row-cols-1 justify-content-center">
       <div className="col wow fadeInUp delay-0-2s">
         <div className="feature-item-five">
-          <i className="flaticon-responsive" />
+          <img className="mb-20" src="/assets/images/shapes/ProfileIcon.png"/>
+        
           <h5>
             <Link legacyBehavior href="/service-details">
               <a>{t("core_features.responsive_design")}</a>
@@ -275,7 +279,8 @@ const IndexOnePage = ({ params }) => {
       </div>
       <div className="col wow fadeInUp delay-0-3s">
         <div className="feature-item-five">
-          <i className="flaticon-feature" />
+        <img className="mb-20" src="/assets/images/shapes/Notefold.png"/>
+
           <h5>
             <Link legacyBehavior href="/service-details">
               <a>{t("core_features.powerful_customization")}</a>
@@ -285,7 +290,8 @@ const IndexOnePage = ({ params }) => {
       </div>
       <div className="col wow fadeInUp delay-0-4s">
         <div className="feature-item-five">
-          <i className="flaticon-aim" />
+        <img className="mb-20" src="/assets/images/shapes/Checkmark.png"/>
+
           <h5>
             <Link legacyBehavior href="/service-details">
               <a>{t("core_features.cool_modern_animations")}</a>
@@ -295,7 +301,8 @@ const IndexOnePage = ({ params }) => {
       </div>
       <div className="col wow fadeInUp delay-0-5s">
         <div className="feature-item-five">
-          <i className="flaticon-seo" />
+        <img className="mb-20" src="/assets/images/shapes/DocFold.png"/>
+
           <h5>
             <Link legacyBehavior href="/service-details">
               <a>{t("core_features.seo_friendly_coding")}</a>
@@ -305,7 +312,8 @@ const IndexOnePage = ({ params }) => {
       </div>
       <div className="col wow fadeInUp delay-0-6s">
         <div className="feature-item-five">
-          <i className="flaticon-search-location" />
+        <img className="mb-20" src="/assets/images/shapes/Law.png"/>
+
           <h5>
             <Link legacyBehavior href="/service-details">
               <a>{t("core_features.best_technical_supports")}</a>
@@ -315,7 +323,8 @@ const IndexOnePage = ({ params }) => {
       </div>
       <div className="col wow fadeInUp delay-0-7s">
         <div className="feature-item-five">
-          <i className="flaticon-settings" />
+        <img className="mb-20" src="/assets/images/shapes/Exclamation.png"/>
+
           <h5>
             <Link legacyBehavior href="/service-details">
               <a>{t("core_features.varied_layouts_parallax")}</a>
@@ -347,17 +356,24 @@ const IndexOnePage = ({ params }) => {
                 <div className="icon">
                   <i className="flaticon-design" />
                 </div>
-                <div className="content">
+                <div className="content d-flex flex-column  p-5 gap-2">
                   <h4>
                     <Link legacyBehavior href="/service-details">
                       <a>{t("website_creation")}</a>
                     </Link>
                   </h4>
-                  <Link legacyBehavior href="/service-details">
-                    <a className="more-btn">
-                      <i className="fal fa-long-arrow-right" />
+                  <p>
+                  {t("website_creation_desc")} </p>
+                  <Link legacyBehavior href="/service-details" >
+                  <div style={{border: "1px solid #416976", borderRadius: "27px"}}  className="d-flex flex-row align-items-center p-10 justify-content-center gap-4">
+
+                    <a style={{color: "#416976"}} >
+                      {t("learn_more")}
                     </a>
+                  <img style={{width:"15px"}} src="/assets/images/shapes/fast-forward.png"/>
+                  </div>
                   </Link>
+
                 </div>
               </div>
             </div>
@@ -366,6 +382,7 @@ const IndexOnePage = ({ params }) => {
         </div>
       </div>
       <div className="col-lg-6 ">
+
         <div className="feature-middle  rmt-30">
           <div className="image  wow fadeInUp delay-0-2s d-flex justify-content-center  align-items-center position-relative z-3">
             {locale === "en" ?<img
@@ -391,17 +408,24 @@ const IndexOnePage = ({ params }) => {
                 <div className="icon">
                   <i className="flaticon-online" />
                 </div>
-                <div className="content">
+                <div className="content d-flex flex-column  p-5 gap-2">
                   <h4>
                     <Link legacyBehavior href="/service-details">
                       <a>{t("ecommerce_solutions")}</a>
                     </Link>
                   </h4>
-                  <Link legacyBehavior href="/service-details">
-                    <a className="more-btn">
-                      <i className="fal fa-long-arrow-right" />
+                  <p>
+                  {t("ecommerce_solutions_desc")} </p>
+                  <Link legacyBehavior href="/service-details" >
+                  <div style={{border: "1px solid #416976", borderRadius: "27px"}}  className="d-flex flex-row align-items-center p-10 justify-content-center gap-4">
+
+                    <a style={{color: "#416976"}} >
+                      {t("learn_more")}
                     </a>
+                  <img style={{width:"15px"}} src="/assets/images/shapes/fast-forward.png"/>
+                  </div>
                   </Link>
+
                 </div>
               </div>
             </div>
@@ -410,17 +434,24 @@ const IndexOnePage = ({ params }) => {
                 <div className="icon">
                   <i className="flaticon-web-programming" />
                 </div>
-                <div className="content">
+                <div className="content d-flex flex-column  p-5 gap-2">
                   <h4>
                     <Link legacyBehavior href="/service-details">
                       <a>{t("responsive_ui_ux")}</a>
                     </Link>
                   </h4>
-                  <Link legacyBehavior href="/service-details">
-                    <a className="more-btn">
-                      <i className="fal fa-long-arrow-right" />
+                  <p>
+                  {t("responsive_ui_ux_desc")} </p>
+                  <Link legacyBehavior href="/service-details" >
+                  <div style={{border: "1px solid #416976", borderRadius: "27px"}}  className="d-flex flex-row align-items-center p-10 justify-content-center gap-4">
+
+                    <a style={{color: "#416976"}} >
+                      {t("learn_more")}
                     </a>
+                  <img style={{width:"15px"}} src="/assets/images/shapes/fast-forward.png"/>
+                  </div>
                   </Link>
+
                 </div>
               </div>
             </div>
@@ -435,17 +466,24 @@ const IndexOnePage = ({ params }) => {
                 <div className="icon">
                   <i className="flaticon-graphic-design" />
                 </div>
-                <div className="content">
+                <div className="content d-flex flex-column  p-5 gap-2">
                   <h4>
                     <Link legacyBehavior href="/service-details">
-                      <a >{t("seo_services")} </a>
+                      <a>{t("seo_services")}</a>
                     </Link>
                   </h4>
-                  <Link legacyBehavior href="/service-details">
-                    <a className="more-btn">
-                      <i className="fal fa-long-arrow-right" />
+                  <p>
+                  {t("seo_services_desc")} </p>
+                  <Link legacyBehavior href="/service-details" >
+                  <div style={{border: "1px solid #416976", borderRadius: "27px"}}  className="d-flex flex-row align-items-center p-10 justify-content-center gap-4">
+
+                    <a style={{color: "#416976"}} >
+                      {t("learn_more")}
                     </a>
+                  <img style={{width:"15px"}} src="/assets/images/shapes/fast-forward.png"/>
+                  </div>
                   </Link>
+
                 </div>
               </div>
             </div>

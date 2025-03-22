@@ -19,7 +19,7 @@ const Hero1 = () => {
       className="main-slider-area bgc-black-with-lighting rel z-1"
     >
       <Slider {...props} className="main-slider-active">
-        <div className="slider-item">
+        {/* <div className="slider-item">
           <div className="container">
             <div className="slider-content">
               <span className="sub-title">
@@ -59,14 +59,16 @@ const Hero1 = () => {
               </span>
             </span>
           </div>
-        </div>
+        </div> */}
         <div className="slider-item">
           <div className="container">
             <div className="slider-content">
               <span className="sub-title">
-                25 Years of Experience in web design solutions
+              3 Million+ notarization completed
               </span>
-              <h1>Digital web design solutions agency</h1>
+              <h1  >Notarize <span style={{ color: "#416976" }}>online. </span>
+                <span className="text-nowrap">Anywhere, Anytime</span> 
+                </h1>
               <div className="slider-btns">
                 <Link legacyBehavior href="/contact">
                   <a className="theme-btn">
@@ -101,7 +103,7 @@ const Hero1 = () => {
             </span>
           </div>
         </div>
-        <div className="slider-item">
+        {/* <div className="slider-item">
           <div className="container">
             <div className="slider-content">
               <span className="sub-title">
@@ -141,7 +143,7 @@ const Hero1 = () => {
               </span>
             </span>
           </div>
-        </div>
+        </div> */}
       </Slider>
       <div className="container">
         <div className="main-slider-dots" />
