@@ -22,7 +22,7 @@ const Footer1 = () => (
             <div className="footer-logo mb-25">
               <Link legacyBehavior href="/">
                 <a>
-                  <img src="assets/images/logos/logo-four.png" alt="Logo" />
+                  <img src="assets/images/logos/logo.png" alt="Logo" />
                 </a>
               </Link>
             </div>
@@ -266,7 +266,7 @@ const DefaultFooter = () => (
             <div className="footer-logo mb-25">
               <Link legacyBehavior href="/">
                 <a>
-                  <img src="assets/images/logos/logo-three.png" alt="Logo" />
+                  <img src="assets/images/logos/logo.png" alt="Logo" />
                 </a>
               </Link>
             </div>

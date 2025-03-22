@@ -1,144 +1,15 @@
+// Previous homepage. MULTIPAGE 
+
 "use client";
 import Counter from "@/components/Counter";
 import ClientsFeedback from "@/components/home1/ClientsFeedback";
 import Hero1 from "@/components/home1/Hero1";
 import RecentProjects from "@/components/home1/RecentProjects";
 import Layout from "@/layout/Layout";
-import SideBar from "@/layout/SideBar";
-import Head from "next/head";
 import Link from "next/link";
-import { Accordion } from "react-bootstrap";
-const IndexOnePage = () => {
+const Index = () => {
   return (
-    <Layout className="home-one" footer={1} noHeader>
-      <Head>
-        {" "}
-        <Link
-          legacyBehavior
-          rel="shortcut icon"
-          href="assets/images/favicon1.png"
-          type="image/x-icon"
-        />
-      </Head>
-      <header className="main-header header-two">
-        {/*Header-Upper*/}
-        <div className="header-upper">
-          <div className="container clearfix">
-            <div className="header-inner rel d-flex align-items-center">
-              <div className="logo-outer">
-                <div className="logo">
-                  <Link legacyBehavior href="/">
-                    <a>
-                      <img
-                        src="assets/images/logos/logo-two.png"
-                        alt="Logo"
-                        title="Logo"
-                      />
-                    </a>
-                  </Link>
-                </div>
-              </div>
-              <div className="nav-outer clearfix">
-                {/* Main Menu */}
-                <nav className="main-menu navbar-expand-lg">
-                  <Accordion>
-                    <div className="navbar-header">
-                      <div className="mobile-logo my-15">
-                        <Link legacyBehavior href="/">
-                          <a>
-                            <img
-                              src="assets/images/logos/logo-two.png"
-                              alt="Logo"
-                              title="Logo"
-                            />
-                          </a>
-                        </Link>
-                      </div>
-                      {/* Toggle Button */}
-                      <Accordion.Toggle
-                        eventKey="nav"
-                        as="button"
-                        className="navbar-toggle"
-                      >
-                        <span className="icon-bar" />
-                        <span className="icon-bar" />
-                        <span className="icon-bar" />
-                      </Accordion.Toggle>
-                    </div>
-                    <Accordion.Collapse
-                      eventKey="nav"
-                      className="navbar-collapse clearfix"
-                    >
-                      <ul className="navigation onepage clearfix">
-                        <li>
-                          <a href="#home">Home</a>
-                        </li>
-                        <li>
-                          <a href="#about">about</a>
-                        </li>
-                        <li>
-                          <a href="#featured">featured</a>
-                        </li>
-                        <li>
-                          <a href="#project">project</a>
-                        </li>
-                        <li>
-                          <a href="#pricing">pricing</a>
-                        </li>
-                        <li>
-                          <a href="#contact">contact</a>
-                        </li>
-                        <li>
-                          <a href="#news">news</a>
-                        </li>
-                      </ul>
-                    </Accordion.Collapse>
-                  </Accordion>
-                </nav>
-                {/* Main Menu End*/}
-              </div>
-              {/* Nav Search */}
-              <div className="nav-search py-15">
-                <button className="far fa-search" />
-                <form
-                  onSubmit={(e) => e.preventDefault()}
-                  action="#"
-                  className="hide"
-                >
-                  <input
-                    type="text"
-                    placeholder="Search"
-                    className="searchbox"
-                    required=""
-                  />
-                  <button
-                    type="submit"
-                    className="searchbutton far fa-search"
-                  />
-                </form>
-              </div>
-              {/* Menu Button */}
-              <div className="menu-btns">
-                <Link legacyBehavior href="/contact">
-                  <a className="theme-btn style-three">
-                    Get a Quote <i className="fas fa-angle-double-right" />
-                  </a>
-                </Link>
-                {/* menu sidbar */}
-                <div className="menu-sidebar">
-                  <button onClick={() => sideBarToggle()}>
-                    <span className="icon-bar" />
-                    <span className="icon-bar" />
-                    <span className="icon-bar" />
-                  </button>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-        {/*End Header Upper*/}
-      </header>
-      <SideBar />
+    <Layout header={1} className="home-one" footer={1}>
       {/*End Hidden Sidebar */}
       {/* Slider Section Start */}
       <Hero1 />
@@ -216,7 +87,7 @@ const IndexOnePage = () => {
       </section>
       {/* Core Feature end */}
       {/* About Us Area start */}
-      <section id="about" className="about-area-one pt-130 pb-125 rel z-1">
+      <section className="about-area-one pt-130 pb-125 rel z-1">
         <div className="container">
           <div className="row justify-content-between align-items-center">
             <div className="col-lg-5">
@@ -335,10 +206,7 @@ const IndexOnePage = () => {
       </section>
       {/* Statistics Three Area end */}
       {/* Design Featured Start */}
-      <section
-        id="featured"
-        className="design-feature-area overflow-hidden pt-130 pb-100 text-white bgc-black-with-lighting rel z-1"
-      >
+      <section className="design-feature-area overflow-hidden pt-130 pb-100 text-white bgc-black-with-lighting rel z-1">
         <div className="container">
           <div className="section-title text-center mb-60 wow fadeInUp delay-0-2s">
             <span className="sub-title mb-10">Core Design Featured</span>
@@ -614,10 +482,7 @@ const IndexOnePage = () => {
       </section>
       {/* CTA Area end */}
       {/* Pricing Two Area start */}
-      <section
-        id="pricing"
-        className="pricing-area-two bgc-lighter pt-240 pb-100 rel z-1"
-      >
+      <section className="pricing-area-two bgc-lighter pt-240 pb-100 rel z-1">
         <div className="container">
           <div className="row justify-content-center">
             <div className="col-lg-10">
@@ -764,10 +629,7 @@ const IndexOnePage = () => {
       <ClientsFeedback />
       {/* Testimonial Area End */}
       {/* Contact Area Start */}
-      <section
-        id="contact"
-        className="contact-area overflow-hidden py-130 bgc-black-with-lighting rel z-1"
-      >
+      <section className="contact-area overflow-hidden py-130 bgc-black-with-lighting rel z-1">
         <div className="container">
           <div className="row justify-content-between">
             <div className="col-xl-5 col-lg-6">
@@ -886,7 +748,7 @@ const IndexOnePage = () => {
       </section>
       {/* Contact Area End */}
       {/* Blog Area start */}
-      <section id="news" className="news-blog-area pt-130 pb-75 rel z-1">
+      <section className="news-blog-area pt-130 pb-75 rel z-1">
         <div className="container">
           <div className="row justify-content-center">
             <div className="col-lg-10">
@@ -999,4 +861,4 @@ const IndexOnePage = () => {
     </Layout>
   );
 };
-export default IndexOnePage;
+export default Index;

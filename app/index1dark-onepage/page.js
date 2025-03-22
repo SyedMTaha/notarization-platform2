@@ -16,7 +16,7 @@ const IndexOnePage = () => {
         <Link
           legacyBehavior
           rel="shortcut icon"
-          href="assets/images/favicon1.png"
+          href="assets/images/favicon.png"
           type="image/x-icon"
         />
       </Head>
@@ -30,7 +30,7 @@ const IndexOnePage = () => {
                   <Link legacyBehavior href="/">
                     <a>
                       <img
-                        src="assets/images/logos/logo-two.png"
+                        src="assets/images/logos/logo-white.png"
                         alt="Logo"
                         title="Logo"
                       />
@@ -47,7 +47,7 @@ const IndexOnePage = () => {
                         <Link legacyBehavior href="/">
                           <a>
                             <img
-                              src="assets/images/logos/logo-two.png"
+                              src="assets/images/logos/logo-white.png"
                               alt="Logo"
                               title="Logo"
                             />
