@@ -1,0 +1,57 @@
+@import url("https://fonts.googleapis.com/css2?family=Catamaran:wght@400;500;600&family=Kumbh+Sans:wght@400;500;700&family=Merriweather:wght@700&family=Roboto:wght@400;500;700&family=Shadows+Into+Light&display=swap");
+
+*,
+html {
+  scroll-behavior: smooth !important;
+}
+/* .navigation li ul,
+.navigation li ul li.dropdown ul {
+  display: block !important;
+  overflow: hidden;
+  height: 0px;
+  -webkit-transition: height 0.3s linear, padding-top 0.3s linear;
+}
+.navigation li:hover ul,
+.navigation li ul li.dropdown:hover ul {
+  height: 100px;
+} */
+.navigation li.dropdown > ul {
+  /* display: block !important;
+  max-height: 0;
+  transition-delay: 4s all;
+  transition: max-height 0.35s ease-out, opacity 0.35s; */
+  /* overflow: hidden; */
+  /* opacity: 0; */
+}
+.navigation li.dropdown:hover > ul {
+  display: block;
+  /* max-height: 500px;
+  transition: max-height 0.65s ease-in, opacity 1.65s;
+  opacity: 1; */
+}
+
+.dark-version .dark-logo {
+  display: none;
+}
+.dark-version .light-logo {
+  display: block;
+}
+.light-logo {
+  display: none;
+}
+
+/* Slick slider */
+.slick-dots {
+  display: flex !important;
+}
+.feedback-active .slick-slide {
+  padding: 0 15px;
+}
+
+.page-item .page-link {
+  border-radius: 50% !important;
+}
+
+.product-details-images .nav-link {
+  padding: 0;
+}

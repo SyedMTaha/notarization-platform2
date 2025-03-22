@@ -85,7 +85,7 @@ const TeamIsotope = () => {
         <div className="col-xl-3 col-lg-4 col-md-6 item developer seo-expert">
           <div className="team-member">
             <div className="image">
-              <img src="assets/images/team/member1.jpg" alt="Member" />
+              <img src="/assets/images/team/member1.jpg" alt="Member" />
             </div>
             <div className="content">
               <h5>
@@ -114,7 +114,7 @@ const TeamIsotope = () => {
         <div className="col-xl-3 col-lg-4 col-md-6 item desiger logo-designer">
           <div className="team-member">
             <div className="image">
-              <img src="assets/images/team/member2.jpg" alt="Member" />
+              <img src="/assets/images/team/member2.jpg" alt="Member" />
             </div>
             <div className="content">
               <h5>
@@ -143,7 +143,7 @@ const TeamIsotope = () => {
         <div className="col-xl-3 col-lg-4 col-md-6 item engineer seo-expert">
           <div className="team-member">
             <div className="image">
-              <img src="assets/images/team/member3.jpg" alt="Member" />
+              <img src="/assets/images/team/member3.jpg" alt="Member" />
             </div>
             <div className="content">
               <h5>
@@ -172,7 +172,7 @@ const TeamIsotope = () => {
         <div className="col-xl-3 col-lg-4 col-md-6 item desiger logo-designer">
           <div className="team-member">
             <div className="image">
-              <img src="assets/images/team/member4.jpg" alt="Member" />
+              <img src="/assets/images/team/member4.jpg" alt="Member" />
             </div>
             <div className="content">
               <h5>
@@ -201,7 +201,7 @@ const TeamIsotope = () => {
         <div className="col-xl-3 col-lg-4 col-md-6 item developer engineer">
           <div className="team-member">
             <div className="image">
-              <img src="assets/images/team/member5.jpg" alt="Member" />
+              <img src="/assets/images/team/member5.jpg" alt="Member" />
             </div>
             <div className="content">
               <h5>
@@ -230,7 +230,7 @@ const TeamIsotope = () => {
         <div className="col-xl-3 col-lg-4 col-md-6 item engineer seo-expert">
           <div className="team-member">
             <div className="image">
-              <img src="assets/images/team/member6.jpg" alt="Member" />
+              <img src="/assets/images/team/member6.jpg" alt="Member" />
             </div>
             <div className="content">
               <h5>
@@ -259,7 +259,7 @@ const TeamIsotope = () => {
         <div className="col-xl-3 col-lg-4 col-md-6 item desiger seo-expert">
           <div className="team-member">
             <div className="image">
-              <img src="assets/images/team/member7.jpg" alt="Member" />
+              <img src="/assets/images/team/member7.jpg" alt="Member" />
             </div>
             <div className="content">
               <h5>
@@ -288,7 +288,7 @@ const TeamIsotope = () => {
         <div className="col-xl-3 col-lg-4 col-md-6 item developer engineer logo-designer">
           <div className="team-member">
             <div className="image">
-              <img src="assets/images/team/member8.jpg" alt="Member" />
+              <img src="/assets/images/team/member8.jpg" alt="Member" />
             </div>
             <div className="content">
               <h5>
@@ -317,7 +317,7 @@ const TeamIsotope = () => {
         <div className="col-xl-3 col-lg-4 col-md-6 item desiger seo-expert">
           <div className="team-member">
             <div className="image">
-              <img src="assets/images/team/member9.jpg" alt="Member" />
+              <img src="/assets/images/team/member9.jpg" alt="Member" />
             </div>
             <div className="content">
               <h5>
@@ -346,7 +346,7 @@ const TeamIsotope = () => {
         <div className="col-xl-3 col-lg-4 col-md-6 item developer logo-designer">
           <div className="team-member">
             <div className="image">
-              <img src="assets/images/team/member10.jpg" alt="Member" />
+              <img src="/assets/images/team/member10.jpg" alt="Member" />
             </div>
             <div className="content">
               <h5>
@@ -375,7 +375,7 @@ const TeamIsotope = () => {
         <div className="col-xl-3 col-lg-4 col-md-6 item desiger engineer">
           <div className="team-member">
             <div className="image">
-              <img src="assets/images/team/member11.jpg" alt="Member" />
+              <img src="/assets/images/team/member11.jpg" alt="Member" />
             </div>
             <div className="content">
               <h5>
@@ -404,7 +404,7 @@ const TeamIsotope = () => {
         <div className="col-xl-3 col-lg-4 col-md-6 item developer seo-expert logo-designer">
           <div className="team-member">
             <div className="image">
-              <img src="assets/images/team/member12.jpg" alt="Member" />
+              <img src="/assets/images/team/member12.jpg" alt="Member" />
             </div>
             <div className="content">
               <h5>

@@ -26,7 +26,7 @@ const Header1 = () => {
                 <Link legacyBehavior href="/">
                   <a>
                     <img
-                      src="assets/images/logos/logo-white.png"
+                      src="/assets/images/logos/logo-white.png"
                       alt="Logo"
                       title="Logo"
                     />
@@ -35,7 +35,7 @@ const Header1 = () => {
               </div>
             </div>
             <div className="nav-outer clearfix">
-              <MobileMenu logo={"assets/images/logos/logo-white.png"} />
+              <MobileMenu logo={"/assets/images/logos/logo-white.png"} />
               {/* Main Menu */}
               <nav className="main-menu d-none d-lg-block navbar-expand-lg">
                 <div className="navbar-header">
@@ -43,7 +43,7 @@ const Header1 = () => {
                     <Link legacyBehavior href="/">
                       <a>
                         <img
-                          src="assets/images/logos/logo-white.png"
+                          src="/assets/images/logos/logo-white.png"
                           alt="Logo"
                           title="Logo"
                         />
@@ -165,14 +165,14 @@ const Header2 = () => {
                 <Link legacyBehavior href="/">
                   <a>
                     <img
-                      src="assets/images/logos/logo.png"
+                      src="/assets/images/logos/logo.png"
                       alt="Logo"
                       title="Logo"
                       className="logo dark-logo"
                     />
                     <img
                       className="light-logo logo"
-                      src="assets/images/logos/logo-white.png"
+                      src="/assets/images/logos/logo-white.png"
                       alt="Logo"
                       title="Logo"
                     />
@@ -189,7 +189,7 @@ const Header2 = () => {
                     <Link legacyBehavior href="/">
                       <a>
                         <img
-                          src="assets/images/logos/logo.png"
+                          src="/assets/images/logos/logo.png"
                           alt="Logo"
                           title="Logo"
                         />
@@ -267,7 +267,7 @@ const DefaultHeader = () => {
                 <Link legacyBehavior href="/">
                   <a>
                     <img
-                      src="assets/images/logos/logo.png"
+                      src="/assets/images/logos/logo.png"
                       alt="Logo"
                       title="Logo"
                     />
@@ -284,7 +284,7 @@ const DefaultHeader = () => {
                     <Link legacyBehavior href="/">
                       <a>
                         <img
-                          src="assets/images/logos/logo.png"
+                          src="/assets/images/logos/logo.png"
                           alt="Logo"
                           title="Logo"
                         />

@@ -149,22 +149,22 @@ const Hero1 = () => {
       <div className="slider-shapes">
         <img
           className="shape dots one"
-          src="assets/images/shapes/slider-dots.png"
+          src="/assets/images/shapes/slider-dots.png"
           alt="Shape"
         />
         <img
           className="shape dots two"
-          src="assets/images/shapes/slider-dots.png"
+          src="/assets/images/shapes/slider-dots.png"
           alt="Shape"
         />
         <img
           className="shape wave-line"
-          src="assets/images/shapes/slider-wave-line.png"
+          src="/assets/images/shapes/slider-wave-line.png"
           alt="Shape"
         />
         <img
           className="shape circle"
-          src="assets/images/shapes/slider-circle.png"
+          src="/assets/images/shapes/slider-circle.png"
           alt="Shape"
         />
       </div>

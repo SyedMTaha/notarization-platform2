@@ -85,7 +85,7 @@ const PreMadeTemplateIsotope = () => {
         <div className="col-xl-4 col-md-6 item saas construction">
           <div className="project-item style-two wow fadeInUp delay-0-2s">
             <div className="project-iamge">
-              <img src="assets/images/projects/project-two1.jpg" />
+              <img src="/assets/images/projects/project-two1.jpg" />
               <div className="project-over">
                 <a className="details-btn" href="#">
                   <i className="far fa-arrow-right" />
@@ -108,7 +108,7 @@ const PreMadeTemplateIsotope = () => {
           <div className="project-item style-two wow fadeInUp delay-0-4s">
             <div className="project-iamge">
               <img
-                src="assets/images/projects/project-two2.jpg"
+                src="/assets/images/projects/project-two2.jpg"
                 alt="Project"
               />
               <div className="project-over">
@@ -135,7 +135,7 @@ const PreMadeTemplateIsotope = () => {
           <div className="project-item style-two wow fadeInUp delay-0-6s">
             <div className="project-iamge">
               <img
-                src="assets/images/projects/project-two3.jpg"
+                src="/assets/images/projects/project-two3.jpg"
                 alt="Project"
               />
               <div className="project-over">
@@ -162,7 +162,7 @@ const PreMadeTemplateIsotope = () => {
           <div className="project-item style-two wow fadeInUp delay-0-2s">
             <div className="project-iamge">
               <img
-                src="assets/images/projects/project-two4.jpg"
+                src="/assets/images/projects/project-two4.jpg"
                 alt="Project"
               />
               <div className="project-over">
@@ -189,7 +189,7 @@ const PreMadeTemplateIsotope = () => {
           <div className="project-item style-two wow fadeInUp delay-0-4s">
             <div className="project-iamge">
               <img
-                src="assets/images/projects/project-two5.jpg"
+                src="/assets/images/projects/project-two5.jpg"
                 alt="Project"
               />
               <div className="project-over">
@@ -216,7 +216,7 @@ const PreMadeTemplateIsotope = () => {
           <div className="project-item style-two wow fadeInUp delay-0-6s">
             <div className="project-iamge">
               <img
-                src="assets/images/projects/project-two6.jpg"
+                src="/assets/images/projects/project-two6.jpg"
                 alt="Project"
               />
               <div className="project-over">

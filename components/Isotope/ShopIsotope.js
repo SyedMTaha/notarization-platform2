@@ -93,7 +93,7 @@ const ShopIsotope = () => {
         <div className="col-xl-4 col-md-6 item plugin ilustration">
           <div className="product-item wow fadeInUp delay-0-2s">
             <div className="image">
-              <img src="assets/images/shop/product1.jpg" alt="Product" />
+              <img src="/assets/images/shop/product1.jpg" alt="Product" />
             </div>
             <div className="content">
               <h5>CMS - Plugin for WordPress</h5>
@@ -124,7 +124,7 @@ const ShopIsotope = () => {
         <div className="col-xl-4 col-md-6 item saas ui-kits">
           <div className="product-item wow fadeInUp delay-0-4s">
             <div className="image">
-              <img src="assets/images/shop/product2.jpg" alt="Product" />
+              <img src="/assets/images/shop/product2.jpg" alt="Product" />
             </div>
             <div className="content">
               <h5>ISOMetric Illustration</h5>
@@ -155,7 +155,7 @@ const ShopIsotope = () => {
         <div className="col-xl-4 col-md-6 item vectors dashboard">
           <div className="product-item wow fadeInUp delay-0-6s">
             <div className="image">
-              <img src="assets/images/shop/product3.jpg" alt="Product" />
+              <img src="/assets/images/shop/product3.jpg" alt="Product" />
             </div>
             <div className="content">
               <h5>3D- Illustration For Crypto</h5>
@@ -186,7 +186,7 @@ const ShopIsotope = () => {
         <div className="col-xl-4 col-md-6 item saas ilustration">
           <div className="product-item wow fadeInUp delay-0-2s">
             <div className="image">
-              <img src="assets/images/shop/product4.jpg" alt="Product" />
+              <img src="/assets/images/shop/product4.jpg" alt="Product" />
             </div>
             <div className="content">
               <h5>Online Shopping Plugin</h5>
@@ -217,7 +217,7 @@ const ShopIsotope = () => {
         <div className="col-xl-4 col-md-6 item saas vectors">
           <div className="product-item wow fadeInUp delay-0-4s">
             <div className="image">
-              <img src="assets/images/shop/product5.jpg" alt="Product" />
+              <img src="/assets/images/shop/product5.jpg" alt="Product" />
             </div>
             <div className="content">
               <h5>Fitness UI Kits</h5>
@@ -248,7 +248,7 @@ const ShopIsotope = () => {
         <div className="col-xl-4 col-md-6 item plugin ilustration ui-kits">
           <div className="product-item wow fadeInUp delay-0-6s">
             <div className="image">
-              <img src="assets/images/shop/product6.jpg" alt="Product" />
+              <img src="/assets/images/shop/product6.jpg" alt="Product" />
             </div>
             <div className="content">
               <h5>Dashboard UI Templates</h5>
@@ -279,7 +279,7 @@ const ShopIsotope = () => {
         <div className="col-xl-4 col-md-6 item saas dashboard">
           <div className="product-item wow fadeInUp delay-0-2s">
             <div className="image">
-              <img src="assets/images/shop/product7.jpg" alt="Product" />
+              <img src="/assets/images/shop/product7.jpg" alt="Product" />
             </div>
             <div className="content">
               <h5>Travel Service Templates</h5>
@@ -310,7 +310,7 @@ const ShopIsotope = () => {
         <div className="col-xl-4 col-md-6 item plugin vectors">
           <div className="product-item wow fadeInUp delay-0-4s">
             <div className="image">
-              <img src="assets/images/shop/product8.jpg" alt="Product" />
+              <img src="/assets/images/shop/product8.jpg" alt="Product" />
             </div>
             <div className="content">
               <h5>Mountain Retro Illustration</h5>
@@ -341,7 +341,7 @@ const ShopIsotope = () => {
         <div className="col-xl-4 col-md-6 item saas ui-kits dashboard">
           <div className="product-item wow fadeInUp delay-0-6s">
             <div className="image">
-              <img src="assets/images/shop/product9.jpg" alt="Product" />
+              <img src="/assets/images/shop/product9.jpg" alt="Product" />
             </div>
             <div className="content">
               <h5>African Animal Forest Design</h5>

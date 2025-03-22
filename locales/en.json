@@ -1,0 +1,18 @@
+{
+    "meta": {
+        "title": "WiScribbles - Online Notarization",
+        "description": "Notarize online. Anywhere, Anytime."
+    },
+    "nav": {
+        "home": "Home",
+        "about": "About",
+        "services": "Services",
+        "contact": "Contact",
+        "language": "Language"
+    },
+    "footer": {
+        "copyright": "© 2025 WiScribbles. All rights reserved.",
+        "privacy": "Privacy Policy",
+        "terms": "Terms of Service"
+    }
+}

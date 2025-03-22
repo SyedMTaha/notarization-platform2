@@ -64,7 +64,7 @@ export default class ClientsFeedback extends Component {
               <div className="testimonial-item-two wow fadeInUp delay-0-2s">
                 <div className="testimonial-author">
                   <img
-                    src="assets/images/feedback/testimonial1.jpg"
+                    src="/assets/images/feedback/testimonial1.jpg"
                     alt="Author"
                   />
                 </div>
@@ -83,7 +83,7 @@ export default class ClientsFeedback extends Component {
               <div className="testimonial-item-two wow fadeInUp delay-0-4s">
                 <div className="testimonial-author">
                   <img
-                    src="assets/images/feedback/testimonial2.jpg"
+                    src="/assets/images/feedback/testimonial2.jpg"
                     alt="Author"
                   />
                 </div>
@@ -101,7 +101,7 @@ export default class ClientsFeedback extends Component {
               <div className="testimonial-item-two wow fadeInUp delay-0-2s">
                 <div className="testimonial-author">
                   <img
-                    src="assets/images/feedback/testimonial1.jpg"
+                    src="/assets/images/feedback/testimonial1.jpg"
                     alt="Author"
                   />
                 </div>
@@ -120,7 +120,7 @@ export default class ClientsFeedback extends Component {
               <div className="testimonial-item-two wow fadeInUp delay-0-4s">
                 <div className="testimonial-author">
                   <img
-                    src="assets/images/feedback/testimonial2.jpg"
+                    src="/assets/images/feedback/testimonial2.jpg"
                     alt="Author"
                   />
                 </div>

@@ -19,7 +19,7 @@ const RecentProjects = () => {
         <div className="project-item style-two wow fadeInUp delay-0-2s">
           <div className="project-iamge">
             <img
-              src="assets/images/projects/project-three1.jpg"
+              src="/assets/images/projects/project-three1.jpg"
               alt="Project"
             />
             <div className="project-over">
@@ -42,7 +42,7 @@ const RecentProjects = () => {
         <div className="project-item style-two wow fadeInUp delay-0-4s">
           <div className="project-iamge">
             <img
-              src="assets/images/projects/project-three2.jpg"
+              src="/assets/images/projects/project-three2.jpg"
               alt="Project"
             />
             <div className="project-over">
@@ -65,7 +65,7 @@ const RecentProjects = () => {
         <div className="project-item style-two wow fadeInUp delay-0-6s">
           <div className="project-iamge">
             <img
-              src="assets/images/projects/project-three3.jpg"
+              src="/assets/images/projects/project-three3.jpg"
               alt="Project"
             />
             <div className="project-over">
@@ -88,7 +88,7 @@ const RecentProjects = () => {
         <div className="project-item style-two wow fadeInUp delay-0-8s">
           <div className="project-iamge">
             <img
-              src="assets/images/projects/project-three2.jpg"
+              src="/assets/images/projects/project-three2.jpg"
               alt="Project"
             />
             <div className="project-over">

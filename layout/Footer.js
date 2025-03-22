@@ -22,7 +22,7 @@ const Footer1 = () => (
             <div className="footer-logo mb-25">
               <Link legacyBehavior href="/">
                 <a>
-                  <img src="assets/images/logos/logo.png" alt="Logo" />
+                  <img src="/assets/images/logos/logo.png" alt="Logo" />
                 </a>
               </Link>
             </div>
@@ -177,7 +177,7 @@ const Footer2 = () => (
           <div className="col-lg-5">
             <div className="footer-newsletter-image wow fadeInRight delay-0-2s">
               <img
-                src="assets/images/footer/footer-newsletter.png"
+                src="/assets/images/footer/footer-newsletter.png"
                 alt="Newsletter"
               />
             </div>
@@ -245,12 +245,12 @@ const Footer2 = () => (
     <div className="wave-shapes">
       <img
         className="shape one"
-        src="assets/images/shapes/footer1.png"
+        src="/assets/images/shapes/footer1.png"
         alt="Wave Shape"
       />
       <img
         className="shape two"
-        src="assets/images/shapes/footer2.png"
+        src="/assets/images/shapes/footer2.png"
         alt="Wave Shape"
       />
     </div>
@@ -266,7 +266,7 @@ const DefaultFooter = () => (
             <div className="footer-logo mb-25">
               <Link legacyBehavior href="/">
                 <a>
-                  <img src="assets/images/logos/logo.png" alt="Logo" />
+                  <img src="/assets/images/logos/logo.png" alt="Logo" />
                 </a>
               </Link>
             </div>

@@ -97,7 +97,7 @@ const ProjectGridIsotope = () => {
           <div className="project-item style-two wow fadeInUp delay-0-2s">
             <div className="project-iamge">
               <img
-                src="assets/images/projects/project-two1.jpg"
+                src="/assets/images/projects/project-two1.jpg"
                 alt="Project"
               />
               <div className="project-over">
@@ -124,7 +124,7 @@ const ProjectGridIsotope = () => {
           <div className="project-item style-two wow fadeInUp delay-0-4s">
             <div className="project-iamge">
               <img
-                src="assets/images/projects/project-two2.jpg"
+                src="/assets/images/projects/project-two2.jpg"
                 alt="Project"
               />
               <div className="project-over">
@@ -151,7 +151,7 @@ const ProjectGridIsotope = () => {
           <div className="project-item style-two wow fadeInUp delay-0-6s">
             <div className="project-iamge">
               <img
-                src="assets/images/projects/project-two3.jpg"
+                src="/assets/images/projects/project-two3.jpg"
                 alt="Project"
               />
               <div className="project-over">
@@ -178,7 +178,7 @@ const ProjectGridIsotope = () => {
           <div className="project-item style-two wow fadeInUp delay-0-2s">
             <div className="project-iamge">
               <img
-                src="assets/images/projects/project-two7.jpg"
+                src="/assets/images/projects/project-two7.jpg"
                 alt="Project"
               />
               <div className="project-over">
@@ -205,7 +205,7 @@ const ProjectGridIsotope = () => {
           <div className="project-item style-two wow fadeInUp delay-0-4s">
             <div className="project-iamge">
               <img
-                src="assets/images/projects/project-two5.jpg"
+                src="/assets/images/projects/project-two5.jpg"
                 alt="Project"
               />
               <div className="project-over">
@@ -232,7 +232,7 @@ const ProjectGridIsotope = () => {
           <div className="project-item style-two wow fadeInUp delay-0-6s">
             <div className="project-iamge">
               <img
-                src="assets/images/projects/project-two8.jpg"
+                src="/assets/images/projects/project-two8.jpg"
                 alt="Project"
               />
               <div className="project-over">
@@ -259,7 +259,7 @@ const ProjectGridIsotope = () => {
           <div className="project-item style-two wow fadeInUp delay-0-2s">
             <div className="project-iamge">
               <img
-                src="assets/images/projects/project-two9.jpg"
+                src="/assets/images/projects/project-two9.jpg"
                 alt="Project"
               />
               <div className="project-over">
@@ -286,7 +286,7 @@ const ProjectGridIsotope = () => {
           <div className="project-item style-two wow fadeInUp delay-0-4s">
             <div className="project-iamge">
               <img
-                src="assets/images/projects/project-two10.jpg"
+                src="/assets/images/projects/project-two10.jpg"
                 alt="Project"
               />
               <div className="project-over">
@@ -313,7 +313,7 @@ const ProjectGridIsotope = () => {
           <div className="project-item style-two wow fadeInUp delay-0-6s">
             <div className="project-iamge">
               <img
-                src="assets/images/projects/project-two11.jpg"
+                src="/assets/images/projects/project-two11.jpg"
                 alt="Project"
               />
               <div className="project-over">
@@ -340,7 +340,7 @@ const ProjectGridIsotope = () => {
           <div className="project-item style-two wow fadeInUp delay-0-2s">
             <div className="project-iamge">
               <img
-                src="assets/images/projects/project-two12.jpg"
+                src="/assets/images/projects/project-two12.jpg"
                 alt="Project"
               />
               <div className="project-over">
@@ -367,7 +367,7 @@ const ProjectGridIsotope = () => {
           <div className="project-item style-two wow fadeInUp delay-0-4s">
             <div className="project-iamge">
               <img
-                src="assets/images/projects/project-two13.jpg"
+                src="/assets/images/projects/project-two13.jpg"
                 alt="Project"
               />
               <div className="project-over">
@@ -394,7 +394,7 @@ const ProjectGridIsotope = () => {
           <div className="project-item style-two wow fadeInUp delay-0-6s">
             <div className="project-iamge">
               <img
-                src="assets/images/projects/project-two14.jpg"
+                src="/assets/images/projects/project-two14.jpg"
                 alt="Project"
               />
               <div className="project-over">

@@ -27,12 +27,12 @@ const PageBanner = ({ titleHtml, titleText }) => {
         />
         <img
           className="shape-one"
-          src="assets/images/shapes/hero-shape1.png"
+          src="/assets/images/shapes/hero-shape1.png"
           alt="Shape"
         />
         <img
           className="shape-two"
-          src="assets/images/shapes/hero-shape2.png"
+          src="/assets/images/shapes/hero-shape2.png"
           alt="Shape"
         />
       </div>
