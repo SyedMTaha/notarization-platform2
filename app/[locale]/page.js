@@ -73,25 +73,22 @@ const IndexOnePage = () => {
                     >
                       <ul className="navigation onepage clearfix">
                         <li>
-                          <a href="#home">{t("home")}</a>
+                          <a href="#home">{t("navbar.home")}</a>
                         </li>
                         <li>
-                          <a href="#about">{t("about")}</a>
+                          <a href="#about">{t("navbar.about")}</a>
                         </li>
                         <li>
-                          <a href="#featured">{t("featured")}</a>
+                          <a href="#featured">{t("navbar.standard")}</a>
                         </li>
                         <li>
-                          <a href="#project">{t("project")}</a>
+                          <a href="#project">{t("navbar.help")}</a>
                         </li>
                         <li>
-                          <a href="#pricing">{t("pricing")}</a>
+                          <a href="#pricing">{t("navbar.help")}</a>
                         </li>
                         <li>
-                          <a href="#contact">{t("contact")}</a>
-                        </li>
-                        <li>
-                          <a href="#news">{t("news")}</a>
+                          <a href="#contact">{t("navbar.contact")}</a>
                         </li>
                       </ul>
                     </Accordion.Collapse>
@@ -109,7 +106,7 @@ const IndexOnePage = () => {
                 >
                   <input
                     type="text"
-                    placeholder={t("search_placeholder")}
+                    placeholder={t("navbar.search_placeholder")}
                     className="searchbox"
                     required=""
                   />
@@ -123,7 +120,7 @@ const IndexOnePage = () => {
               <div className="menu-btns">
                 <Link legacyBehavior href="/contact">
                   <a className="theme-btn style-three">
-                    {t("get_a_quote")} <i className="fas fa-angle-double-right" />
+                    {t("navbar.login")} <i className="fas fa-angle-double-right" />
                   </a>
                 </Link>
                 {/* menu sidebar */}
@@ -146,85 +143,75 @@ const IndexOnePage = () => {
       {/* Slider Section Start */}
       <Hero1 />
       {/* Slider Section End */}
-      {/* Core Feature start */}
-      <section className="feature-area-five bgc-lighter pt-100 pb-70">
+      {/* Working Process Area start */}
+      <section className="work-process-area pt-100 rel z-1">
   <div className="container">
-    <div className="section-title text-center mb-60 wow fadeInUp delay-0-2s">
-      <span className="sub-title mb-10">{t("core_features")}</span>
-      <h2>{t("amazing_web_design_features")}</h2>
+    <div className="row justify-content-center">
+      <div className="col-lg-10">
+        <div className="section-title text-center mb-55 wow fadeInUp delay-0-2s">
+          <span className="sub-title mb-15">{t("working_process")}</span>
+          <h2>{t("how_we_work")}</h2>
+        </div>
+      </div>
     </div>
-    <div className="row row-cols-xl-6 row-cols-lg-4 row-cols-md-3 row-cols-sm-2 row-cols-1 justify-content-center">
-      <div className="col wow fadeInUp delay-0-2s">
-        <div className="feature-item-five">
-          <i className="flaticon-responsive" />
-          <h5>
-            <Link legacyBehavior href="/service-details">
-              <a>{t("responsive_design")}</a>
-            </Link>
-          </h5>
+    <div className="work-process-wrap rel z-1">
+      <div className="row justify-content-between">
+        <div className="col-xl-3 col-lg-5 col-sm-6">
+          <div className="work-process-item mt-30 wow fadeInUp delay-0-2s">
+            <div className="icon">
+              <span className="number">01</span>
+              <i className="flaticon-optimization" />
+            </div>
+            <h4>{t("info_gathering")}</h4>
+            <p>{t("info_gathering_desc")}</p>
+          </div>
+        </div>
+        <div className="col-xl-3 col-lg-5 col-sm-6">
+          <div className="work-process-item wow fadeInUp delay-0-4s">
+            <div className="icon">
+              <span className="number">02</span>
+              <i className="flaticon-link" />
+            </div>
+            <h4>{t("idea_planning")}</h4>
+            <p>{t("idea_planning_desc")}</p>
+          </div>
+        </div>
+        <div className="col-xl-3 col-lg-5 col-sm-6">
+          <div className="work-process-item mt-55 wow fadeInUp delay-0-6s">
+            <div className="icon">
+              <span className="number">03</span>
+              <i className="flaticon-data" />
+            </div>
+            <h4>{t("design_analysis")}</h4>
+            <p>{t("design_analysis_desc")}</p>
+          </div>
+        </div>
+        <div className="col-xl-3 col-lg-5 col-sm-6">
+          <div className="work-process-item mt-45 wow fadeInUp delay-0-8s">
+            <div className="icon">
+              <span className="number">04</span>
+              <i className="flaticon-star" />
+            </div>
+            <h4>{t("testing_launch")}</h4>
+            <p>{t("testing_launch_desc")}</p>
+          </div>
         </div>
       </div>
-      <div className="col wow fadeInUp delay-0-3s">
-        <div className="feature-item-five">
-          <i className="flaticon-feature" />
-          <h5>
-            <Link legacyBehavior href="/service-details">
-              <a>{t("powerful_customization")}</a>
-            </Link>
-          </h5>
-        </div>
-      </div>
-      <div className="col wow fadeInUp delay-0-4s">
-        <div className="feature-item-five">
-          <i className="flaticon-aim" />
-          <h5>
-            <Link legacyBehavior href="/service-details">
-              <a>{t("cool_modern_animations")}</a>
-            </Link>
-          </h5>
-        </div>
-      </div>
-      <div className="col wow fadeInUp delay-0-5s">
-        <div className="feature-item-five">
-          <i className="flaticon-seo" />
-          <h5>
-            <Link legacyBehavior href="/service-details">
-              <a>{t("seo_friendly_coding")}</a>
-            </Link>
-          </h5>
-        </div>
-      </div>
-      <div className="col wow fadeInUp delay-0-6s">
-        <div className="feature-item-five">
-          <i className="flaticon-search-location" />
-          <h5>
-            <Link legacyBehavior href="/service-details">
-              <a>{t("best_technical_supports")}</a>
-            </Link>
-          </h5>
-        </div>
-      </div>
-      <div className="col wow fadeInUp delay-0-7s">
-        <div className="feature-item-five">
-          <i className="flaticon-settings" />
-          <h5>
-            <Link legacyBehavior href="/service-details">
-              <a>{t("varied_layouts_parallax")}</a>
-            </Link>
-          </h5>
-        </div>
+      <div className="work-process-shape">
+        <img
+          src="/assets/images/shapes/worp-process-step.png"
+          alt="Shape"
+        />
       </div>
     </div>
   </div>
 </section>
-
-      {/* Core Feature end */}
       {/* About Us Area start */}
       <section id="about" className="about-area-one pt-130 pb-125 rel z-1">
   <div className="container">
     <div className="row justify-content-between align-items-center">
       <div className="col-lg-5">
-        <div className="about-image-one bg-squire-shape rmb-85 wow fadeInUp delay-0-2s">
+        <div className="about-image-one bg-squire-shape rmb-85 wow fadeInUp delay-0-2s ">
           <img src="/assets/images/about/about-one.jpg" alt={t("about_digital_solutions")} />
           <img
             className="image-left"
@@ -266,64 +253,80 @@ const IndexOnePage = () => {
 </section>
 
       {/* About Us Area end */}
-      {/* Statistics Three Area start */}
-      <section className="statistics-area-three bgs-cover pb-100 rel z-1">
+      
+      {/* Core Feature start */}
+      <section className="feature-area-five bgc-lighter pt-100 pb-70">
   <div className="container">
-    <div className="row justify-content-between align-items-center">
-      <div className="col-lg-7">
-        <div className="statistics-three-content rmb-65 wow fadeInRight delay-0-2s">
-          <div className="row justify-content-center justify-content-xl-start">
-            <div className="col-xl-9">
-              <div className="section-title mb-60">
-                <span className="sub-title mb-15">{t("company_statistics")}</span>
-                <h2>{t("global_partners_achievement")}</h2>
-              </div>
-            </div>
-            <div className="col-xl-4 col-lg-6 col-md-4 col-sm-6">
-              <div className="counter-item style-two counter-text-wrap wow fadeInRight delay-0-3s">
-                <i className="flaticon-startup" />
-                <Counter end={2365} />
-                <span className="counter-title">{t("projects_complete")}</span>
-                <p>{t("statistics_description")}</p>
-              </div>
-            </div>
-            <div className="col-xl-4 col-lg-6 col-md-4 col-sm-6">
-              <div className="counter-item style-two counter-text-wrap wow fadeInRight delay-0-5s">
-                <i className="flaticon-global" />
-                <Counter end={5234} />
-                <span className="counter-title">{t("global_clients")}</span>
-                <p>{t("statistics_description")}</p>
-              </div>
-            </div>
-            <div className="col-xl-4 col-lg-6 col-md-4 col-sm-6">
-              <div className="counter-item style-two counter-text-wrap wow fadeInRight delay-0-7s">
-                <i className="flaticon-rating" />
-                <Counter end={8532} />
-                <span className="counter-title">{t("happy_customers")}</span>
-                <p>{t("statistics_description")}</p>
-              </div>
-            </div>
-          </div>
+    <div className="section-title text-center mb-60 wow fadeInUp delay-0-2s">
+      <span className="sub-title mb-10">{t("core_features.core_features")}</span>
+      <h2>{t("core_features.heading")}</h2>
+    </div>
+    <div className="row row-cols-xl-6 row-cols-lg-4 row-cols-md-3 row-cols-sm-2 row-cols-1 justify-content-center">
+      <div className="col wow fadeInUp delay-0-2s">
+        <div className="feature-item-five">
+          <i className="flaticon-responsive" />
+          <h5>
+            <Link legacyBehavior href="/service-details">
+              <a>{t("core_features.responsive_design")}</a>
+            </Link>
+          </h5>
         </div>
       </div>
-      <div className="col-lg-5">
-        <div className="statistics-three-image bg-squire-shape mb-30 wow fadeInLeft delay-0-3s">
-          <img
-            src="/assets/images/about/statictics.jpg"
-            alt={t("company_statistics")}
-          />
-          <img
-            className="image-right"
-            src="/assets/images/shapes/image-right.png"
-            alt="shape"
-          />
+      <div className="col wow fadeInUp delay-0-3s">
+        <div className="feature-item-five">
+          <i className="flaticon-feature" />
+          <h5>
+            <Link legacyBehavior href="/service-details">
+              <a>{t("core_features.powerful_customization")}</a>
+            </Link>
+          </h5>
+        </div>
+      </div>
+      <div className="col wow fadeInUp delay-0-4s">
+        <div className="feature-item-five">
+          <i className="flaticon-aim" />
+          <h5>
+            <Link legacyBehavior href="/service-details">
+              <a>{t("core_features.cool_modern_animations")}</a>
+            </Link>
+          </h5>
+        </div>
+      </div>
+      <div className="col wow fadeInUp delay-0-5s">
+        <div className="feature-item-five">
+          <i className="flaticon-seo" />
+          <h5>
+            <Link legacyBehavior href="/service-details">
+              <a>{t("core_features.seo_friendly_coding")}</a>
+            </Link>
+          </h5>
+        </div>
+      </div>
+      <div className="col wow fadeInUp delay-0-6s">
+        <div className="feature-item-five">
+          <i className="flaticon-search-location" />
+          <h5>
+            <Link legacyBehavior href="/service-details">
+              <a>{t("core_features.best_technical_supports")}</a>
+            </Link>
+          </h5>
+        </div>
+      </div>
+      <div className="col wow fadeInUp delay-0-7s">
+        <div className="feature-item-five">
+          <i className="flaticon-settings" />
+          <h5>
+            <Link legacyBehavior href="/service-details">
+              <a>{t("core_features.varied_layouts_parallax")}</a>
+            </Link>
+          </h5>
         </div>
       </div>
     </div>
   </div>
 </section>
-
-      {/* Statistics Three Area end */}
+      {/* Core Feature end */}
+      
       {/* Design Featured Start */}
       <section
   id="featured"
@@ -497,114 +500,9 @@ const IndexOnePage = () => {
 
       {/* Design Featured End */}
       {/* Project Area start */}
-      <RecentProjects />
+      {/* <RecentProjects /> */}
       {/* Project Area end */}
-      {/* Working Process Area start */}
-      <section className="work-process-area pb-95 rel z-1">
-  <div className="container">
-    <div className="row justify-content-center">
-      <div className="col-lg-10">
-        <div className="section-title text-center mb-55 wow fadeInUp delay-0-2s">
-          <span className="sub-title mb-15">{t("working_process")}</span>
-          <h2>{t("how_we_work")}</h2>
-        </div>
-      </div>
-    </div>
-    <div className="work-process-wrap rel z-1">
-      <div className="row justify-content-between">
-        <div className="col-xl-3 col-lg-5 col-sm-6">
-          <div className="work-process-item mt-30 wow fadeInUp delay-0-2s">
-            <div className="icon">
-              <span className="number">01</span>
-              <i className="flaticon-optimization" />
-            </div>
-            <h4>{t("info_gathering")}</h4>
-            <p>{t("info_gathering_desc")}</p>
-          </div>
-        </div>
-        <div className="col-xl-3 col-lg-5 col-sm-6">
-          <div className="work-process-item wow fadeInUp delay-0-4s">
-            <div className="icon">
-              <span className="number">02</span>
-              <i className="flaticon-link" />
-            </div>
-            <h4>{t("idea_planning")}</h4>
-            <p>{t("idea_planning_desc")}</p>
-          </div>
-        </div>
-        <div className="col-xl-3 col-lg-5 col-sm-6">
-          <div className="work-process-item mt-55 wow fadeInUp delay-0-6s">
-            <div className="icon">
-              <span className="number">03</span>
-              <i className="flaticon-data" />
-            </div>
-            <h4>{t("design_analysis")}</h4>
-            <p>{t("design_analysis_desc")}</p>
-          </div>
-        </div>
-        <div className="col-xl-3 col-lg-5 col-sm-6">
-          <div className="work-process-item mt-45 wow fadeInUp delay-0-8s">
-            <div className="icon">
-              <span className="number">04</span>
-              <i className="flaticon-star" />
-            </div>
-            <h4>{t("testing_launch")}</h4>
-            <p>{t("testing_launch_desc")}</p>
-          </div>
-        </div>
-      </div>
-      <div className="work-process-shape">
-        <img
-          src="/assets/images/shapes/worp-process-step.png"
-          alt="Shape"
-        />
-      </div>
-    </div>
-  </div>
-</section>
 
-{/* Call-To-Action Area */}
-<section className="call-to-action-area rel z-2">
-  <div className="container">
-    <div
-      className="cta-inner bgs-cover"
-      style={{
-        backgroundImage: "url(assets/images/background/cta-bg.jpg)",
-      }}
-    >
-      <div className="row">
-        <div className="col-xl-6">
-          <div className="cta-item wow fadeInLeft delay-0-2s">
-            <div className="icon">
-              <i className="flaticon-target" />
-            </div>
-            <h4>{t("cta_project_title")}</h4>
-            <Link legacyBehavior href="/contact">
-              <a className="details-btn">
-                <i className="far fa-arrow-right" />
-              </a>
-            </Link>
-          </div>
-        </div>
-        <div className="col-xl-6">
-          <div className="cta-item wow fadeInRight delay-0-2s">
-            <div className="icon">
-              <i className="flaticon-target" />
-            </div>
-            <h4>{t("cta_seo_title")}</h4>
-            <Link legacyBehavior href="/contact">
-              <a className="details-btn">
-                <i className="far fa-arrow-right" />
-              </a>
-            </Link>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-      {/* CTA Area end */}
       {/* Pricing Two Area start */}
       <section
   id="pricing"
@@ -673,6 +571,48 @@ const IndexOnePage = () => {
 </section>
 
       {/* Pricing Two Area end */}
+{/* Call-To-Action Area */}
+<section className="call-to-action-area rel pb-60 z-2">
+  <div className="container">
+    <div
+      className="cta-inner bgs-cover"
+      style={{
+        backgroundImage: "url(assets/images/background/cta-bg.jpg)",
+      }}
+    >
+      <div className="row">
+        <div className="col-xl-6">
+          <div className="cta-item wow fadeInLeft delay-0-2s">
+            <div className="icon">
+              <i className="flaticon-target" />
+            </div>
+            <h4>{t("cta_project_title")}</h4>
+            <Link legacyBehavior href="/contact">
+              <a className="details-btn">
+                <i className="far fa-arrow-right" />
+              </a>
+            </Link>
+          </div>
+        </div>
+        <div className="col-xl-6">
+          <div className="cta-item wow fadeInRight delay-0-2s">
+            <div className="icon">
+              <i className="flaticon-target" />
+            </div>
+            <h4>{t("cta_seo_title")}</h4>
+            <Link legacyBehavior href="/contact">
+              <a className="details-btn">
+                <i className="far fa-arrow-right" />
+              </a>
+            </Link>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+      {/* CTA Area end */}
       {/* Testimonial Area Start */}
       <ClientsFeedback />
       {/* Testimonial Area End */}
@@ -794,121 +734,121 @@ const IndexOnePage = () => {
 </section>
 
       {/* Contact Area End */}
-      {/* Blog Area start */}
-      <section id="news" className="news-blog-area pt-130 pb-75 rel z-1">
-  <div className="container">
-    <div className="row justify-content-center">
-      <div className="col-lg-10">
-        <div className="section-title text-center mb-60 wow fadeInUp delay-0-2s">
-          <span className="sub-title mb-15">{t("news_section")}</span>
-          <h2>{t("news_title")}</h2>
-        </div>
-      </div>
-    </div>
-    <div className="row large-gap">
-      <div className="col-lg-6">
-        <div className="blog-item wow fadeInUp delay-0-2s">
-          <div className="image">
-            <img src="/assets/images/blog/blog1.jpg" alt="Blog" />
-          </div>
-          <div className="content">
-            <span className="date">
-              <i className="far fa-calendar-alt" /> {t("blog_1_date")}
-            </span>
-            <h4>
-              <Link legacyBehavior href="/blog-details">
-                <a>{t("blog_1_title")}</a>
-              </Link>
-            </h4>
-            <div className="author">
-              <img src="/assets/images/blog/author1.jpg" alt="Author" />
-              <div className="post-by">
-                <span>{t("post_by")}</span>
-                <a href="#">Douglas B. Dickens</a>
-              </div>
+          {/* Blog Area start
+          <section id="news" className="news-blog-area pt-130 pb-75 rel z-1">
+      <div className="container">
+        <div className="row justify-content-center">
+          <div className="col-lg-10">
+            <div className="section-title text-center mb-60 wow fadeInUp delay-0-2s">
+              <span className="sub-title mb-15">{t("news_section")}</span>
+              <h2>{t("news_title")}</h2>
             </div>
           </div>
         </div>
-      </div>
-
-      <div className="col-lg-6">
-        <div className="blog-item wow fadeInUp delay-0-4s">
-          <div className="image">
-            <img src="/assets/images/blog/blog2.jpg" alt="Blog" />
-          </div>
-          <div className="content">
-            <span className="date">
-              <i className="far fa-calendar-alt" /> {t("blog_2_date")}
-            </span>
-            <h4>
-              <Link legacyBehavior href="/blog-details">
-                <a>{t("blog_2_title")}</a>
-              </Link>
-            </h4>
-            <div className="author">
-              <img src="/assets/images/blog/author2.jpg" alt="Author" />
-              <div className="post-by">
-                <span>{t("post_by")}</span>
-                <a href="#">Carson C. Rhodes</a>
+        <div className="row large-gap">
+          <div className="col-lg-6">
+            <div className="blog-item wow fadeInUp delay-0-2s">
+              <div className="image">
+                <img src="/assets/images/blog/blog1.jpg" alt="Blog" />
+              </div>
+              <div className="content">
+                <span className="date">
+                  <i className="far fa-calendar-alt" /> {t("blog_1_date")}
+                </span>
+                <h4>
+                  <Link legacyBehavior href="/blog-details">
+                    <a>{t("blog_1_title")}</a>
+                  </Link>
+                </h4>
+                <div className="author">
+                  <img src="/assets/images/blog/author1.jpg" alt="Author" />
+                  <div className="post-by">
+                    <span>{t("post_by")}</span>
+                    <a href="#">Douglas B. Dickens</a>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
-        </div>
-      </div>
 
-      <div className="col-lg-6">
-        <div className="blog-item wow fadeInUp delay-0-2s">
-          <div className="image">
-            <img src="/assets/images/blog/blog3.jpg" alt="Blog" />
-          </div>
-          <div className="content">
-            <span className="date">
-              <i className="far fa-calendar-alt" /> {t("blog_3_date")}
-            </span>
-            <h4>
-              <Link legacyBehavior href="/blog-details">
-                <a>{t("blog_3_title")}</a>
-              </Link>
-            </h4>
-            <div className="author">
-              <img src="/assets/images/blog/author3.jpg" alt="Author" />
-              <div className="post-by">
-                <span>{t("post_by")}</span>
-                <a href="#">Robert T. Evans</a>
+          <div className="col-lg-6">
+            <div className="blog-item wow fadeInUp delay-0-4s">
+              <div className="image">
+                <img src="/assets/images/blog/blog2.jpg" alt="Blog" />
+              </div>
+              <div className="content">
+                <span className="date">
+                  <i className="far fa-calendar-alt" /> {t("blog_2_date")}
+                </span>
+                <h4>
+                  <Link legacyBehavior href="/blog-details">
+                    <a>{t("blog_2_title")}</a>
+                  </Link>
+                </h4>
+                <div className="author">
+                  <img src="/assets/images/blog/author2.jpg" alt="Author" />
+                  <div className="post-by">
+                    <span>{t("post_by")}</span>
+                    <a href="#">Carson C. Rhodes</a>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
-        </div>
-      </div>
 
-      <div className="col-lg-6">
-        <div className="blog-item wow fadeInUp delay-0-4s">
-          <div className="image">
-            <img src="/assets/images/blog/blog4.jpg" alt="Blog" />
-          </div>
-          <div className="content">
-            <span className="date">
-              <i className="far fa-calendar-alt" /> {t("blog_4_date")}
-            </span>
-            <h4>
-              <Link legacyBehavior href="/blog-details">
-                <a>{t("blog_4_title")}</a>
-              </Link>
-            </h4>
-            <div className="author">
-              <img src="/assets/images/blog/author4.jpg" alt="Author" />
-              <div className="post-by">
-                <span>{t("post_by")}</span>
-                <a href="#">Stanley J. Contreras</a>
+          <div className="col-lg-6">
+            <div className="blog-item wow fadeInUp delay-0-2s">
+              <div className="image">
+                <img src="/assets/images/blog/blog3.jpg" alt="Blog" />
+              </div>
+              <div className="content">
+                <span className="date">
+                  <i className="far fa-calendar-alt" /> {t("blog_3_date")}
+                </span>
+                <h4>
+                  <Link legacyBehavior href="/blog-details">
+                    <a>{t("blog_3_title")}</a>
+                  </Link>
+                </h4>
+                <div className="author">
+                  <img src="/assets/images/blog/author3.jpg" alt="Author" />
+                  <div className="post-by">
+                    <span>{t("post_by")}</span>
+                    <a href="#">Robert T. Evans</a>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
+
+          <div className="col-lg-6">
+            <div className="blog-item wow fadeInUp delay-0-4s">
+              <div className="image">
+                <img src="/assets/images/blog/blog4.jpg" alt="Blog" />
+              </div>
+              <div className="content">
+                <span className="date">
+                  <i className="far fa-calendar-alt" /> {t("blog_4_date")}
+                </span>
+                <h4>
+                  <Link legacyBehavior href="/blog-details">
+                    <a>{t("blog_4_title")}</a>
+                  </Link>
+                </h4>
+                <div className="author">
+                  <img src="/assets/images/blog/author4.jpg" alt="Author" />
+                  <div className="post-by">
+                    <span>{t("post_by")}</span>
+                    <a href="#">Stanley J. Contreras</a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
         </div>
       </div>
-
-    </div>
-  </div>
-</section>
+    </section> */}
 
 
     </Layout>
