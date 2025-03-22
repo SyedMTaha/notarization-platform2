@@ -15,11 +15,17 @@ import '../../public/assets/css/nice-select.min.css';
 import '../../public/assets/css/slick.min.css';
 import '../../public/assets/css/style.css';
 
-// Metadata configuration
-export const metadata = {
-  title: 'WiScribbles',
-  description: 'Notarize online. Anywhere, Anytime',
-};
+
+
+export async function generateMetadata({ params }) {
+  const { locale, slug } = params;
+  console.log(locale, slug)
+  return locale ==='en' ?{ title: 'WiScribbles',
+    description: 'Notarize online. Anywhere, Anytime'}: {
+    title: 'WiScribbles',
+    description: 'Notariza en línea. En cualquier lugar, en cualquier momento',
+  };
+}
 
 // Locale-aware layout component
 export default async function LocaleLayout({ children, params }) {
