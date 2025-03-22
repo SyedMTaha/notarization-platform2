@@ -19,7 +19,6 @@ import '../../public/assets/css/style.css';
 
 export async function generateMetadata({ params }) {
   const { locale, slug } = params;
-  console.log(locale, slug)
   return locale ==='en' ?{ title: 'WiScribbles',
     description: 'Notarize online. Anywhere, Anytime'}: {
     title: 'WiScribbles',

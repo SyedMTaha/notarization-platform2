@@ -9,8 +9,9 @@ import { useTranslations } from "next-intl";
 import Head from "next/head";
 import Link from "next/link";
 import { Accordion } from "react-bootstrap";
-const IndexOnePage = () => {
+const IndexOnePage = ({ params }) => {
   const t = useTranslations(); 
+  const { locale, slug } = params;
   return (
     <Layout className="home-one" footer={1} noHeader>
       <Head>
@@ -331,13 +332,13 @@ const IndexOnePage = () => {
 >
   <div className="container">
     <div className="section-title text-center mb-60 wow fadeInUp delay-0-2s">
-      <span className="sub-title mb-10">{t("core_design_featured")}</span>
+      <span className="sub-title mb-10">{t("core_design_features")}</span>
       <h2>{t("website_services")}</h2>
     </div>
     <div className="row no-gap align-items-center">
-      <div className="col-lg-3">
-        <div className="feature-left">
-          <div className="row">
+      <div className="col-lg-3 mb-200">
+        <div className="feature-left ">
+          <div className="row ">
             <div className="col-lg-12 col-sm-6">
               <div className="service-item style-three wow fadeInRight delay-0-2s">
                 <div className="icon">
@@ -357,44 +358,32 @@ const IndexOnePage = () => {
                 </div>
               </div>
             </div>
-            <div className="col-lg-12 col-sm-6">
-              <div className="service-item style-three wow fadeInRight delay-0-3s">
-                <div className="icon">
-                  <i className="flaticon-web-page" />
-                </div>
-                <div className="content">
-                  <h4>
-                    <Link legacyBehavior href="/service-details">
-                      <a>{t("website_maintenance")}</a>
-                    </Link>
-                  </h4>
-                  <Link legacyBehavior href="/service-details">
-                    <a className="more-btn">
-                      <i className="fal fa-long-arrow-right" />
-                    </a>
-                  </Link>
-                </div>
-              </div>
-            </div>
+            
           </div>
         </div>
       </div>
-      <div className="col-lg-6">
-        <div className="feature-middle rmt-30">
-          <div className="image wow fadeInUp delay-0-2s">
-            <img
+      <div className="col-lg-6 ">
+        <div className="feature-middle  rmt-30">
+          <div className="image  wow fadeInUp delay-0-2s d-flex justify-content-center  align-items-center position-relative z-3">
+            {locale === "en" ?<img
               className="circle-text"
               src="/assets/images/shapes/feature-image-top.png"
               alt="Text"
-            />
+            />:<img
+            className="circle-text "
+            src="/assets/images/shapes/feature-image-top-spanish.png"
+            alt="Text"
+          />}
+        
+              
             <img
-              className="round"
+              className={`round w-50 ${locale === "en" ? "mt-10" : "mt-20"} mx-auto`}
               src="/assets/images/features/feature-middle.png"
               alt="Feature Middle"
             />
           </div>
-          <div className="row">
-            <div className="col-sm-6">
+          <div className="row mt-md-5  rmt-30 position-relative z-3 z-md-1">
+            <div className="col-sm-6 text-black">
               <div className="service-item style-three wow fadeInUp delay-0-3s">
                 <div className="icon">
                   <i className="flaticon-online" />
@@ -435,18 +424,18 @@ const IndexOnePage = () => {
           </div>
         </div>
       </div>
-      <div className="col-lg-3">
+      <div className="col-lg-3 -ml-5 mb-200">
         <div className="feature-right">
-          <div className="row">
-            <div className="col-lg-12 col-sm-6">
-              <div className="service-item style-three mt-100 wow fadeInLeft delay-0-2s">
+          <div className="row ">
+            <div className="col-lg-12  col-sm-6">
+              <div className="service-item  style-three  wow fadeInLeft delay-0-2s">
                 <div className="icon">
                   <i className="flaticon-graphic-design" />
                 </div>
                 <div className="content">
                   <h4>
                     <Link legacyBehavior href="/service-details">
-                      <a>{t("seo_services")}</a>
+                      <a >{t("seo_services")} </a>
                     </Link>
                   </h4>
                   <Link legacyBehavior href="/service-details">
@@ -457,25 +446,7 @@ const IndexOnePage = () => {
                 </div>
               </div>
             </div>
-            <div className="col-lg-12 col-sm-6">
-              <div className="service-item style-three wow fadeInLeft delay-0-3s">
-                <div className="icon">
-                  <i className="flaticon-user-experience" />
-                </div>
-                <div className="content">
-                  <h4>
-                    <Link legacyBehavior href="/service-details">
-                      <a>{t("user_experience_design")}</a>
-                    </Link>
-                  </h4>
-                  <Link legacyBehavior href="/service-details">
-                    <a className="more-btn">
-                      <i className="fal fa-long-arrow-right" />
-                    </a>
-                  </Link>
-                </div>
-              </div>
-            </div>
+            
           </div>
         </div>
       </div>
