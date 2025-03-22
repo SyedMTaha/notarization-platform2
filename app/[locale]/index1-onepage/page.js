@@ -383,7 +383,7 @@ const Index = () => {
             <div className="col-lg-10">
               <div className="section-title text-center mb-55 wow fadeInUp delay-0-2s">
                 <span className="sub-title mb-15">Working Process</span>
-                <h2>How does we works</h2>
+                <h2>How does it work?</h2>
               </div>
             </div>
           </div>
