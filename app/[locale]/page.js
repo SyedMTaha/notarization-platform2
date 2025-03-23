@@ -342,15 +342,15 @@ const IndexOnePage = ({ params }) => {
   id="featured"
   className="design-feature-area overflow-hidden pt-130 pb-100 text-white bgc-black-with-lighting rel z-1"
 >
-  <div className="container">
+  <div className="w-75  mx-auto ">
     <div className="section-title text-center mb-60 wow fadeInUp delay-0-2s">
       <span className="sub-title mb-10">{t("core_design_features")}</span>
       <h2>{t("website_services")}</h2>
     </div>
-    <div className="row no-gap align-items-center">
-      <div className="col-lg-3 mb-200">
+    <div className="row gap-1 flex-lg-nowrap align-items-center  ">
+      <div className="col-lg-3 ">
         <div className="feature-left ">
-          <div className="row ">
+          <div className=" mx-1 ">
             <div className="col-lg-12 col-sm-6">
               <div className="service-item style-three wow fadeInRight delay-0-2s">
                 <div className="icon">
@@ -384,7 +384,7 @@ const IndexOnePage = ({ params }) => {
       <div className="col-lg-6 ">
 
         <div className="feature-middle  rmt-30">
-          <div className="image  wow fadeInUp delay-0-2s d-flex justify-content-center  align-items-center position-relative z-3">
+          <div className="image  wow fadeInUp delay-0-2s d-flex justify-content-center  align-items-center position-relative z-1">
             {locale === "en" ?<img
               className="circle-text"
               src="/assets/images/shapes/feature-image-top.png"
@@ -397,12 +397,12 @@ const IndexOnePage = ({ params }) => {
         
               
             <img
-              className={`round w-50 ${locale === "en" ? "mt-10" : "mt-20"} mx-auto`}
+              className={`round w-50   ${locale === "en" ? "mt-10" : "mt-20"} mx-auto`}
               src="/assets/images/features/feature-middle.png"
               alt="Feature Middle"
             />
           </div>
-          <div className="row mt-md-5  rmt-30 position-relative z-3 z-md-1">
+          <div className="row mt-md-5  rmt-30 position-relative  z-3">
             <div className="col-sm-6 text-black">
               <div className="service-item style-three wow fadeInUp delay-0-3s">
                 <div className="icon">
@@ -458,9 +458,9 @@ const IndexOnePage = ({ params }) => {
           </div>
         </div>
       </div>
-      <div className="col-lg-3 -ml-5 mb-200">
+      <div className="col-lg-3 -ml-5 ">
         <div className="feature-right">
-          <div className="row ">
+          <div className="mx-1">
             <div className="col-lg-12  col-sm-6">
               <div className="service-item  style-three  wow fadeInLeft delay-0-2s">
                 <div className="icon">
@@ -526,33 +526,49 @@ const IndexOnePage = ({ params }) => {
         </div>
       </div>
     </div>
-    <div className="row">
+    <div className="row d-flex flex-row align-items-stretch">
       {[
-        { plan: "basic_plan", price: 248 },
-        { plan: "standard_plan", price: 352 },
-        { plan: "golden_plan", price: 583 },
-        { plan: "platinum_plan", price: 834 }
+        { price: 15, per: t("per_notary_seal") },
+        {  price: 25, per: t("per_two_signatories")  },  
+
       ].map((item, index) => (
-        <div key={index} className="col-lg-6">
-          <div className={`pricing-item-two wow fadeInUp delay-0-${index % 2 === 0 ? 2 : 4}s`}>
-            <h4 className="title">{t(item.plan)}</h4>
+        <div key={index} className="col-lg-6 ">
+          <div className={`pricing-item-two wow border h-100 p-10 d-flex justify-content-stretch align flex-column fadeInUp delay-0-${index % 2 === 0 ? 2 : 4}s`}>
+           
             <span className="badge">{t("popular_package")}</span>
-            <div className="pricing-inner">
-              <ul className="list-style-two">
+            <div className="pricing-inner d-flex mt-30 align-items-start">
+              <ul className="list-style-two mt-10">
                 <li>{t("landing_page_design")}</li>
                 <li>{t("html_css_design")}</li>
                 <li>{t("social_media_marketing")}</li>
                 <li>{t("domain_hosting_provider")}</li>
-                <li>{t("online_support")}</li>
               </ul>
               <div className="price-and-btn">
                 <div className="content">
-                  <span className="price">{item.price}</span>
+                  <div className="d-flex flex-row align-items-baseline gap-2">
+                    <h2 style={{color: "#416976"}} >${item.price}</h2>
+                    <p className="fs-5">/ {item.per}</p>
+                  </div>
                   <span className="save">
-                    {t("save_text")}<span> 25%</span>
+                  
+                   {
+                    item.price===15?
+                    <span> + $10 / {t("additional_witness")} </span>
+                    : <div style={{lineHeight: ".5", paddingTop: "10px"}}>
+                      <p>
+                      + $10 / {t("additional_signatory")} 
+                      </p>
+                      <p>
+                      + $10 / {t("witness")}
+                      </p>
+                      <p>
+                      + $10 / {t("additional_notary_seal")}
+                      </p>
+                    </div>
+                   }
                   </span>
                   <Link legacyBehavior href="/pricing">
-                    <a className="theme-btn style-three">
+                    <a className="theme-btn style-three fw-bold">
                       {t("choose_package")}{" "}
                       <i className="fas fa-angle-double-right" />
                     </a>
@@ -590,12 +606,12 @@ const IndexOnePage = ({ params }) => {
       }}
     >
       <div className="row">
-        <div className="col-xl-6">
-          <div className="cta-item wow fadeInLeft delay-0-2s">
+        <div className="col-xl-6  w-75 mx-auto">
+          <div className="cta-item  wow fadeInLeft delay-0-2s">
             <div className="icon">
               <i className="flaticon-target" />
             </div>
-            <h4>{t("cta_project_title")}</h4>
+            <h4 className="w-100">{t("cta_project_title")}</h4>
             <Link legacyBehavior href="/contact">
               <a className="details-btn">
                 <i className="far fa-arrow-right" />
@@ -603,19 +619,7 @@ const IndexOnePage = ({ params }) => {
             </Link>
           </div>
         </div>
-        <div className="col-xl-6">
-          <div className="cta-item wow fadeInRight delay-0-2s">
-            <div className="icon">
-              <i className="flaticon-target" />
-            </div>
-            <h4>{t("cta_seo_title")}</h4>
-            <Link legacyBehavior href="/contact">
-              <a className="details-btn">
-                <i className="far fa-arrow-right" />
-              </a>
-            </Link>
-          </div>
-        </div>
+        
       </div>
     </div>
   </div>
