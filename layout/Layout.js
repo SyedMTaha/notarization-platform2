@@ -16,6 +16,7 @@ const Layout = ({ children, header, className, footer, noHeader }) => {
   const pathname = usePathname();
   const locale = pathname.split("/")[1]; // Extract locale from the URL
   const messages = useMessages(); // Auto-fetch messages
+  
 
   useEffect(() => {
     animation();

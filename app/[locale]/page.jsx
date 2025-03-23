@@ -1,8 +1,6 @@
 "use client";
-import Counter from "@/components/Counter";
 import ClientsFeedback from "@/components/home1/ClientsFeedback";
 import Hero1 from "@/components/home1/Hero1";
-import RecentProjects from "@/components/home1/RecentProjects";
 import Layout from "@/layout/Layout";
 import SideBar from "@/layout/SideBar";
 import { sideBarToggle } from "@/utility";
@@ -10,11 +8,19 @@ import { useTranslations } from "next-intl";
 import Head from "next/head";
 import Link from "next/link";
 import { Accordion } from "react-bootstrap";
+import { faqsData1,faqsData2 } from "./faqs/page";
+import OxencyAccordion from "@/components/OxencyAccordion";
+import { useState } from "react";
+
+
 const IndexOnePage = ({ params }) => {
   const t = useTranslations(); 
   const { locale, slug } = params;
 
-
+  const [active, setActive] = useState(`a0`);
+    const onClick = (value) => {
+      setActive(value === active ? "" : value);
+    };
   return (
     <Layout className="home-one" footer={1} noHeader>
       <Head>
@@ -390,7 +396,8 @@ const IndexOnePage = ({ params }) => {
               src="/assets/images/shapes/feature-image-top.png"
               alt="Text"
             />:<img
-            className="circle-text "
+            className="circle-text w-75 mb-md-0 mb-20 "
+            style={{marginBottom:"20px"}}
             src="/assets/images/shapes/feature-image-top-spanish.png"
             alt="Text"
           />}
@@ -561,7 +568,7 @@ const IndexOnePage = ({ params }) => {
                       <p>
                       + $10 / {t("witness")}
                       </p>
-                      <p>
+                      <p className="text-nowrap">
                       + $10 / {t("additional_notary_seal")}
                       </p>
                     </div>
@@ -640,7 +647,7 @@ const IndexOnePage = ({ params }) => {
         <div className="contact-info-area text-white rmb-75 wow fadeInLeft delay-0-2s">
           <div className="section-title mb-55">
             <h2>
-              {t("contact_section")} <span>{t("say_hello")}</span>
+              {t("contact_section")}
             </h2>
           </div>
           <div className="contact-info-wrap">
@@ -745,6 +752,69 @@ const IndexOnePage = ({ params }) => {
     />
   </div>
 </section>
+{/* FAQ Section start*/}
+
+
+<section className="faqs-area-area bgc-lighter py-130 rel z-1">
+        <div className="container">
+          <div className="row justify-content-between align-items-end pb-5">
+            <div className="col-xl-6 col-lg-8 wow fadeInUp delay-0-2s">
+              <div className="section-title mb-35">
+                <span className="sub-title style-two mb-15">Faqs</span>
+                <h2>Asked Questions about Website Design</h2>
+              </div>
+            </div>
+            <div className="col-lg-4  text-lg-end wow rounded-1 fadeInUp delay-0-4s">
+              <Link legacyBehavior href="/contact" >
+                <a style={{color:"#293043", fontWeight:"24px"}} className="theme-btn style-three rounded-2 fs-6  mb-55 ">
+                  Add Questions <i className="fas fa-angle-double-right" />
+                </a>
+              </Link>
+            </div>
+          </div>
+          <Accordion
+            defaultActiveKey="a0"
+            className="accordion style-two"
+            id="faq-accordion"
+          >
+            <div className="row">
+              <div className="col-lg-6 rmb-20 wow fadeInUp delay-0-2s">
+                {faqsData1.map((data, i) => (
+                  <OxencyAccordion
+                    key={i}
+                    dec={t(data.dec)}
+                    onClick={() => onClick(`a${i}`)}
+                    active={active}
+                    event={`a${i}`}
+                    title={t(data.title)}
+                  />
+                ))}
+              </div>
+              <div className="col-lg-6 wow fadeInUp delay-0-4s">
+                {faqsData2.map((data, i) => (
+                  <OxencyAccordion
+                    key={i}
+                    dec={t(data.dec)}
+                    onClick={() => onClick(`b${i}`)}
+                    active={active}
+                    event={`b${i}`}
+                    title={t(data.title)}
+                  />
+                ))}
+              </div>
+            </div>
+          </Accordion>
+        </div>
+      </section>
+
+
+
+
+
+
+
+
+{/* FAQ Section end*/}
 
       {/* Contact Area End */}
           {/* Blog Area start

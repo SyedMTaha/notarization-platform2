@@ -1,3 +1,4 @@
+import { useTranslations } from "next-intl";
 import Link from "next/link";
 
 const Footer = ({ footer }) => {
@@ -13,127 +14,126 @@ const Footer = ({ footer }) => {
 };
 export default Footer;
 
-const Footer1 = () => (
-  <footer className="main-footer footer-two pt-80 bgc-lighter">
-    <div className="container">
-      <div className="row justify-content-xl-between justify-content-center">
-        <div className="col-xl-4 col-lg-5 col-md-6">
-          <div className="footer-widget widget_about me-md-5 wow fadeInUp delay-0-2s">
-            <div className="footer-logo mb-25">
-              <Link legacyBehavior href="/">
-                <a>
-                  <img src="/assets/images/logos/logo.png" alt="Logo" />
-                </a>
+const Footer1 = () => {
+    const t = useTranslations(); 
+  
+  return (<footer className="main-footer footer-two pt-80 bgc-lighter">
+  <div className="container">
+    <div className="row justify-content-xl-between justify-content-center">
+      <div className="col-xl-4 col-lg-5 col-md-6">
+        <div className="footer-widget widget_about me-md-5 wow fadeInUp delay-0-2s">
+          <div className="footer-logo mb-25">
+            <Link legacyBehavior href="/">
+              <a>
+                <img src="/assets/images/logos/logo.png" alt="Logo" />
+              </a>
+            </Link>
+          </div>
+          <p>{t("footer1AboutText")}</p>
+          <div className="social-style-two pt-5">
+            <a href="#">
+              <i className="fab fa-facebook-f" />
+            </a>
+            <a href="#">
+              <i className="fab fa-twitter" />
+            </a>
+            <a href="#">
+              <i className="fab fa-linkedin-in" />
+            </a>
+            <a href="#">
+              <i className="fab fa-behance" />
+            </a>
+          </div>
+        </div>
+      </div>
+      <div className="col-xl-4 col-md-6">
+        <div className="footer-widget widget_nav_menu wow fadeInUp delay-0-4s">
+          <h4 className="footer-title">{t("footer1QuickLinks")}</h4>
+          <ul className="list-style-two">
+            <li>
+              <Link legacyBehavior href="/service-details">
+                {t("footer1LinkWebDesign")}
               </Link>
-            </div>
-            <p>
-              Sed ut perspiciatis unde omnis iste natus error sit voluptatem
-              accusantium doloremq dantium, totam rem aperiam eaqu quae ab illo
-              inventore veritatis et quasi architecto beatae
-            </p>
-            <div className="social-style-two pt-5">
-              <a href="#">
-                <i className="fab fa-facebook-f" />
-              </a>
-              <a href="#">
-                <i className="fab fa-twitter" />
-              </a>
-              <a href="#">
-                <i className="fab fa-linkedin-in" />
-              </a>
-              <a href="#">
-                <i className="fab fa-behance" />
-              </a>
-            </div>
-          </div>
+            </li>
+            <li>
+              <Link legacyBehavior href="/about">
+                {t("footer1LinkAboutCompany")}
+              </Link>
+            </li>
+            <li>
+              <Link legacyBehavior href="/service-details">
+                {t("footer1LinkWebDevelopment")}
+              </Link>
+            </li>
+            <li>
+              <Link legacyBehavior href="/team">
+                {t("footer1LinkMeetOurTeams")}
+              </Link>
+            </li>
+            <li>
+              <Link legacyBehavior href="/service-details">
+                {t("footer1LinkSEOOptimization")}
+              </Link>
+            </li>
+            <li>
+              <Link legacyBehavior href="/service-details">
+                {t("footer1LinkCaseStories")}
+              </Link>
+            </li>
+            <li>
+              <Link legacyBehavior href="/service-details">
+                {t("footer1LinkProductEngineering")}
+              </Link>
+            </li>
+            <li>
+              <Link legacyBehavior href="/blog">
+                {t("footer1LinkLatestNews")}
+              </Link>
+            </li>
+            <li>
+              <Link legacyBehavior href="/service-details">
+                {t("footer1LinkTechnicalSupport")}
+              </Link>
+            </li>
+            <li>
+              <Link legacyBehavior href="/contact">
+                {t("footer1LinkContact")}
+              </Link>
+            </li>
+            <li>
+              <Link legacyBehavior href="/service-details">
+                {t("footer1LinkLandingPagesDesign")}
+              </Link>
+            </li>
+          </ul>
         </div>
-        <div className="col-xl-4 col-md-6">
-          <div className="footer-widget widget_nav_menu wow fadeInUp delay-0-4s">
-            <h4 className="footer-title">Quick Links</h4>
-            <ul className="list-style-two">
-              <li>
-                <Link legacyBehavior href="/service-details">
-                  Wed Design (UI/UX)
-                </Link>
-              </li>
-              <li>
-                <Link legacyBehavior href="/about">
-                  About company
-                </Link>
-              </li>
-              <li>
-                <Link legacyBehavior href="/service-details">
-                  Web development
-                </Link>
-              </li>
-              <li>
-                <Link legacyBehavior href="/team">
-                  Meet our teams
-                </Link>
-              </li>
-              <li>
-                <Link legacyBehavior href="/service-details">
-                  SEO Optimization
-                </Link>
-              </li>
-              <li>
-                <Link legacyBehavior href="/service-details">
-                  Case Stories
-                </Link>
-              </li>
-              <li>
-                <Link legacyBehavior href="/service-details">
-                  Product Engineering
-                </Link>
-              </li>
-              <li>
-                <Link legacyBehavior href="/blog">
-                  Latest News
-                </Link>
-              </li>
-              <li>
-                <Link legacyBehavior href="/service-details">
-                  Technical Support
-                </Link>
-              </li>
-              <li>
-                <Link legacyBehavior href="/contact">
-                  Contact
-                </Link>
-              </li>
-              <li>
-                <Link legacyBehavior href="/service-details">
-                  Landing Pages Design
-                </Link>
-              </li>
-            </ul>
-          </div>
-        </div>
-        <div className="col-xl-4 col-lg-6 col-md-8">
-          <div className="footer-widget widget_newsletter wow fadeInUp delay-0-6s">
-            <h4 className="footer-title">Newsletter</h4>
-            <p>Sing up to get more every updates</p>
-            <form onSubmit={(e) => e.preventDefault()} action="#">
-              <input type="email" placeholder="Enter email" required="" />
-              <button className="theme-btn">
-                Subscribe Now <i className="fas fa-angle-double-right" />
-              </button>
-            </form>
-          </div>
+      </div>
+      <div className="col-xl-4 col-lg-6 col-md-8">
+        <div className="footer-widget widget_newsletter wow fadeInUp delay-0-6s">
+          <h4 className="footer-title">{t("footer1NewsletterTitle")}</h4>
+          <p>{t("footer1NewsletterText")}</p>
+          <form onSubmit={(e) => e.preventDefault()} action="#">
+            <input type="email" placeholder={t("footer1SubscribePlaceholder")} required="" />
+            <button className="theme-btn">
+              {t("footer1SubscribeButton")} <i className="fas fa-angle-double-right" />
+            </button>
+          </form>
         </div>
       </div>
     </div>
-    <div className="footer-bottom mt-30 pt-25 pb-10">
-      <div className="container">
-        <div className="copyright-text text-center">
-          <p>
-            © Copyright {new Date().getFullYear()} Oxence. All right reserved
-          </p>
-        </div>
+  </div>
+  <div className="footer-bottom mt-30 pt-25 pb-10">
+    <div className="container">
+      <div className="copyright-text text-center">
+        <p>
+          {t("footer1Copyright", { year: new Date().getFullYear() })}
+        </p>
       </div>
     </div>
-  </footer>
-);
+  </div>
+</footer>)
+
+}
 
 const Footer2 = () => (
   <footer className="main-footer bgc-dark-blue text-white rel z-1">
@@ -402,3 +402,6 @@ const DefaultFooter = () => (
     </div>
   </footer>
 );
+
+
+

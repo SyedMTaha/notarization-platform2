@@ -2,48 +2,49 @@
 import OxencyAccordion from "@/components/OxencyAccordion";
 import Layout from "@/layout/Layout";
 import PageBanner from "@/layout/PageBanner";
+import { useTranslations } from "next-intl";
 import Link from "next/link";
 import { useState } from "react";
 import { Accordion } from "react-bootstrap";
-
-const faqsData1 = [
+export const faqsData1 = [
   {
-    title: "Will you  provide website layout about design ?",
-    dec: "Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium totam aperiam eaquey quae abillo inventore",
+    title: "faqsData1title1",
+    dec: "faqsData1dec1",
   },
   {
-    title: "How much does cost to design website ?",
-    dec: "Fortunately, we aren’t just designers and developers here we are writer strategists, techs and creatives working towards the same end goal our client’s success. As a full-service digital marketing agency",
+    title: "faqsData1title2",
+    dec: "faqsData1dec2",
   },
   {
-    title: "How many revisions can i make the  design ?",
-    dec: "Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium totam aperiam eaquey quae abillo inventore",
+    title: "faqsData1title3",
+    dec: "faqsData1dec3",
   },
   {
-    title: "Can i uplode this  design in my personal work?",
-    dec: "Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium totam aperiam eaquey quae abillo inventore",
+    title: "faqsData1title4",
+    dec: "faqsData1dec4",
   },
 ];
-const faqsData2 = [
+
+export const faqsData2 = [
   {
-    title: "How long will delivery take ?",
-    dec: "Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium totam aperiam eaquey quae abillo inventore",
+    title: "faqsData2title1",
+    dec: "faqsData2dec1",
   },
   {
-    title: "Do you have discounts for returning customers ?",
-    dec: "Fortunately, we aren’t just designers and developers here we are writer strategists, techs and creatives working towards the same end goal our client’s success. As a full-service digital marketing agency",
+    title: "faqsData2title2",
+    dec: "faqsData2dec2",
   },
   {
-    title: "Will you  provide website layout about design ?",
-    dec: "Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium totam aperiam eaquey quae abillo inventore",
+    title: "faqsData2title3",
+    dec: "faqsData2dec3",
   },
   {
-    title: "What payment methods do you accept ?",
-    dec: "Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium totam aperiam eaquey quae abillo inventore",
+    title: "faqsData2title4",
+    dec: "faqsData2dec4",
   },
   {
-    title: "How do your referral program work ?",
-    dec: "Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium totam aperiam eaquey quae abillo inventore",
+    title: "faqsData2title5",
+    dec: "faqsData2dec5",
   },
 ];
 
@@ -52,6 +53,7 @@ const Faq = () => {
   const onClick = (value) => {
     setActive(value === active ? "" : value);
   };
+  const {t} = useTranslations()
   return (
     <Layout>
       <PageBanner
@@ -253,11 +255,11 @@ const Faq = () => {
                 {faqsData1.map((data, i) => (
                   <OxencyAccordion
                     key={i}
-                    dec={data.dec}
+                    dec={t(data.dec)}
                     onClick={() => onClick(`a${i}`)}
                     active={active}
                     event={`a${i}`}
-                    title={data.title}
+                    title={t(data.title)}
                   />
                 ))}
               </div>
@@ -265,11 +267,11 @@ const Faq = () => {
                 {faqsData2.map((data, i) => (
                   <OxencyAccordion
                     key={i}
-                    dec={data.dec}
+                    dec={t(data.dec)}
                     onClick={() => onClick(`b${i}`)}
                     active={active}
                     event={`b${i}`}
-                    title={data.title}
+                    title={t(data.title)}
                   />
                 ))}
               </div>

@@ -45,15 +45,18 @@ export default class ClientsFeedback extends Component {
           </div>
         </div>
         <div className="col-lg-4">
-          <div className="slider-arrow-btns text-lg-end">
-            <button className="work-prev slick-arrow" onClick={this.previous}>
-              <i className="far fa-arrow-left" /> {t("previous")}
-            </button>
-            <button className="work-next slick-arrow" onClick={this.next}>
-              <i className="far fa-arrow-right" /> {t("next")}
-            </button>
-          </div>
-        </div>
+                <div className="slider-arrow-btns text-lg-end">
+                  <button
+                    className="work-prev slick-arrow"
+                    onClick={this.previous}
+                  >
+                    <i className="far fa-arrow-left" />
+                  </button>
+                  <button className="work-next slick-arrow" onClick={this.next}>
+                    <i className="far fa-arrow-right" />
+                  </button>
+                </div>
+              </div>
       </div>
       <Slider
         className="testimonial-two-active"
