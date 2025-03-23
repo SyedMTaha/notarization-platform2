@@ -627,7 +627,7 @@ const IndexOnePage = ({ params }) => {
 
       {/* CTA Area end */}
       {/* Testimonial Area Start */}
-      <ClientsFeedback />
+      <ClientsFeedback t={t}/>
       {/* Testimonial Area End */}
       {/* Contact Area Start */}
       <section
