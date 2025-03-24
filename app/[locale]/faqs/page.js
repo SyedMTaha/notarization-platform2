@@ -48,12 +48,63 @@ export const faqsData2 = [
   },
 ];
 
+const services = [
+  {
+    id: 1,
+    icon: "/assets/images/services/icon1.png",
+    title: "Managing Account",
+    description:
+      "Start building your first prototype in no time with Ogency's intuitive, drag & drop interface that gives you the building blocks you need.",
+    animationDelay: "0.2s",
+  },
+  {
+    id: 2,
+    icon: "/assets/images/services/icon2.png",
+    title: "Business Develop",
+    description:
+      "Start building your first prototype in no time with Ogency's intuitive, drag & drop interface that gives you the building blocks you need.",
+    animationDelay: "0.4s",
+  },
+  {
+    id: 3,
+    icon: "/assets/images/services/icon3.png",
+    title: "Refund Policy",
+    description:
+      "Start building your first prototype in no time with Ogency's intuitive, drag & drop interface that gives you the building blocks you need.",
+    animationDelay: "0.6s",
+  },
+  {
+    id: 4,
+    icon: "/assets/images/services/icon4.png",
+    title: "Payment Options",
+    description:
+      "Start building your first prototype in no time with Ogency's intuitive, drag & drop interface that gives you the building blocks you need.",
+    animationDelay: "0.2s",
+  },
+  {
+    id: 5,
+    icon: "/assets/images/services/icon5.png",
+    title: "Delivery Information",
+    description:
+      "Start building your first prototype in no time with Ogency's intuitive, drag & drop interface that gives you the building blocks you need.",
+    animationDelay: "0.4s",
+  },
+  {
+    id: 6,
+    icon: "/assets/images/services/icon6.png",
+    title: "Affiliate Program",
+    description:
+      "Start building your first prototype in no time with Ogency's intuitive, drag & drop interface that gives you the building blocks you need.",
+    animationDelay: "0.6s",
+  },
+];
+
 const Faq = () => {
   const [active, setActive] = useState(`a0`);
   const onClick = (value) => {
     setActive(value === active ? "" : value);
   };
-  const {t} = useTranslations()
+  const t = useTranslations();
   return (
     <Layout>
       <PageBanner
@@ -114,115 +165,35 @@ const Faq = () => {
         <div className="container">
           <div className="row justify-content-center">
             <div className="col-xl-8 col-lg-10">
-              <div className="section-title text-center mb-60 wow fadeInUp delay-0-2s">
+              <div
+                className="section-title text-center mb-60 wow fadeInUp"
+                data-wow-delay="0.2s"
+              >
                 <span className="sub-title style-two mb-20">What We Offer</span>
                 <h2>Choose Your Topic</h2>
               </div>
             </div>
           </div>
           <div className="row">
-            <div className="col-xl-4 col-md-6">
-              <div className="service-item-five wow fadeInUp delay-0-2s">
-                <div className="icon">
-                  <img src="/assets/images/services/icon1.png" alt="Icon" />
+            {services.map((service) => (
+              <div key={service.id} className="col-xl-4 col-md-6">
+                <div
+                  className={`service-item-five wow fadeInUp`}
+                  data-wow-delay={service.animationDelay}
+                >
+                  <div className="icon">
+                    <img src={service.icon} alt="Icon" />
+                  </div>
+                  <h4>{service.title}</h4>
+                  <p>{service.description}</p>
+                  <Link legacyBehavior href={`/faqs/${service.id}`}>
+                    <a className="theme-btn style-three">
+                      Learn More <i className="fas fa-angle-double-right" />
+                    </a>
+                  </Link>
                 </div>
-                <h4>Managing Account</h4>
-                <p>
-                  Start building your first prototypeno time Ogency intuitive,
-                  drag drop interface gives building blocks that you needs
-                </p>
-                <Link legacyBehavior href="/service-details">
-                  <a className="theme-btn style-three">
-                    Learn More <i className="fas fa-angle-double-right" />
-                  </a>
-                </Link>
               </div>
-            </div>
-            <div className="col-xl-4 col-md-6">
-              <div className="service-item-five wow fadeInUp delay-0-4s">
-                <div className="icon">
-                  <img src="/assets/images/services/icon2.png" alt="Icon" />
-                </div>
-                <h4>Business Develop</h4>
-                <p>
-                  Start building your first prototypeno time Ogency intuitive,
-                  drag drop interface gives building blocks that you needs
-                </p>
-                <Link legacyBehavior href="/service-details">
-                  <a className="theme-btn style-three">
-                    Learn More <i className="fas fa-angle-double-right" />
-                  </a>
-                </Link>
-              </div>
-            </div>
-            <div className="col-xl-4 col-md-6">
-              <div className="service-item-five wow fadeInUp delay-0-6s">
-                <div className="icon">
-                  <img src="/assets/images/services/icon3.png" alt="Icon" />
-                </div>
-                <h4>Refund Policy</h4>
-                <p>
-                  Start building your first prototypeno time Ogency intuitive,
-                  drag drop interface gives building blocks that you needs
-                </p>
-                <Link legacyBehavior href="/service-details">
-                  <a className="theme-btn style-three">
-                    Learn More <i className="fas fa-angle-double-right" />
-                  </a>
-                </Link>
-              </div>
-            </div>
-            <div className="col-xl-4 col-md-6">
-              <div className="service-item-five wow fadeInUp delay-0-2s">
-                <div className="icon">
-                  <img src="/assets/images/services/icon4.png" alt="Icon" />
-                </div>
-                <h4>Payment Options</h4>
-                <p>
-                  Start building your first prototypeno time Ogency intuitive,
-                  drag drop interface gives building blocks that you needs
-                </p>
-                <Link legacyBehavior href="/service-details">
-                  <a className="theme-btn style-three">
-                    Learn More <i className="fas fa-angle-double-right" />
-                  </a>
-                </Link>
-              </div>
-            </div>
-            <div className="col-xl-4 col-md-6">
-              <div className="service-item-five wow fadeInUp delay-0-4s">
-                <div className="icon">
-                  <img src="/assets/images/services/icon5.png" alt="Icon" />
-                </div>
-                <h4>Delivery Information</h4>
-                <p>
-                  Start building your first prototypeno time Ogency intuitive,
-                  drag drop interface gives building blocks that you needs
-                </p>
-                <Link legacyBehavior href="/service-details">
-                  <a className="theme-btn style-three">
-                    Learn More <i className="fas fa-angle-double-right" />
-                  </a>
-                </Link>
-              </div>
-            </div>
-            <div className="col-xl-4 col-md-6">
-              <div className="service-item-five wow fadeInUp delay-0-6s">
-                <div className="icon">
-                  <img src="/assets/images/services/icon6.png" alt="Icon" />
-                </div>
-                <h4>Affiliate Program</h4>
-                <p>
-                  Start building your first prototypeno time Ogency intuitive,
-                  drag drop interface gives building blocks that you needs
-                </p>
-                <Link legacyBehavior href="/service-details">
-                  <a className="theme-btn style-three">
-                    Learn More <i className="fas fa-angle-double-right" />
-                  </a>
-                </Link>
-              </div>
-            </div>
+            ))}
           </div>
         </div>
       </section>
