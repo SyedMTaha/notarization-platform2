@@ -1,17 +1,18 @@
 import Link from "next/link";
-
 const CallToAction = () => {
   return (
-    <section className="call-to-action-area bgc-black pt-80 pb-50">
+    <section
+      // style={{ backgroundColor: "#081A34" }}
+      className="call-to-action-area bgc-black-with-lighting-half pt-80 pb-50"
+    >
       <div className="container">
         <div className="row justify-content-between align-items-center">
           <div className="col-xl-7 col-lg-9">
             <div className="section-title text-white mb-25 wow fadeInUp delay-0-2s">
-              <h2>Let’s Design Your New Website</h2>
+              <h2>Let’s Start Notarization Process</h2>
               <p>
-                Do you want to have a website that stands out and impresses your
-                clients? Then we are ready to help! Click the button below to
-                contact us and discuss your ideas.
+                With millions of documents notarized, our platform is a trusted
+                choice for individuals and businesses worldwide.
               </p>
             </div>
           </div>

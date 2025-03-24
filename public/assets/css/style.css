@@ -947,6 +947,42 @@ a.theme-btn {
     -webkit-animation-delay: 2.5s;
     animation-delay: 2.5s; }
 
+
+
+
+
+
+
+
+.bgc-black-with-lighting-half {
+  background: #021025; 
+overflow: hidden;}
+  .bgc-black-with-lighting-half:after {
+    position: absolute;
+    width: 450px;
+    height: 450px;
+    z-index: -1;
+    content: '';
+    border-radius: 50%;
+    background: var(--primary-theme);
+    -webkit-animation: zoomInOut 5s infinite;
+    animation: zoomInOut 5s infinite;
+    right: -8%;
+    top: -15%;
+    -webkit-filter: blur(110px);
+    filter: blur(110px);
+  }
+
+
+
+
+
+
+
+
+
+
+    
 /* Border Radius */
 .br-5 {
   border-radius: 5px; }

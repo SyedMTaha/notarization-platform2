@@ -1,6 +1,7 @@
 import { sideBarToggle } from "@/utility";
 import Link from "next/link";
 import MobileMenu from "./MobileMenu";
+import { useTranslations } from "next-intl";
 
 const Header = ({ header }) => {
   switch (header) {
@@ -256,6 +257,8 @@ const Header2 = () => {
 };
 
 const DefaultHeader = () => {
+  const t = useTranslations();
+
   return (
     <header className="main-header header-three menu-absolute">
       {/*Header-Upper*/}
@@ -312,11 +315,12 @@ const DefaultHeader = () => {
             {/* Menu Button */}
             <div className="menu-btns">
               <Link legacyBehavior href="/contact">
-                <a className="login">Log in</a>
+                <a className="login">{t("default_header_login")}</a>
               </Link>
               <Link legacyBehavior href="/contact">
                 <a className="theme-btn">
-                  Sign up Free <i className="fas fa-angle-double-right" />
+                  {t("default_header_signup")}
+                  <i className="fas fa-angle-double-right" />
                 </a>
               </Link>
             </div>
@@ -329,37 +333,38 @@ const DefaultHeader = () => {
 };
 
 const Menu = () => {
+  const t = useTranslations();
   return (
     <ul className="navigation clearfix">
       <li className="dropdown">
-        <a href="#">Home</a>
+        <a href="#">{t("default_header_home")}</a>
         <ul>
           <li className="dropdown">
-            <a href="#">MultiPage</a>
+            <a href="#">{t("default_header_multipage")}</a>
             <ul>
               <li>
                 <Link legacyBehavior href="/">
-                  Web Design
+                  {t("default_header_web_design")}
                 </Link>
               </li>
               <li>
                 <Link legacyBehavior href="/index1dark">
-                  Web Design Dark
+                  {t("default_header_web_design_dark")}
                 </Link>
               </li>
               <li>
                 <Link legacyBehavior href="/index2">
-                  Front End Services
+                  {t("default_header_front_end_services")}
                 </Link>
               </li>
               <li>
                 <Link legacyBehavior href="/index2dark">
-                  Front End Dark
+                  {t("default_header_front_end_dark")}
                 </Link>
               </li>
               <li>
                 <Link legacyBehavior href="/index3">
-                  Website Builder
+                  {t("default_header_website_builder")}
                 </Link>
               </li>
             </ul>
@@ -368,31 +373,31 @@ const Menu = () => {
             </div>
           </li>
           <li className="dropdown">
-            <a href="#">OnePage</a>
+            <a href="#">{t("default_header_onepage")}</a>
             <ul>
               <li>
                 <Link legacyBehavior href="/index1-onepage">
-                  Web Design
+                  {t("default_header_web_design")}
                 </Link>
               </li>
               <li>
                 <Link legacyBehavior href="/index1dark-onepage">
-                  Web Design Dark
+                  {t("default_header_web_design_dark")}
                 </Link>
               </li>
               <li>
                 <Link legacyBehavior href="/index2-onepage">
-                  Front End Services
+                  {t("default_header_front_end_services")}
                 </Link>
               </li>
               <li>
                 <Link legacyBehavior href="/index2dark-onepage">
-                  Front End Dark
+                  {t("default_header_front_end_dark")}
                 </Link>
               </li>
               <li>
                 <Link legacyBehavior href="/index3-onepage">
-                  Website Builder
+                  {t("default_header_website_builder")}
                 </Link>
               </li>
             </ul>
@@ -406,16 +411,16 @@ const Menu = () => {
         </div>
       </li>
       <li className="dropdown">
-        <a href="#">services</a>
+        <a href="#">{t("default_header_services")}</a>
         <ul>
           <li>
             <Link legacyBehavior href="/services">
-              Popular Services
+              {t("default_header_popular_services")}
             </Link>
           </li>
           <li>
             <Link legacyBehavior href="/service-details">
-              service details
+              {t("default_header_service_details")}
             </Link>
           </li>
         </ul>
@@ -424,26 +429,26 @@ const Menu = () => {
         </div>
       </li>
       <li className="dropdown">
-        <a href="#">Project</a>
+        <a href="#">{t("default_header_project")}</a>
         <ul>
           <li>
             <Link legacyBehavior href="/projects">
-              Project Grid
+              {t("default_header_project_grid")}
             </Link>
           </li>
           <li>
             <Link legacyBehavior href="/project-creative">
-              Project Creative
+              {t("default_header_project_creative")}
             </Link>
           </li>
           <li>
             <Link legacyBehavior href="/project-carousel">
-              Project Carousel
+              {t("default_header_project_carousel")}
             </Link>
           </li>
           <li>
             <Link legacyBehavior href="/project-details">
-              Project Details
+              {t("default_header_project_details")}
             </Link>
           </li>
         </ul>
@@ -452,24 +457,24 @@ const Menu = () => {
         </div>
       </li>
       <li className="dropdown">
-        <a href="#">pages</a>
+        <a href="#">{t("default_header_pages")}</a>
         <ul>
           <li>
             <Link legacyBehavior href="/about">
-              About us
+              {t("default_header_about_us")}
             </Link>
           </li>
           <li className="dropdown">
-            <a href="#">Team</a>
+            <a href="#">{t("default_header_team")}</a>
             <ul>
               <li>
                 <Link legacyBehavior href="/team">
-                  Expert Team
+                  {t("default_header_expert_team")}
                 </Link>
               </li>
               <li>
                 <Link legacyBehavior href="/team-profile">
-                  Team Profile
+                  {t("default_header_team_profile")}
                 </Link>
               </li>
             </ul>
@@ -479,17 +484,17 @@ const Menu = () => {
           </li>
           <li>
             <Link legacyBehavior href="/pricing">
-              pricing plan
+              {t("default_header_pricing_plan")}
             </Link>
           </li>
           <li>
             <Link legacyBehavior href="/faqs">
-              faqs &amp; helf
+              {t("default_header_faqs_help")}
             </Link>
           </li>
           <li>
             <Link legacyBehavior href="/404">
-              404 error
+              {t("default_header_404_error")}
             </Link>
           </li>
         </ul>
@@ -498,26 +503,26 @@ const Menu = () => {
         </div>
       </li>
       <li className="dropdown">
-        <a href="#">shop</a>
+        <a href="#">{t("default_header_shop")}</a>
         <ul>
           <li>
             <Link legacyBehavior href="/shop">
-              shop Grid
+              {t("default_header_shop_grid")}
             </Link>
           </li>
           <li>
             <Link legacyBehavior href="/product-details">
-              Product details
+              {t("default_header_product_details")}
             </Link>
           </li>
           <li>
             <Link legacyBehavior href="/cart">
-              cart page
+              {t("default_header_cart_page")}
             </Link>
           </li>
           <li>
             <Link legacyBehavior href="/checkout">
-              checkout
+              {t("default_header_checkout")}
             </Link>
           </li>
         </ul>
@@ -526,21 +531,21 @@ const Menu = () => {
         </div>
       </li>
       <li className="dropdown">
-        <a href="#">blog</a>
+        <a href="#">{t("default_header_blog")}</a>
         <ul>
           <li>
             <Link legacyBehavior href="/blog">
-              blog Grid
+              {t("default_header_blog_grid")}
             </Link>
           </li>
           <li>
             <Link legacyBehavior href="/blog-list">
-              blog list
+              {t("default_header_blog_list")}
             </Link>
           </li>
           <li>
             <Link legacyBehavior href="/blog-details">
-              blog details
+              {t("default_header_blog_details")}
             </Link>
           </li>
         </ul>
@@ -550,7 +555,7 @@ const Menu = () => {
       </li>
       <li>
         <Link legacyBehavior href="/contact">
-          Contact
+          {t("default_header_contact")}
         </Link>
       </li>
     </ul>

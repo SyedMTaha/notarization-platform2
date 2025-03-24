@@ -1,5 +1,7 @@
+import { useTranslations } from "next-intl";
 import Link from "next/link";
 const PageBanner = ({ titleHtml, titleText }) => {
+  const t = useTranslations();
   return (
     <section className="page-banner-area pt-245 rpt-150 pb-170 rpb-100 rel z-1 bgc-lighter text-center">
       <div className="container">
@@ -12,7 +14,7 @@ const PageBanner = ({ titleHtml, titleText }) => {
             <ol className="breadcrumb justify-content-center wow fadeInUp delay-0-4s">
               <li className="breadcrumb-item">
                 <Link legacyBehavior href="/">
-                  <a>home</a>
+                  <a>{t("page_banner_home")}</a>
                 </Link>
               </li>
               <li className="breadcrumb-item active">{titleText}</li>

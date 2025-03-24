@@ -262,7 +262,7 @@ const Footer2 = () => (
 );
 
 const DefaultFooter = () => (
-  <footer className="main-footer pt-80">
+  <footer className="main-footer  pt-80">
     <div className="container">
       <div className="row justify-content-xl-between justify-content-center">
         <div className="col-xl-4 col-lg-5 col-md-6">

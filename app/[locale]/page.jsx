@@ -100,7 +100,6 @@ const IndexOnePage = ({ params }) => {
                         <li>
                           <a href="#contact">{t("navbar.contact")}</a>
                         </li>
-                    
                       </ul>
                     </Accordion.Collapse>
                   </Accordion>
