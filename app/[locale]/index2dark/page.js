@@ -68,7 +68,7 @@ const Index2Dark = () => {
                   className="years-fo-experience bgc-primary bgs-cover counter-text-wrap"
                   style={{
                     backgroundImage:
-                      "url(assets/images/about/years-fo-experience-bg.png)",
+                      "url(/assets/images/about/years-fo-experience-bg.png)",
                   }}
                 >
                   <Counter end={36} />
@@ -204,7 +204,10 @@ const Index2Dark = () => {
             </div>
             <div className="col-lg-6">
               <div className="mission-visson-image wow fadeInUp delay-0-4s">
-                <img src="/assets/images/about/mission-visson.png" alt="About" />
+                <img
+                  src="/assets/images/about/mission-visson.png"
+                  alt="About"
+                />
               </div>
             </div>
           </div>
@@ -655,7 +658,7 @@ const Index2Dark = () => {
         className="support-features-area bgs-cover bgc-lighter pt-130 pb-100 rel z-1"
         style={{
           backgroundImage:
-            "url(assets/images/features/support-features-bg.png)",
+            "url(/assets/images/features/support-features-bg.png)",
         }}
       >
         <div className="container">

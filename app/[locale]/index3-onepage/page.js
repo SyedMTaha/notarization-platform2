@@ -496,7 +496,7 @@ const index3 = () => {
         className="statistics-area-two bgc-lighter bgs-cover pt-130 pb-100 rel z-1"
         style={{
           backgroundImage:
-            "url(assets/images/features/support-features-bg.png)",
+            "url(/assets/images/features/support-features-bg.png)",
         }}
       >
         <div className="container">

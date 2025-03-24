@@ -13,7 +13,6 @@ import OxencyAccordion from "@/components/OxencyAccordion";
 import { useState } from "react";
 import LangSwitcher from "@/components/LangSwitch";
 
-
 const IndexOnePage = ({ params }) => {
   const t = useTranslations();
   const { locale, slug } = params;
@@ -131,10 +130,14 @@ const IndexOnePage = ({ params }) => {
               <div className="menu-btns">
                 <Link legacyBehavior href="/contact">
                   <a className="theme-btn style-three">
-                    {t("navbar.login")} <i className="fas fa-angle-double-right" />
+                    {t("navbar.login")}{" "}
+                    <i className="fas fa-angle-double-right" />
                   </a>
                 </Link>
-                <LangSwitcher locale={locale} icon={"/assets/images/lang.png"} />
+                <LangSwitcher
+                  locale={locale}
+                  icon={"/assets/images/lang.png"}
+                />
                 {/* menu sidebar */}
                 <div className="menu-sidebar">
                   <button onClick={() => sideBarToggle()}>
@@ -224,7 +227,10 @@ const IndexOnePage = ({ params }) => {
           <div className="row justify-content-between align-items-center">
             <div className="col-lg-5">
               <div className="about-image-one bg-squire-shape rmb-85 wow fadeInUp delay-0-2s ">
-                <img src="/assets/images/about/about-one.jpg" alt={t("about_digital_solutions")} />
+                <img
+                  src="/assets/images/about/about-one.jpg"
+                  alt={t("about_digital_solutions")}
+                />
                 <img
                   className="image-left"
                   src="/assets/images/shapes/image-left.png"
@@ -235,7 +241,9 @@ const IndexOnePage = ({ params }) => {
             <div className="col-xl-6 col-lg-7">
               <div className="about-content-one wow fadeInUp delay-0-4s">
                 <div className="section-title mb-45">
-                  <span className="sub-title mb-15">{t("about_digital_solutions")}</span>
+                  <span className="sub-title mb-15">
+                    {t("about_digital_solutions")}
+                  </span>
                   <h2>{t("best_web_design_solutions")}</h2>
                 </div>
                 <ul className="list-style-one">
@@ -270,13 +278,18 @@ const IndexOnePage = ({ params }) => {
       <section className="feature-area-five bgc-lighter pt-100 pb-70">
         <div className="container">
           <div className="section-title text-center mb-60 wow fadeInUp delay-0-2s">
-            <span className="sub-title mb-10">{t("core_features.core_features")}</span>
+            <span className="sub-title mb-10">
+              {t("core_features.core_features")}
+            </span>
             <h2>{t("core_features.heading")}</h2>
           </div>
           <div className="row row-cols-xl-6 row-cols-lg-4 row-cols-md-3 row-cols-sm-2 row-cols-1 justify-content-center">
             <div className="col wow fadeInUp delay-0-2s">
               <div className="feature-item-five">
-                <img className="mb-20" src="/assets/images/shapes/ProfileIcon.png" />
+                <img
+                  className="mb-20"
+                  src="/assets/images/shapes/ProfileIcon.png"
+                />
 
                 <h5>
                   <Link legacyBehavior href="/service-details">
@@ -287,7 +300,10 @@ const IndexOnePage = ({ params }) => {
             </div>
             <div className="col wow fadeInUp delay-0-3s">
               <div className="feature-item-five">
-                <img className="mb-20" src="/assets/images/shapes/Notefold.png" />
+                <img
+                  className="mb-20"
+                  src="/assets/images/shapes/Notefold.png"
+                />
 
                 <h5>
                   <Link legacyBehavior href="/service-details">
@@ -298,7 +314,10 @@ const IndexOnePage = ({ params }) => {
             </div>
             <div className="col wow fadeInUp delay-0-4s">
               <div className="feature-item-five">
-                <img className="mb-20" src="/assets/images/shapes/Checkmark.png" />
+                <img
+                  className="mb-20"
+                  src="/assets/images/shapes/Checkmark.png"
+                />
 
                 <h5>
                   <Link legacyBehavior href="/service-details">
@@ -309,7 +328,10 @@ const IndexOnePage = ({ params }) => {
             </div>
             <div className="col wow fadeInUp delay-0-5s">
               <div className="feature-item-five">
-                <img className="mb-20" src="/assets/images/shapes/DocFold.png" />
+                <img
+                  className="mb-20"
+                  src="/assets/images/shapes/DocFold.png"
+                />
 
                 <h5>
                   <Link legacyBehavior href="/service-details">
@@ -331,7 +353,10 @@ const IndexOnePage = ({ params }) => {
             </div>
             <div className="col wow fadeInUp delay-0-7s">
               <div className="feature-item-five">
-                <img className="mb-20" src="/assets/images/shapes/Exclamation.png" />
+                <img
+                  className="mb-20"
+                  src="/assets/images/shapes/Exclamation.png"
+                />
 
                 <h5>
                   <Link legacyBehavior href="/service-details">
@@ -370,43 +395,52 @@ const IndexOnePage = ({ params }) => {
                             <a>{t("website_creation")}</a>
                           </Link>
                         </h4>
-                        <p>
-                          {t("website_creation_desc")} </p>
-                        <Link legacyBehavior href="/service-details" >
-                          <div style={{ border: "1px solid #416976", borderRadius: "27px" }} className="d-flex flex-row align-items-center p-10 justify-content-center gap-4">
-
-                            <a style={{ color: "#416976" }} >
+                        <p>{t("website_creation_desc")} </p>
+                        <Link legacyBehavior href="/service-details">
+                          <div
+                            style={{
+                              border: "1px solid #416976",
+                              borderRadius: "27px",
+                            }}
+                            className="d-flex flex-row align-items-center p-10 justify-content-center gap-4"
+                          >
+                            <a style={{ color: "#416976" }}>
                               {t("learn_more")}
                             </a>
-                            <img style={{ width: "15px" }} src="/assets/images/shapes/fast-forward.png" />
+                            <img
+                              style={{ width: "15px" }}
+                              src="/assets/images/shapes/fast-forward.png"
+                            />
                           </div>
                         </Link>
-
                       </div>
                     </div>
                   </div>
-
                 </div>
               </div>
             </div>
             <div className="col-lg-6 ">
-
               <div className="feature-middle  rmt-30">
                 <div className="image  wow fadeInUp delay-0-2s d-flex justify-content-center  align-items-center position-relative z-1">
-                  {locale === "en" ? <img
-                    className="circle-text"
-                    src="/assets/images/shapes/feature-image-top.png"
-                    alt="Text"
-                  /> : <img
-                    className="circle-text w-75 mb-md-0 mb-20 "
-                    style={{ marginBottom: "20px" }}
-                    src="/assets/images/shapes/feature-image-top-spanish.png"
-                    alt="Text"
-                  />}
-
+                  {locale === "en" ? (
+                    <img
+                      className="circle-text"
+                      src="/assets/images/shapes/feature-image-top.png"
+                      alt="Text"
+                    />
+                  ) : (
+                    <img
+                      className="circle-text w-75 mb-md-0 mb-20 "
+                      style={{ marginBottom: "20px" }}
+                      src="/assets/images/shapes/feature-image-top-spanish.png"
+                      alt="Text"
+                    />
+                  )}
 
                   <img
-                    className={`round w-50   ${locale === "en" ? "mt-10" : "mt-20"} mx-auto`}
+                    className={`round w-50   ${
+                      locale === "en" ? "mt-10" : "mt-20"
+                    } mx-auto`}
                     src="/assets/images/features/feature-middle.png"
                     alt="Feature Middle"
                   />
@@ -423,18 +457,24 @@ const IndexOnePage = ({ params }) => {
                             <a>{t("ecommerce_solutions")}</a>
                           </Link>
                         </h4>
-                        <p>
-                          {t("ecommerce_solutions_desc")} </p>
-                        <Link legacyBehavior href="/service-details" >
-                          <div style={{ border: "1px solid #416976", borderRadius: "27px" }} className="d-flex flex-row align-items-center p-10 justify-content-center gap-4">
-
-                            <a style={{ color: "#416976" }} >
+                        <p>{t("ecommerce_solutions_desc")} </p>
+                        <Link legacyBehavior href="/service-details">
+                          <div
+                            style={{
+                              border: "1px solid #416976",
+                              borderRadius: "27px",
+                            }}
+                            className="d-flex flex-row align-items-center p-10 justify-content-center gap-4"
+                          >
+                            <a style={{ color: "#416976" }}>
                               {t("learn_more")}
                             </a>
-                            <img style={{ width: "15px" }} src="/assets/images/shapes/fast-forward.png" />
+                            <img
+                              style={{ width: "15px" }}
+                              src="/assets/images/shapes/fast-forward.png"
+                            />
                           </div>
                         </Link>
-
                       </div>
                     </div>
                   </div>
@@ -449,18 +489,24 @@ const IndexOnePage = ({ params }) => {
                             <a>{t("responsive_ui_ux")}</a>
                           </Link>
                         </h4>
-                        <p>
-                          {t("responsive_ui_ux_desc")} </p>
-                        <Link legacyBehavior href="/service-details" >
-                          <div style={{ border: "1px solid #416976", borderRadius: "27px" }} className="d-flex flex-row align-items-center p-10 justify-content-center gap-4">
-
-                            <a style={{ color: "#416976" }} >
+                        <p>{t("responsive_ui_ux_desc")} </p>
+                        <Link legacyBehavior href="/service-details">
+                          <div
+                            style={{
+                              border: "1px solid #416976",
+                              borderRadius: "27px",
+                            }}
+                            className="d-flex flex-row align-items-center p-10 justify-content-center gap-4"
+                          >
+                            <a style={{ color: "#416976" }}>
                               {t("learn_more")}
                             </a>
-                            <img style={{ width: "15px" }} src="/assets/images/shapes/fast-forward.png" />
+                            <img
+                              style={{ width: "15px" }}
+                              src="/assets/images/shapes/fast-forward.png"
+                            />
                           </div>
                         </Link>
-
                       </div>
                     </div>
                   </div>
@@ -481,22 +527,27 @@ const IndexOnePage = ({ params }) => {
                             <a>{t("seo_services")}</a>
                           </Link>
                         </h4>
-                        <p>
-                          {t("seo_services_desc")} </p>
-                        <Link legacyBehavior href="/service-details" >
-                          <div style={{ border: "1px solid #416976", borderRadius: "27px" }} className="d-flex flex-row align-items-center p-10 justify-content-center gap-4">
-
-                            <a style={{ color: "#416976" }} >
+                        <p>{t("seo_services_desc")} </p>
+                        <Link legacyBehavior href="/service-details">
+                          <div
+                            style={{
+                              border: "1px solid #416976",
+                              borderRadius: "27px",
+                            }}
+                            className="d-flex flex-row align-items-center p-10 justify-content-center gap-4"
+                          >
+                            <a style={{ color: "#416976" }}>
                               {t("learn_more")}
                             </a>
-                            <img style={{ width: "15px" }} src="/assets/images/shapes/fast-forward.png" />
+                            <img
+                              style={{ width: "15px" }}
+                              src="/assets/images/shapes/fast-forward.png"
+                            />
                           </div>
                         </Link>
-
                       </div>
                     </div>
                   </div>
-
                 </div>
               </div>
             </div>
@@ -539,11 +590,13 @@ const IndexOnePage = ({ params }) => {
             {[
               { price: 15, per: t("per_notary_seal") },
               { price: 25, per: t("per_two_signatories") },
-
             ].map((item, index) => (
               <div key={index} className="col-lg-6 ">
-                <div className={`pricing-item-two wow border h-100 p-10 d-flex justify-content-stretch align flex-column fadeInUp delay-0-${index % 2 === 0 ? 2 : 4}s`}>
-
+                <div
+                  className={`pricing-item-two wow border h-100 p-10 d-flex justify-content-stretch align flex-column fadeInUp delay-0-${
+                    index % 2 === 0 ? 2 : 4
+                  }s`}
+                >
                   <span className="badge">{t("popular_package")}</span>
                   <div className="pricing-inner d-flex mt-30 align-items-start">
                     <ul className="list-style-two mt-10">
@@ -555,26 +608,23 @@ const IndexOnePage = ({ params }) => {
                     <div className="price-and-btn">
                       <div className="content">
                         <div className="d-flex flex-row align-items-baseline gap-2">
-                          <h2 style={{ color: "#416976" }} >${item.price}</h2>
+                          <h2 style={{ color: "#416976" }}>${item.price}</h2>
                           <p className="fs-5">/ {item.per}</p>
                         </div>
                         <span className="save">
-
-                          {
-                            item.price === 15 ?
-                              <span> + $10 / {t("additional_witness")} </span>
-                              : <div style={{ lineHeight: ".5", paddingTop: "10px" }}>
-                                <p>
-                                  + $10 / {t("additional_signatory")}
-                                </p>
-                                <p>
-                                  + $10 / {t("witness")}
-                                </p>
-                                <p className="text-nowrap">
-                                  + $10 / {t("additional_notary_seal")}
-                                </p>
-                              </div>
-                          }
+                          {item.price === 15 ? (
+                            <span> + $10 / {t("additional_witness")} </span>
+                          ) : (
+                            <div
+                              style={{ lineHeight: ".5", paddingTop: "10px" }}
+                            >
+                              <p>+ $10 / {t("additional_signatory")}</p>
+                              <p>+ $10 / {t("witness")}</p>
+                              <p className="text-nowrap">
+                                + $10 / {t("additional_notary_seal")}
+                              </p>
+                            </div>
+                          )}
                         </span>
                         <Link legacyBehavior href="/pricing">
                           <a className="theme-btn style-three fw-bold">
@@ -611,7 +661,7 @@ const IndexOnePage = ({ params }) => {
           <div
             className="cta-inner bgs-cover"
             style={{
-              backgroundImage: "url(assets/images/background/cta-bg.jpg)",
+              backgroundImage: "url(/assets/images/background/cta-bg.jpg)",
             }}
           >
             <div className="row">
@@ -628,7 +678,6 @@ const IndexOnePage = ({ params }) => {
                   </Link>
                 </div>
               </div>
-
             </div>
           </div>
         </div>
@@ -636,7 +685,7 @@ const IndexOnePage = ({ params }) => {
 
       {/* CTA Area end */}
       {/* Testimonial Area Start */}
-      <ClientsFeedback t={t} />
+      <ClientsFeedback />
       {/* Testimonial Area End */}
       {/* Contact Area Start */}
       <section
@@ -648,9 +697,7 @@ const IndexOnePage = ({ params }) => {
             <div className="col-xl-5 col-lg-6">
               <div className="contact-info-area text-white rmb-75 wow fadeInLeft delay-0-2s">
                 <div className="section-title mb-55">
-                  <h2>
-                    {t("contact_section")}
-                  </h2>
+                  <h2>{t("contact_section")}</h2>
                 </div>
                 <div className="contact-info-wrap">
                   <div className="contact-info-item">
@@ -730,7 +777,8 @@ const IndexOnePage = ({ params }) => {
                   required
                 />
                 <button type="submit" className="theme-btn">
-                  {t("send_message_button")} <i className="fas fa-angle-double-right" />
+                  {t("send_message_button")}{" "}
+                  <i className="fas fa-angle-double-right" />
                 </button>
               </form>
             </div>
@@ -756,7 +804,6 @@ const IndexOnePage = ({ params }) => {
       </section>
       {/* FAQ Section start*/}
 
-
       <section className="faqs-area-area bgc-lighter py-130 rel z-1">
         <div className="container">
           <div className="row justify-content-between align-items-end pb-5">
@@ -767,8 +814,11 @@ const IndexOnePage = ({ params }) => {
               </div>
             </div>
             <div className="col-lg-4  text-lg-end wow rounded-1 fadeInUp delay-0-4s">
-              <Link legacyBehavior href="/contact" >
-                <a style={{ color: "#293043", fontWeight: "24px" }} className="theme-btn style-three rounded-2 fs-6  mb-55 ">
+              <Link legacyBehavior href="/contact">
+                <a
+                  style={{ color: "#293043", fontWeight: "24px" }}
+                  className="theme-btn style-three rounded-2 fs-6  mb-55 "
+                >
                   Add Questions <i className="fas fa-angle-double-right" />
                 </a>
               </Link>
@@ -808,13 +858,6 @@ const IndexOnePage = ({ params }) => {
           </Accordion>
         </div>
       </section>
-
-
-
-
-
-
-
 
       {/* FAQ Section end*/}
 
@@ -934,8 +977,6 @@ const IndexOnePage = ({ params }) => {
         </div>
       </div>
     </section> */}
-
-
     </Layout>
   );
 };
