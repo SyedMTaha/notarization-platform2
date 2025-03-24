@@ -454,7 +454,7 @@ const index1dark = () => {
             <div
               className="cta-inner bgs-cover"
               style={{
-                backgroundImage: "url(assets/images/background/cta-bg.jpg)",
+                backgroundImage: "url(/assets/images/background/cta-bg.jpg)",
               }}
             >
               <div className="row">

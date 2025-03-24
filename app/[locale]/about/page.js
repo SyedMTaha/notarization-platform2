@@ -105,7 +105,7 @@ const About = () => {
           <div
             className="statistics-four-counters bgs-cover bgc-lighter"
             style={{
-              backgroundImage: "url(assets/images/background/counter-bg.png)",
+              backgroundImage: "url(/assets/images/background/counter-bg.png)",
             }}
           >
             <div className="row medium-gap">
@@ -419,7 +419,7 @@ const About = () => {
             className="feature-six-inner bgs-cover bgc-primary"
             style={{
               backgroundImage:
-                "url(assets/images/background/freature-bg-line.png)",
+                "url(/assets/images/background/freature-bg-line.png)",
             }}
           >
             <div className="row">
@@ -529,7 +529,7 @@ const About = () => {
             <div className="feedback-item wow fadeInUp delay-0-6s">
               <div className="author-logo">
                 <i className="far fa-quote-right" />
-                <img src="/assets/images/feedback/logo3.png" alt="Logo" />
+                <img src="/assets/images/feedback/wo3.png" alt="Logo" />
               </div>
               <h4>We use strategic marketing tactics be proven work.</h4>
               <p>

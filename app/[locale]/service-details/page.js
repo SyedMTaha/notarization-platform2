@@ -237,7 +237,7 @@ const ServicesDetails = () => {
       {/* CTA Two Area start */}
       <section
         className="cta-two bgc-primary bgs-cover text-white py-75 rel z-1"
-        style={{ backgroundImage: "url(assets/images/background/cta-two.png)" }}
+        style={{ backgroundImage: "url(/assets/images/background/cta-two.png)" }}
       >
         <div className="container">
           <div className="row large-gap align-items-center">
