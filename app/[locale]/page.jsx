@@ -139,7 +139,7 @@ const IndexOnePage = ({ params }) => {
                   icon={"/assets/images/lang.png"}
                 />
                 {/* menu sidebar */}
-                <div className="menu-sidebar">
+                <div className="menu-sidebar d-none d-md-block">
                   <button onClick={() => sideBarToggle()}>
                     <span className="icon-bar" />
                     <span className="icon-bar" />
