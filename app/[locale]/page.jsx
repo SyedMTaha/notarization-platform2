@@ -8,7 +8,7 @@ import { useTranslations } from "next-intl";
 import Head from "next/head";
 import Link from "next/link";
 import { Accordion } from "react-bootstrap";
-import { faqsData1, faqsData2 } from "./faqs/page";
+import { faqsData1, faqsData2 } from "./help-desk/page";
 import OxencyAccordion from "@/components/OxencyAccordion";
 import { useState } from "react";
 import LangSwitcher from "@/components/LangSwitch";
@@ -95,7 +95,7 @@ const IndexOnePage = ({ params }) => {
                           <a href="#project">{t("navbar.authenticate")}</a>
                         </li>
                         <li>
-                          <a href="#pricing">{t("navbar.authenticate")}</a>
+                          <Link href="/help-desk">{t("navbar.help")}</Link>
                         </li>
                         <li>
                           <a href="#contact">{t("navbar.contact")}</a>

@@ -106,10 +106,10 @@ const Faq = () => {
   };
   const t = useTranslations();
   return (
-    <Layout>
+    <Layout header={3}>
       <PageBanner
-        titleHtml={`Faq & <span>Help</span>`}
-        titleText="Faq & Help"
+        titleHtml={`Help <span>Desk</span>`}
+        titleText="Help Desk"
       />
       <section className="faq-page-about-area pt-130">
         <div className="container">
