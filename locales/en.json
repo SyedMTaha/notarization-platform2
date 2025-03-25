@@ -44,7 +44,6 @@
   "statistics_description": "On the other denonce with righteous indin",
   "core_design_features": "Core Design Features",
   "website_services": "Business Solutions",
-
   "website_creation": "Attorneys",
   "website_creation_desc": "Fast track your client's legal process through access to your personal customizable document repository. Learn more about our features and how it may benefit your firm.",
   "ecommerce_solutions": "Real Estate Agents",
@@ -54,7 +53,6 @@
   "seo_services": "Notaries",
   "seo_services_desc": "Grow your business and watch your income balloon from the comfort of your home through access to our digital tools. All that is necessary is a laptop, a webcam and a good internet connection.",
   "learn_more": "Learn More",
-
   "working_process": "Working Process",
   "how_we_work": "How does we works",
   "info_gathering": "Upload or Select Your Document",
@@ -113,10 +111,8 @@
   "previous": "Previous",
   "next": "Next",
   "testimonial_1_text": "Sit amet consectetur adipiscing elit sed do eiusmod tempor incididunt ut labore dolore magna aliuasum susendise ultrices",
-
   "testimonial_1_designation": "CEO & Founder",
   "testimonial_2_text": "Quis autem vel eum iure reprehe nderitue voluptate esseuam nihile molestias equatur veillum dolorem eum voluptas nulla",
-
   "testimonial_2_designation": "Business Consultant",
   "commonly_asked_questions": "Commonly Asked Questions",
   "faqsData1title1": "Lorem ipsum dolor sit amet, consectetur adipiscing elit",
@@ -137,7 +133,6 @@
   "faqsData2dec4": "Lorem ipsum dolor sit amet, consectetur adipiscing elit",
   "faqsData2title5": "Lorem ipsum dolor sit amet, consectetur adipiscing elit",
   "faqsData2dec5": "Lorem ipsum dolor sit amet, consectetur adipiscing elit",
-
   "footer1AboutText": "West Indian Scribbles LLC is a document processing and notary marketplace allowing for faster and simpler notarizations. However, we are not legal professionals and as such it is imperative that you first consult with your lawyers and/or financial advisors if you are unsure of your legal commitments should you sign any document",
   "footer1QuickLinks": "Quick Links",
   "footer1NewsletterTitle": "Newsletter",
@@ -156,7 +151,6 @@
   "footer1LinkTechnicalSupport": "Technical Support",
   "footer1LinkContact": "Contact",
   "footer1LinkLandingPagesDesign": "Location",
-
   "slider_sub_title": "3 Million+ notarization completed",
   "slider_main_title": "Notarize",
   "slider_main_title_highlight": "online.",
@@ -170,7 +164,6 @@
   "form_email_placeholder": "Email Address",
   "form_message_placeholder": "Message",
   "form_submit_button": "Submit now",
-
   "page_banner_home": "Home",
   "how_it_works_title": "How It Works",
   "how_it_works_banner_html_1": "How It W",
@@ -221,7 +214,6 @@
   "how_it_works_lets_start_notarization": "Let’s Start Notarization Process",
   "how_it_works_lets_start_notarization_description": "With millions of documents notarized, our platform is a trusted choice for individuals and businesses worldwide.",
   "how_it_works_lets_get_started": "Let’s Get Started",
-
   "default_header_home": "Home",
   "default_header_multipage": "MultiPage",
   "default_header_web_design": "Web Design",
@@ -230,21 +222,21 @@
   "default_header_front_end_dark": "Front End Dark",
   "default_header_website_builder": "Website Builder",
   "default_header_onepage": "OnePage",
-  "default_header_services": "Services",
+  "default_header_services": "Solutions",
   "default_header_popular_services": "Popular Services",
   "default_header_service_details": "Service Details",
-  "default_header_project": "Project",
+  "default_header_project": "Standard Forms",
   "default_header_project_grid": "Project Grid",
   "default_header_project_creative": "Project Creative",
   "default_header_project_carousel": "Project Carousel",
   "default_header_project_details": "Project Details",
-  "default_header_pages": "Pages",
+  "default_header_pages": "Authenticate",
   "default_header_about_us": "About Us",
   "default_header_team": "Team",
   "default_header_expert_team": "Expert Team",
   "default_header_team_profile": "Team Profile",
   "default_header_pricing_plan": "Pricing Plan",
-  "default_header_faqs_help": "FAQs & Help",
+  "default_header_faqs_help": "Help Desk",
   "default_header_404_error": "404 Error",
   "default_header_shop": "Shop",
   "default_header_shop_grid": "Shop Grid",
@@ -258,7 +250,6 @@
   "default_header_contact": "Contact",
   "default_header_login": "Login",
   "default_header_signup": "Signup",
-
   "about_us_banner_html_1": "Abo",
   "about_us_banner_html_2": "ut Us",
   "about_us_what_we_do": "What We Do",
@@ -289,5 +280,85 @@
   "about_us_add_advanced_features": "Add advanced features",
   "about_us_add_advanced_features_desc": "Sit amet consectetur adipiscing sed eiusmod tempor incididunt labore et dolore magnaes epsums",
   "about_us_optimize_for_search": "Optimize for search engines",
-  "about_us_optimize_for_search_desc": "Sit amet consectetur adipiscing sed eiusmod tempor incididunt labore et dolore magnaes epsums"
+  "about_us_optimize_for_search_desc": "Sit amet consectetur adipiscing sed eiusmod tempor incididunt labore et dolore magnaes epsums",
+  "help-desk": {
+    "title": "Help Desk",
+    "finding-help": "Finding Help",
+    "how-can-we-help-title": "How Can We Help",
+    "how-can-we-help-description": "You ask, we answer. Find out more about our signature and notary process or how you may become one of our trusted notaries.",
+    "search-placeholder": "Find your category",
+    "suggestions-label": "Suggestions:",
+    "suggestions": "Dashboard, Payments, Refunds, Delivery",
+    "offer": "What We Offer",
+    "choose-your-form-title": "Choose Your Form",
+    "forms": {
+      "affidavit-of-identity": {
+        "title": "Affidavit of Identity",
+        "description": "Sit amet consectetur adipiscing elit, sed eiusmod tempor incididunt labore et dolore magna aliqua esuis suspendisse",
+        "button": "Learn More"
+      },
+      "power-of-attorney": {
+        "title": "Power of Attorney",
+        "description": "Sit amet consectetur adipiscing elit, sed eiusmod tempor incididunt labore et dolore magna aliqua esuis suspendisse",
+        "button": "Learn More"
+      },
+      "agreement-of-sale": {
+        "title": "Agreement of Sale",
+        "description": "Sit amet consectetur adipiscing elit, sed eiusmod tempor incididunt labore et dolore magna aliqua esuis suspendisse",
+        "button": "Learn More"
+      },
+      "property-management-agreement": {
+        "title": "Property Management Agreement",
+        "description": "Sit amet consectetur adipiscing elit, sed eiusmod tempor incididunt labore et dolore magna aliqua esuis suspendisse",
+        "button": "Learn More"
+      },
+      "lease-agreement": {
+        "title": "Lease Agreement",
+        "description": "Sit amet consectetur adipiscing elit, sed eiusmod tempor incididunt labore et dolore magna aliqua esuis suspendisse",
+        "button": "Learn More"
+      },
+      "promissory-note": {
+        "title": "Promissory Note",
+        "description": "Sit amet consectetur adipiscing elit, sed eiusmod tempor incididunt labore et dolore magna aliqua esuis suspendisse",
+        "button": "Learn More"
+      }
+    },
+    "faqs-title": "Commonly Asked Questions",
+    "faqs-link": "FAQs",
+    "add-questions-button": "Add Questions",
+    "faqs": {
+      "q1": {
+        "title": "Question about Notarization",
+        "description": "Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium totam aperiam eaque quae abillo inventore"
+      },
+      "q2": {
+        "title": "Question about Notarization",
+        "description": "Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium totam aperiam eaque quae abillo inventore"
+      },
+      "q3": {
+        "title": "Question about Notarization",
+        "description": "Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium totam aperiam eaque quae abillo inventore"
+      },
+      "q4": {
+        "title": "Question about Notarization",
+        "description": "Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium totam aperiam eaque quae abillo inventore"
+      },
+      "q5": {
+        "title": "Question about Notarization",
+        "description": "Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium totam aperiam eaque quae abillo inventore"
+      },
+      "q6": {
+        "title": "Question about Notarization",
+        "description": "Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium totam aperiam eaque quae abillo inventore"
+      },
+      "q7": {
+        "title": "Question about Notarization",
+        "description": "Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium totam aperiam eaque quae abillo inventore"
+      },
+      "q8": {
+        "title": "Question about Notarization",
+        "description": "Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium totam aperiam eaque quae abillo inventore"
+      }
+    }
+  }
 }

@@ -133,7 +133,6 @@
   "faqsData2dec4": "Lorem ipsum dolor sit amet, consectetur adipiscing elit",
   "faqsData2title5": "Lorem ipsum dolor sit amet, consectetur adipiscing elit",
   "faqsData2dec5": "Lorem ipsum dolor sit amet, consectetur adipiscing elit",
-
   "footer1AboutText": "West Indian Scribbles LLC es un mercado de procesamiento de documentos y notarización que permite notarizaciones más rápidas y sencillas. Sin embargo, no somos profesionales legales, por lo que es fundamental que primero consultes con tus abogados y/o asesores financieros si no estás seguro de tus compromisos legales al firmar cualquier documento.",
   "footer1QuickLinks": "Enlaces Rápidos",
   "footer1NewsletterTitle": "Boletín Informativo",
@@ -152,7 +151,6 @@
   "footer1LinkTechnicalSupport": "Soporte Técnico",
   "footer1LinkContact": "Contacto",
   "footer1LinkLandingPagesDesign": "Ubicación",
-
   "slider_sub_title": "Más de 3 millones de notarizaciones completadas",
   "slider_main_title": "Notariza",
   "slider_main_title_highlight": "en línea.",
@@ -166,7 +164,6 @@
   "form_email_placeholder": "Correo Electrónico",
   "form_message_placeholder": "Mensaje",
   "form_submit_button": "Enviar Ahora",
-
   "page_banner_home": "Hogar",
   "how_it_works_title": "Cómo Funciona",
   "how_it_works_banner_html_1": "Cómo Func",
@@ -217,7 +214,6 @@
   "how_it_works_lets_start_notarization": "Comencemos el Proceso de Notarización",
   "how_it_works_lets_start_notarization_description": "Con millones de documentos notariados, nuestra plataforma es una opción confiable para personas y empresas en todo el mundo.",
   "how_it_works_lets_get_started": "Comencemos",
-
   "default_header_home": "Inicio",
   "default_header_multipage": "MultiPágina",
   "default_header_web_design": "Diseño Web",
@@ -254,7 +250,6 @@
   "default_header_contact": "Contacto",
   "default_header_login": "Iniciar Sesión",
   "default_header_signup": "Registrarse",
-
   "about_us_banner_html_1": "So",
   "about_us_banner_html_2": "bre Nosotros",
   "about_us_what_we_do": "Qué Hacemos",
@@ -285,5 +280,51 @@
   "about_us_add_advanced_features": "Añadir funciones avanzadas",
   "about_us_add_advanced_features_desc": "Sit amet consectetur adipiscing sed eiusmod tempor incididunt labore et dolore magnaes epsums",
   "about_us_optimize_for_search": "Optimizar para motores de búsqueda",
-  "about_us_optimize_for_search_desc": "Sit amet consectetur adipiscing sed eiusmod tempor incididunt labore et dolore magnaes epsums"
+  "about_us_optimize_for_search_desc": "Sit amet consectetur adipiscing sed eiusmod tempor incididunt labore et dolore magnaes epsums",
+  "help-desk": {
+    "title": "Centro de Ayuda",
+    "finding-help": "Cómo Encontrar Ayuda",
+    "how-can-we-help-title": "¿Cómo Podemos Ayudarte?",
+    "how-can-we-help-description": "Tú preguntas, nosotros respondemos. Descubre más sobre nuestro proceso de firma y notaría o cómo puedes convertirte en uno de nuestros notarios de confianza.",
+    "search-placeholder": "Encuentra tu categoría",
+    "suggestions-label": "Sugerencias:",
+    "suggestions": "Panel de control, Pagos, Reembolsos, Entrega",
+    "offer": "Lo Que Ofrecemos",
+    "choose-your-form-title": "Elige Tu Formulario",
+    "forms": {
+      "affidavit-of-identity": {
+        "title": "Declaración Jurada de Identidad",
+        "description": "Sit amet consectetur adipiscing elit, sed eiusmod tempor incididunt labore et dolore magna aliqua esuis suspendisse",
+        "button": "Más Información"
+      },
+      "power-of-attorney": {
+        "title": "Poder Notarial",
+        "description": "Sit amet consectetur adipiscing elit, sed eiusmod tempor incididunt labore et dolore magna aliqua esuis suspendisse",
+        "button": "Más Información"
+      },
+      "agreement-of-sale": {
+        "title": "Contrato de Venta",
+        "description": "Sit amet consectetur adipiscing elit, sed eiusmod tempor incididunt labore et dolore magna aliqua esuis suspendisse",
+        "button": "Más Información"
+      },
+      "property-management-agreement": {
+        "title": "Contrato de Gestión de Propiedades",
+        "description": "Sit amet consectetur adipiscing elit, sed eiusmod tempor incididunt labore et dolore magna aliqua esuis suspendisse",
+        "button": "Más Información"
+      },
+      "lease-agreement": {
+        "title": "Contrato de Arrendamiento",
+        "description": "Sit amet consectetur adipiscing elit, sed eiusmod tempor incididunt labore et dolore magna aliqua esuis suspendisse",
+        "button": "Más Información"
+      },
+      "promissory-note": {
+        "title": "Pagaré",
+        "description": "Sit amet consectetur adipiscing elit, sed eiusmod tempor incididunt labore et dolore magna aliqua esuis suspendisse",
+        "button": "Más Información"
+      }
+    },
+    "faqs-title": "Preguntas Frecuentes",
+    "faqs-link": "Preguntas Frecuentes",
+    "add-questions-button": "Añadir Preguntas"
+  }
 }

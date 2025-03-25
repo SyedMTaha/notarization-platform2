@@ -36,25 +36,19 @@ const MobileMenu = ({ logo }) => {
         <Accordion.Collapse eventKey="nav" className="navbar-collapse clearfix">
           <ul className="navigation clearfix">
             <li className="dropdown">
-              <a href="#">{t("default_header_home")} </a>
+              <Link href="/">{t("default_header_home")} </Link>
             </li>
             <li className="dropdown">
-              <a href="#">{t("default_header_services")}</a>
+              <Link href="/solutions">{t("default_header_services")}</Link>
             </li>
             <li className="dropdown">
-              <a href="#">{t("default_header_project")}</a>
+              <Link href="/standard-forms">{t("default_header_project")}</Link>
             </li>
             <li className="dropdown">
-              <a href="#">{t("default_header_pages")}</a>
-            </li>
-            <li className="dropdown">
-              <a href="#">{t("default_header_shop")}</a>
-            </li>
-            <li className="dropdown">
-              <a href="#">{t("default_header_blog")}</a>
+              <Link href="/authenticate">{t("default_header_pages")}</Link>
             </li>
             <li>
-              <Link legacyBehavior href="/contact">
+              <Link href="/contact">
                 {t("default_header_contact")}
               </Link>
             </li>

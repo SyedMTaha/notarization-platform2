@@ -47,57 +47,57 @@ export const faqsData2 = [
     dec: "faqsData2dec5",
   },
 ];
-
 const services = [
   {
     id: 1,
     icon: "/assets/images/services/icon1.png",
-    title: "Managing Account",
-    description:
-      "Start building your first prototype in no time with Ogency's intuitive, drag & drop interface that gives you the building blocks you need.",
+    title: "forms.affidavit-of-identity.title", // Translation key
+    description: "forms.affidavit-of-identity.description", // Translation key
+    button: "forms.affidavit-of-identity.button", // Translation key
     animationDelay: "0.2s",
   },
   {
     id: 2,
     icon: "/assets/images/services/icon2.png",
-    title: "Business Develop",
-    description:
-      "Start building your first prototype in no time with Ogency's intuitive, drag & drop interface that gives you the building blocks you need.",
+    title: "forms.power-of-attorney.title",
+    description: "forms.power-of-attorney.description",
+    button: "forms.power-of-attorney.button",
     animationDelay: "0.4s",
   },
   {
     id: 3,
     icon: "/assets/images/services/icon3.png",
-    title: "Refund Policy",
-    description:
-      "Start building your first prototype in no time with Ogency's intuitive, drag & drop interface that gives you the building blocks you need.",
+    title: "forms.agreement-of-sale.title",
+    description: "forms.agreement-of-sale.description",
+    button: "forms.agreement-of-sale.button",
     animationDelay: "0.6s",
   },
   {
     id: 4,
     icon: "/assets/images/services/icon4.png",
-    title: "Payment Options",
-    description:
-      "Start building your first prototype in no time with Ogency's intuitive, drag & drop interface that gives you the building blocks you need.",
+    title: "forms.property-management-agreement.title",
+    description: "forms.property-management-agreement.description",
+    button: "forms.property-management-agreement.button",
     animationDelay: "0.2s",
   },
   {
     id: 5,
     icon: "/assets/images/services/icon5.png",
-    title: "Delivery Information",
-    description:
-      "Start building your first prototype in no time with Ogency's intuitive, drag & drop interface that gives you the building blocks you need.",
+    title: "forms.lease-agreement.title",
+    description: "forms.lease-agreement.description",
+    button: "forms.lease-agreement.button",
     animationDelay: "0.4s",
   },
   {
     id: 6,
     icon: "/assets/images/services/icon6.png",
-    title: "Affiliate Program",
-    description:
-      "Start building your first prototype in no time with Ogency's intuitive, drag & drop interface that gives you the building blocks you need.",
+    title: "forms.promissory-note.title",
+    description: "forms.promissory-note.description",
+    button: "forms.promissory-note.button",
     animationDelay: "0.6s",
   },
 ];
+
 
 const Faq = () => {
   const [active, setActive] = useState(`a0`);
@@ -105,11 +105,12 @@ const Faq = () => {
     setActive(value === active ? "" : value);
   };
   const t = useTranslations();
+  const ht = useTranslations('help-desk')
   return (
-    <Layout header={3}>
+    <Layout footer={1}>
       <PageBanner
-        titleHtml={`Help <span>Desk</span>`}
-        titleText="Help Desk"
+        titleHtml={`${ht("title").slice(0, -4)}<span>${ht("title").slice(-4)}</span>`}
+        titleText={ht("title")}
       />
       <section className="faq-page-about-area pt-130">
         <div className="container">
@@ -118,14 +119,11 @@ const Faq = () => {
               <div className="faq-page-content rmb-65 wow fadeInRight delay-0-2s">
                 <div className="section-title mb-25">
                   <span className="sub-title style-two mb-15">
-                    Finding Help
+                    {ht("finding-help")}
                   </span>
-                  <h2>How Can We Help</h2>
+                  <h2>{ht("how-can-we-help-title")}</h2>
                 </div>
-                <p>
-                  Start building your first prototype in no time. Ogency
-                  intuitive drag &amp; drop interface gives you all the building
-                  blocks that you need to get started! No skills required.
+                <p>{ht("how-can-we-help-description")}
                 </p>
                 <form
                   onSubmit={(e) => e.preventDefault()}
@@ -146,7 +144,7 @@ const Faq = () => {
                   </button>
                 </form>
                 <p>
-                  <b>Suggestions:</b> Dashboard, Payments, Refunds, Delivery
+                  <b>{ht("suggestions-label")}</b> {ht("suggestions")}
                 </p>
               </div>
             </div>
@@ -161,7 +159,7 @@ const Faq = () => {
       </section>
       {/* FAQ Page About Area end */}
       {/* Services Area start */}
-      <section className="services-area-five pt-115 pb-100">
+      <section className="bgc-black-with-lighting rel z-1 text-white pt-115 pb-100">
         <div className="container">
           <div className="row justify-content-center">
             <div className="col-xl-8 col-lg-10">
@@ -169,8 +167,8 @@ const Faq = () => {
                 className="section-title text-center mb-60 wow fadeInUp"
                 data-wow-delay="0.2s"
               >
-                <span className="sub-title style-two mb-20">What We Offer</span>
-                <h2>Choose Your Topic</h2>
+                <span className="sub-title style-two mb-20">{ht("offer")}</span>
+                <h2>{ht("choose-your-form-title")}</h2>
               </div>
             </div>
           </div>
@@ -184,17 +182,39 @@ const Faq = () => {
                   <div className="icon">
                     <img src={service.icon} alt="Icon" />
                   </div>
-                  <h4>{service.title}</h4>
-                  <p>{service.description}</p>
+                  <h4>{ht(service.title)}</h4>
+                  <p>{ht(service.description)}</p>
                   <Link legacyBehavior href={`/faqs/${service.id}`}>
                     <a className="theme-btn style-three">
-                      Learn More <i className="fas fa-angle-double-right" />
+                      {ht(service.button)} <i className="fas fa-angle-double-right" />
                     </a>
                   </Link>
                 </div>
               </div>
             ))}
           </div>
+        </div>
+        <div className="slider-shapes">
+          <img
+            className="shape dots one"
+            src="/assets/images/shapes/slider-dots.png"
+            alt="Shape"
+          />
+          <img
+            className="shape dots two"
+            src="/assets/images/shapes/slider-dots.png"
+            alt="Shape"
+          />
+          <img
+            className="shape wave-line"
+            src="/assets/images/shapes/slider-wave-line.png"
+            alt="Shape"
+          />
+          <img
+            className="shape circle"
+            src="/assets/images/shapes/slider-circle.png"
+            alt="Shape"
+          />
         </div>
       </section>
       {/* Services Area end */}
@@ -204,14 +224,14 @@ const Faq = () => {
           <div className="row justify-content-between align-items-end pb-5">
             <div className="col-xl-6 col-lg-8 wow fadeInUp delay-0-2s">
               <div className="section-title mb-35">
-                <span className="sub-title style-two mb-15">Faqs</span>
-                <h2>Asked Questions about Website Design</h2>
+                <span className="sub-title style-two mb-15">{ht("faqs-link")}</span>
+                <h2>{ht("faqs-title") }</h2>
               </div>
             </div>
             <div className="col-lg-4 text-lg-end wow fadeInUp delay-0-4s">
               <Link legacyBehavior href="/contact">
                 <a className="theme-btn style-three mb-55">
-                  Add Questions <i className="fas fa-angle-double-right" />
+                  {ht("add-questions-button")} <i className="fas fa-angle-double-right" />
                 </a>
               </Link>
             </div>

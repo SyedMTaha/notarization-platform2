@@ -18,7 +18,8 @@ const Footer1 = () => {
   const t = useTranslations();
 
   return (
-    <footer className="main-footer footer-two pt-80 bgc-lighter">
+    // Add home-one class to all footers
+    <footer className="main-footer footer-two pt-80 bgc-lighter home-one">
       <div className="container">
         <div className="row justify-content-xl-between justify-content-center">
           <div className="col-xl-4 col-lg-5 col-md-6">

@@ -2,7 +2,7 @@ import { sideBarToggle } from "@/utility";
 import Link from "next/link";
 import MobileMenu from "./MobileMenu";
 import { useTranslations } from "next-intl";
-
+import { useState, useEffect } from "react";
 const Header = ({ header }) => {
   switch (header) {
     case 1:
@@ -260,12 +260,30 @@ const Header2 = () => {
 
 const DefaultHeader = () => {
   const t = useTranslations();
+  const [padding, setPadding] = useState("0rem 6rem");
+  useEffect(() => {
+    const handleResize = () => {
+      if (window.innerWidth < 1200) {
+        setPadding("0rem 1rem"); // Apply different padding for smaller screens
+      } else {
+        setPadding("0rem 6rem"); // Default padding for larger screens
+      }
+    };
 
+    // Check the size on initial load
+    handleResize();
+
+    // Set up event listener for window resize
+    window.addEventListener("resize", handleResize);
+
+    // Cleanup event listener on component unmount
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
   return (
     <header className="main-header header-three menu-absolute">
       {/*Header-Upper*/}
       <div className="header-upper">
-        <div className="container-fluid clearfix">
+        <div className="container-fluid clearfix" style={{padding: padding}}>
           <div className="header-inner rel d-flex align-items-center">
             <div className="logo-outer">
               <div className="logo">
@@ -351,134 +369,22 @@ const Menu = () => {
   return (
     <ul className="navigation clearfix">
       <li className="dropdown">
-        <a href="#">{t("default_header_home")} </a>
+        <Link href="/">{t("default_header_home")} </Link>
       </li>
       <li className="dropdown">
-        <a href="#">{t("default_header_services")}</a>
+        <Link href="/solutions">{t("default_header_services")}</Link>
       </li>
       <li className="dropdown">
-        <a href="#">{t("default_header_project")}</a>
+        <Link href="/standard-forms">{t("default_header_project")}</Link>
       </li>
       <li className="dropdown">
-        <a href="#">{t("default_header_pages")}</a>
-      </li>
-      <li className="dropdown">
-        <a href="#">{t("default_header_shop")}</a>
-      </li>
-      <li className="dropdown">
-        <a href="#">{t("default_header_blog")}</a>
+        <Link href="/authenticate">{t("default_header_pages")}</Link>
       </li>
       <li>
-        <Link legacyBehavior href="/contact">
+        <Link href="/contact">
           {t("default_header_contact")}
         </Link>
       </li>
     </ul>
-  );
-};
-
-const PlainHeader = () => {
-  const t = useTranslations();
-
-  return (
-    <header className="main-header header-three menu-absolute">
-      {/* Header-Upper */}
-      <div className="header-upper">
-        <div className="container-fluid clearfix">
-          <div className="header-inner rel d-flex align-items-center">
-            <div className="logo-outer">
-              <div className="logo">
-                <Link legacyBehavior href="/">
-                  <a>
-                    <img
-                      src="/assets/images/logos/logo.png"
-                      alt="Logo"
-                      title="Logo"
-                    />
-                  </a>
-                </Link>
-              </div>
-            </div>
-            <div className="nav-outer clearfix">
-              {/* Main Menu */}
-              <nav className="main-menu d-none d-lg-block navbar-expand-lg">
-                <div className="navbar-header">
-                  <div className="mobile-logo my-15">
-                    <Link legacyBehavior href="/">
-                      <a>
-                        <img
-                          src="/assets/images/logos/logo.png"
-                          alt="Logo"
-                          title="Logo"
-                        />
-                      </a>
-                    </Link>
-                  </div>
-                  {/* Toggle Button */}
-                  <button
-                    type="button"
-                    className="navbar-toggle"
-                    data-bs-toggle="collapse"
-                    data-bs-target=".navbar-collapse"
-                  >
-                    <span className="icon-bar" />
-                    <span className="icon-bar" />
-                    <span className="icon-bar" />
-                  </button>
-                </div>
-                <div className="navbar-collapse collapse clearfix">
-                  <ul className="navigation clearfix">
-                    <li>
-                      <Link legacyBehavior href="/">
-                        <a>Home</a>
-                      </Link>
-                    </li>
-                    <li>
-                      <Link legacyBehavior href="/solutions">
-                        <a>Solutions</a>
-                      </Link>
-                    </li>
-                    <li>
-                      <Link legacyBehavior href="/standard-forms">
-                        <a>Standard Forms</a>
-                      </Link>
-                    </li>
-                    <li>
-                      <Link legacyBehavior href="/authenticate">
-                        <a>Authenticate</a>
-                      </Link>
-                    </li>
-                    <li>
-                      <Link legacyBehavior href="/help-desk">
-                        <a>Help Desk</a>
-                      </Link>
-                    </li>
-                    <li>
-                      <Link legacyBehavior href="/contact">
-                        <a>Contact</a>
-                      </Link>
-                    </li>
-                  </ul>
-                </div>
-              </nav>
-              {/* Main Menu End*/}
-            </div>
-            {/* Menu Button */}
-            <div className="menu-btns">
-              <Link legacyBehavior href="/contact">
-                <a className="login">{t("default_header_login")}</a>
-              </Link>
-              <Link legacyBehavior href="/contact">
-                <a className="theme-btn">
-                  {t("default_header_signup")}
-                  <i className="fas fa-angle-double-right" />
-                </a>
-              </Link>
-            </div>
-          </div>
-        </div>
-      </div>
-      {/* End Header Upper */}
-    </header>
   );
 };
