@@ -15,7 +15,6 @@
     "search_button": "Search Button",
     "menu_button": "Menu Button",
     "mobile_logo_alt": "Mobile Logo"
-
   },
   "toggle_button": "Toggle Button",
   "menu_sidebar": "Menu Sidebar",
@@ -84,7 +83,7 @@
   "additional_notary_seal": "additional notary seal",
   "witness": "witness",
   "per_notary_seal": "notary seal",
-  "per_two_signatories":"2 signatories",
+  "per_two_signatories": "2 signatories",
   "choose_package": "Choose Package",
   "contact_section": "Have any Queries? Feel free to contact us!",
   "location": "Location",
@@ -114,12 +113,12 @@
   "previous": "Previous",
   "next": "Next",
   "testimonial_1_text": "Sit amet consectetur adipiscing elit sed do eiusmod tempor incididunt ut labore dolore magna aliuasum susendise ultrices",
- 
+
   "testimonial_1_designation": "CEO & Founder",
   "testimonial_2_text": "Quis autem vel eum iure reprehe nderitue voluptate esseuam nihile molestias equatur veillum dolorem eum voluptas nulla",
- 
+
   "testimonial_2_designation": "Business Consultant",
-  "commonly_asked_questions":"Commonly Asked Questions",
+  "commonly_asked_questions": "Commonly Asked Questions",
   "faqsData1title1": "Lorem ipsum dolor sit amet, consectetur adipiscing elit",
   "faqsData1dec1": "Lorem ipsum dolor sit amet, consectetur adipiscing elit",
   "faqsData1title2": "Lorem ipsum dolor sit amet, consectetur adipiscing elit",
@@ -258,6 +257,37 @@
   "default_header_blog_details": "Blog Details",
   "default_header_contact": "Contact",
   "default_header_login": "Login",
-  "default_header_signup": "Signup"
-  
+  "default_header_signup": "Signup",
+
+  "about_us_banner_html_1": "Abo",
+  "about_us_banner_html_2": "ut Us",
+  "about_us_what_we_do": "What We Do",
+  "about_us_revolutionizing_notarization": "Revolutionizing Notarization with Technology",
+  "about_us_description": "At West Indian Scribbles LLC, we are committed to transforming the notarization process by making it fast, secure, and fully digital. Our mission is to eliminate the hassle of in-person notarization, allowing individuals and businesses to notarize documents remotely with complete legal compliance.",
+  "about_us_simplifying_notarization": "Simplifying Notarization for Everyone",
+  "about_us_simplifying_notarization_desc": "Experience fast, secure, and fully digital notarization from anywhere, anytime.",
+  "about_us_legally_compliant": "Legally Compliant & Hassle-Free",
+  "about_us_legally_compliant_desc": "Notarize documents remotely with complete security and legal recognition.",
+  "about_us_notarize_now": "Notarize Now",
+  "about_us_watch_tutorial": "Watch Tutorial",
+  "about_us_years_experience": "Years in the E-commerce Industry",
+  "about_us_faster_processing": "Faster Processing",
+  "about_us_secure_encryption": "Secure Encryption",
+  "about_us_availability": "Availability",
+  "about_us_document_acceptance": "Document Acceptance",
+  "about_us_notarization_ai_tech": "Making notarization easy with AI, secure tech, and live verification.",
+  "about_us_accessible_notarization": "Accessible Notarization",
+  "about_us_ai_verification": "AI Verification",
+  "about_us_seamless_anytime": "Seamless Anytime",
+  "about_us_live_notary": "Live Notary",
+  "about_us_secure_technology": "Secure Technology",
+  "about_us_legally_valid": "Legally Valid",
+  "about_us_legally_compliant_secure": "Legally Compliant & Secure",
+  "about_us_legally_compliant_secure_desc": "Our platform complies with Guyana's ECT Act 2023, Trinidad's ET Act Rev. 2016, Jamaica's ET Act Rev. 2014, and Barbados' ET Act 308B, ensuring that all notarized documents are legally binding.",
+  "about_us_edit_mobile_view": "Edit your mobile view",
+  "about_us_edit_mobile_view_desc": "Sit amet consectetur adipiscing sed eiusmod tempor incididunt labore et dolore magnaes epsums",
+  "about_us_add_advanced_features": "Add advanced features",
+  "about_us_add_advanced_features_desc": "Sit amet consectetur adipiscing sed eiusmod tempor incididunt labore et dolore magnaes epsums",
+  "about_us_optimize_for_search": "Optimize for search engines",
+  "about_us_optimize_for_search_desc": "Sit amet consectetur adipiscing sed eiusmod tempor incididunt labore et dolore magnaes epsums"
 }

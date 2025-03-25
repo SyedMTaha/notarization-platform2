@@ -4766,7 +4766,14 @@ h6, .h6 {
 /****************** 11. Counter Area *******************/
 /*******************************************************/
 .count-text:after {
-  content: '+'; }
+  content: '%'; }
+.count-text-without-plus{
+  font-weight: 700;
+  color: #293043;
+  font-family: "Merriweather", serif; 
+  font-size: 45px; 
+  line-height: 54.9px;
+}
 
 .counter-item {
   display: -webkit-box;
