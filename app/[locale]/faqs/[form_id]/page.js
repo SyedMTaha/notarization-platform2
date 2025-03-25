@@ -9,7 +9,7 @@ import Link from "next/link";
 const HowItWorks = ({ params: { form_id } }) => {
   const t = useTranslations();
   return (
-    <Layout footer={1}>
+    <Layout footer={1} >
       <PageBanner
         titleHtml={
           t("how_it_works_banner_html_1") +

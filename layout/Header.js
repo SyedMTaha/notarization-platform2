@@ -317,14 +317,26 @@ const DefaultHeader = () => {
             {/* Menu Button */}
             <div className="menu-btns">
               <Link legacyBehavior href="/contact">
-                <a className="login">{t("default_header_login")}</a>
-              </Link>
-              <Link legacyBehavior href="/contact">
-                <a className="theme-btn">
-                  {t("default_header_signup")}
-                  <i className="fas fa-angle-double-right" />
+                <a
+                  style={{
+                    border: "1px solid black",
+                    paddingLeft: "50px",
+                    paddingRight: "40px",
+                  }}
+                  className="theme-btn rounded-pill style-three d-flex gap-3"
+                >
+                  {t("navbar.login")}{" "}
+                  <i className="fas fa-angle-double-right " />
                 </a>
               </Link>
+              {/* menu sidebar */}
+              <div className="menu-sidebar d-none d-md-block">
+                <button onClick={() => sideBarToggle()}>
+                  <span className="icon-bar" />
+                  <span className="icon-bar" />
+                  <span className="icon-bar" />
+                </button>
+              </div>
             </div>
           </div>
         </div>
@@ -339,221 +351,22 @@ const Menu = () => {
   return (
     <ul className="navigation clearfix">
       <li className="dropdown">
-        <a href="#">{t("default_header_home")}</a>
-        <ul>
-          <li className="dropdown">
-            <a href="#">{t("default_header_multipage")}</a>
-            <ul>
-              <li>
-                <Link legacyBehavior href="/">
-                  {t("default_header_web_design")}
-                </Link>
-              </li>
-              <li>
-                <Link legacyBehavior href="/index1dark">
-                  {t("default_header_web_design_dark")}
-                </Link>
-              </li>
-              <li>
-                <Link legacyBehavior href="/index2">
-                  {t("default_header_front_end_services")}
-                </Link>
-              </li>
-              <li>
-                <Link legacyBehavior href="/index2dark">
-                  {t("default_header_front_end_dark")}
-                </Link>
-              </li>
-              <li>
-                <Link legacyBehavior href="/index3">
-                  {t("default_header_website_builder")}
-                </Link>
-              </li>
-            </ul>
-            <div className="dropdown-btn">
-              <span className="fas fa-chevron-down" />
-            </div>
-          </li>
-          <li className="dropdown">
-            <a href="#">{t("default_header_onepage")}</a>
-            <ul>
-              <li>
-                <Link legacyBehavior href="/index1-onepage">
-                  {t("default_header_web_design")}
-                </Link>
-              </li>
-              <li>
-                <Link legacyBehavior href="/index1dark-onepage">
-                  {t("default_header_web_design_dark")}
-                </Link>
-              </li>
-              <li>
-                <Link legacyBehavior href="/index2-onepage">
-                  {t("default_header_front_end_services")}
-                </Link>
-              </li>
-              <li>
-                <Link legacyBehavior href="/index2dark-onepage">
-                  {t("default_header_front_end_dark")}
-                </Link>
-              </li>
-              <li>
-                <Link legacyBehavior href="/index3-onepage">
-                  {t("default_header_website_builder")}
-                </Link>
-              </li>
-            </ul>
-            <div className="dropdown-btn">
-              <span className="fas fa-chevron-down" />
-            </div>
-          </li>
-        </ul>
-        <div className="dropdown-btn">
-          <span className="fas fa-chevron-down" />
-        </div>
+        <a href="#">{t("default_header_home")} </a>
       </li>
       <li className="dropdown">
         <a href="#">{t("default_header_services")}</a>
-        <ul>
-          <li>
-            <Link legacyBehavior href="/services">
-              {t("default_header_popular_services")}
-            </Link>
-          </li>
-          <li>
-            <Link legacyBehavior href="/service-details">
-              {t("default_header_service_details")}
-            </Link>
-          </li>
-        </ul>
-        <div className="dropdown-btn">
-          <span className="fas fa-chevron-down" />
-        </div>
       </li>
       <li className="dropdown">
         <a href="#">{t("default_header_project")}</a>
-        <ul>
-          <li>
-            <Link legacyBehavior href="/projects">
-              {t("default_header_project_grid")}
-            </Link>
-          </li>
-          <li>
-            <Link legacyBehavior href="/project-creative">
-              {t("default_header_project_creative")}
-            </Link>
-          </li>
-          <li>
-            <Link legacyBehavior href="/project-carousel">
-              {t("default_header_project_carousel")}
-            </Link>
-          </li>
-          <li>
-            <Link legacyBehavior href="/project-details">
-              {t("default_header_project_details")}
-            </Link>
-          </li>
-        </ul>
-        <div className="dropdown-btn">
-          <span className="fas fa-chevron-down" />
-        </div>
       </li>
       <li className="dropdown">
         <a href="#">{t("default_header_pages")}</a>
-        <ul>
-          <li>
-            <Link legacyBehavior href="/about">
-              {t("default_header_about_us")}
-            </Link>
-          </li>
-          <li className="dropdown">
-            <a href="#">{t("default_header_team")}</a>
-            <ul>
-              <li>
-                <Link legacyBehavior href="/team">
-                  {t("default_header_expert_team")}
-                </Link>
-              </li>
-              <li>
-                <Link legacyBehavior href="/team-profile">
-                  {t("default_header_team_profile")}
-                </Link>
-              </li>
-            </ul>
-            <div className="dropdown-btn">
-              <span className="fas fa-chevron-down" />
-            </div>
-          </li>
-          <li>
-            <Link legacyBehavior href="/pricing">
-              {t("default_header_pricing_plan")}
-            </Link>
-          </li>
-          <li>
-            <Link legacyBehavior href="/faqs">
-              {t("default_header_faqs_help")}
-            </Link>
-          </li>
-          <li>
-            <Link legacyBehavior href="/404">
-              {t("default_header_404_error")}
-            </Link>
-          </li>
-        </ul>
-        <div className="dropdown-btn">
-          <span className="fas fa-chevron-down" />
-        </div>
       </li>
       <li className="dropdown">
         <a href="#">{t("default_header_shop")}</a>
-        <ul>
-          <li>
-            <Link legacyBehavior href="/shop">
-              {t("default_header_shop_grid")}
-            </Link>
-          </li>
-          <li>
-            <Link legacyBehavior href="/product-details">
-              {t("default_header_product_details")}
-            </Link>
-          </li>
-          <li>
-            <Link legacyBehavior href="/cart">
-              {t("default_header_cart_page")}
-            </Link>
-          </li>
-          <li>
-            <Link legacyBehavior href="/checkout">
-              {t("default_header_checkout")}
-            </Link>
-          </li>
-        </ul>
-        <div className="dropdown-btn">
-          <span className="fas fa-chevron-down" />
-        </div>
       </li>
       <li className="dropdown">
         <a href="#">{t("default_header_blog")}</a>
-        <ul>
-          <li>
-            <Link legacyBehavior href="/blog">
-              {t("default_header_blog_grid")}
-            </Link>
-          </li>
-          <li>
-            <Link legacyBehavior href="/blog-list">
-              {t("default_header_blog_list")}
-            </Link>
-          </li>
-          <li>
-            <Link legacyBehavior href="/blog-details">
-              {t("default_header_blog_details")}
-            </Link>
-          </li>
-        </ul>
-        <div className="dropdown-btn">
-          <span className="fas fa-chevron-down" />
-        </div>
       </li>
       <li>
         <Link legacyBehavior href="/contact">
