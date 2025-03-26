@@ -1,6 +1,5 @@
 import React, { useEffect, useRef } from "react";
 import SimpleBar from "simplebar-react";
-
 // components
 import AppMenu from "./AppMenu";
 const logoSm = "/assets/images/logo-sm.png";

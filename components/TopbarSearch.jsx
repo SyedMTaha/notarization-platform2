@@ -3,10 +3,10 @@
 // import Avatar5 from "../assets/images/users/user-5.jpg";
 const TopbarSearch = (props) => {
   const showSearchOptions = () => {
-    document.getElementById("search-dropdown").classList.add("d-block");
+    // document.getElementById("search-dropdown").classList.add("d-block");
   };
   const hideSearchOptions = () => {
-    document.getElementById("search-dropdown").classList.remove("d-block");
+    // document.getElementById("search-dropdown").classList.remove("d-block");
   };
   return (
     <>

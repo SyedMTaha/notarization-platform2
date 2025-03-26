@@ -295,4 +295,4 @@ const MENU_ITEMS = [
     url: "/apps/file-manager",
   },
 ];
-export default MENU_ITEMS;
+export { MENU_ITEMS };

@@ -14,6 +14,7 @@ import { useViewport } from "@/hooks/useViewPort";
 import { useLayoutContext } from "@/context/useLayoutContext.jsx";
 import { toggleDocumentAttribute } from "@/utils/layout";
 import Link from "next/link";
+import MessageDropdown from "@/components/MessagesDropdown";
 // get the notifications
 const Notifications = [
   {
@@ -164,7 +165,7 @@ const Topbar = ({ hideLogo, navCssClasses }) => {
               <NotificationDropdown notifications={Notifications} />
             </li>
             <li className="dropdown notification-list">
-              <NotificationDropdown notifications={Notifications} />
+              <MessageDropdown notifications={Notifications} />
             </li>
             <li>
               <button

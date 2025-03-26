@@ -18,7 +18,7 @@ const MenuItemLink = ({ item, className }) => {
   const Icon = item.icon;
   return (
     <Link
-      href={item.url}
+      href={item.url || "#"}
       target={item.target}
       className={classNames("side-nav-link-ref menu-link", className)}
       data-menu-key={item.key}
