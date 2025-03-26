@@ -3,7 +3,8 @@ import Link from "next/link";
 import MobileMenu from "./MobileMenu";
 import { useTranslations } from "next-intl";
 import { useState, useEffect } from "react";
-const Header = ({ header }) => {
+import LangSwitcher from "@/components/LangSwitch";
+const Header = ({ header, locale }) => {
   switch (header) {
     case 1:
       return <Header1 />;
@@ -12,7 +13,7 @@ const Header = ({ header }) => {
     case 3:
       return <PlainHeader />;
     default:
-      return <DefaultHeader />;
+      return <DefaultHeader locale={locale} />;
   }
 };
 export default Header;
@@ -258,7 +259,7 @@ const Header2 = () => {
   );
 };
 
-const DefaultHeader = () => {
+const DefaultHeader = ({ locale }) => {
   const t = useTranslations();
   const [padding, setPadding] = useState("0rem 10rem");
   useEffect(() => {
@@ -327,7 +328,7 @@ const DefaultHeader = () => {
                   </button>
                 </div>
                 <div className="navbar-collapse collapse clearfix">
-                  <Menu />
+                  <Menu locale={locale} />
                 </div>
               </nav>
               {/* Main Menu End*/}
@@ -364,10 +365,10 @@ const DefaultHeader = () => {
   );
 };
 
-const Menu = () => {
+const Menu = ({ locale }) => {
   const t = useTranslations();
   return (
-    <ul className="navigation clearfix">
+    <ul className="navigation clearfix" style={{ display: "flex", alignItems: "center" }}>
       <li className="dropdown">
         <Link href="/">{t("default_header_home")} </Link>
       </li>
@@ -375,7 +376,7 @@ const Menu = () => {
         <Link href="/about">{t("default_header_services")}</Link>
       </li>
       <li className="dropdown">
-        <Link href="/faqs/0">{t("default_header_project")}</Link>
+        <Link href="/faqs/0">{t("navbar.standard")}</Link>
       </li>
       <li className="dropdown">
         <Link href="/authenticate">{t("default_header_pages")}</Link>
@@ -384,10 +385,12 @@ const Menu = () => {
         <Link href="/help-desk">{t("navbar.help")}</Link>
       </li>
       <li>
-        <Link href="/contact">
-          {t("default_header_contact")}
-        </Link>
+        <Link href="/contact">{t("default_header_contact")}</Link>
       </li>
+      {/* Wrapper div for proper vertical alignment */}
+      <div style={{ display: "flex", alignItems: "center", marginLeft: "20px" }}>
+        <LangSwitcher locale={locale} icon={"/assets/images/lang.png"} type="dark" />
+      </div>
     </ul>
   );
 };

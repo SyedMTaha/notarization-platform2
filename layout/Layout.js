@@ -39,7 +39,7 @@ const Layout = ({ children, header, className, footer, noHeader }) => {
         <VideoPopup />
         <ImageView />
         <div className="page-wrapper">
-          {!noHeader && <Header header={header} />}
+          {!noHeader && <Header header={header} locale={locale} />}
           <SideBar />
           {children}
           {!footer && <CallToAction />}

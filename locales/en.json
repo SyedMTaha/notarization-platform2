@@ -5,7 +5,7 @@
   "navbar": {
     "home": "Home",
     "about": "Solutions",
-    "standard": "Standard Forms",
+    "standard": "How it Works",
     "authenticate": "Authenticate",
     "help": "Help Desk",
     "contact": "Contact",
@@ -157,7 +157,7 @@
   "slider_main_title_suffix": "Anywhere, Anytime",
   "slider_btn_get_started": "Get Started Us",
   "slider_btn_explore_services": "Explore Services",
-  "slider_video_title_1": "Web Design",
+  "slider_video_title_1": "Notorize Now",
   "slider_video_title_2": "Development",
   "get_appointment_title": "Get Appointment",
   "form_name_placeholder": "Name",

@@ -3563,9 +3563,9 @@ h6, .h6 {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex; }
-  @media only screen and (min-width: 576px) and (max-width: 2000px) {
+  /* @media only screen and (min-width: 576px) and (max-width: 2000px) {
     .menu-sidebar {
-      margin-left: 1rem; } }
+      margin-left: 0.25rem; } } */
   .menu-sidebar button {
     width: 35px;
     display: -webkit-box;
