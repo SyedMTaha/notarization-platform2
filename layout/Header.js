@@ -260,13 +260,13 @@ const Header2 = () => {
 
 const DefaultHeader = () => {
   const t = useTranslations();
-  const [padding, setPadding] = useState("0rem 6rem");
+  const [padding, setPadding] = useState("0rem 10rem");
   useEffect(() => {
     const handleResize = () => {
       if (window.innerWidth < 1200) {
         setPadding("0rem 1rem"); // Apply different padding for smaller screens
       } else {
-        setPadding("0rem 6rem"); // Default padding for larger screens
+        setPadding("0rem 10rem"); // Default padding for larger screens
       }
     };
 
@@ -283,7 +283,7 @@ const DefaultHeader = () => {
     <header className="main-header header-three menu-absolute">
       {/*Header-Upper*/}
       <div className="header-upper">
-        <div className="container-fluid clearfix" style={{padding: padding}}>
+        <div className="container-fluid clearfix" style={{ padding: padding }}>
           <div className="header-inner rel d-flex align-items-center">
             <div className="logo-outer">
               <div className="logo">
@@ -372,13 +372,16 @@ const Menu = () => {
         <Link href="/">{t("default_header_home")} </Link>
       </li>
       <li className="dropdown">
-        <Link href="/solutions">{t("default_header_services")}</Link>
+        <Link href="/about">{t("default_header_services")}</Link>
       </li>
       <li className="dropdown">
-        <Link href="/standard-forms">{t("default_header_project")}</Link>
+        <Link href="/faqs/0">{t("default_header_project")}</Link>
       </li>
       <li className="dropdown">
         <Link href="/authenticate">{t("default_header_pages")}</Link>
+      </li>
+      <li>
+        <Link href="/help-desk">{t("navbar.help")}</Link>
       </li>
       <li>
         <Link href="/contact">

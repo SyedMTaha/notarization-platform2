@@ -83,13 +83,13 @@ const IndexOnePage = ({ params }) => {
                     >
                       <ul className="navigation onepage clearfix">
                         <li>
-                          <a href="#home">{t("navbar.home")}</a>
+                          <Link href="#home">{t("navbar.home")}</Link>
                         </li>
                         <li>
-                          <a href="#about">{t("navbar.about")}</a>
+                          <Link href="/about">{t("navbar.about")}</Link>
                         </li>
                         <li>
-                          <a href="#featured">{t("navbar.standard")}</a>
+                          <Link href="/faqs/0">{t("navbar.standard")}</Link>
                         </li>
                         <li>
                           <a href="#project">{t("navbar.authenticate")}</a>
