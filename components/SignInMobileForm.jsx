@@ -11,7 +11,7 @@ import "react-phone-input-2/lib/bootstrap.css";
 
 // components
 
-import useMobileSignIn from "@/hooks/useMobileSignIn.js";
+import useMobileNumberSignIn from "@/hooks/useMobileNumberSignIn.js";
 import { Controller } from "react-hook-form";
 import Feedback from "react-bootstrap/esm/Feedback";
 import { forwardRef, useState } from "react";
@@ -50,13 +50,13 @@ const CustomCheckbox = forwardRef(
 const SignInMobileForm = () => {
   const t = useTranslations();
 
-  const { login, control, errors } = useMobileSignIn();
+  const { login, control, errors } = useMobileNumberSignIn();
   const [showPassword, setShowPassword] = useState(false);
   return (
     <>
       <form onSubmit={login}>
         <div className="my-4">
-          <label htmlFor="phone">{t("signin_phone_label")}</label>
+          <label htmlFor="phone">{t("phone_label")}</label>
           <Controller
             name="phone"
             control={control}
@@ -73,9 +73,7 @@ const SignInMobileForm = () => {
             control={control}
             render={({ field, fieldState }) => (
               <FormGroup>
-                <FormLabel htmlFor="password">
-                  {t("signin_password_label")}
-                </FormLabel>
+                <FormLabel htmlFor="password">{t("password_label")}</FormLabel>
 
                 <div className="position-relative">
                   <FormControl

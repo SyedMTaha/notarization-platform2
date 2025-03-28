@@ -47,9 +47,7 @@ const SignInEmailForm = () => {
             control={control}
             render={({ field, fieldState }) => (
               <FormGroup>
-                <FormLabel htmlFor="email">
-                  {t("siginin_email_label")}
-                </FormLabel>
+                <FormLabel htmlFor="email">{t("email_label")}</FormLabel>
                 <FormControl
                   size="sm"
                   style={{ padding: "10px" }}
@@ -73,9 +71,7 @@ const SignInEmailForm = () => {
             control={control}
             render={({ field, fieldState }) => (
               <FormGroup>
-                <FormLabel htmlFor="password">
-                  {t("signin_password_label")}
-                </FormLabel>
+                <FormLabel htmlFor="password">{t("password_label")}</FormLabel>
 
                 <div className="position-relative">
                   <FormControl

@@ -335,8 +335,13 @@
   "forgot_pass": "¿Olvidaste tu contraseña?",
   "need_account": "¿Necesitas una cuenta?",
   "create_one": "Crea una",
-  "signin_password_label": "Contraseña",
-  "siginin_email_label": "Correo electrónico",
+  "password_label": "Contraseña",
+  "email_label": "Correo electrónico",
   "keep_me_logged_in": "Mantenerme conectado",
-  "signin_phone_label": "Número de móvil"
+  "phone_label": "Número de móvil",
+
+  "forgot_pass_heading": "¿Olvidaste tu contraseña?",
+  "forgot_pass_we_got_you": "¿Olvidaste tu contraseña? ¡Te tenemos cubierto!",
+  "send_verification_link": "Enviar enlace de verificación",
+  "send_verification_message": "Enviar mensaje de verificación"
 }

@@ -2,21 +2,26 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import * as yup from "yup";
-const useLogin = () => {
+const useMobileNumberSignIn = () => {
   const [loading, setLoading] = useState(false);
   const loginFormSchema = yup.object({
-    email: yup
+    phone: yup
       .string()
-      .email("Please enter a valid email")
-      .required("Please enter your email"),
+      .required("Phone number is required")
+      .matches(/^\+?[1-9]\d{1,14}$/, "Phone number is not valid"),
     password: yup.string().required("Please enter your password"),
     keepMeLoggedIn: yup.bool().oneOf([true, false], "Invalid choice"),
   });
-  const { control, handleSubmit } = useForm({
+  const {
+    control,
+    handleSubmit,
+    formState: { errors },
+  } = useForm({
     resolver: yupResolver(loginFormSchema),
+    mode: "onBlur",
     defaultValues: {
-      mobile: "user@demo.com",
-      password: "123456",
+      phone: "",
+      password: "",
       keepMeLoggedIn: false,
     },
   });
@@ -24,6 +29,7 @@ const useLogin = () => {
   const login = handleSubmit(async (values) => {
     try {
       /// implement login
+      console.log(values);
     } catch (e) {
       if (e.response?.data?.error) {
         control.setError("email", {
@@ -43,6 +49,7 @@ const useLogin = () => {
     loading,
     login,
     control,
+    errors,
   };
 };
-export default useLogin;
+export default useMobileNumberSignIn;

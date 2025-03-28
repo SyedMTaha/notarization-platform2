@@ -2,14 +2,13 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import * as yup from "yup";
-const useMobileSignIn = () => {
+const useMobileNumberForgotPassword = () => {
   const [loading, setLoading] = useState(false);
   const loginFormSchema = yup.object({
-    password: yup.string().required("Please enter your password"),
     phone: yup
       .string()
-      .matches(/^\d{10,15}$/, "Please enter a valid phone number")
-      .required("Please enter your phone number"),
+      .required("Phone number is required")
+      .matches(/^\+?[1-9]\d{1,14}$/, "Phone number is not valid"),
   });
   const {
     control,
@@ -19,21 +18,16 @@ const useMobileSignIn = () => {
     resolver: yupResolver(loginFormSchema),
     mode: "onBlur",
     defaultValues: {
-      email: "jonas_kahnwald@gmail.com",
-      password: "",
+      phone: "",
     },
   });
 
-  const login = handleSubmit(async (values) => {
+  const forgotPassword = handleSubmit(async (values) => {
     try {
-      /// implement login
+      /// implement forgot password
       console.log(values);
     } catch (e) {
       if (e.response?.data?.error) {
-        control.setError("password", {
-          type: "custom",
-          message: e.response?.data?.error,
-        });
         control.setError("phone", {
           type: "custom",
           message: e.response?.data?.error,
@@ -45,9 +39,9 @@ const useMobileSignIn = () => {
   });
   return {
     loading,
-    login,
+    forgotPassword,
     control,
     errors,
   };
 };
-export default useMobileSignIn;
+export default useMobileNumberForgotPassword;

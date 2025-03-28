@@ -369,8 +369,13 @@
   "forgot_pass": "Forgot your password?",
   "need_account": "Need an account?",
   "create_one": "Create one",
-  "signin_password_label": "Password",
-  "siginin_email_label": "Email",
+  "password_label": "Password",
+  "email_label": "Email",
   "keep_me_logged_in": "Keep me logged in",
-  "signin_phone_label": "Mobile Number"
+  "phone_label": "Mobile Number",
+
+  "forgot_pass_heading": "Forgot Password?",
+  "forgot_pass_we_got_you": "Forgot your Password? We’ve Got you!",
+  "send_verification_link": "Send Verification Link",
+  "send_verification_message": "Send Verification Message"
 }

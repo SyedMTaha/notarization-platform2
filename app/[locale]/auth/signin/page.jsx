@@ -11,7 +11,7 @@ import { useState } from "react";
 import SignInMobileForm from "@/components/SignInMobileForm";
 import SignInEmailForm from "@/components/SignInEmailForm";
 
-const Login = () => {
+const SignIn = () => {
   const t = useTranslations();
   const [formType, setFormType] = useState("mobile");
   return (
@@ -114,4 +114,4 @@ const Login = () => {
     </>
   );
 };
-export default Login;
+export default SignIn;
