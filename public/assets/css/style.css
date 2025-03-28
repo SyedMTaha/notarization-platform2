@@ -8339,3 +8339,35 @@ h4.comment-title {
     background: transparent; }
   .dark-version.home-one .main-footer {
     background: #1e1e22; }
+
+.custom-tab .nav-link{
+  color: #0C1134 !important; 
+}
+
+.custom-tab .nav-link.active {
+  background-color: #0C1134 !important; /* Background color for active tab */
+  color: #ffffff !important; /* Text color for active tab */
+  border-radius: 5px; /* Optional: adds rounded corners to active tab */
+}
+
+input[type=checkbox]
+{
+  /* Double-sized Checkboxes */
+  -ms-transform: scale(1); /* IE */
+  -moz-transform: scale(1); /* FF */
+  -webkit-transform: scale(1); /* Safari and Chrome */
+  -o-transform: scale(1); /* Opera */
+  padding: 10px;
+}
+
+.signin-form-container{
+  width: 50%;
+  margin-top: 50px;
+}
+
+@media (max-width: 768px) {
+  .signin-form-container {
+    width: 100%;
+    padding: 10px;
+  }
+}

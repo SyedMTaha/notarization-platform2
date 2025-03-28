@@ -360,5 +360,17 @@
         "description": "Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium totam aperiam eaque quae abillo inventore"
       }
     }
-  }
+  },
+  "please_signin": "Please login to continue to your account.",
+  "send_me_on": "Send me on:",
+  "sign_in_heading": "Sign In",
+  "mobile_number_tab": "Mobile Number",
+  "email_tab": "Email",
+  "forgot_pass": "Forgot your password?",
+  "need_account": "Need an account?",
+  "create_one": "Create one",
+  "signin_password_label": "Password",
+  "siginin_email_label": "Email",
+  "keep_me_logged_in": "Keep me logged in",
+  "signin_phone_label": "Mobile Number"
 }

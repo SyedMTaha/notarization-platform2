@@ -326,5 +326,17 @@
     "faqs-title": "Preguntas Frecuentes",
     "faqs-link": "Preguntas Frecuentes",
     "add-questions-button": "Añadir Preguntas"
-  }
+  },
+  "please_signin": "Por favor, inicie sesión para continuar con su cuenta.",
+  "send_me_on": "Envíame en:",
+  "sign_in_heading": "Iniciar sesión",
+  "mobile_number_tab": "Número de móvil",
+  "email_tab": "Correo electrónico",
+  "forgot_pass": "¿Olvidaste tu contraseña?",
+  "need_account": "¿Necesitas una cuenta?",
+  "create_one": "Crea una",
+  "signin_password_label": "Contraseña",
+  "siginin_email_label": "Correo electrónico",
+  "keep_me_logged_in": "Mantenerme conectado",
+  "signin_phone_label": "Número de móvil"
 }
