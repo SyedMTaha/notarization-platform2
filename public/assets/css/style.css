@@ -3226,8 +3226,7 @@ h6, .h6 {
     flex: none; }
     @media only screen and (max-width: 991px) {
       .main-header .logo-outer {
-        display: none; }
-       }
+        display: none; } }
   .main-header .logo {
     z-index: 9;
     padding: 2px 0;
@@ -3247,7 +3246,7 @@ h6, .h6 {
   @media only screen and (min-width: 992px) {
     .main-header.fixed-header .main-menu .navbar-collapse > ul > li {
       padding-top: 25px;
-      padding-bottom: 35px; } }
+      padding-bottom: 25px; } }
 
 @media only screen and (max-width: 767px) {
   .header-top-wrap {
@@ -3756,101 +3755,27 @@ h6, .h6 {
 .main-header.header-three .navbar-header {
   margin-right: 0; }
 
-.main-header.header-three .header-upper {
-  background-image: url("/assets/images/logos/logo.png");
-  background-size: auto 70%; /* Adjusts height dynamically */
-  background-position: left 1% center;
-  background-repeat: no-repeat;
-}
-
 /* Menu White */
-.main-header.header-two-home {
-  position: absolute; 
-  /* background-color: #0066ff; */
-}
+.main-header.header-two {
+  position: absolute; }
   @media only screen and (min-width: 992px) {
-    .main-header.header-two-home .nav-outer {
-      /* margin-left: 75px;  */
-    } }
-  .main-header.header-two-home .nav-search > button {
+    .main-header.header-two .nav-outer {
+      margin-left: 75px; } }
+  .main-header.header-two .nav-search > button {
     color: white; }
   @media only screen and (min-width: 992px) {
-    .main-header.header-two-home.default .main-menu .navigation > li > a
-    {
-      color:black;
-    }
-    .main-header.header-two-home.other .main-menu .navigation > li > a
-    {
-      color:white;
-    }
-
-    .main-header.header-two-home .main-menu .navigation > .dropdown > .dropdown-btn {
-      color: white; 
-    } 
-    }
-  .main-header.header-two-home .main-menu .navigation li li a:hover {
-    color: var(--primary-theme); 
-  }
-
-  .main-header.header-two-home .menu-sidebar button .icon-bar,
-  .main-header.header-two-home .main-menu .navbar-toggle .icon-bar {
-    background: white; 
-  }
-  .main-header.header-two-home .menu-btns .theme-btn.style-three:not(:hover) {
-    border-color: white; 
-  }
-
-  .main-header.header-two-home.fixed-header .header-upper .main-menu .navigation > li > a {
-    color: white;
-  }
-  .main-header.header-two-home.fixed-header .header-upper .main-menu.navbar-collapse .navigation > li > a {
-    color: black;
-  }
-  .main-header.header-two-home.fixed-header .header-upper {
-    background: var(--primary-theme);
-    background-image: url("/assets/images/logos/logo-white.png");
-    background-size: auto 70%; /* Adjusts height dynamically */
-    background-position: left 1% center;
-    background-repeat: no-repeat;
-  }
-  
-  .main-header.header-two-home.default .header-upper {
-    background-image: url("/assets/images/logos/logo.png");
-    background-size: auto 70%; /* Responsive height */
-    background-position: left 1% center;
-    background-repeat: no-repeat;
-  }
-  
-  .main-header.header-two-home.default.fixed-header .header-upper {
-    background-image: url("/assets/images/logos/logo-white.png");
-    background-size: auto 70%; /* Responsive height */
-    background-position: left 1% center;
-    background-repeat: no-repeat;
-  }
-  
-  .main-header.header-two-home.other .header-upper {
-    background-image: url("/assets/images/logos/logo-white.png");
-    background-size: auto 70%; /* Responsive height */
-    background-position: left 1% center;
-    background-repeat: no-repeat;
-  }
-  
-  /* Mobile responsiveness */
-  @media (max-width: 768px) {
-    .main-header.header-two-home .header-upper {
-      background-size: auto 30%; /* Smaller height for mobile */
-      background-position: left 3% center; /* Adjust position */
-    }
-  }
-  
-  .logo-container {
-    display: block;
-    width: 80px; /* Adjust size */
-    height: 40px; /* Adjust size */
-    background-size: contain;
-    background-repeat: no-repeat;
-    background-position: center;
-  }
+    .main-header.header-two .main-menu .navigation > li > a,
+    .main-header.header-two .main-menu .navigation > .dropdown > .dropdown-btn {
+      color: white; } }
+  .main-header.header-two .main-menu .navigation li li a:hover {
+    color: var(--primary-theme); }
+  .main-header.header-two .menu-sidebar button .icon-bar,
+  .main-header.header-two .main-menu .navbar-toggle .icon-bar {
+    background: white; }
+  .main-header.header-two .menu-btns .theme-btn.style-three:not(:hover) {
+    border-color: white; }
+  .main-header.header-two.fixed-header .header-upper {
+    background: #17171a; }
 
 /*******************************************************/
 /******************** 07. Hero Area ********************/
@@ -8414,4 +8339,3 @@ h4.comment-title {
     background: transparent; }
   .dark-version.home-one .main-footer {
     background: #1e1e22; }
-

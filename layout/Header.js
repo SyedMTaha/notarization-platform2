@@ -1,129 +1,400 @@
 import { sideBarToggle } from "@/utility";
 import Link from "next/link";
+import MobileMenu from "./MobileMenu";
 import { useTranslations } from "next-intl";
+import { useState, useEffect } from "react";
 import LangSwitcher from "@/components/LangSwitch";
-import { usePathname } from "next/navigation";
-import { Accordion } from "react-bootstrap";
+const Header = ({ header, locale }) => {
+  switch (header) {
+    case 1:
+      return <Header1 />;
+    case 2:
+      return <Header2 />;
+    case 3:
+      return <PlainHeader />;
+    default:
+      return <DefaultHeader locale={locale} />;
+  }
+};
+export default Header;
 
-
-const Header_Temp=({header, locale})=>
-{
-  const t = useTranslations();
-  console.log(locale);
-  return(
-    <>
-      <Header_Main locale={locale} header={header}/>
-    </>
-
-  )
-}
-
-export default Header_Temp;
-
-
-const Header_Main = ({header, locale}) => {
-  const pathname = usePathname();
-  const t = useTranslations();
-  const hasRouteAfterLocale = header ? false : true;
+const Header1 = () => {
   return (
-    <>
-
-
-              <header className={`main-header ${hasRouteAfterLocale ? 'header-three default' : 'header-two-home other'}`}>
-              <div className="header-upper">
-              <div className="container clearfix">
-                <div className="header-inner rel d-flex align-items-center justify-content-between">
-                  <div className="header-left">
-                    <div className="logo">
-                      {/* <Link legacyBehavior href="/">
-                        <a>
-                          <img
-                            src={hasRouteAfterLocale ? "/assets/images/logos/logo.png" : "/assets/images/logos/logo-white.png"}
-                            alt={t("logo_alt")}
-                            title={t("logo_title")}
-                          />
-                        </a>
-                      </Link> */}
-                        <Link href="/" legacyBehavior>
-                        <a className={`logo-container ${hasRouteAfterLocale ? 'default' : 'other'}`}></a>
-                        </Link>
-                    </div>
-                  </div>
-                  <div>
-                    <nav className="main-menu navbar-expand-lg py-15" style={{display:"flex", alignContent:"center", justifyContent:"space-between"}}>
-                      
-                      {hasRouteAfterLocale && <LangSwitcher
-                          locale={locale}
-                          icon={"/assets/images/lang.png"}
-                          type={hasRouteAfterLocale ? "dark" : undefined}
-                        />}
-                      <div style={{marginTop:"0.5rem"}}>
-                        <Accordion>
-                          <div className="navbar-header">
-                            <Accordion.Toggle
-                              eventKey="nav"
-                              as="button"
-                              className="navbar-toggle"
-                            >
-                              <span className="icon-bar" />
-                              <span className="icon-bar" />
-                              <span className="icon-bar" />
-                            </Accordion.Toggle>
-                          </div>
-                          <Accordion.Collapse
-                            eventKey="nav"
-                            className="navbar-collapse clearfix"
-                          >
-                            <ul className="navigation onepage clearfix ">
-                              <li>
-                                <Link href="/">{t("navbar.home")}</Link>
-                              </li>
-                              <li>
-                                <Link href="/about">{t("navbar.about")}</Link>
-                              </li>
-                              <li>
-                                <Link href="/faqs/0">{t("navbar.standard")}</Link>
-                              </li>
-                              <li>
-                                <a href="#project">{t("navbar.authenticate")}</a>
-                              </li>
-                              <li>
-                                <Link href="/help-desk">{t("navbar.help")}</Link>
-                              </li>
-                              <li>
-                                <a href="#contact">{t("navbar.contact")}</a>
-                              </li>
-                            </ul>
-                          </Accordion.Collapse>
-                        </Accordion>
-                      </div>
-                    </nav>
-                  </div>
-
-                  <div className="menu-btns">
-                    <Link legacyBehavior href="/contact">
-                      <a className="theme-btn style-three rounded-pill">
-                        {t("navbar.login")}{" "}
-                        <i className="fas fa-angle-double-right" />
+    <header className="main-header header-two">
+      {/*Header-Upper*/}
+      <div className="header-upper">
+        <div className="container clearfix">
+          <div className="header-inner rel d-flex align-items-center">
+            <div className="logo-outer">
+              <div className="logo">
+                <Link legacyBehavior href="/">
+                  <a>
+                    <img
+                      src="/assets/images/logos/logo-white.png"
+                      alt="Logo"
+                      title="Logo"
+                    />
+                  </a>
+                </Link>
+              </div>
+            </div>
+            <div className="nav-outer clearfix">
+              <MobileMenu logo={"/assets/images/logos/logo-white.png"} />
+              {/* Main Menu */}
+              <nav className="main-menu d-none d-lg-block navbar-expand-lg">
+                <div className="navbar-header">
+                  <div className="mobile-logo my-15">
+                    <Link legacyBehavior href="/">
+                      <a>
+                        <img
+                          src="/assets/images/logos/logo-white.png"
+                          alt="Logo"
+                          title="Logo"
+                        />
                       </a>
                     </Link>
-                    <LangSwitcher
-                      locale={locale}
-                      icon={"/assets/images/lang.png"}
-                      type={hasRouteAfterLocale ? "dark" : undefined}
-                    />
-                    <div className="menu-sidebar d-none d-md-block">
-                      <button onClick={() => sideBarToggle()}>
-                        <span className="icon-bar" />
-                        <span className="icon-bar" />
-                        <span className="icon-bar" />
-                      </button>
-                    </div>
                   </div>
+                  {/* Toggle Button */}
+                  <button
+                    type="button"
+                    className="navbar-toggle"
+                    data-bs-toggle="collapse"
+                    data-bs-target=".navbar-collapse"
+                  >
+                    <span className="icon-bar" />
+                    <span className="icon-bar" />
+                    <span className="icon-bar" />
+                  </button>
+                </div>
+                <div className="navbar-collapse collapse clearfix">
+                  <Menu />
+                </div>
+              </nav>
+              {/* Main Menu End*/}
+            </div>
+            {/* Nav Search */}
+            <div className="nav-search py-15">
+              <button className="far fa-search" />
+              <form
+                onSubmit={(e) => e.preventDefault()}
+                action="#"
+                className="hide"
+              >
+                <input
+                  type="text"
+                  placeholder="Search"
+                  className="searchbox"
+                  required=""
+                />
+                <button type="submit" className="searchbutton far fa-search" />
+              </form>
+            </div>
+            {/* Menu Button */}
+            <div className="menu-btns">
+              <Link legacyBehavior href="/contact">
+                <a className="theme-btn style-three">
+                  Get a Quote <i className="fas fa-angle-double-right" />
+                </a>
+              </Link>
+              {/* menu sidbar */}
+              <div className="menu-sidebar d-none d-lg-block">
+                <button onClick={() => sideBarToggle()}>
+                  <span className="icon-bar" />
+                  <span className="icon-bar" />
+                  <span className="icon-bar" />
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      {/*End Header Upper*/}
+    </header>
+  );
+};
+
+const Header2 = () => {
+  return (
+    <header className="main-header">
+      <div className="header-top-wrap bgc-secondary text-white py-5">
+        <div className="container">
+          <div className="header-top">
+            <div className="row align-items-center">
+              <div className="col-lg-4">
+                <div className="top-left text-center text-lg-start">
+                  <ul>
+                    <li>
+                      <a href="#">About</a>
+                    </li>
+                    <li>
+                      <a href="#">Services</a>
+                    </li>
+                    <li>
+                      <a href="#">Faqs</a>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+              <div className="col-lg-8">
+                <div className="top-right text-center text-lg-end">
+                  <ul>
+                    <li>
+                      <i className="far fa-envelope" />{" "}
+                      <a href="mailto:support@gmail.com">support@gmail.com</a>
+                    </li>
+                    <li>
+                      <i className="far fa-phone" />{" "}
+                      <a href="callto:+000(123)45699">+000 (123) 456 99</a>
+                    </li>
+                    <li>
+                      <select className="select" name="language" id="language">
+                        <option value="English">English</option>
+                        <option value="Bengali">Bengali</option>
+                        <option value="Arabic">Arabic</option>
+                      </select>
+                    </li>
+                  </ul>
                 </div>
               </div>
             </div>
-          </header>
-    </>
-  )
-}
+          </div>
+        </div>
+      </div>
+      {/*Header-Upper*/}
+      <div className="header-upper">
+        <div className="container clearfix">
+          <div className="header-inner rel d-flex align-items-center">
+            <div className="logo-outer">
+              <div className="logo">
+                <Link legacyBehavior href="/">
+                  <a>
+                    <img
+                      src="/assets/images/logos/logo.png"
+                      alt="Logo"
+                      title="Logo"
+                      className="logo dark-logo"
+                    />
+                    <img
+                      className="light-logo logo"
+                      src="/assets/images/logos/logo-white.png"
+                      alt="Logo"
+                      title="Logo"
+                    />
+                  </a>
+                </Link>
+              </div>
+            </div>
+            <div className="nav-outer clearfix">
+              <MobileMenu />
+              {/* Main Menu */}
+              <nav className="main-menu d-none d-lg-block navbar-expand-lg">
+                <div className="navbar-header">
+                  <div className="mobile-logo my-15">
+                    <Link legacyBehavior href="/">
+                      <a>
+                        <img
+                          src="/assets/images/logos/logo.png"
+                          alt="Logo"
+                          title="Logo"
+                        />
+                      </a>
+                    </Link>
+                  </div>
+                  {/* Toggle Button */}
+                  <button
+                    type="button"
+                    className="navbar-toggle"
+                    data-bs-toggle="collapse"
+                    data-bs-target=".navbar-collapse"
+                  >
+                    <span className="icon-bar" />
+                    <span className="icon-bar" />
+                    <span className="icon-bar" />
+                  </button>
+                </div>
+                <div className="navbar-collapse collapse clearfix">
+                  <Menu />
+                </div>
+              </nav>
+              {/* Main Menu End*/}
+            </div>
+            {/* Nav Search */}
+            <div className="nav-search py-15">
+              <button className="far fa-search" />
+              <form
+                onSubmit={(e) => e.preventDefault()}
+                action="#"
+                className="hide"
+              >
+                <input
+                  type="text"
+                  placeholder="Search"
+                  className="searchbox"
+                  required=""
+                />
+                <button type="submit" className="searchbutton far fa-search" />
+              </form>
+            </div>
+            {/* Menu Button */}
+            <div className="menu-btns">
+              <Link legacyBehavior href="/contact">
+                <a className="theme-btn">
+                  Download Now <i className="fas fa-angle-double-right" />
+                </a>
+              </Link>
+              {/* menu sidbar */}
+              <div className="menu-sidebar d-none d-lg-block">
+                <button onClick={() => sideBarToggle()}>
+                  <span className="icon-bar" />
+                  <span className="icon-bar" />
+                  <span className="icon-bar" />
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      {/*End Header Upper*/}
+    </header>
+  );
+};
+
+const DefaultHeader = ({ locale }) => {
+  const t = useTranslations();
+  const [padding, setPadding] = useState("0rem 10rem");
+  useEffect(() => {
+    const handleResize = () => {
+      if (window.innerWidth < 1200) {
+        setPadding("0rem 1rem"); // Apply different padding for smaller screens
+      } else {
+        setPadding("0rem 10rem"); // Default padding for larger screens
+      }
+    };
+
+    // Check the size on initial load
+    handleResize();
+
+    // Set up event listener for window resize
+    window.addEventListener("resize", handleResize);
+
+    // Cleanup event listener on component unmount
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
+  return (
+    <header className="main-header header-three menu-absolute">
+      {/*Header-Upper*/}
+      <div className="header-upper">
+        <div className="container-fluid clearfix" style={{ padding: padding }}>
+          <div className="header-inner rel d-flex align-items-center">
+            <div className="logo-outer">
+              <div className="logo">
+                <Link legacyBehavior href="/">
+                  <a>
+                    <img
+                      src="/assets/images/logos/logo.png"
+                      alt="Logo"
+                      title="Logo"
+                    />
+                  </a>
+                </Link>
+              </div>
+            </div>
+            <div className="nav-outer clearfix">
+              <MobileMenu />
+              {/* Main Menu */}
+              <nav className="main-menu d-none d-lg-block navbar-expand-lg">
+                <div className="navbar-header">
+                  <div className="mobile-logo my-15">
+                    <Link legacyBehavior href="/">
+                      <a>
+                        <img
+                          src="/assets/images/logos/logo.png"
+                          alt="Logo"
+                          title="Logo"
+                        />
+                      </a>
+                    </Link>
+                  </div>
+                  {/* Toggle Button */}
+                  <button
+                    type="button"
+                    className="navbar-toggle"
+                    data-bs-toggle="collapse"
+                    data-bs-target=".navbar-collapse"
+                  >
+                    <span className="icon-bar" />
+                    <span className="icon-bar" />
+                    <span className="icon-bar" />
+                  </button>
+                </div>
+                <div className="navbar-collapse collapse clearfix">
+                  <Menu locale={locale} />
+                </div>
+              </nav>
+              {/* Main Menu End*/}
+            </div>
+            {/* Menu Button */}
+            <div className="menu-btns">
+              <Link legacyBehavior href="/contact">
+                <a
+                  style={{
+                    border: "1px solid black",
+                    paddingLeft: "50px",
+                    paddingRight: "40px",
+                  }}
+                  className="theme-btn rounded-pill style-three d-flex gap-3"
+                >
+                  {t("navbar.login")}{" "}
+                  <i className="fas fa-angle-double-right " />
+                </a>
+              </Link>
+              <LangSwitcher
+                locale={locale}
+                type={"dark"}
+              />
+              {/* menu sidebar */}
+              <div className="menu-sidebar d-none d-md-block">
+                <button onClick={() => sideBarToggle()}>
+                  <span className="icon-bar" />
+                  <span className="icon-bar" />
+                  <span className="icon-bar" />
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      {/*End Header Upper*/}
+    </header>
+  );
+};
+
+const Menu = ({ locale }) => {
+  const t = useTranslations();
+  return (
+    <ul
+      className="navigation clearfix"
+      style={{ display: "flex", alignItems: "center" }}
+    >
+      <li className="dropdown">
+        <Link href="/">{t("default_header_home")} </Link>
+      </li>
+      <li className="dropdown">
+        <Link href="/about">{t("default_header_services")}</Link>
+      </li>
+      <li className="dropdown">
+        <Link href="/faqs/0">{t("navbar.standard")}</Link>
+      </li>
+      <li className="dropdown">
+        <Link href="/authenticate">{t("default_header_pages")}</Link>
+      </li>
+      <li>
+        <Link href="/help-desk">{t("navbar.help")}</Link>
+      </li>
+      <li>
+        <Link href="/contact">{t("default_header_contact")}</Link>
+      </li>
+      {/* Wrapper div for proper vertical alignment */}
+    </ul>
+  );
+};

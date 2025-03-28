@@ -22,7 +22,7 @@ const IndexOnePage = ({ params }) => {
     setActive(value === active ? "" : value);
   };
   return (
-    <Layout className="home-one" footer={1} header={1}>
+    <Layout className="home-one" footer={1} noHeader>
       <Head>
         {" "}
         <Link
@@ -32,6 +32,125 @@ const IndexOnePage = ({ params }) => {
           type="image/x-icon"
         />
       </Head>
+      <header className="main-header header-two">
+        {/*Header-Upper*/}
+        <div className="header-upper">
+          <div className="container clearfix">
+            <div className="header-inner rel d-flex align-items-center">
+              <div className="logo-outer">
+                <div className="logo">
+                  <Link legacyBehavior href="/">
+                    <a>
+                      <img
+                        src="/assets/images/logos/logo-white.png"
+                        alt={t("logo_alt")}
+                        title={t("logo_title")}
+                      />
+                    </a>
+                  </Link>
+                </div>
+              </div>
+              <div className="nav-outer clearfix">
+                {/* Main Menu */}
+                <nav className="main-menu navbar-expand-lg">
+                  <Accordion>
+                    <div className="navbar-header">
+                      <div className="mobile-logo my-15">
+                        <Link legacyBehavior href="/">
+                          <a>
+                            <img
+                              src="/assets/images/logos/logo-white.png"
+                              alt={t("navbar.mobile_logo_alt")}
+                              title={t("logo_title")}
+                            />
+                          </a>
+                        </Link>
+                      </div>
+                      {/* Toggle Button */}
+                      <Accordion.Toggle
+                        eventKey="nav"
+                        as="button"
+                        className="navbar-toggle"
+                      >
+                        <span className="icon-bar" />
+                        <span className="icon-bar" />
+                        <span className="icon-bar" />
+                      </Accordion.Toggle>
+                    </div>
+                    <Accordion.Collapse
+                      eventKey="nav"
+                      className="navbar-collapse clearfix"
+                    >
+                      <ul className="navigation onepage clearfix">
+                        <li>
+                          <Link href="#home">{t("navbar.home")}</Link>
+                        </li>
+                        <li>
+                          <Link href="/about">{t("navbar.about")}</Link>
+                        </li>
+                        <li>
+                          <Link href="/faqs/0">{t("navbar.standard")}</Link>
+                        </li>
+                        <li>
+                          <a href="#project">{t("navbar.authenticate")}</a>
+                        </li>
+                        <li>
+                          <Link href="/help-desk">{t("navbar.help")}</Link>
+                        </li>
+                        <li>
+                          <a href="#contact">{t("navbar.contact")}</a>
+                        </li>
+                      </ul>
+                    </Accordion.Collapse>
+                  </Accordion>
+                </nav>
+                {/* Main Menu End*/}
+              </div>
+              {/* Nav Search */}
+              <div className="nav-search py-15">
+                <button className="far fa-search" />
+                <form
+                  onSubmit={(e) => e.preventDefault()}
+                  action="#"
+                  className="hide"
+                >
+                  <input
+                    type="text"
+                    placeholder={t("navbar.search_placeholder")}
+                    className="searchbox"
+                    required=""
+                  />
+                  <button
+                    type="submit"
+                    className="searchbutton far fa-search"
+                  />
+                </form>
+              </div>
+              {/* Menu Button */}
+              <div className="menu-btns">
+                <Link legacyBehavior href="/contact">
+                  <a className="theme-btn style-three">
+                    {t("navbar.login")}{" "}
+                    <i className="fas fa-angle-double-right" />
+                  </a>
+                </Link>
+                <LangSwitcher
+                  locale={locale}
+                />
+                {/* menu sidebar */}
+                <div className="menu-sidebar d-none d-md-block">
+                  <button onClick={() => sideBarToggle()}>
+                    <span className="icon-bar" />
+                    <span className="icon-bar" />
+                    <span className="icon-bar" />
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        {/*End Header Upper*/}
+      </header>
 
       <SideBar />
       {/*End Hidden Sidebar */}
