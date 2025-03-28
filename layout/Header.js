@@ -348,6 +348,10 @@ const DefaultHeader = ({ locale }) => {
                   <i className="fas fa-angle-double-right " />
                 </a>
               </Link>
+              <LangSwitcher
+                locale={locale}
+                type={"dark"}
+              />
               {/* menu sidebar */}
               <div className="menu-sidebar d-none d-md-block">
                 <button onClick={() => sideBarToggle()}>
@@ -368,7 +372,10 @@ const DefaultHeader = ({ locale }) => {
 const Menu = ({ locale }) => {
   const t = useTranslations();
   return (
-    <ul className="navigation clearfix" style={{ display: "flex", alignItems: "center" }}>
+    <ul
+      className="navigation clearfix"
+      style={{ display: "flex", alignItems: "center" }}
+    >
       <li className="dropdown">
         <Link href="/">{t("default_header_home")} </Link>
       </li>
@@ -388,9 +395,6 @@ const Menu = ({ locale }) => {
         <Link href="/contact">{t("default_header_contact")}</Link>
       </li>
       {/* Wrapper div for proper vertical alignment */}
-      <div style={{ display: "flex", alignItems: "center", marginLeft: "20px" }}>
-        <LangSwitcher locale={locale} icon={"/assets/images/lang.png"} type="dark" />
-      </div>
     </ul>
   );
 };

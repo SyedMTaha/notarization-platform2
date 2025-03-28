@@ -136,7 +136,6 @@ const IndexOnePage = ({ params }) => {
                 </Link>
                 <LangSwitcher
                   locale={locale}
-                  icon={"/assets/images/lang.png"}
                 />
                 {/* menu sidebar */}
                 <div className="menu-sidebar d-none d-md-block">
