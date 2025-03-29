@@ -32,7 +32,7 @@ const ForgotPassword = () => {
               title={t("logo_title")}
               className="position-absolute top-0 start-0 mt-4 ms-4"
             />
-            <div className=" signin-form-container">
+            <div className="signin-form-container">
               <h2 style={{ fontFamily: "Jost" }}>{t("forgot_pass_heading")}</h2>
               <p>{t("forgot_pass_we_got_you")}</p>
               <p className="mt-20">{t("send_me_on")}</p>
@@ -43,7 +43,9 @@ const ForgotPassword = () => {
                   defaultActiveKey="mobile"
                   className="gap-2 custom-tab flex-nowrap"
                 >
-                  <Nav.Item>
+                  <Nav.Item
+                    style={{ width: "50%" }}
+                  >
                     <Nav.Link
                       eventKey="mobile"
                       onClick={() => setFormType("mobile")}
@@ -51,7 +53,9 @@ const ForgotPassword = () => {
                       {t("mobile_number_tab")}
                     </Nav.Link>
                   </Nav.Item>
-                  <Nav.Item>
+                  <Nav.Item
+                    style={{ width: "50%" }}
+                  >
                     <Nav.Link
                       eventKey="email"
                       onClick={() => setFormType("email")}

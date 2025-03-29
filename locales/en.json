@@ -373,9 +373,22 @@
   "email_label": "Email",
   "keep_me_logged_in": "Keep me logged in",
   "phone_label": "Mobile Number",
-
   "forgot_pass_heading": "Forgot Password?",
   "forgot_pass_we_got_you": "Forgot your Password? We’ve Got you!",
   "send_verification_link": "Send Verification Link",
-  "send_verification_message": "Send Verification Message"
+  "send_verification_message": "Send Verification Message",
+  "sign-up": {
+    "title": "Sign Up",
+    "subtitle": "Register to get the best notary services online",
+    "mobile_number": "Mobile Number",
+    "email": "Email",
+    "password": "Password",
+    "confirm_password": "Confirm Password",
+    "terms_agreement": "By creating an account you agree with our",
+    "terms_conditions": "Terms & Conditions",
+    "privacy_policy": "Privacy Policy",
+    "sign_up_button": "Sign up",
+    "already_have_account": "Already have an account?",
+    "sign_in": "Sign in"
+  }
 }

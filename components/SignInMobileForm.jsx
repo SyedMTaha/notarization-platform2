@@ -21,7 +21,7 @@ import { useTranslations } from "next-intl";
 const CustomPhoneInput = forwardRef(({ value, onChange, onBlur }, ref) => (
   <PhoneInput
     country={"us"}
-    inputStyle={{ width: "100%", padding: "10px" }}
+    inputStyle={{ width: "100%", paddingTop: "10px", paddingBottom: "10px", paddingRight: "5px" }}
     value={value}
     onChange={onChange}
     onBlur={onBlur}

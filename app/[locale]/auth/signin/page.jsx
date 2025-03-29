@@ -18,13 +18,15 @@ const SignIn = () => {
     <>
       <Container
         fluid
-        className="d-flex align-items-center w-100 justify-content-center p-0"
+        className="d-flex align-items-center w-100 justify-content-center"
+        style={{ padding: "0px" }}
       >
         <Row className="w-100">
           {/* Left Side - Form Section */}
           <Col
             md={6}
-            className="d-flex mx-auto justify-content-center position-relative vh-100 align-items-center"
+            className="d-flex mx-auto justify-content-center position-relative align-items-center"
+            style={{ padding: "0px" }}
           >
             <img
               src="/assets/images/logos/logo.png"
@@ -32,7 +34,7 @@ const SignIn = () => {
               title={t("logo_title")}
               className="position-absolute top-0 start-0 mt-4 ms-4"
             />
-            <div className=" signin-form-container">
+            <div className="signin-form-container">
               <h2 style={{ fontFamily: "Jost" }}>{t("sign_in_heading")}</h2>
               <p>{t("please_signin")}</p>
               <p className="mt-20">{t("send_me_on")}</p>
@@ -43,7 +45,7 @@ const SignIn = () => {
                   defaultActiveKey="mobile"
                   className="gap-2 custom-tab flex-nowrap"
                 >
-                  <Nav.Item>
+                  <Nav.Item style={{ width: "50%" }} >
                     <Nav.Link
                       eventKey="mobile"
                       onClick={() => setFormType("mobile")}
@@ -51,7 +53,7 @@ const SignIn = () => {
                       {t("mobile_number_tab")}
                     </Nav.Link>
                   </Nav.Item>
-                  <Nav.Item>
+                  <Nav.Item style={{ width: "50%" }}>
                     <Nav.Link
                       eventKey="email"
                       onClick={() => setFormType("email")}
@@ -66,7 +68,7 @@ const SignIn = () => {
               ) : (
                 <SignInEmailForm />
               )}
-              <Row className="mt-3">
+              <Row className="mt-3" style={{ width: "100%" }}>
                 <Col className="text-center ">
                   <p>
                     <Link
