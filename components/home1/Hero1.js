@@ -97,12 +97,12 @@ const Hero1 = () => {
               backgroundImage: "url(/assets/images/slider/slide2.jpg)",
             }}
           >
-            <a
+            {/* <a
               href="https://www.youtube.com/watch?v=9Y7ma241N8k"
               className="mfp-iframe video-play"
             >
               <i className="fas fa-play" />
-            </a>
+            </a> */}
             <span className="video-title cd-headline clip">
               <span className="cd-words-wrapper">
                 <b className="is-visible">{t("slider_video_title_1")}</b>

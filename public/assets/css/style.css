@@ -3229,7 +3229,7 @@ h6, .h6 {
         display: none; } }
   .main-header .logo {
     z-index: 9;
-    padding: 2px 0;
+    padding: 10px 0;
     position: relative;
     margin-right: 25px; }
   .main-header.menu-absolute .header-upper {
