@@ -128,7 +128,7 @@ const IndexOnePage = ({ params }) => {
               </div>
               {/* Menu Button */}
               <div className="menu-btns">
-                <Link legacyBehavior href="/contact">
+                <Link legacyBehavior href="/auth/signin">
                   <a className="theme-btn style-three">
                     {t("navbar.login")}{" "}
                     <i className="fas fa-angle-double-right" />

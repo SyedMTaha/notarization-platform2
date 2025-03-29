@@ -343,5 +343,19 @@
   "forgot_pass_heading": "¿Olvidaste tu contraseña?",
   "forgot_pass_we_got_you": "¿Olvidaste tu contraseña? ¡Te tenemos cubierto!",
   "send_verification_link": "Enviar enlace de verificación",
-  "send_verification_message": "Enviar mensaje de verificación"
+  "send_verification_message": "Enviar mensaje de verificación",
+  "sign-up": {
+    "title": "Registro",
+    "subtitle": "Regístrate para obtener los mejores servicios notariales en línea",
+    "mobile_number": "Número de móvil",
+    "email": "Correo electrónico",
+    "password": "Contraseña",
+    "confirm_password": "Confirmar contraseña",
+    "terms_agreement": "Al crear una cuenta, aceptas nuestros",
+    "terms_conditions": "Términos y condiciones",
+    "privacy_policy": "Política de privacidad",
+    "sign_up_button": "Registrarse",
+    "already_have_account": "¿Ya tienes una cuenta?",
+    "sign_in": "Iniciar sesión"
+  }
 }
