@@ -335,7 +335,7 @@ const DefaultHeader = ({ locale }) => {
             </div>
             {/* Menu Button */}
             <div className="menu-btns">
-              <Link legacyBehavior href="/contact">
+              <Link legacyBehavior href="/auth/signin">
                 <a
                   style={{
                     border: "1px solid black",
@@ -381,10 +381,10 @@ const Menu = ({ locale }) => {
         <Link href="/about">{t("default_header_services")}</Link>
       </li>
       <li className="dropdown text-nowrap">
-        <Link href="/faqs/0">{t("navbar.standard")}</Link>
+        <Link href="#" className="disabled-link">{t("navbar.Standard_Forms")}</Link>
       </li>
       <li className="dropdown text-nowrap">
-        <Link href="/authenticate">{t("default_header_pages")}</Link>
+        <Link href="/authenticate" className="disabled-link">{t("default_header_pages")}</Link>
       </li>
       <li className="text-nowrap">
         <Link href="/help-desk">{t("navbar.help")}</Link>

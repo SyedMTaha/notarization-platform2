@@ -8383,3 +8383,8 @@ input[type=checkbox]
 .form-check-input {
   margin-top: 0 !important;
 }
+.disabled-link {
+  pointer-events: none;
+  opacity: 0.6;
+  cursor: not-allowed;
+}
