@@ -342,16 +342,13 @@ const DefaultHeader = ({ locale }) => {
                     paddingLeft: "50px",
                     paddingRight: "40px",
                   }}
-                  className="theme-btn rounded-pill style-three d-flex gap-3"
+                  className="theme-btn rounded-pill style-three d-flex gap-3 text-nowrap"
                 >
                   {t("navbar.login")}{" "}
                   <i className="fas fa-angle-double-right " />
                 </a>
               </Link>
-              <LangSwitcher
-                locale={locale}
-                type={"dark"}
-              />
+              <LangSwitcher locale={locale} type={"dark"} />
               {/* menu sidebar */}
               <div className="menu-sidebar d-none d-md-block">
                 <button onClick={() => sideBarToggle()}>
@@ -376,22 +373,22 @@ const Menu = ({ locale }) => {
       className="navigation clearfix"
       style={{ display: "flex", alignItems: "center" }}
     >
-      <li className="dropdown">
+      <li className="dropdown text-nowrap">
         <Link href="/">{t("default_header_home")} </Link>
       </li>
-      <li className="dropdown">
+      <li className="dropdown text-nowrap">
         <Link href="/about">{t("default_header_services")}</Link>
       </li>
-      <li className="dropdown">
+      <li className="dropdown text-nowrap">
         <Link href="/faqs/0">{t("navbar.standard")}</Link>
       </li>
-      <li className="dropdown">
+      <li className="dropdown text-nowrap">
         <Link href="/authenticate">{t("default_header_pages")}</Link>
       </li>
-      <li>
+      <li className="text-nowrap">
         <Link href="/help-desk">{t("navbar.help")}</Link>
       </li>
-      <li>
+      <li className="text-nowrap">
         <Link href="/contact">{t("default_header_contact")}</Link>
       </li>
       {/* Wrapper div for proper vertical alignment */}
