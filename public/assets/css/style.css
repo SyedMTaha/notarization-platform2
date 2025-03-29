@@ -3361,7 +3361,8 @@ h6, .h6 {
     @media only screen and (max-width: 1399px) {
       .main-menu .navbar-collapse li {
         padding-left: 10px;
-        padding-right: 10px; } }
+        padding-right: 10px; 
+      } }
     @media only screen and (max-width: 991px) {
       .main-menu .navbar-collapse li {
         display: block;
@@ -3750,7 +3751,7 @@ h6, .h6 {
 
 .main-header.header-three .menu-btns .theme-btn {
   margin-right: 0;
-  margin-left: 30px; }
+  margin-left: 20px; }
 
 .main-header.header-three .navbar-header {
   margin-right: 0; }
@@ -3760,7 +3761,7 @@ h6, .h6 {
   position: absolute; }
   @media only screen and (min-width: 992px) {
     .main-header.header-two .nav-outer {
-      margin-left: 75px; } }
+      margin-left: 5%; } }
   .main-header.header-two .nav-search > button {
     color: white; }
   @media only screen and (min-width: 992px) {

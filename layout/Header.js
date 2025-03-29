@@ -261,13 +261,13 @@ const Header2 = () => {
 
 const DefaultHeader = ({ locale }) => {
   const t = useTranslations();
-  const [padding, setPadding] = useState("0rem 10rem");
+  const [padding, setPadding] = useState("0rem 4rem");
   useEffect(() => {
     const handleResize = () => {
-      if (window.innerWidth < 1200) {
+      if (window.innerWidth < 1250) {
         setPadding("0rem 1rem"); // Apply different padding for smaller screens
       } else {
-        setPadding("0rem 10rem"); // Default padding for larger screens
+        setPadding("0rem 4rem"); // Default padding for larger screens
       }
     };
 
@@ -339,13 +339,14 @@ const DefaultHeader = ({ locale }) => {
                 <a
                   style={{
                     border: "1px solid black",
-                    paddingLeft: "50px",
-                    paddingRight: "40px",
+                    paddingLeft: "30px",
+                    paddingRight: "0px",
                   }}
                   className="theme-btn rounded-pill style-three d-flex gap-3 text-nowrap"
                 >
-                  {t("navbar.login")}{" "}
-                  <i className="fas fa-angle-double-right " />
+                  {t("navbar.login")}
+                  <i className="fas fa-angle-double-right"
+                  style={{marginRight:"15px", marginLeft: "5px"}}/>
                 </a>
               </Link>
               <LangSwitcher locale={locale} type={"dark"} />
