@@ -1,6 +1,23 @@
-// Simple language switcher
+import { useState, useEffect } from "react";
 
 const LangSwitcher = ({ locale, type }) => {
+  const [padding, setPadding] = useState("0rem 30px 0 30px");
+    useEffect(() => {
+      const handleResize = () => {
+        const windowWidth = window.innerWidth;
+        if (windowWidth > 1250) {
+          setPadding("0 30px 0 30px");
+        } else if (windowWidth > 500) {
+          setPadding("0 20px 0 20px");
+        } else {
+          setPadding("0 15px 0 0");
+        }
+      };
+      handleResize();
+      window.addEventListener("resize", handleResize);
+      return () => window.removeEventListener("resize", handleResize);
+    }, []);
+  
   const icon =
     type === "dark"
       ? "/assets/images/lang-dark.png"
@@ -19,10 +36,9 @@ const LangSwitcher = ({ locale, type }) => {
         flexDirection: "column",
         alignItems: "center",
         background: "rgba(0,0,0,0)",
-        margin: "0px 20px",
-        width: "45px",
+        margin: padding,
+        width: "40px",
         borderRadius: "50%",
-        padding: "5px",
       }}
     >
       <img

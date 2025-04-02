@@ -3604,6 +3604,7 @@ h6, .h6 {
   top: 0px;
   opacity: 0;
   width: 350px;
+  max-width: 80vw;
   height: 100%;
   z-index: 99999;
   overflow-y: auto;
@@ -3738,9 +3739,9 @@ h6, .h6 {
     .main-header.header-three .nav-outer {
       margin-left: 100px; } }
 
-@media only screen and (max-width: 991px) {
+/* @media only screen and (max-width: 991px) {
   .main-header.header-three .menu-btns {
-    display: none; } }
+    display: none; } } */
 
 .main-header.header-three .menu-btns .login {
   font-size: 18px;
@@ -3761,7 +3762,7 @@ h6, .h6 {
   position: absolute; }
   @media only screen and (min-width: 992px) {
     .main-header.header-two .nav-outer {
-      margin-left: 5%; } }
+      margin-left: 7%; } }
   .main-header.header-two .nav-search > button {
     color: white; }
   @media only screen and (min-width: 992px) {

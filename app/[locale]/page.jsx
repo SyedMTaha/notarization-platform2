@@ -85,20 +85,26 @@ const IndexOnePage = ({ params }) => {
                         <li>
                           <Link href="#home">{t("navbar.home")}</Link>
                         </li>
-                        <li>
-                          <Link href="/about">{t("navbar.about")}</Link>
+                        <li className="dropdown text-nowrap">
+                          <a>{t("navbar.about")}</a>
+                          <ul>
+                            <li className="dropdown" >{t("navbar.about_dropdown.1")}</li>
+                            <li className="dropdown" >{t("navbar.about_dropdown.2")}</li>
+                            <li className="dropdown" >{t("navbar.about_dropdown.3")}</li>
+                            <li className="dropdown" >{t("navbar.about_dropdown.4")}</li>
+                          </ul>
+                          <div className="dropdown-btn">
+                            <span className="fas fa-chevron-down" />
+                          </div>
                         </li>
                         <li>
-                          <Link className="disabled-link" href="/faqs/0">{t("navbar.Standard_Forms")}</Link>
+                          <Link className="disabled-link" href="/faqs/0">{t("navbar.standard")}</Link>
                         </li>
                         <li>
                           <a className="disabled-link" href="#project">{t("navbar.authenticate")}</a>
                         </li>
                         <li>
                           <Link href="/help-desk">{t("navbar.help")}</Link>
-                        </li>
-                        <li>
-                          <a href="#contact">{t("navbar.contact")}</a>
                         </li>
                       </ul>
                     </Accordion.Collapse>
@@ -130,7 +136,7 @@ const IndexOnePage = ({ params }) => {
               <div className="menu-btns">
                 <Link legacyBehavior href="/auth/signin">
                   <a className="theme-btn style-three">
-                    {t("navbar.login")}{" "}
+                    {t("navbar.pill-button")}{" "}
                     <i className="fas fa-angle-double-right" />
                   </a>
                 </Link>
@@ -138,7 +144,7 @@ const IndexOnePage = ({ params }) => {
                   locale={locale}
                 />
                 {/* menu sidebar */}
-                <div className="menu-sidebar d-none d-md-block">
+                <div className="menu-sidebar">
                   <button onClick={() => sideBarToggle()}>
                     <span className="icon-bar" />
                     <span className="icon-bar" />
@@ -437,9 +443,8 @@ const IndexOnePage = ({ params }) => {
                   )}
 
                   <img
-                    className={`round w-50   ${
-                      locale === "en" ? "mt-10" : "mt-20"
-                    } mx-auto`}
+                    className={`round w-50   ${locale === "en" ? "mt-10" : "mt-20"
+                      } mx-auto`}
                     src="/assets/images/features/feature-middle.png"
                     alt="Feature Middle"
                   />
@@ -592,9 +597,8 @@ const IndexOnePage = ({ params }) => {
             ].map((item, index) => (
               <div key={index} className="col-lg-6 ">
                 <div
-                  className={`pricing-item-two wow border h-100 p-10 d-flex justify-content-stretch align flex-column fadeInUp delay-0-${
-                    index % 2 === 0 ? 2 : 4
-                  }s`}
+                  className={`pricing-item-two wow border h-100 p-10 d-flex justify-content-stretch align flex-column fadeInUp delay-0-${index % 2 === 0 ? 2 : 4
+                    }s`}
                 >
                   <span className="badge">{t("popular_package")}</span>
                   <div className="pricing-inner d-flex mt-30 align-items-start">

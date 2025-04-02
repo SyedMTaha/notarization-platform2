@@ -344,14 +344,14 @@ const DefaultHeader = ({ locale }) => {
                   }}
                   className="theme-btn rounded-pill style-three d-flex gap-3 text-nowrap"
                 >
-                  {t("navbar.login")}
+                  {t("navbar.pill-button")}
                   <i className="fas fa-angle-double-right"
-                  style={{marginRight:"15px", marginLeft: "5px"}}/>
+                    style={{ marginRight: "15px", marginLeft: "5px" }} />
                 </a>
               </Link>
               <LangSwitcher locale={locale} type={"dark"} />
               {/* menu sidebar */}
-              <div className="menu-sidebar d-none d-md-block">
+              <div className="menu-sidebar">
                 <button onClick={() => sideBarToggle()}>
                   <span className="icon-bar" />
                   <span className="icon-bar" />
@@ -368,29 +368,35 @@ const DefaultHeader = ({ locale }) => {
 };
 
 const Menu = ({ locale }) => {
-  const t = useTranslations();
+  const t = useTranslations('navbar');
   return (
     <ul
       className="navigation clearfix"
-      style={{ display: "flex", alignItems: "center" }}
+      style={{ display: "flex", alignItems: "center", gap: '5px' }}
     >
       <li className="dropdown text-nowrap">
-        <Link href="/">{t("default_header_home")} </Link>
+        <Link href="/">{t("home")} </Link>
       </li>
       <li className="dropdown text-nowrap">
-        <Link href="/about">{t("default_header_services")}</Link>
+        <a>{t("about")}</a>
+        <ul>
+          <li className="dropdown" >{t("about_dropdown.1")}</li>
+          <li className="dropdown" >{t("about_dropdown.2")}</li>
+          <li className="dropdown" >{t("about_dropdown.3")}</li>
+          <li className="dropdown" >{t("about_dropdown.4")}</li>
+        </ul>
+        <div className="dropdown-btn">
+          <span className="fas fa-chevron-down" />
+        </div>
       </li>
       <li className="dropdown text-nowrap">
-        <Link href="#" className="disabled-link">{t("navbar.Standard_Forms")}</Link>
+        <Link href="#" className="disabled-link">{t("standard")}</Link>
       </li>
       <li className="dropdown text-nowrap">
-        <Link href="/authenticate" className="disabled-link">{t("default_header_pages")}</Link>
+        <Link href="/authenticate" className="disabled-link">{t("authenticate")}</Link>
       </li>
       <li className="text-nowrap">
-        <Link href="/help-desk">{t("navbar.help")}</Link>
-      </li>
-      <li className="text-nowrap">
-        <Link href="/contact">{t("default_header_contact")}</Link>
+        <Link href="/help-desk">{t("help")}</Link>
       </li>
       {/* Wrapper div for proper vertical alignment */}
     </ul>

@@ -22,12 +22,14 @@ const SignUp = () => {
             md={6}
             className="d-flex mx-auto justify-content-center position-relative align-items-center"
           >
+            <Link href="/">
             <img
               src="/assets/images/logos/logo.png"
               alt={t("logo_alt")}
               title={t("logo_alt")}
               className="position-absolute top-0 start-0 mt-4 ms-4"
             />
+            </Link>
             <div className="signin-form-container">
               <h2 style={{ fontFamily: "Jost" }}>{st("title")}</h2>
               <p>{st("subtitle")}</p>

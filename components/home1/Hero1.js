@@ -103,12 +103,12 @@ const Hero1 = () => {
             >
               <i className="fas fa-play" />
             </a> */}
-            <span className="video-title cd-headline clip">
+            {/* <span className="video-title cd-headline clip">
               <span className="cd-words-wrapper">
                 <b className="is-visible">{t("slider_video_title_1")}</b>
                 <b>{t("slider_video_title_2")}</b>
               </span>
-            </span>
+            </span> */}
           </div>
         </div>
 

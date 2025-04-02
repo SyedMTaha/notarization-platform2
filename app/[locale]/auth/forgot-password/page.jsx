@@ -2,6 +2,7 @@
 import { Row, Col, Container } from "react-bootstrap";
 import "react-phone-input-2/lib/bootstrap.css";
 import Nav from "react-bootstrap/Nav";
+import Link from "next/link";
 
 // components
 
@@ -26,12 +27,14 @@ const ForgotPassword = () => {
             md={6}
             className="d-flex mx-auto justify-content-center position-relative vh-100 align-items-center"
           >
-            <img
-              src="/assets/images/logos/logo.png"
-              alt={t("logo_alt")}
-              title={t("logo_title")}
-              className="position-absolute top-0 start-0 mt-4 ms-4"
-            />
+            <Link href='/'>
+              <img
+                src="/assets/images/logos/logo.png"
+                alt={t("logo_alt")}
+                title={t("logo_title")}
+                className="position-absolute top-0 start-0 mt-4 ms-4"
+              />
+            </Link>
             <div className="signin-form-container">
               <h2 style={{ fontFamily: "Jost" }}>{t("forgot_pass_heading")}</h2>
               <p>{t("forgot_pass_we_got_you")}</p>
