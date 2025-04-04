@@ -95,16 +95,24 @@ const IndexOnePage = ({ params }) => {
                           <Link href="/solutions">{t("navbar.solutions")}</Link>
                           <ul>
                             <Link href="/solutions#1">
-                              <li className="dropdown">{t("navbar.solutions_dropdown.1")}</li>
+                              <li className="dropdown">
+                                {t("navbar.solutions_dropdown.1")}
+                              </li>
                             </Link>
                             <Link href="/solutions#2">
-                              <li className="dropdown">{t("navbar.solutions_dropdown.2")}</li>
+                              <li className="dropdown">
+                                {t("navbar.solutions_dropdown.2")}
+                              </li>
                             </Link>
                             <Link href="/solutions#3">
-                              <li className="dropdown">{t("navbar.solutions_dropdown.3")}</li>
+                              <li className="dropdown">
+                                {t("navbar.solutions_dropdown.3")}
+                              </li>
                             </Link>
                             <Link href="/solutions#4">
-                              <li className="dropdown">{t("navbar.solutions_dropdown.4")}</li>
+                              <li className="dropdown">
+                                {t("navbar.solutions_dropdown.4")}
+                              </li>
                             </Link>
                           </ul>
                           <div className="dropdown-btn">
@@ -112,10 +120,14 @@ const IndexOnePage = ({ params }) => {
                           </div>
                         </li>
                         <li>
-                          <Link className="disabled-link" href="/faqs/0">{t("navbar.standard")}</Link>
+                          <Link className="disabled-link" href="/faqs/0">
+                            {t("navbar.standard")}
+                          </Link>
                         </li>
                         <li>
-                          <a className="disabled-link" href="#project">{t("navbar.authenticate")}</a>
+                          <a className="disabled-link" href="#project">
+                            {t("navbar.authenticate")}
+                          </a>
                         </li>
                         <li>
                           <Link href="/help-desk">{t("navbar.help")}</Link>
@@ -154,9 +166,7 @@ const IndexOnePage = ({ params }) => {
                     <i className="fas fa-angle-double-right" />
                   </a>
                 </Link>
-                <LangSwitcher
-                  locale={locale}
-                />
+                <LangSwitcher locale={locale} />
                 {/* menu sidebar */}
                 <div className="menu-sidebar">
                   <button onClick={() => sideBarToggle()}>
@@ -457,8 +467,9 @@ const IndexOnePage = ({ params }) => {
                   )}
 
                   <img
-                    className={`round w-50   ${locale === "en" ? "mt-10" : "mt-20"
-                      } mx-auto`}
+                    className={`round w-50   ${
+                      locale === "en" ? "mt-10" : "mt-20"
+                    } mx-auto`}
                     src="/assets/images/features/feature-middle.png"
                     alt="Feature Middle"
                   />
@@ -611,8 +622,9 @@ const IndexOnePage = ({ params }) => {
             ].map((item, index) => (
               <div key={index} className="col-lg-6 ">
                 <div
-                  className={`pricing-item-two wow border h-100 p-10 d-flex justify-content-stretch align flex-column fadeInUp delay-0-${index % 2 === 0 ? 2 : 4
-                    }s`}
+                  className={`pricing-item-two wow border h-100 p-10 d-flex justify-content-stretch align flex-column fadeInUp delay-0-${
+                    index % 2 === 0 ? 2 : 4
+                  }s`}
                 >
                   <span className="badge">{t("popular_package")}</span>
                   <div className="pricing-inner d-flex mt-30 align-items-start">
@@ -826,8 +838,10 @@ const IndexOnePage = ({ params }) => {
           <div className="row justify-content-between align-items-end pb-5">
             <div className="col-xl-6 col-lg-8 wow fadeInUp delay-0-2s">
               <div className="section-title mb-35">
-                <span className="sub-title style-two mb-15">{t("help-desk.faqs-link")}</span>
-                <h2>{t("help-desk.faqs-title") }</h2>
+                <span className="sub-title style-two mb-15">
+                  {t("help-desk.faqs-link")}
+                </span>
+                <h2>{t("help-desk.faqs-title")}</h2>
               </div>
             </div>
             <div className="col-lg-4  text-lg-end wow rounded-1 fadeInUp delay-0-4s">
@@ -836,7 +850,8 @@ const IndexOnePage = ({ params }) => {
                   style={{ color: "#293043", fontWeight: "24px" }}
                   className="theme-btn style-three rounded-2 fs-6  mb-55 "
                 >
-                  {t('help-desk.add-questions-button')} <i className="fas fa-angle-double-right" />
+                  {t("help-desk.add-questions-button")}{" "}
+                  <i className="fas fa-angle-double-right" />
                 </a>
               </Link>
             </div>
