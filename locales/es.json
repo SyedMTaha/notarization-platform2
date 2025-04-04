@@ -363,6 +363,39 @@
     "already_have_account": "¿Ya tienes una cuenta?",
     "sign_in": "Iniciar sesión"
   },
+  "solutions": {
+    "banner_html_1": "Solu",
+    "banner_html_2": "ciones",
+    "title": "Soluciones",
+    "sec1": {
+      "point": "Conozca Nuestras Soluciones",
+      "heading": "Notarios",
+      "para1": "Disfrute ganando dinero sin tener que salir de la comodidad de su hogar. WI Scribbles ofrece una plataforma para notarizar documentos fácilmente, solo necesita una computadora portátil y una conexión estable a internet.",
+      "para2": "Regístrese, introduzca su información bancaria y comience a ganar dinero de inmediato.",
+      "button": "Regístrate"
+    },
+    "sec2": {
+      "point": "Obtenga las tasas de éxito más altas",
+      "heading": "Abogados",
+      "para1": "Redacte documentos especializados o utilice nuestro conjunto de documentos estándar para conectarse con nuevos y antiguos clientes dondequiera que se encuentren.",
+      "para2": "Nuestra plataforma proporciona un medio seguro para la firma y el procesamiento de documentos, llevando su firma legal a nuevas alturas.",
+      "button": "Regístrate"
+    },
+    "sec3": {
+      "point": "Lo mejor para Agentes Inmobiliarios",
+      "heading": "Agentes Inmobiliarios",
+      "para1": "Practique inversiones fuera de jurisdicción con acceso a nuestro acuerdo estándar de venta, contrato de administración de propiedades y contrato de arrendamiento para proporcionar un marco legal a todas sus transacciones.",
+      "para2": "Las transacciones inmobiliarias no deberían estar limitadas por la ubicación.",
+      "button": "Regístrate"
+    },
+    "sec4": {
+      "point": "Creando los mejores Negocios",
+      "heading": "Negocios",
+      "para1": "Rompa nuevas barreras comerciales con nuestra plataforma mediante la capacidad de firmar acuerdos con proveedores y clientes por igual.",
+      "para2": "Seleccione de nuestro conjunto de documentos estándar o redacte sus propios documentos usando nuestra plataforma como un medio seguro y legal para hacer negocios en línea.",
+      "button": "Regístrate"
+    }
+  },
   "sidebar_menu": "Menú",
   "sidebar_solutions": "Soluciones",
   "sidebar_standard_forms": "Formularios Estándar",
