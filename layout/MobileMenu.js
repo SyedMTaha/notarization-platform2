@@ -14,20 +14,12 @@ const MobileMenu = ({ logo }) => {
           <div className="mobile-logo my-15">
             <Link legacyBehavior href="/">
               <a>
-                <img
-                  src={logo ? logo : "/assets/images/logos/logo.png"}
-                  alt="Logo"
-                  title="Logo"
-                />
+                <img src={logo ? logo : "/assets/images/logos/logo.png"} alt="Logo" title="Logo" />
               </a>
             </Link>
           </div>
           {/* Toggle Button */}
-          <Accordion.Toggle
-            eventKey="nav"
-            as="button"
-            className="navbar-toggle"
-          >
+          <Accordion.Toggle eventKey="nav" as="button" className="navbar-toggle">
             <span className="icon-bar" />
             <span className="icon-bar" />
             <span className="icon-bar" />
@@ -38,9 +30,20 @@ const MobileMenu = ({ logo }) => {
             <li className="dropdown">
               <Link href="/">{t("default_header_home")} </Link>
             </li>
-            <li className="dropdown">
-              <Link href="/solutions">{t("default_header_services")}</Link>
-            </li>
+            <ul>
+              <Link href="/solutions#1">
+                <li className="dropdown">{t("navbar.solutions_dropdown.1")}</li>
+              </Link>
+              <Link href="/solutions#2">
+                <li className="dropdown">{t("navbar.solutions_dropdown.2")}</li>
+              </Link>
+              <Link href="/solutions#3">
+                <li className="dropdown">{t("navbar.solutions_dropdown.3")}</li>
+              </Link>
+              <Link href="/solutions#4">
+                <li className="dropdown">{t("navbar.solutions_dropdown.4")}</li>
+              </Link>
+            </ul>
             <li className="dropdown">
               <Link href="/standard-forms">{t("default_header_project")}</Link>
             </li>
@@ -48,9 +51,7 @@ const MobileMenu = ({ logo }) => {
               <Link href="/authenticate">{t("default_header_pages")}</Link>
             </li>
             <li>
-              <Link href="/contact">
-                {t("default_header_contact")}
-              </Link>
+              <Link href="/contact">{t("default_header_contact")}</Link>
             </li>
           </ul>
         </Accordion.Collapse>

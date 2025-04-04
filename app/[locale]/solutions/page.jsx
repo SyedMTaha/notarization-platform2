@@ -17,7 +17,7 @@ const HowItWorks = ({ params: { form_id } }) => {
       />
       {[1, 2, 3, 4].map((secNo, index) =>
         secNo % 2 == 1 ? (
-          <section key={index} className="what-we-offer my-130 rel z-1">
+          <section id={`${secNo}`} key={index} className="what-we-offer my-130 rel z-1">
             <div className="container">
               <div className="row justify-content-between align-items-center">
                 <div className="col-xl-5 col-lg-6">
@@ -51,7 +51,7 @@ const HowItWorks = ({ params: { form_id } }) => {
             </div>
           </section>
         ) : (
-          <section
+          <section id={`${secNo}`}
             className="cta-two bgc-black-with-lighting-half solutions-opposite bgs-cover text-white py-75 rel z-1"
             style={{
               backgroundImage: "url(/assets/images/background/cta-two.png)",

@@ -4,8 +4,8 @@
   "logo_title": "Logo",
   "navbar": {
     "home": "Home",
-    "about": "About Us",
-    "about_dropdown": {
+    "solutions": "solutions",
+    "solutions_dropdown": {
       "1": "Notaries",
       "2": "Attorneys",
       "3": "Businesses",

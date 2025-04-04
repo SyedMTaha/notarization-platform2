@@ -378,12 +378,20 @@ const Menu = ({ locale }) => {
         <Link href="/">{t("home")} </Link>
       </li>
       <li className="dropdown text-nowrap">
-        <a>{t("about")}</a>
+        <a>{t("solutions")}</a>
         <ul>
-          <li className="dropdown" >{t("about_dropdown.1")}</li>
-          <li className="dropdown" >{t("about_dropdown.2")}</li>
-          <li className="dropdown" >{t("about_dropdown.3")}</li>
-          <li className="dropdown" >{t("about_dropdown.4")}</li>
+          <Link href="/solutions#1">
+            <li className="dropdown">{t("solutions_dropdown.1")}</li>
+          </Link>
+          <Link href="/solutions#2">
+            <li className="dropdown">{t("solutions_dropdown.2")}</li>
+          </Link>
+          <Link href="/solutions#3">
+            <li className="dropdown">{t("solutions_dropdown.3")}</li>
+          </Link>
+          <Link href="/solutions#4">
+            <li className="dropdown">{t("solutions_dropdown.4")}</li>
+          </Link>
         </ul>
         <div className="dropdown-btn">
           <span className="fas fa-chevron-down" />
