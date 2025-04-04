@@ -8389,3 +8389,19 @@ input[type=checkbox]
   opacity: 0.6;
   cursor: not-allowed;
 }
+
+.section-title .sub-title.style-two.reverse-arrow {
+  display: flex; 
+  align-items: center;
+  flex-direction: row-reverse;
+}
+
+.section-title .sub-title.style-two.reverse-arrow:before {
+  content: url(/_next/static/media/section-subtitle-line.7f6672ae.png);
+  margin-left: 15px;
+  transform: rotate(180deg) scaleY(-1);
+}
+
+.bgc-black-with-lighting-half.solutions-opposite:after {
+  left: -8%;
+}

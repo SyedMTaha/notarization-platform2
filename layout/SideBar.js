@@ -19,8 +19,8 @@ const SideBar = () => {
             <ul className="sidebar-menu">
               <li><Link href="/about-us">About Us</Link></li>
               <li><Link href="/how-it-works">How it Works</Link></li>
-              <li><Link href="/sign-up">Sign Up</Link></li>
-              <li><Link href="/log-in">Log In</Link></li>
+              <li><Link href="/auth/signup">Sign Up</Link></li>
+              <li><Link href="/auth/signin">Log In</Link></li>
               <li><Link href="/contact-us">Contact Us</Link></li>
             </ul>
           </nav>

@@ -396,5 +396,38 @@
     "sign_up_button": "Sign up",
     "already_have_account": "Already have an account?",
     "sign_in": "Sign in"
+  },
+  "solutions": {
+    "banner_html_1": "Solu",
+    "banner_html_2": "tions",
+    "title": "Solutions",
+    "sec1": {
+      "point": "Know Our Solutions",
+      "heading": "Notaries",
+      "para1": "Enjoy making money without having to leave the comfort of your home. WI Scribbles provides a platform for you to notarize documents easily while only needing a laptop and a stable internet connection.",
+      "para2": "Sign up, input your banking information and start earning money immediately!",
+      "button": "Sign Up"
+    },
+    "sec2": {
+      "point": "Get the highest success rates",
+      "heading": "Attorneys",
+      "para1": "Draft specialized documents or use from our standard document pool to connect to both new and return clients wherever they may be.",
+      "para2": "Our platform provides a safe means for document signing and processing to push your legal firm to greater heights.",
+      "button": "Sign Up"
+    },
+    "sec3": {
+      "point": "The best for Real Estate Agents",
+      "heading": "Real Estate Agents",
+      "para1": ". Practice out of jurisdiction investing with access to our standard agreement of sales, property management agreement and lease agreement to provide a legal framework for all your transactions",
+      "para2": "Real estate transactions should not be limited to location.",
+      "button": "Sign Up"
+    },
+    "sec4": {
+      "point": "Creating the best Businesses",
+      "heading": "Businesses",
+      "para1": "Break new barriers to trade with our platform through the ability to sign agreements with suppliers and customers alike.",
+      "para2": "Select from our standard document pool or draft your own documents with our platform forming a safe and legal means to conduct business online.",
+      "button": "Sign Up"
+    }
   }
 }
