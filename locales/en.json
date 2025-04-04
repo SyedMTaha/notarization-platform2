@@ -281,7 +281,7 @@
   "about_us_add_advanced_features_desc": "Sit amet consectetur adipiscing sed eiusmod tempor incididunt labore et dolore magnaes epsums",
   "about_us_optimize_for_search": "Optimize for search engines",
   "about_us_optimize_for_search_desc": "Sit amet consectetur adipiscing sed eiusmod tempor incididunt labore et dolore magnaes epsums",
-  "about_us_stats":{
+  "about_us_stats": {
     "1": "Faster processing",
     "2": "Secure Encryption",
     "3": "Availability",
@@ -429,5 +429,12 @@
       "para2": "Select from our standard document pool or draft your own documents with our platform forming a safe and legal means to conduct business online.",
       "button": "Sign Up"
     }
-  }
+  },
+  "sidebar_menu": "Menu",
+  "sidebar_solutions": "Solutions",
+  "sidebar_standard_forms": "Standard Forms",
+  "sidebar_authenticate": "Authenticate",
+  "sidebar_help_desk": "Help Desk",
+  "sidebar_contact": "Contact",
+  "sidebar_sign_up": "Sign Up"
 }

@@ -1,5 +1,6 @@
 import { sideBarToggle } from "@/utility";
 import { useTranslations } from "next-intl";
+import { FaBars } from "react-icons/fa";
 import { Fragment } from "react";
 import Link from "next/link";
 const SideBar = () => {
@@ -9,21 +10,64 @@ const SideBar = () => {
       {/* Form Back Drop */}
       <div className="form-back-drop" onClick={() => sideBarToggle()} />
       {/* Hidden Sidebar */}
-      <section className="hidden-bar">
-        <div className="inner-box text-center">
-          <div className="cross-icon" onClick={() => sideBarToggle()}>
-            <span className="fa fa-times" />
+      <section className="hidden-bar" style={{ fontFamily: "Kumbh Sans" }}>
+        <div className="inner-box text-center  h-100">
+          <div className="cross-icon fs-3" onClick={() => sideBarToggle()}>
+            <FaBars size={24} />
+            <h3 style={{ fontFamily: "Kumbh Sans" }} className="text-white mt-2">
+              {t("sidebar_menu")}
+            </h3>
           </div>
           {/* Navigation Links */}
-          <nav className="sidebar-nav">
+          <nav className="sidebar-nav d-flex flex-column justify-content-between h-100 ">
             <ul className="sidebar-menu">
-              <li><Link href="/about">About Us</Link></li>
-              <li><Link href="/faqs/1">How it Works</Link></li>
-              <li><Link href="/auth/signup">Sign Up</Link></li>
-              <li><Link href="/auth/signin">Log In</Link></li>
-              <li><Link href="/contact-us">Contact Us</Link></li>
+              <li
+                style={{
+                  borderBottom: "1px solid #5872A3",
+                  borderTop: "1px solid #5872A3",
+                }}
+                className="p-15 text-white fs-4 "
+              >
+                <Link href="/solutions">{t("sidebar_solutions")}</Link>
+              </li>
+              <li
+                style={{ borderBottom: "1px solid #5872A3" }}
+                className="text-white p-15 fs-4 "
+              >
+                <Link href="/faqs/1">{t("sidebar_standard_forms")}</Link>
+              </li>
+              <li
+                style={{ borderBottom: "1px solid #5872A3" }}
+                className=" text-white p-15  fs-4 "
+              >
+                <Link href="/auth/signin">{t("sidebar_authenticate")}</Link>
+              </li>
+              <li
+                style={{ borderBottom: "1px solid #5872A3" }}
+                className=" text-white p-15 fs-4 "
+              >
+                <Link href="/help-desk">{t("sidebar_help_desk")}</Link>
+              </li>
+              <li
+                style={{ borderBottom: "1px solid #5872A3" }}
+                className=" text-white p-15 fs-4 "
+              >
+                <Link href="/contact">{t("sidebar_contact")}</Link>
+              </li>
+            </ul>
+            <ul className="sidebar-menu">
+              <li
+                style={{
+                  borderBottom: "1px solid #5872A3",
+                  borderTop: "1px solid #5872A3",
+                }}
+                className=" p-15 text-white fs-4 "
+              >
+                <Link href="/auth/signup">{t("sidebar_sign_up")}</Link>
+              </li>
             </ul>
           </nav>
+
           {/* <div className="title">
             <h4>{t("sidebar_title")}</h4>
           </div> */}
@@ -76,7 +120,6 @@ const SideBar = () => {
         </div>
       </section>
     </Fragment>
-
   );
 };
 export default SideBar;

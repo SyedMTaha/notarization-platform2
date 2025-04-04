@@ -362,5 +362,12 @@
     "sign_up_button": "Registrarse",
     "already_have_account": "¿Ya tienes una cuenta?",
     "sign_in": "Iniciar sesión"
-  }
+  },
+  "sidebar_menu": "Menú",
+  "sidebar_solutions": "Soluciones",
+  "sidebar_standard_forms": "Formularios Estándar",
+  "sidebar_authenticate": "Autenticar",
+  "sidebar_help_desk": "Soporte Técnico",
+  "sidebar_contact": "Contacto",
+  "sidebar_sign_up": "Registrarse"
 }

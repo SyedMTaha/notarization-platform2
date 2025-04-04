@@ -3629,14 +3629,17 @@ h6, .h6 {
 
 .hidden-bar .inner-box {
   position: relative;
-  padding: 100px 40px 50px; }
+  padding: 100px 0px 0px; }
   @media only screen and (max-width: 375px) {
     .hidden-bar .inner-box {
       padding-left: 25px;
       padding-right: 25px; } }
   .hidden-bar .inner-box .cross-icon {
     position: absolute;
-    right: 30px;
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    left: 30px;
     top: 30px;
     cursor: pointer;
     color: #ffffff;
@@ -8405,3 +8408,4 @@ input[type=checkbox]
 .bgc-black-with-lighting-half.solutions-opposite:after {
   left: -8%;
 }
+
