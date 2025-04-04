@@ -101,6 +101,47 @@ const About = () => {
       </section>
       {/* What We Do Two Area end */}
       {/* Statistics Four Area start */}
+      <div className="statistics-area-four rel z-1">
+        <div className="container">
+          <div
+            className="statistics-four-counters bgs-cover bgc-lighter"
+            style={{
+              backgroundImage: "url(assets/images/background/counter-bg.png)",
+            }}
+          >
+            <div className="row medium-gap">
+              <div className="col-xl-3 col-sm-6">
+                <div className="counter-item mt-30 counter-text-wrap wow fadeInLeft delay-0-2s">
+                  <i className="flaticon-startup" />
+                  <Counter end={80} percentageTrue/>
+                  <span className="counter-title">{t('about_us_stats.1')}</span>
+                </div>
+              </div>
+              <div className="col-xl-3 col-sm-6">
+                <div className="counter-item for-margin counter-text-wrap wow fadeInLeft delay-0-4s">
+                  <i className="flaticon-global" />
+                  <Counter end={100} percentageTrue/>
+                  <span className="counter-title">{t('about_us_stats.2')}</span>
+                </div>
+              </div>
+              <div className="col-xl-3 col-sm-6">
+                <div className="counter-item mt-20 counter-text-wrap wow fadeInLeft delay-0-6s">
+                  <i className="flaticon-rating" />
+                  <Counter end="24/7" />
+                  <span className="counter-title">{t('about_us_stats.3')}</span>
+                </div>
+              </div>
+              <div className="col-xl-3 col-sm-6">
+                <div className="counter-item for-margin counter-text-wrap wow fadeInLeft delay-0-8s">
+                  <i className="flaticon-trophy" />
+                  <Counter end={100} percentageTrue/>
+                  <span className="counter-title">{t('about_us_stats.4')}</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
       {/* Video Area start */}
       <section className="video-area bgc-black pt-250">
         <div className="container">
@@ -108,13 +149,13 @@ const About = () => {
             <div className="col-lg-6">
               <div className="video-part rmb-65 wow fadeInRight delay-0-2s">
                 <img src="/assets/images/background/video-bg.jpg" alt="Video" />
-                <a
+                {/* <a
                   href="https://www.youtube.com/watch?v=9Y7ma241N8k"
                   className="mfp-iframe video-play"
                   tabIndex={-1}
                 >
                   <i className="fas fa-play" />
-                </a>
+                </a> */}
               </div>
             </div>
             <div className="col-lg-6">

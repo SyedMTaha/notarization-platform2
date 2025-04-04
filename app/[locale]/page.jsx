@@ -10,10 +10,16 @@ import Link from "next/link";
 import { Accordion } from "react-bootstrap";
 import { faqsData1, faqsData2 } from "./help-desk/page";
 import OxencyAccordion from "@/components/OxencyAccordion";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import LangSwitcher from "@/components/LangSwitch";
 
 const IndexOnePage = ({ params }) => {
+  useEffect(() => {
+    const timeoutId = setTimeout(() => {
+      window.scrollTo(0, 0);
+    }, 100);
+    return () => clearTimeout(timeoutId);
+  }, []);
   const t = useTranslations();
   const { locale, slug } = params;
 
@@ -169,8 +175,8 @@ const IndexOnePage = ({ params }) => {
           <div className="row justify-content-center">
             <div className="col-lg-10">
               <div className="section-title text-center mb-55 wow fadeInUp delay-0-2s">
-                <span className="sub-title mb-15">{t("working_process")}</span>
-                <h2>{t("how_we_work")}</h2>
+                {/* <span className="sub-title mb-15">{t("working_process")}</span> */}
+                <h2>{t("how_does_it_work")}</h2>
               </div>
             </div>
           </div>
@@ -382,7 +388,7 @@ const IndexOnePage = ({ params }) => {
       >
         <div className="w-75  mx-auto ">
           <div className="section-title text-center mb-60 wow fadeInUp delay-0-2s">
-            <span className="sub-title mb-10">{t("core_design_features")}</span>
+            {/* <span className="sub-title mb-10">{t("core_design_features")}</span> */}
             <h2>{t("website_services")}</h2>
           </div>
           <div className="row gap-1 flex-lg-nowrap align-items-center  ">
@@ -812,8 +818,8 @@ const IndexOnePage = ({ params }) => {
           <div className="row justify-content-between align-items-end pb-5">
             <div className="col-xl-6 col-lg-8 wow fadeInUp delay-0-2s">
               <div className="section-title mb-35">
-                <span className="sub-title style-two mb-15">Faqs</span>
-                <h2>Asked Questions about Website Design</h2>
+                <span className="sub-title style-two mb-15">{t("help-desk.faqs-link")}</span>
+                <h2>{t("help-desk.faqs-title") }</h2>
               </div>
             </div>
             <div className="col-lg-4  text-lg-end wow rounded-1 fadeInUp delay-0-4s">
@@ -822,7 +828,7 @@ const IndexOnePage = ({ params }) => {
                   style={{ color: "#293043", fontWeight: "24px" }}
                   className="theme-btn style-three rounded-2 fs-6  mb-55 "
                 >
-                  Add Questions <i className="fas fa-angle-double-right" />
+                  {t('help-desk.add-questions-button')} <i className="fas fa-angle-double-right" />
                 </a>
               </Link>
             </div>

@@ -5,11 +5,11 @@
   "navbar": {
     "home": "Home",
     "about": "About Us",
-    "about_dropdown":{
-      "1":"Notaries",
-      "2":"Attorneys",
-      "3":"Businesses",
-      "4":"Real Estate Agents"
+    "about_dropdown": {
+      "1": "Notaries",
+      "2": "Attorneys",
+      "3": "Businesses",
+      "4": "Real Estate Agents"
     },
     "standard": "Standard Forms",
     "authenticate": "Authenticate",
@@ -59,7 +59,7 @@
   "seo_services_desc": "Grow your business and watch your income balloon from the comfort of your home through access to our digital tools. All that is necessary is a laptop, a webcam and a good internet connection.",
   "learn_more": "Learn More",
   "working_process": "Working Process",
-  "how_we_work": "How does we works",
+  "how_does_it_work": "How does it work?",
   "info_gathering": "Upload or Select Your Document",
   "info_gathering_desc": "Upload or select from our standard pdf / docx templates",
   "idea_planning": "Verify Your Identity",
@@ -145,16 +145,11 @@
   "footer1SubscribePlaceholder": "Enter email",
   "footer1SubscribeButton": "Subscribe Now",
   "footer1Copyright": "© Copyright 2025 WiScribbles All right reserved",
-  "footer1LinkWebDesign": "Home",
-  "footer1LinkAboutCompany": "About company",
-  "footer1LinkWebDevelopment": "Services",
-  "footer1LinkMeetOurTeams": "Meet our teams",
-  "footer1LinkSEOOptimization": "Pages",
-  "footer1LinkCaseStories": "Case Stories",
-  "footer1LinkProductEngineering": "Contact US",
-  "footer1LinkLatestNews": "Latest News",
+  "footer1LinkHome": "Home",
+  "footer1LinkServices": "Services",
+  "footer1LinkContact": "Contact US",
   "footer1LinkTechnicalSupport": "Technical Support",
-  "footer1LinkContact": "Contact",
+  "footer1LinkAboutCompany": "About company",
   "footer1LinkLandingPagesDesign": "Location",
   "slider_sub_title": "Trusted partner for Caribbean Businesses",
   "slider_main_title": "Notarize",
@@ -286,6 +281,12 @@
   "about_us_add_advanced_features_desc": "Sit amet consectetur adipiscing sed eiusmod tempor incididunt labore et dolore magnaes epsums",
   "about_us_optimize_for_search": "Optimize for search engines",
   "about_us_optimize_for_search_desc": "Sit amet consectetur adipiscing sed eiusmod tempor incididunt labore et dolore magnaes epsums",
+  "about_us_stats":{
+    "1": "Faster processing",
+    "2": "Secure Encryption",
+    "3": "Availability",
+    "4": "Document Acceptance"
+  },
   "help-desk": {
     "title": "Help Desk",
     "finding-help": "Finding Help",
@@ -299,33 +300,33 @@
     "forms": {
       "affidavit-of-identity": {
         "title": "Affidavit of Identity",
-        "description": "Sit amet consectetur adipiscing elit, sed eiusmod tempor incididunt labore et dolore magna aliqua esuis suspendisse",
-        "button": "Learn More"
+        "description": "This notarized document confirms your identity and can be useful for online transactions including financial institutions, government agencies or legal matters",
+        "button": "Edit Template"
       },
       "power-of-attorney": {
         "title": "Power of Attorney",
-        "description": "Sit amet consectetur adipiscing elit, sed eiusmod tempor incididunt labore et dolore magna aliqua esuis suspendisse",
-        "button": "Learn More"
+        "description": "This is used to appoint someone you trust to manage your affairs in your absence. This legal document can be used for emergencies or even to transact business on your behalf",
+        "button": "Edit Template"
       },
       "agreement-of-sale": {
         "title": "Agreement of Sale",
-        "description": "Sit amet consectetur adipiscing elit, sed eiusmod tempor incididunt labore et dolore magna aliqua esuis suspendisse",
-        "button": "Learn More"
+        "description": "A legal contract between a buyer and a seller that details the terms and conditions of the proposed sale. Applicable for transactions involving real estate, motor vehicles etc.",
+        "button": "Edit Template"
       },
       "property-management-agreement": {
         "title": "Property Management Agreement",
-        "description": "Sit amet consectetur adipiscing elit, sed eiusmod tempor incididunt labore et dolore magna aliqua esuis suspendisse",
-        "button": "Learn More"
+        "description": "This agreement allows an individual or agency to manage your property on your behalf. It can include tasks like paying taxes, leasing or rehabilitation works ",
+        "button": "Edit Template"
       },
       "lease-agreement": {
         "title": "Lease Agreement",
-        "description": "Sit amet consectetur adipiscing elit, sed eiusmod tempor incididunt labore et dolore magna aliqua esuis suspendisse",
-        "button": "Learn More"
+        "description": "Lease agreements avoid disputes by setting out the rights and responsibilities of both the tenant and landlord.",
+        "button": "Edit Template"
       },
       "promissory-note": {
         "title": "Promissory Note",
-        "description": "Sit amet consectetur adipiscing elit, sed eiusmod tempor incididunt labore et dolore magna aliqua esuis suspendisse",
-        "button": "Learn More"
+        "description": "This document sets out loan terms and conditions for lending money between persons. It includes repayment schedules, interest rates and collateral.",
+        "button": "Edit Template"
       }
     },
     "faqs-title": "Commonly Asked Questions",

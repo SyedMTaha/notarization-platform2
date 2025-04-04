@@ -51,45 +51,25 @@ const Footer1 = () => {
           <div className="col-xl-4 col-md-6">
             <div className="footer-widget widget_nav_menu wow fadeInUp delay-0-4s">
               <h4 className="footer-title">{t("footer1QuickLinks")}</h4>
-              <ul className="list-style-two">
+              <ul className="list-style-two" style={{flexDirection:"column"}}>
+                <li>
+                  {/*   "footer1LinkHome": "Home",
+  "footer1LinkServices": "Services",
+  "footer1LinkContact": "Contact US",
+  "footer1LinkTechnicalSupport": "Technical Support",
+  "footer1LinkAboutCompany": "About company", */}
+                  <Link legacyBehavior href="/">
+                    {t("footer1LinkHome")}
+                  </Link>
+                </li>
                 <li>
                   <Link legacyBehavior href="/service-details">
-                    {t("footer1LinkWebDesign")}
+                    {t("footer1LinkServices")}
                   </Link>
                 </li>
                 <li>
                   <Link legacyBehavior href="/about">
-                    {t("footer1LinkAboutCompany")}
-                  </Link>
-                </li>
-                <li>
-                  <Link legacyBehavior href="/service-details">
-                    {t("footer1LinkWebDevelopment")}
-                  </Link>
-                </li>
-                <li>
-                  <Link legacyBehavior href="/team">
-                    {t("footer1LinkMeetOurTeams")}
-                  </Link>
-                </li>
-                <li>
-                  <Link legacyBehavior href="/service-details">
-                    {t("footer1LinkSEOOptimization")}
-                  </Link>
-                </li>
-                <li>
-                  <Link legacyBehavior href="/service-details">
-                    {t("footer1LinkCaseStories")}
-                  </Link>
-                </li>
-                <li>
-                  <Link legacyBehavior href="/service-details">
-                    {t("footer1LinkProductEngineering")}
-                  </Link>
-                </li>
-                <li>
-                  <Link legacyBehavior href="/blog">
-                    {t("footer1LinkLatestNews")}
+                    {t("footer1LinkContact")}
                   </Link>
                 </li>
                 <li>
@@ -98,13 +78,8 @@ const Footer1 = () => {
                   </Link>
                 </li>
                 <li>
-                  <Link legacyBehavior href="/contact">
-                    {t("footer1LinkContact")}
-                  </Link>
-                </li>
-                <li>
                   <Link legacyBehavior href="/service-details">
-                    {t("footer1LinkLandingPagesDesign")}
+                    {t("footer1LinkAboutCompany")}
                   </Link>
                 </li>
               </ul>

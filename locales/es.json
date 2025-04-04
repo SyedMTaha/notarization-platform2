@@ -5,13 +5,17 @@
   "navbar": {
     "home": "Inicio",
     "about": "Acerca de",
+    "about_dropdown": {
+      "1": "Notarios",
+      "2": "Abogados",
+      "3": "Empresas",
+      "4": "Agentes de Bienes Raíces"
+    },
     "standard": "Formularios Estándar",
-    "Standard_Forms": "Standard Form",
     "authenticate": "Autenticar",
     "help": "Centro de Ayuda",
-    "contact": "Contacto",
     "search_placeholder": "Buscar",
-    "login": "Iniciar Sesión",
+    "pill-button": "Notarizar",
     "search_icon": "Ícono de Búsqueda",
     "search_button": "Botón de Búsqueda",
     "menu_button": "Botón de Menú",
@@ -55,7 +59,7 @@
   "seo_services_desc": "Haz crecer tu negocio y aumenta tus ingresos desde la comodidad de tu hogar con nuestras herramientas digitales. Solo necesitas una laptop, una cámara web y una buena conexión a internet.",
   "learn_more": "Más Información",
   "working_process": "Proceso de Trabajo",
-  "how_we_work": "¿Cómo Trabajamos?",
+  "how_does_it_work": "¿Cómo funciona?",
   "info_gathering": "Sube o Selecciona tu Documento",
   "info_gathering_desc": "Sube o selecciona entre nuestras plantillas estándar en PDF / DOCX",
   "idea_planning": "Verifica tu Identidad",
@@ -141,16 +145,11 @@
   "footer1SubscribePlaceholder": "Introduce tu correo electrónico",
   "footer1SubscribeButton": "Suscribirse Ahora",
   "footer1Copyright": "© Copyright 2025 WiScribbles. Todos los derechos reservados",
-  "footer1LinkWebDesign": "Inicio",
-  "footer1LinkAboutCompany": "Sobre la Empresa",
-  "footer1LinkWebDevelopment": "Servicios",
-  "footer1LinkMeetOurTeams": "Conoce a Nuestro Equipo",
-  "footer1LinkSEOOptimization": "Páginas",
-  "footer1LinkCaseStories": "Casos de Éxito",
-  "footer1LinkProductEngineering": "Contáctanos",
-  "footer1LinkLatestNews": "Últimas Noticias",
+  "footer1LinkHome": "Inicio",
+  "footer1LinkServices": "Servicios",
+  "footer1LinkContact": "Contáctenos",
   "footer1LinkTechnicalSupport": "Soporte Técnico",
-  "footer1LinkContact": "Contacto",
+  "footer1LinkAboutCompany": "Acerca de la compañía",
   "footer1LinkLandingPagesDesign": "Ubicación",
   "slider_sub_title": "Más de 3 millones de notarizaciones completadas",
   "slider_main_title": "Notariza",
@@ -160,7 +159,7 @@
   "slider_btn_explore_services": "Explora los Servicios",
   "slider_video_title_1": "Diseño Web",
   "slider_video_title_2": "Desarrollo",
-  "get_appointment_title": "Solicita una Cita",
+  "sidebar_title": "Solicita una Cita",
   "form_name_placeholder": "Nombre",
   "form_email_placeholder": "Correo Electrónico",
   "form_message_placeholder": "Mensaje",
@@ -282,6 +281,12 @@
   "about_us_add_advanced_features_desc": "Sit amet consectetur adipiscing sed eiusmod tempor incididunt labore et dolore magnaes epsums",
   "about_us_optimize_for_search": "Optimizar para motores de búsqueda",
   "about_us_optimize_for_search_desc": "Sit amet consectetur adipiscing sed eiusmod tempor incididunt labore et dolore magnaes epsums",
+  "about_us_stats": {
+    "1": "Procesamiento más rápido",
+    "2": "Cifrado seguro",
+    "3": "Disponibilidad",
+    "4": "Aceptación de documentos"
+  },
   "help-desk": {
     "title": "Centro de Ayuda",
     "finding-help": "Cómo Encontrar Ayuda",
@@ -295,33 +300,33 @@
     "forms": {
       "affidavit-of-identity": {
         "title": "Declaración Jurada de Identidad",
-        "description": "Sit amet consectetur adipiscing elit, sed eiusmod tempor incididunt labore et dolore magna aliqua esuis suspendisse",
-        "button": "Más Información"
+        "description": "Este documento notariado confirma su identidad y puede ser útil para transacciones en línea, incluyendo instituciones financieras, agencias gubernamentales o asuntos legales.",
+        "button": "Editar Plantilla"
       },
       "power-of-attorney": {
         "title": "Poder Notarial",
-        "description": "Sit amet consectetur adipiscing elit, sed eiusmod tempor incididunt labore et dolore magna aliqua esuis suspendisse",
-        "button": "Más Información"
+        "description": "Se utiliza para designar a alguien de su confianza para que gestione sus asuntos en su ausencia. Este documento legal puede utilizarse para emergencias o incluso para realizar transacciones comerciales en su nombre.",
+        "button": "Editar Plantilla"
       },
       "agreement-of-sale": {
-        "title": "Contrato de Venta",
-        "description": "Sit amet consectetur adipiscing elit, sed eiusmod tempor incididunt labore et dolore magna aliqua esuis suspendisse",
-        "button": "Más Información"
+        "title": "Contrato de Compraventa",
+        "description": "Un contrato legal entre un comprador y un vendedor que detalla los términos y condiciones de la venta propuesta. Aplicable para transacciones relacionadas con bienes raíces, vehículos motorizados, etc.",
+        "button": "Editar Plantilla"
       },
       "property-management-agreement": {
-        "title": "Contrato de Gestión de Propiedades",
-        "description": "Sit amet consectetur adipiscing elit, sed eiusmod tempor incididunt labore et dolore magna aliqua esuis suspendisse",
-        "button": "Más Información"
+        "title": "Contrato de Administración de Propiedades",
+        "description": "Este acuerdo permite a una persona o agencia administrar su propiedad en su nombre. Puede incluir tareas como el pago de impuestos, el arrendamiento o trabajos de rehabilitación.",
+        "button": "Editar Plantilla"
       },
       "lease-agreement": {
         "title": "Contrato de Arrendamiento",
-        "description": "Sit amet consectetur adipiscing elit, sed eiusmod tempor incididunt labore et dolore magna aliqua esuis suspendisse",
-        "button": "Más Información"
+        "description": "Los contratos de arrendamiento evitan disputas al establecer los derechos y responsabilidades tanto del inquilino como del arrendador.",
+        "button": "Editar Plantilla"
       },
       "promissory-note": {
         "title": "Pagaré",
-        "description": "Sit amet consectetur adipiscing elit, sed eiusmod tempor incididunt labore et dolore magna aliqua esuis suspendisse",
-        "button": "Más Información"
+        "description": "Este documento establece los términos y condiciones del préstamo para el préstamo de dinero entre personas. Incluye calendarios de pago, tasas de interés y garantías.",
+        "button": "Editar Plantilla"
       }
     },
     "faqs-title": "Preguntas Frecuentes",
@@ -340,7 +345,6 @@
   "email_label": "Correo electrónico",
   "keep_me_logged_in": "Mantenerme conectado",
   "phone_label": "Número de móvil",
-
   "forgot_pass_heading": "¿Olvidaste tu contraseña?",
   "forgot_pass_we_got_you": "¿Olvidaste tu contraseña? ¡Te tenemos cubierto!",
   "send_verification_link": "Enviar enlace de verificación",

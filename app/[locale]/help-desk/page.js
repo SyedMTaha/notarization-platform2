@@ -159,7 +159,7 @@ const Faq = () => {
       </section>
       {/* FAQ Page About Area end */}
       {/* Services Area start */}
-      <section className="bgc-black-with-lighting rel z-1 text-white pt-115 pb-100">
+      <section className="bgc-black-with-lighting rel z-1 pt-115 pb-100">
         <div className="container">
           <div className="row justify-content-center">
             <div className="col-xl-8 col-lg-10">
@@ -168,7 +168,7 @@ const Faq = () => {
                 data-wow-delay="0.2s"
               >
                 <span className="sub-title style-two mb-20">{ht("offer")}</span>
-                <h2>{ht("choose-your-form-title")}</h2>
+                <h2 className="text-white">{ht("choose-your-form-title")}</h2>
               </div>
             </div>
           </div>
@@ -182,8 +182,8 @@ const Faq = () => {
                   <div className="icon">
                     <img src={service.icon} alt="Icon" />
                   </div>
-                  <h4>{ht(service.title)}</h4>
-                  <p>{ht(service.description)}</p>
+                  <h4 className="text-white">{ht(service.title)}</h4>
+                  <p className="text-white">{ht(service.description)}</p>
                   <Link legacyBehavior href={`/faqs/${service.id}`}>
                     <a className="theme-btn style-three">
                       {ht(service.button)} <i className="fas fa-angle-double-right" />
