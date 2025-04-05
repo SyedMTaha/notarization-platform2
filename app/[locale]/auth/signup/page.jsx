@@ -59,6 +59,7 @@ const SignUp = () => {
             style={{
               maxHeight: "95%",
               maxWidth: "100%",
+              paddingTop: "100px"
             }}
           />
         </Col>

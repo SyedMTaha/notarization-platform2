@@ -1,14 +1,5 @@
 "use client";
-import {
-  Button,
-  FormGroup,
-  FormLabel,
-  FormControl,
-  FormCheck,
-  Form,
-  Row,
-  Col,
-} from "react-bootstrap";
+import { Button, FormGroup, FormLabel, FormControl, FormCheck, Form, Row, Col } from "react-bootstrap";
 import PhoneInput from "react-phone-input-2";
 import "react-phone-input-2/lib/bootstrap.css";
 import "../public/assets/v3/scss/style.scss";
@@ -41,21 +32,19 @@ const CustomPhoneInput = forwardRef(({ value, onChange, onBlur }, ref) => (
   />
 ));
 
-const CustomCheckbox = forwardRef(
-  ({ label, name, onChange, onBlur, checked }, ref) => (
-    <FormGroup controlId={name}>
-      <FormCheck
-        label={label}
-        name={name}
-        ref={ref}
-        onChange={onChange}
-        className="gap-2"
-        onBlur={onBlur}
-        checked={checked}
-      />
-    </FormGroup>
-  )
-);
+const CustomCheckbox = forwardRef(({ label, name, onChange, onBlur, checked }, ref) => (
+  <FormGroup controlId={name}>
+    <FormCheck
+      label={label}
+      name={name}
+      ref={ref}
+      onChange={onChange}
+      className="gap-2"
+      onBlur={onBlur}
+      checked={checked}
+    />
+  </FormGroup>
+));
 
 const readURL = (event, id) => {
   console.log(id);
@@ -83,15 +72,9 @@ const SignUpForm = () => {
 
   // Define validation schema
   const schema = yup.object({
-    email: yup
-      .string()
-      .email("Please enter a valid email")
-      .required("Email is required"),
+    email: yup.string().email("Please enter a valid email").required("Email is required"),
     phone: yup.string().required("Mobile number is required"),
-    password: yup
-      .string()
-      .min(8, "Password must be at least 8 characters")
-      .required("Password is required"),
+    password: yup.string().min(8, "Password must be at least 8 characters").required("Password is required"),
     confirmPassword: yup
       .string()
       .oneOf([yup.ref("password"), null], "Passwords must match")
@@ -176,9 +159,7 @@ const SignUpForm = () => {
             render={({ field, fieldState }) => (
               <>
                 <CustomPhoneInput {...field} />
-                {fieldState.error?.message && (
-                  <p className="text-danger">{fieldState.error?.message}</p>
-                )}
+                {fieldState.error?.message && <p className="text-danger">{fieldState.error?.message}</p>}
               </>
             )}
           />
@@ -212,17 +193,9 @@ const SignUpForm = () => {
                   >
                     {!fieldState.error &&
                       (showPassword ? (
-                        <FiEye
-                          height={18}
-                          width={18}
-                          className="cursor-pointer"
-                        />
+                        <FiEye height={18} width={18} className="cursor-pointer" />
                       ) : (
-                        <FiEyeOff
-                          height={18}
-                          width={18}
-                          className="cursor-pointer"
-                        />
+                        <FiEyeOff height={18} width={18} className="cursor-pointer" />
                       ))}
                   </span>
                 </div>
@@ -237,9 +210,7 @@ const SignUpForm = () => {
             control={control}
             render={({ field, fieldState }) => (
               <FormGroup>
-                <FormLabel htmlFor="confirmPassword">
-                  {t("confirm_password")}
-                </FormLabel>
+                <FormLabel htmlFor="confirmPassword">{t("confirm_password")}</FormLabel>
 
                 <div className="position-relative">
                   <FormControl
@@ -261,17 +232,9 @@ const SignUpForm = () => {
                   >
                     {!fieldState.error &&
                       (showConfirmPassword ? (
-                        <FiEye
-                          height={18}
-                          width={18}
-                          className="cursor-pointer"
-                        />
+                        <FiEye height={18} width={18} className="cursor-pointer" />
                       ) : (
-                        <FiEyeOff
-                          height={18}
-                          width={18}
-                          className="cursor-pointer"
-                        />
+                        <FiEyeOff height={18} width={18} className="cursor-pointer" />
                       ))}
                   </span>
                 </div>
@@ -284,34 +247,24 @@ const SignUpForm = () => {
         <Form.Group controlId="payment_method" className="mb-3">
           <Form.Label>Payment Method</Form.Label>
 
-          <Form.Control
-            as="select"
-            {...register("payment_method")}
-            style={{ cursor: "pointer" }}
-          >
+          <Form.Control as="select" {...register("payment_method")} style={{ cursor: "pointer" }}>
             <option>Credit Card</option>
             <option>PayPal</option>
             <option>CashApp</option>
           </Form.Control>
 
           {errors.payment_method && (
-            <Form.Text className="text-danger">
-              {errors.payment_method.message}
-            </Form.Text>
+            <Form.Text className="text-danger">{errors.payment_method.message}</Form.Text>
           )}
         </Form.Group>
 
         <Form.Group controlId="name" className="mb-3">
           <Form.Label>Name</Form.Label>
           <Form.Control type="text" {...register("name")} />
-          {errors.name && (
-            <Form.Text className="text-danger">{errors.name.message}</Form.Text>
-          )}
+          {errors.name && <Form.Text className="text-danger">{errors.name.message}</Form.Text>}
         </Form.Group>
 
-        {["Credit Card", "PayPal", "CashApp"].includes(
-          watch("payment_method")
-        ) && (
+        {["Credit Card", "PayPal", "CashApp"].includes(watch("payment_method")) && (
           <>
             {watch("payment_method") === "Credit Card" && (
               <>
@@ -319,9 +272,7 @@ const SignUpForm = () => {
                   <Form.Label>Card Number</Form.Label>
                   <Form.Control type="text" {...register("card_number")} />
                   {errors.card_number && (
-                    <Form.Text className="text-danger">
-                      {errors.card_number.message}
-                    </Form.Text>
+                    <Form.Text className="text-danger">{errors.card_number.message}</Form.Text>
                   )}
                 </Form.Group>
                 <Row className="mb-3">
@@ -330,9 +281,7 @@ const SignUpForm = () => {
                       <Form.Label>Expiry Date</Form.Label>
                       <Form.Control type="date" {...register("expiry_date")} />
                       {errors.expiry_date && (
-                        <Form.Text className="text-danger">
-                          {errors.expiry_date.message}
-                        </Form.Text>
+                        <Form.Text className="text-danger">{errors.expiry_date.message}</Form.Text>
                       )}
                     </Form.Group>
                   </Col>
@@ -340,11 +289,7 @@ const SignUpForm = () => {
                     <Form.Group controlId="CVV">
                       <Form.Label>CVV</Form.Label>
                       <Form.Control type="text" {...register("CVV")} />
-                      {errors.CVV && (
-                        <Form.Text className="text-danger">
-                          {errors.CVV.message}
-                        </Form.Text>
-                      )}
+                      {errors.CVV && <Form.Text className="text-danger">{errors.CVV.message}</Form.Text>}
                     </Form.Group>
                   </Col>
                 </Row>
@@ -353,13 +298,21 @@ const SignUpForm = () => {
           </>
         )}
 
-        <Row className="mb-3 no-wrap">
-          <Col>
+        <Row className="mb-3 flex-nowrap">
+          <Col className="col-6">
             <div
-              style={{ border: "1px solid black" }}
+              style={{
+                border: "1px solid black",
+                maxWidth: "100%",
+                height: "auto",
+              }}
               className="wizard-photo-upload position-relative p-2"
             >
-              <label htmlFor="identification_image" className="text-center">
+              <label
+                htmlFor="identification_image"
+                className="text-center rounded"
+                style={{ fontSize: "10px" }}
+              >
                 Upload Identification
               </label>
               <input
@@ -369,24 +322,40 @@ const SignUpForm = () => {
                 type="file"
                 style={{ display: "none" }}
               />
-              <div className="display-img text-center">
+              <div
+                className="display-img text-center"
+                style={{
+                  maxWidth: "100%",
+                  height: "auto",
+                }}
+              >
                 <img
                   id="identification"
                   src={"/assets/v3/img/pf1.png"}
                   alt="your image"
+                  style={{
+                    maxWidth: "100%",
+                    height: "auto",
+                  }}
                 />
               </div>
             </div>
-            {errors.identification && (
-              <p className="text-danger">{errors.identification.message}</p>
-            )}
+            {errors.identification && <p className="text-danger">{errors.identification.message}</p>}
           </Col>
-          <Col>
+          <Col className="col-6">
             <div
-              style={{ border: "1px solid black" }}
+              style={{
+                border: "1px solid black",
+                maxWidth: "100%",
+                height: "auto",
+              }}
               className="wizard-photo-upload position-relative p-2"
             >
-              <label htmlFor="notary_certificate_image" className="text-center">
+              <label
+                htmlFor="notary_certificate_image"
+                className="text-center rounded"
+                style={{ fontSize: "10px" }}
+              >
                 Upload Certificate of Notary
               </label>
               <input
@@ -396,17 +365,22 @@ const SignUpForm = () => {
                 type="file"
                 style={{ display: "none" }}
               />
-              <div className="display-img text-center">
+              <div
+                className="display-img text-center"
+                style={{
+                  maxWidth: "100%",
+                  height: "auto",
+                }}
+              >
                 <img
                   id="notary_certificate"
                   src={"/assets/v3/img/pf1.png"}
+                  // className="img-fluid"
                   alt="your image"
                 />
               </div>
             </div>
-            {errors.notary_certificate && (
-              <p className="text-danger">{errors.notary_certificate.message}</p>
-            )}
+            {errors.notary_certificate && <p className="text-danger">{errors.notary_certificate.message}</p>}
           </Col>
         </Row>
 
@@ -426,28 +400,18 @@ const SignUpForm = () => {
                   <label htmlFor="termsAgreed" className="form-check-label">
                     <span>
                       {t("terms_agreement")}{" "}
-                      <Link
-                        href="/terms"
-                        className="text-decoration-none"
-                        style={{ color: "#0C1134" }}
-                      >
+                      <Link href="/terms" className="text-decoration-none" style={{ color: "#0C1134" }}>
                         {t("terms_conditions")}
                       </Link>{" "}
                       &{" "}
-                      <Link
-                        href="/privacy"
-                        className="text-decoration-none"
-                        style={{ color: "#0C1134" }}
-                      >
+                      <Link href="/privacy" className="text-decoration-none" style={{ color: "#0C1134" }}>
                         {t("privacy_policy")}
                       </Link>
                     </span>
                   </label>
                 </div>
                 {fieldState.error?.message && (
-                  <div className="text-danger small">
-                    {fieldState.error.message}
-                  </div>
+                  <div className="text-danger small">{fieldState.error.message}</div>
                 )}
               </FormGroup>
             )}
