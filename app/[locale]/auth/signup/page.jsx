@@ -30,7 +30,7 @@ const SignUp = () => {
             <h2 style={{ fontFamily: "Jost" }}>{st("title")}</h2>
             <p>{st("subtitle")}</p>
             <SignUpForm />
-            <Row className="mt-3 w-100">
+            <Row className="mt-3 mb-3 w-100">
               <Col>
                 <p style={{textAlign:"left"}}>
                   {st("already_have_account")}{" "}

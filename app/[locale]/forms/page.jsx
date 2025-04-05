@@ -8,7 +8,10 @@ import Step5 from "../../../components/v3/step/step-5";
 export default function V3() {
   return (
     <div>
-      <div style={{minHeight: "120vh"}} className="wrapper wizard d-flex clearfix multisteps-form position-relative ">
+      <div
+        style={{ minHeight: "150vh" }}
+        className="wrapper wizard d-flex clearfix multisteps-form position-relative "
+      >
         {/* for rtl */}
         {/* <div className="wrapper wizard d-flex clearfix multisteps-form position-relative" dir='rtl'> */}
         <div className="steps order-2 position-relative w-25 ">
