@@ -430,11 +430,12 @@
       "button": "Sign Up"
     }
   },
-  "sidebar_menu": "Menu",
-  "sidebar_solutions": "Solutions",
-  "sidebar_standard_forms": "Standard Forms",
-  "sidebar_authenticate": "Authenticate",
-  "sidebar_help_desk": "Help Desk",
-  "sidebar_contact": "Contact",
-  "sidebar_sign_up": "Sign Up"
+  "sidebar": {
+    "sidebar_menu": "Menu",
+    "how_it_works": "How it works",
+    "about": "About us",
+    "sign-up": "Sign up",
+    "login": "Log in",
+    "bottom": "Contact us"
+  }
 }

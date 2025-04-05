@@ -12,34 +12,26 @@ const HowItWorks = ({ params: { form_id } }) => {
   return (
     <Layout footer={1}>
       <PageBanner
-        titleHtml={
-          st("banner_html_1") + "<span>" + st("banner_html_2") + "</span>"
-        }
+        titleHtml={st("banner_html_1") + "<span>" + st("banner_html_2") + "</span>"}
         titleText={st("title")}
       />
       {[1, 2, 3, 4].map((secNo, index) =>
         secNo % 2 == 1 ? (
-          <section
-            id={`${secNo}`}
-            key={index}
-            className="what-we-offer my-130 rel z-1"
-          >
+          <section id={`${secNo}`} key={index} className="what-we-offer my-130 rel z-1">
             <div className="container">
               <div className="row justify-content-between align-items-center">
                 <div className="col-xl-5 col-lg-6">
                   <div className="what-we-offer-left mb-30 rmb-65 wow fadeInRight delay-0-2s">
                     <div className="section-title mb-25">
-                      <span className="sub-title style-two mb-15">
-                        {st(`sec${secNo}.point`)}
-                      </span>
+                      <span className="sub-title style-two mb-15">{st(`sec${secNo}.point`)}</span>
                       <h2>{st(`sec${secNo}.heading`)}</h2>
                     </div>
-                    <p>{st(`sec${secNo}.para1`)}</p>
-                    <p>{st(`sec${secNo}.para2`)}</p>
+                    <p style={{ textAlign: "justify" }}>
+                      {st(`sec${secNo}.para1`)} {st(`sec${secNo}.para2`)}
+                    </p>
                     <Link legacyBehavior href="/about">
                       <a className="theme-btn mt-15">
-                        {st(`sec${secNo}.button`)}{" "}
-                        <i className="fas fa-angle-double-right" />
+                        {st(`sec${secNo}.button`)} <i className="fas fa-angle-double-right" />
                       </a>
                     </Link>
                   </div>
@@ -97,25 +89,20 @@ const HowItWorks = ({ params: { form_id } }) => {
                   </div>
                 </div>
                 <div className="col-lg-6">
-                  <div style={{ textAlign: "right" }} className="what-we-offer-content wow fadeInLeft delay-0-2s">
+                  <div
+                    style={{ textAlign: "right" }}
+                    className="what-we-offer-content wow fadeInLeft delay-0-2s"
+                  >
                     <div className="section-title mb-25">
                       <span className="sub-title style-two reverse-arrow mb-15">
                         {st(`sec${secNo}.point`)}
                       </span>
-                      <h2 style={{ textAlign: "right" }}>
-                        {st(`sec${secNo}.heading`)}
-                      </h2>
+                      <h2 style={{ textAlign: "right" }}>{st(`sec${secNo}.heading`)}</h2>
                     </div>
-                    <p style={{ textAlign: "right" }}>
-                      {st(`sec${secNo}.para1`)}
-                    </p>
-                    <p  style={{ textAlign: "right" }}>
-                      {st(`sec${secNo}.para2`)}
-                    </p>
-                    <Link  legacyBehavior href="/about">
+                    <p style={{ textAlign: "justify" }}>{st(`sec${secNo}.para1`)} {st(`sec${secNo}.para2`)}</p>
+                    <Link legacyBehavior href="/about">
                       <a className="theme-btn mt-15">
-                        {st(`sec${secNo}.button`)}{" "}
-                        <i className="fas fa-angle-double-right" />
+                        {st(`sec${secNo}.button`)} <i className="fas fa-angle-double-right" />
                       </a>
                     </Link>
                   </div>

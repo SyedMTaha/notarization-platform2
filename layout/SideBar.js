@@ -4,7 +4,7 @@ import { FaBars } from "react-icons/fa";
 import { Fragment } from "react";
 import Link from "next/link";
 const SideBar = () => {
-  const t = useTranslations();
+  const t = useTranslations('sidebar');
   return (
     <Fragment>
       {/* Form Back Drop */}
@@ -28,31 +28,25 @@ const SideBar = () => {
                 }}
                 className="p-15 text-white fs-4 "
               >
-                <Link href="/solutions">{t("sidebar_solutions")}</Link>
+                <Link href="/faqs/1">{t("how_it_works")}</Link>
               </li>
               <li
                 style={{ borderBottom: "1px solid #5872A3" }}
                 className="text-white p-15 fs-4 "
               >
-                <Link href="/faqs/1">{t("sidebar_standard_forms")}</Link>
+                <Link href="/about">{t("about")}</Link>
               </li>
               <li
                 style={{ borderBottom: "1px solid #5872A3" }}
                 className=" text-white p-15  fs-4 "
               >
-                <Link href="/auth/signin">{t("sidebar_authenticate")}</Link>
+                <Link href="/auth/signup">{t("sign-up")}</Link>
               </li>
               <li
                 style={{ borderBottom: "1px solid #5872A3" }}
                 className=" text-white p-15 fs-4 "
               >
-                <Link href="/help-desk">{t("sidebar_help_desk")}</Link>
-              </li>
-              <li
-                style={{ borderBottom: "1px solid #5872A3" }}
-                className=" text-white p-15 fs-4 "
-              >
-                <Link href="/contact">{t("sidebar_contact")}</Link>
+                <Link href="/auth/signin">{t("login")}</Link>
               </li>
             </ul>
             <ul className="sidebar-menu">
@@ -63,7 +57,7 @@ const SideBar = () => {
                 }}
                 className=" p-15 text-white fs-4 "
               >
-                <Link href="/auth/signup">{t("sidebar_sign_up")}</Link>
+                <Link href="/contact">{t("bottom")}</Link>
               </li>
             </ul>
           </nav>

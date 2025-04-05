@@ -31,7 +31,7 @@ const Footer1 = () => {
                   </a>
                 </Link>
               </div>
-              <p>{t("footer1AboutText")}</p>
+              <p style={{textAlign:"justify"}} >{t("footer1AboutText")}</p>
               <div className="social-style-two pt-5">
                 <a href="#">
                   <i className="fab fa-facebook-f" />

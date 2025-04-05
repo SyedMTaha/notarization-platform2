@@ -396,11 +396,12 @@
       "button": "Regístrate"
     }
   },
-  "sidebar_menu": "Menú",
-  "sidebar_solutions": "Soluciones",
-  "sidebar_standard_forms": "Formularios Estándar",
-  "sidebar_authenticate": "Autenticar",
-  "sidebar_help_desk": "Soporte Técnico",
-  "sidebar_contact": "Contacto",
-  "sidebar_sign_up": "Registrarse"
+  "sidebar": {
+    "sidebar_menu": "Menú",
+    "how_it_works": "Cómo funciona",
+    "about": "Acerca de nosotros",
+    "sign-up": "Registrarse",
+    "login": "Iniciar sesión",
+    "bottom": "Contáctanos"
+  }
 }
