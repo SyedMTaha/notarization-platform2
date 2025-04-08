@@ -92,7 +92,7 @@ const Hero1 = () => {
             </div>
           </div>
           <div
-            className="slider-video"
+            className="slider-video a"
             style={{
               backgroundImage: "url(/assets/images/slider/slide2.jpg)",
             }}
