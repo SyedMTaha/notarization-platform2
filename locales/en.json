@@ -1,10 +1,10 @@
 {
-  "favicon_alt": "Favicon",
-  "logo_alt": "Logo",
-  "logo_title": "Logo",
+  "favicon_alt": "WiScribbles",
+  "logo_alt": "WiScribbles",
+  "logo_title": "WiScribbles",
   "navbar": {
     "home": "Home",
-    "solutions": "solutions",
+    "solutions": "Solutions",
     "solutions_dropdown": {
       "1": "Notaries",
       "2": "Attorneys",
@@ -94,7 +94,7 @@
   "email_address": "Email Address",
   "email": "support@wiscribbles.com",
   "phone_number": "Phone No",
-  "phone": "+000 (123) 456 99",
+  "phone": " +1 (813) 940-1599",
   "send_us_message": "Send us a Message",
   "full_name_placeholder": "Full Name",
   "email_placeholder": "Email Address",
@@ -157,7 +157,7 @@
   "slider_main_title_suffix": "Anywhere, Anytime",
   "slider_btn_get_started": "Notarize Now!",
   "slider_btn_explore_services": "E-Sign Now!",
-  "slider_video_title_1": "Notorize Now",
+  "slider_video_title_1": "Watch Tutorial",
   "slider_video_title_2": "Development",
   "sidebar_title": "Get Appointment",
   "form_name_placeholder": "Name",
@@ -211,7 +211,7 @@
   "how_it_works_cost_effective_description": "Save 50% compared to traditional notary services.",
   "how_it_works_fast_convenient": "Fast & Convenient",
   "how_it_works_fast_convenient_description": "Complete notarization in 10-15 minutes from anywhere.",
-  "how_it_works_lets_start_notarization": "Let’s Start Notarization Process",
+  "how_it_works_lets_start_notarization": "Let’s start the Notarization Process",
   "how_it_works_lets_start_notarization_description": "With millions of documents notarized, our platform is a trusted choice for individuals and businesses worldwide.",
   "how_it_works_lets_get_started": "Let’s Get Started",
   "default_header_home": "Home",
@@ -275,12 +275,12 @@
   "about_us_legally_valid": "Legally Valid",
   "about_us_legally_compliant_secure": "Legally Compliant & Secure",
   "about_us_legally_compliant_secure_desc": "Our platform complies with Guyana's ECT Act 2023, Trinidad's ET Act Rev. 2016, Jamaica's ET Act Rev. 2014, and Barbados' ET Act 308B, ensuring that all notarized documents are legally binding.",
-  "about_us_edit_mobile_view": "Edit your mobile view",
-  "about_us_edit_mobile_view_desc": "Sit amet consectetur adipiscing sed eiusmod tempor incididunt labore et dolore magnaes epsums",
-  "about_us_add_advanced_features": "Add advanced features",
-  "about_us_add_advanced_features_desc": "Sit amet consectetur adipiscing sed eiusmod tempor incididunt labore et dolore magnaes epsums",
-  "about_us_optimize_for_search": "Optimize for search engines",
-  "about_us_optimize_for_search_desc": "Sit amet consectetur adipiscing sed eiusmod tempor incididunt labore et dolore magnaes epsums",
+  "about_us_edit_mobile_view": "Convenience at Your Fingertips",
+  "about_us_edit_mobile_view_desc": "No more scheduling conflicts or trips to a notary office. Our remote notary services are available 24/7.",
+  "about_us_add_advanced_features": "Fast & Reliables",
+  "about_us_add_advanced_features_desc": "Traditional notarization can take hours or even days. With our online platform, you can get your document notarized in just 10-15 minutes.",
+  "about_us_optimize_for_search": "Experienced & Licensed Notaries",
+  "about_us_optimize_for_search_desc": "We work with a network of professional certified Commissioner of Oaths who guide you through the entire process via live video sessions.",
   "about_us_stats": {
     "1": "Faster processing",
     "2": "Secure Encryption",
@@ -395,7 +395,59 @@
     "privacy_policy": "Privacy Policy",
     "sign_up_button": "Sign up",
     "already_have_account": "Already have an account?",
-    "sign_in": "Sign in"
+    "sign_in": "Sign in",
+    "validation": {
+      "signUpAs": {
+        "required": "Please select a role"
+      },
+      "email": {
+        "invalid": "Please enter a valid email",
+        "required": "Email is required"
+      },
+      "phone": {
+        "required": "Mobile number is required"
+      },
+      "password": {
+        "min": "Password must be at least 8 characters",
+        "required": "Password is required"
+      },
+      "confirmPassword": {
+        "oneOf": "Passwords must match",
+        "required": "Confirm password is required"
+      },
+      "termsAgreed": {
+        "oneOf": "You must agree to the terms and conditions",
+        "required": "You must agree to the terms and conditions"
+      },
+      "payment_method": {
+        "oneOf": "Invalid payment method",
+        "required": "Payment method is required"
+      },
+      "card_number": {
+        "required": "Card number is required"
+      },
+      "name": {
+        "required": "Name is required"
+      },
+      "expiry_date": {
+        "required": "Expiry date is required"
+      },
+      "CVV": {
+        "length": "CVV must be 3 digits"
+      },
+      "identification": {
+        "required": "Identification is required"
+      },
+      "notary_certificate": {
+        "required": "Notary certificate is required"
+      }
+    },
+    "options": {
+      "Notary": "Notary",
+      "Attorney": "Attorney",
+      "Business": "Business",
+      "Real_Estate_Agent": "Real Estate Agent"
+    }
   },
   "solutions": {
     "banner_html_1": "Solu",
@@ -418,7 +470,7 @@
     "sec3": {
       "point": "The best for Real Estate Agents",
       "heading": "Real Estate Agents",
-      "para1": ". Practice out of jurisdiction investing with access to our standard agreement of sales, property management agreement and lease agreement to provide a legal framework for all your transactions",
+      "para1": "Practice out of jurisdiction investing with access to our standard agreement of sales, property management agreement and lease agreement to provide a legal framework for all your transactions",
       "para2": "Real estate transactions should not be limited to location.",
       "button": "Sign Up"
     },

@@ -205,7 +205,7 @@ const HowItWorks = ({ params: { form_id } }) => {
                   <h2>{t("how_it_works_cta_heading")}</h2>
                 </div>
                 <p>{t("how_it_works_cta_description")}</p>
-                <Link legacyBehavior href="/contact">
+                <Link legacyBehavior href="/auth/signup">
                   <a className="theme-btn style-three white-btn mt-15">
                     {t("how_it_works_join_notary_team")}{" "}
                     <i className="fas fa-angle-double-right" />
@@ -290,7 +290,7 @@ const HowItWorks = ({ params: { form_id } }) => {
               </div>
             </div>
             <div className="col-lg-3 text-lg-end">
-              <Link legacyBehavior href="/contact">
+              <Link legacyBehavior href="/auth/signup">
                 <a className="theme-btn style-two mb-30 wow fadeInUp delay-0-4s">
                   {t("how_it_works_lets_get_started")}{" "}
                   <i className="fas fa-angle-double-right" />

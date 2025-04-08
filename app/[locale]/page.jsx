@@ -22,6 +22,15 @@ const IndexOnePage = ({ params }) => {
   }, []);
   const t = useTranslations();
   const { locale, slug } = params;
+  // Define your sidebar links array (usually placed in a constants file or component state)
+  const sidebarLinks = [
+    { href: "/how-it-works", labelKey: "how_it_works" },
+    { href: "/about", labelKey: "about" },
+    { href: "/auth/signup", labelKey: "sign-up" },
+    { href: "/auth/signin", labelKey: "login" },
+    { href: "/contact", labelKey: "bottom" }
+  ];
+
 
   const [active, setActive] = useState(`a0`);
   const onClick = (value) => {
@@ -132,6 +141,15 @@ const IndexOnePage = ({ params }) => {
                         <li>
                           <Link href="/help-desk">{t("navbar.help")}</Link>
                         </li>
+                        <ul className="d-block d-md-none">
+                          {sidebarLinks.map((link, index) => (
+                            <li key={index}>
+                              <Link href={link.href}>
+                                {t(`sidebar.${link.labelKey}`)}
+                              </Link>
+                            </li>
+                          ))}
+                        </ul>
                       </ul>
                     </Accordion.Collapse>
                   </Accordion>
@@ -168,7 +186,8 @@ const IndexOnePage = ({ params }) => {
                 </Link>
                 <LangSwitcher locale={locale} />
                 {/* menu sidebar */}
-                <div className="menu-sidebar">
+              {/* Menu sidebar (visible only on md and up) */}
+                <div className="menu-sidebar d-none d-md-block">
                   <button onClick={() => sideBarToggle()}>
                     <span className="icon-bar" />
                     <span className="icon-bar" />
@@ -425,7 +444,7 @@ const IndexOnePage = ({ params }) => {
                           </Link>
                         </h4>
                         <p>{t("website_creation_desc")} </p>
-                        <Link legacyBehavior href="/service-details">
+                        <Link legacyBehavior href="/solutions#2">
                           <div
                             style={{
                               border: "1px solid #416976",
@@ -487,7 +506,7 @@ const IndexOnePage = ({ params }) => {
                           </Link>
                         </h4>
                         <p>{t("ecommerce_solutions_desc")} </p>
-                        <Link legacyBehavior href="/service-details">
+                        <Link legacyBehavior href="/solutions#3">
                           <div
                             style={{
                               border: "1px solid #416976",
@@ -519,7 +538,7 @@ const IndexOnePage = ({ params }) => {
                           </Link>
                         </h4>
                         <p>{t("responsive_ui_ux_desc")} </p>
-                        <Link legacyBehavior href="/service-details">
+                        <Link legacyBehavior href="/solutions#4">
                           <div
                             style={{
                               border: "1px solid #416976",
@@ -557,7 +576,7 @@ const IndexOnePage = ({ params }) => {
                           </Link>
                         </h4>
                         <p>{t("seo_services_desc")} </p>
-                        <Link legacyBehavior href="/service-details">
+                        <Link legacyBehavior href="/solutions#1">
                           <div
                             style={{
                               border: "1px solid #416976",

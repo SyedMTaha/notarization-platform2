@@ -72,27 +72,28 @@ const SignUpForm = () => {
 
   // Define validation schema
   const schema = yup.object({
-    email: yup.string().email("Please enter a valid email").required("Email is required"),
-    phone: yup.string().required("Mobile number is required"),
-    password: yup.string().min(8, "Password must be at least 8 characters").required("Password is required"),
+    signUpAs: yup.string().required(t("validation.signUpAs.required")),
+    email: yup.string().email(t("validation.email.invalid")).required(t("validation.email.required")),
+    phone: yup.string().required(t("validation.phone.required")),
+    password: yup.string().min(8, t("validation.password.min")).required(t("validation.password.required")),
     confirmPassword: yup
       .string()
-      .oneOf([yup.ref("password"), null], "Passwords must match")
-      .required("Confirm password is required"),
+      .oneOf([yup.ref("password"), null], t("validation.confirmPassword.oneOf"))
+      .required(t("validation.confirmPassword.required")),
     termsAgreed: yup
       .boolean()
-      .oneOf([true], "You must agree to the terms and conditions")
-      .required("You must agree to the terms and conditions"),
+      .oneOf([true], t("validation.termsAgreed.oneOf"))
+      .required(t("validation.termsAgreed.required")),
     payment_method: yup
       .string()
-      .oneOf(["Credit Card", "PayPal", "CashApp"], "Invalid payment method")
-      .required("Payment method is required"),
-    card_number: yup.string().required("Card number is required"),
-    name: yup.string().required("Name is required"),
-    expiry_date: yup.date().required("Expiry date is required"),
-    CVV: yup.string().length(3, "CVV must be 3 digits"),
-    identification: yup.mixed().required("Identification is required"),
-    notary_certificate: yup.mixed().required("Notary certificate is required"),
+      .oneOf(["Credit Card", "PayPal", "CashApp"], t("validation.payment_method.oneOf"))
+      .required(t("validation.payment_method.required")),
+    card_number: yup.string().required(t("validation.card_number.required")),
+    name: yup.string().required(t("validation.name.required")),
+    expiry_date: yup.date().required(t("validation.expiry_date.required")),
+    CVV: yup.string().length(3, t("validation.CVV.length")),
+    identification: yup.mixed().required(t("validation.identification.required")),
+    notary_certificate: yup.mixed().required(t("validation.notary_certificate.required")),
   });
 
   // Initialize form with validation
@@ -106,6 +107,7 @@ const SignUpForm = () => {
     resolver: yupResolver(schema),
     mode: "onChange",
     defaultValues: {
+      signUpAs: "",
       termsAgreed: false,
       payment_method: "Credit Card",
       card_number: "123",
@@ -125,6 +127,35 @@ const SignUpForm = () => {
   return (
     <>
       <form onSubmit={handleSubmit(onSubmit)}>
+        <div className="my-3">
+          <Controller
+            name="signUpAs"
+            control={control}
+            render={({ field, fieldState }) => (
+              <FormGroup>
+                <FormLabel htmlFor="signUpAs">Sign Up As</FormLabel>
+                <FormControl
+                  as="select"
+                  id="signUpAs"
+                  {...field}
+                  isInvalid={Boolean(fieldState.error?.message)}
+                >
+                  <option value=""></option>
+                  <option value="Notary">{t("options.Notary")}</option>
+                  <option value="Attorney">{t("options.Attorney")}</option>
+                  <option value="Business">{t("options.Business")}</option>
+                  <option value="Real Estate Agent">{t("options.Real_Estate_Agent")}</option>
+                </FormControl>
+                {fieldState.error?.message && (
+                  <Feedback type="invalid" className="text-danger">
+                    {fieldState.error?.message}
+                  </Feedback>
+                )}
+              </FormGroup>
+            )}
+          />
+        </div>
+
         <div className="mb-3">
           <Controller
             name="email"
@@ -242,7 +273,7 @@ const SignUpForm = () => {
             )}
           />
         </div>
-        <p>Payment Details</p>
+        {/* <p>Payment Details</p>
 
         <Form.Group controlId="payment_method" className="mb-3">
           <Form.Label>Payment Method</Form.Label>
@@ -298,7 +329,7 @@ const SignUpForm = () => {
           </>
         )}
 
-        <Row className="mb-3 flex-nowrap">
+         <Row className="mb-3 flex-nowrap">
           <Col className="col-6">
             <div
               style={{
@@ -381,8 +412,8 @@ const SignUpForm = () => {
               </div>
             </div>
             {errors.notary_certificate && <p className="text-danger">{errors.notary_certificate.message}</p>}
-          </Col>
-        </Row>
+          </Col> 
+        </Row> */}
 
         <div className="mb-3">
           <Controller

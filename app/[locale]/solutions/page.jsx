@@ -29,7 +29,7 @@ const HowItWorks = ({ params: { form_id } }) => {
                     <p style={{ textAlign: "justify" }}>
                       {st(`sec${secNo}.para1`)} {st(`sec${secNo}.para2`)}
                     </p>
-                    <Link legacyBehavior href="/about">
+                    <Link legacyBehavior href="/auth/signup">
                       <a className="theme-btn mt-15">
                         {st(`sec${secNo}.button`)} <i className="fas fa-angle-double-right" />
                       </a>

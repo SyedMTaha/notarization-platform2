@@ -97,18 +97,18 @@ const Hero1 = () => {
               backgroundImage: "url(/assets/images/slider/slide2.jpg)",
             }}
           >
-            {/* <a
-              href="https://www.youtube.com/watch?v=9Y7ma241N8k"
+            <a
+              // href="https://www.youtube.com"
               className="mfp-iframe video-play"
             >
               <i className="fas fa-play" />
-            </a> */}
-            {/* <span className="video-title cd-headline clip">
+            </a> 
+           <span style={{fontFamily:"Catamaran", textTransform: "none", fontSize: "4rem", opacity:"0.8" }} className="video-title cd-headline clip">
               <span className="cd-words-wrapper">
                 <b className="is-visible">{t("slider_video_title_1")}</b>
-                <b>{t("slider_video_title_2")}</b>
+                {/* <b>{t("slider_video_title_2")}</b> */}
               </span>
-            </span> */}
+            </span>
           </div>
         </div>
 

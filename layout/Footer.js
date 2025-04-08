@@ -63,7 +63,7 @@ const Footer1 = () => {
                   </Link>
                 </li>
                 <li>
-                  <Link legacyBehavior href="/service-details">
+                  <Link legacyBehavior href="/solutions">
                     {t("footer1LinkServices")}
                   </Link>
                 </li>
@@ -73,12 +73,12 @@ const Footer1 = () => {
                   </Link>
                 </li>
                 <li>
-                  <Link legacyBehavior href="/service-details">
+                  <Link legacyBehavior href="/help-desk">
                     {t("footer1LinkTechnicalSupport")}
                   </Link>
                 </li>
                 <li>
-                  <Link legacyBehavior href="/service-details">
+                  <Link legacyBehavior href="/about">
                     {t("footer1LinkAboutCompany")}
                   </Link>
                 </li>

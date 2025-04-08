@@ -3,7 +3,7 @@ import Layout from "../../../layout/Layout";
 import PageBanner from "../../../layout/PageBanner";
 const Contact = () => {
   return (
-    <Layout>
+    <Layout footer={1}>
       <PageBanner titleHtml={`Conta<span>ct Us</span>`} titleText="Contact" />
       <section className="contact-us-page-area py-130">
         <div className="container">
@@ -153,9 +153,9 @@ const Contact = () => {
                   <div className="content">
                     <span className="title">Phone Number</span>
                     <span className="text">
-                      Call <a href="calto:+000(123)45688">+000 (123) 456 88</a>
+                      Call <a href="calto:+1(813)940-1599">+1 (813) 940-1599</a>
                       <br />
-                      Whatsapp : +9632145789
+                      {/* Whatsapp : +9632145789 */}
                     </span>
                   </div>
                 </div>

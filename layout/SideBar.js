@@ -28,7 +28,7 @@ const SideBar = () => {
                 }}
                 className="p-15 text-white fs-4 "
               >
-                <Link href="/faqs/1">{t("how_it_works")}</Link>
+                <Link href="/how-it-works">{t("how_it_works")}</Link>
               </li>
               <li
                 style={{ borderBottom: "1px solid #5872A3" }}

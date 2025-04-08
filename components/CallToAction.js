@@ -1,5 +1,8 @@
+import { useTranslations } from "next-intl";
 import Link from "next/link";
+useTranslations
 const CallToAction = () => {
+  const t = useTranslations();
   return (
     <section
       // style={{ backgroundColor: "#081A34" }}
@@ -9,7 +12,7 @@ const CallToAction = () => {
         <div className="row justify-content-between align-items-center">
           <div className="col-xl-7 col-lg-9">
             <div className="section-title text-white mb-25 wow fadeInUp delay-0-2s">
-              <h2>Let’s Start Notarization Process</h2>
+              <h2>Let's start the Notarization Process</h2>
               <p>
                 With millions of documents notarized, our platform is a trusted
                 choice for individuals and businesses worldwide.
