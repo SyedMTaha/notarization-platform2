@@ -140,7 +140,6 @@ const SignUpForm = () => {
                   {...field}
                   isInvalid={Boolean(fieldState.error?.message)}
                 >
-                  <option value=""></option>
                   <option value="Notary">{t("options.Notary")}</option>
                   <option value="Attorney">{t("options.Attorney")}</option>
                   <option value="Business">{t("options.Business")}</option>
