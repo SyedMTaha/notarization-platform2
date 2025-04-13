@@ -16,7 +16,10 @@ const Hero1 = () => {
   };
   const t = useTranslations();
   return (
-    <section id="home" className="main-slider-area bgc-black-with-lighting rel z-1">
+    <section
+      id="home"
+      className="main-slider-area bgc-black-with-lighting rel z-1"
+    >
       <Slider {...props} className="main-slider-active">
         {/* <div className="slider-item">
           <div className="container">
@@ -65,24 +68,32 @@ const Hero1 = () => {
               <span className="sub-title">{t("slider_sub_title")}</span>
               <h1>
                 {t("slider_main_title")}{" "}
-                <span style={{ color: "#416976" }}>{t("slider_main_title_highlight") + " "}</span>
+                <span style={{ color: "#416976" }}>
+                  {t("slider_main_title_highlight") + " "}
+                </span>
                 <span className="text-nowrap">
                   {t("slider_main_title_suffix")
                     .split(" ")
                     .map((str, num, arr) =>
-                      arr.length / 2 <= num ? <span style={{ color: "#416976" }}>{str + ' '}</span> : (str + " ")
+                      arr.length / 2 <= num ? (
+                        <span style={{ color: "#416976" }}>{str + " "}</span>
+                      ) : (
+                        str + " "
+                      )
                     )}
                 </span>
               </h1>
               <div className="slider-btns">
                 <Link legacyBehavior href="/contact">
                   <a className="theme-btn">
-                    {t("slider_btn_get_started")} <i className="fas fa-angle-double-right" />
+                    {t("slider_btn_get_started")}{" "}
+                    <i className="fas fa-angle-double-right" />
                   </a>
                 </Link>
                 <Link legacyBehavior href="/contact">
                   <a className="theme-btn style-three">
-                    {t("slider_btn_explore_services")} <i className="fas fa-angle-double-right" />
+                    {t("slider_btn_explore_services")}{" "}
+                    <i className="fas fa-angle-double-right" />
                   </a>
                 </Link>
               </div>
@@ -104,15 +115,32 @@ const Hero1 = () => {
               style={{
                 fontFamily: "Catamaran",
                 textTransform: "none",
-                fontSize: "4rem",
-                opacity: "0.8",
-                bottom: "40%",
+                fontSize: "2.5rem",
+                bottom: "30%",
                 position: "absolute",
+                cursor: "pointer",
               }}
               className="video-title cd-headline clip"
             >
-              <span className="cd-words-wrapper">
-                <b className="is-visible">{t("slider_video_title_1")}</b>
+              <span
+                style={{ backgroundColor: "#416976", borderRadius: "50px" }}
+                className=" py-3 px-4"
+              >
+                <div className="d-flex flex-row align-items-center">
+                  <b className="is-visible">{t("slider_video_title_1")}</b>
+                  <div
+                    className=" bg-white d-flex align-items-center p-3"
+                    style={{ marginLeft: "15px", borderRadius: "50%" }}
+                  >
+                    <i
+                      className="fas fa-play  "
+                      style={{
+                        fontSize: "18px",
+                        color: "#416976",
+                      }}
+                    ></i>
+                  </div>
+                </div>
                 {/* <b>{t("slider_video_title_2")}</b> */}
               </span>
             </span>
@@ -165,10 +193,26 @@ const Hero1 = () => {
         <div className="main-slider-dots" />
       </div>
       <div className="slider-shapes">
-        <img className="shape dots one" src="/assets/images/shapes/slider-dots.png" alt="Shape" />
-        <img className="shape dots two" src="/assets/images/shapes/slider-dots.png" alt="Shape" />
-        <img className="shape wave-line" src="/assets/images/shapes/slider-wave-line.png" alt="Shape" />
-        <img className="shape circle" src="/assets/images/shapes/slider-circle.png" alt="Shape" />
+        <img
+          className="shape dots one"
+          src="/assets/images/shapes/slider-dots.png"
+          alt="Shape"
+        />
+        <img
+          className="shape dots two"
+          src="/assets/images/shapes/slider-dots.png"
+          alt="Shape"
+        />
+        <img
+          className="shape wave-line"
+          src="/assets/images/shapes/slider-wave-line.png"
+          alt="Shape"
+        />
+        <img
+          className="shape circle"
+          src="/assets/images/shapes/slider-circle.png"
+          alt="Shape"
+        />
       </div>
     </section>
   );

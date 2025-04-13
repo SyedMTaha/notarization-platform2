@@ -31,7 +31,7 @@ const Footer1 = () => {
                   </a>
                 </Link>
               </div>
-              <p style={{textAlign:"justify"}} >{t("footer1AboutText")}</p>
+              <p style={{ textAlign: "justify" }}>{t("footer1AboutText")}</p>
               <div className="social-style-two pt-5">
                 <a href="#">
                   <i className="fab fa-facebook-f" />
@@ -51,7 +51,10 @@ const Footer1 = () => {
           <div className="col-xl-4 col-md-6">
             <div className="footer-widget widget_nav_menu wow fadeInUp delay-0-4s">
               <h4 className="footer-title">{t("footer1QuickLinks")}</h4>
-              <ul className="list-style-two" style={{flexDirection:"column"}}>
+              <ul
+                className="list-style-two"
+                style={{ flexDirection: "column" }}
+              >
                 <li>
                   {/*   "footer1LinkHome": "Home",
   "footer1LinkServices": "Services",
@@ -336,7 +339,7 @@ const DefaultFooter = () => (
         <div className="col-xl-4 col-lg-6 col-md-8">
           <div className="footer-widget widget_newsletter wow fadeInUp delay-0-6s">
             <h4 className="footer-title">Newsletter</h4>
-            <p>Sing up to get more every updates</p>
+            <p>Sign up to get more every updates</p>
             <form onSubmit={(e) => e.preventDefault()} action="#">
               <input type="email" placeholder="Enter email" required="" />
               <button className="theme-btn">
