@@ -27,7 +27,7 @@ const Contact = () => {
                   className="contactForm z-1 rel"
                 >
                   <div className="row pt-15">
-                    <div className="col-md-6">
+                    <div className="col-md-12">
                       <div className="form-group">
                         <label htmlFor="name">Full Name</label>
                         <input
@@ -43,7 +43,7 @@ const Contact = () => {
                         <div className="help-block with-errors" />
                       </div>
                     </div>
-                    <div className="col-md-6">
+                    <div className="col-md-12">
                       <div className="form-group">
                         <label htmlFor="email">Email Address</label>
                         <input
@@ -59,7 +59,7 @@ const Contact = () => {
                         <div className="help-block with-errors" />
                       </div>
                     </div>
-                    <div className="col-md-6">
+                    <div className="col-md-12">
                       <div className="form-group">
                         <label htmlFor="phone_number">Phone Number</label>
                         <input
@@ -72,7 +72,7 @@ const Contact = () => {
                         />
                       </div>
                     </div>
-                    <div className="col-md-6">
+                    {/* <div className="col-md-6">
                       <div className="form-group">
                         <label htmlFor="select_subject">
                           Select Requirments
@@ -86,7 +86,7 @@ const Contact = () => {
                           <option value="SEO">SEO</option>
                         </select>
                       </div>
-                    </div>
+                    </div> */}
                     <div className="col-md-12">
                       <div className="form-group">
                         <label htmlFor="message">Write Message</label>
@@ -125,7 +125,7 @@ const Contact = () => {
                   <div className="content">
                     <span className="title">Location</span>
                     <span className="text">
-                      55 Main Street, 2nd Floor, E-Block, New York
+                    Lot 5 Camp & Hadfield Streets, Georgetown, Guyana
                     </span>
                   </div>
                 </div>
@@ -136,17 +136,17 @@ const Contact = () => {
                   <div className="content">
                     <span className="title">email address</span>
                     <span className="text">
-                      <a href="mailto:support@gmail.com">
-                        supportweb@gmail.com
+                      <a href="mailto:support@wiscribbles.com">
+                      support@wiscribbles.com
                       </a>
-                      <br />
+                      {/* <br />
                       <a href="mailto:websitebuilding.net">
                         websitebuilding.net
-                      </a>
+                      </a> */}
                     </span>
                   </div>
                 </div>
-                <div className="contact-info-item style-two">
+                {/* <div className="contact-info-item style-two">
                   <div className="icon">
                     <i className="far fa-phone" />
                   </div>
@@ -155,10 +155,9 @@ const Contact = () => {
                     <span className="text">
                       Call <a href="calto:+1(813)940-1599">+1 (813) 940-1599</a>
                       <br />
-                      {/* Whatsapp : +9632145789 */}
                     </span>
                   </div>
-                </div>
+                </div> */}
                 <div className="follow-us">
                   <h4>Follow Us</h4>
                   <div className="social-style-two">
@@ -183,7 +182,7 @@ const Contact = () => {
       </section>
       {/* Contact Us Page Area end */}
       {/* Our Location Address Area start */}
-      <section className="our-location-address-area rel z-1">
+      {/* <section className="our-location-address-area rel z-1">
         <div className="container">
           <div className="row medium-gap justify-content-center">
             <div className="col-lg-4 col-md-6">
@@ -266,7 +265,7 @@ const Contact = () => {
             </div>
           </div>
         </div>
-      </section>
+      </section> */}
       {/* Our Location Address Area end */}
       {/* Location Map Area Start */}
       <div className="contact-page-map wow fadeInUp delay-0-2s">
