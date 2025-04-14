@@ -5171,9 +5171,15 @@ h6, .h6 {
     left: 50%;
     max-width: 100%;
     position: absolute;
-    -webkit-transform: translate(-51%);
-    -ms-transform: translate(-51%);
-    transform: translate(-51%); }
+    -webkit-transform: translate(-51%, -10%);
+    -ms-transform: translate(-51%, -10%);
+    transform: translate(-51%, -10%);}
+    @media only screen and (max-width: 575px) {
+      .feature-middle .image .circle-text {
+        -webkit-transform: translate(-51%, -20%);
+    -ms-transform: translate(-51%, -20%);
+    transform: translate(-51%, -20%);}
+    }
   .feature-middle .image .round {
     border-radius: 200px; }
 
@@ -6646,7 +6652,8 @@ h6, .h6 {
       top: 0; } }
   @media only screen and (max-width: 575px) {
     .work-process-shape {
-      display: none; } }
+      transform: rotate(90deg) translateX(400px) translateY(130px) scale(1.7);
+       } }
 
 /*******************************************************/
 /******************** 19. CTA Area *********************/

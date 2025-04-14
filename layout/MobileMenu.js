@@ -6,6 +6,13 @@ const MobileMenu = ({ logo }) => {
   const [activeMenu, setActiveMenu] = useState("");
   const [multiMenu, setMultiMenu] = useState("");
   const t = useTranslations();
+  const sidebarLinks = [
+    { href: "/how-it-works", labelKey: "how_it_works" },
+    { href: "/about", labelKey: "about" },
+    { href: "/auth/signup", labelKey: "sign-up" },
+    { href: "/auth/signin", labelKey: "login" },
+    { href: "/contact", labelKey: "bottom" },
+  ];
 
   return (
     <nav className="main-menu navbar-expand-lg d-block d-lg-none mobile-header">
@@ -79,6 +86,13 @@ const MobileMenu = ({ logo }) => {
             <li>
               <Link href="/help-desk">{t("navbar.help")}</Link>
             </li>
+            <ul className="d-block d-md-none">
+              {sidebarLinks.map((link, index) => (
+                <li key={index}>
+                  <Link href={link.href}>{t(`sidebar.${link.labelKey}`)}</Link>
+                </li>
+              ))}
+            </ul>
           </ul>
         </Accordion.Collapse>
       </Accordion>

@@ -28,9 +28,8 @@ const IndexOnePage = ({ params }) => {
     { href: "/about", labelKey: "about" },
     { href: "/auth/signup", labelKey: "sign-up" },
     { href: "/auth/signin", labelKey: "login" },
-    { href: "/contact", labelKey: "bottom" }
+    { href: "/contact", labelKey: "bottom" },
   ];
-
 
   const [active, setActive] = useState(`a0`);
   const onClick = (value) => {
@@ -186,7 +185,7 @@ const IndexOnePage = ({ params }) => {
                 </Link>
                 <LangSwitcher locale={locale} />
                 {/* menu sidebar */}
-              {/* Menu sidebar (visible only on md and up) */}
+                {/* Menu sidebar (visible only on md and up) */}
                 <div className="menu-sidebar d-none d-md-block">
                   <button onClick={() => sideBarToggle()}>
                     <span className="icon-bar" />
@@ -333,7 +332,7 @@ const IndexOnePage = ({ params }) => {
           </div>
           <div className="row row-cols-xl-6 row-cols-lg-4 row-cols-md-3 row-cols-sm-2 row-cols-1 justify-content-center">
             <div className="col wow fadeInUp delay-0-2s">
-              <div className="feature-item-five">
+              <div className="feature-item-five  h-100 d-flex flex-column justify-content-center align-items-center">
                 <img
                   className="mb-20"
                   src="/assets/images/shapes/ProfileIcon.png"
@@ -347,7 +346,7 @@ const IndexOnePage = ({ params }) => {
               </div>
             </div>
             <div className="col wow fadeInUp delay-0-3s">
-              <div className="feature-item-five">
+              <div className="feature-item-five  h-100 d-flex flex-column justify-content-center align-items-center">
                 <img
                   className="mb-20"
                   src="/assets/images/shapes/Notefold.png"
@@ -361,7 +360,7 @@ const IndexOnePage = ({ params }) => {
               </div>
             </div>
             <div className="col wow fadeInUp delay-0-4s">
-              <div className="feature-item-five">
+              <div className="feature-item-five  h-100 d-flex flex-column justify-content-center align-items-center">
                 <img
                   className="mb-20"
                   src="/assets/images/shapes/Checkmark.png"
@@ -375,7 +374,7 @@ const IndexOnePage = ({ params }) => {
               </div>
             </div>
             <div className="col wow fadeInUp delay-0-5s">
-              <div className="feature-item-five">
+              <div className="feature-item-five  h-100 d-flex flex-column justify-content-center align-items-center">
                 <img
                   className="mb-20"
                   src="/assets/images/shapes/DocFold.png"
@@ -389,7 +388,7 @@ const IndexOnePage = ({ params }) => {
               </div>
             </div>
             <div className="col wow fadeInUp delay-0-6s">
-              <div className="feature-item-five">
+              <div className="feature-item-five h-100 d-flex flex-column justify-content-center align-items-center">
                 <img className="mb-20" src="/assets/images/shapes/Law.png" />
 
                 <h5>
@@ -400,7 +399,7 @@ const IndexOnePage = ({ params }) => {
               </div>
             </div>
             <div className="col wow fadeInUp delay-0-7s">
-              <div className="feature-item-five">
+              <div className="feature-item-five h-100 d-flex flex-column justify-content-center align-items-center">
                 <img
                   className="mb-20"
                   src="/assets/images/shapes/Exclamation.png"
@@ -470,20 +469,34 @@ const IndexOnePage = ({ params }) => {
             <div className="col-lg-6 ">
               <div className="feature-middle  rmt-30">
                 <div className="image  wow fadeInUp delay-0-2s d-flex justify-content-center  align-items-center position-relative z-1">
-                  {locale === "en" ? (
-                    <img
-                      className="circle-text"
-                      src="/assets/images/shapes/feature-image-top.png"
-                      alt="Text"
-                    />
-                  ) : (
-                    <img
-                      className="circle-text w-75 mb-md-0 mb-20 "
-                      style={{ marginBottom: "20px" }}
-                      src="/assets/images/shapes/feature-image-top-spanish.png"
-                      alt="Text"
-                    />
-                  )}
+                  <svg
+                    viewBox="0 0 300 180"
+                    className="circle-text"
+                    width="600"
+                    height="360"
+                  >
+                    <defs>
+                      <path
+                        id="arcPath"
+                        d="M 30,150 A 120,120 0 0,1 270,150"
+                        fill="none"
+                      />
+                    </defs>
+                    <text
+                      fill="white"
+                      font-size={locale === "en" ? "24px" : "16px"}
+                      font-family="Arial"
+                      letter-spacing="2"
+                    >
+                      <textPath
+                        href="#arcPath"
+                        startOffset="50%"
+                        text-anchor="middle"
+                      >
+                        {t("business_centric_solutions")}
+                      </textPath>
+                    </text>
+                  </svg>
 
                   <img
                     className={`round w-50   ${
@@ -646,34 +659,39 @@ const IndexOnePage = ({ params }) => {
                   }s`}
                 >
                   <span className="badge">{t("popular_package")}</span>
-                  <div className="pricing-inner d-flex mt-30 align-items-start">
+                  <div className="pricing-inner d-flex flex-column justify-content-between h-100 mt-30  align-items-start">
                     <ul className="list-style-two mt-10">
                       <li>{t("landing_page_design")}</li>
                       <li>{t("html_css_design")}</li>
                       <li>{t("social_media_marketing")}</li>
                       <li>{t("domain_hosting_provider")}</li>
                     </ul>
-                    <div className="price-and-btn">
-                      <div className="content">
-                        <div className="d-flex flex-row align-items-baseline gap-2">
-                          <h2 style={{ color: "#416976" }}>${item.price}</h2>
-                          <p className="fs-5">/ {item.per}</p>
+                    <div className="price-and-btn  w-100  ">
+                      <div className="content d-flex  align-items-end   w-100 justify-content-between">
+                        <div style={{ marginBottom: "-20px" }}>
+                          <div className="d-flex flex-row  align-items-baseline gap-2 ">
+                            <h2 style={{ color: "#416976", fontSize: "70px" }}>
+                              ${item.price}
+                            </h2>
+                            <p className="fs-5">/ {item.per}</p>
+                          </div>
+                          <span className="save ">
+                            {item.price === 15 ? (
+                              <span> + $10 / {t("additional_witness")} </span>
+                            ) : (
+                              <div
+                                style={{ lineHeight: "1", paddingTop: "10px" }}
+                              >
+                                <p>+ $10 / {t("additional_signatory")}</p>
+                                <p>+ $10 / {t("witness")}</p>
+                                <p className="text-nowrap">
+                                  + $10 / {t("additional_notary_seal")}
+                                </p>
+                              </div>
+                            )}
+                          </span>
                         </div>
-                        <span className="save">
-                          {item.price === 15 ? (
-                            <span> + $10 / {t("additional_witness")} </span>
-                          ) : (
-                            <div
-                              style={{ lineHeight: ".5", paddingTop: "10px" }}
-                            >
-                              <p>+ $10 / {t("additional_signatory")}</p>
-                              <p>+ $10 / {t("witness")}</p>
-                              <p className="text-nowrap">
-                                + $10 / {t("additional_notary_seal")}
-                              </p>
-                            </div>
-                          )}
-                        </span>
+
                         <Link legacyBehavior href="/pricing">
                           <a className="theme-btn style-three fw-bold">
                             {t("choose_package")}{" "}
@@ -719,7 +737,7 @@ const IndexOnePage = ({ params }) => {
                     <i className="flaticon-target" />
                   </div>
                   <h4 className="w-100">{t("cta_project_title")}</h4>
-                  <Link legacyBehavior href="/contact">
+                  <Link legacyBehavior href="/auth/signup">
                     <a className="details-btn">
                       <i className="far fa-arrow-right" />
                     </a>

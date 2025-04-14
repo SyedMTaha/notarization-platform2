@@ -335,30 +335,23 @@ const DefaultHeader = ({ locale }) => {
             </div>
             {/* Menu Button */}
             <div className="menu-btns">
-              <Link legacyBehavior href="/auth/signin">
-                <a
-                  style={{
-                    border: "1px solid black",
-                    paddingLeft: "30px",
-                    paddingRight: "0px",
-                  }}
-                  className="theme-btn rounded-pill style-three d-flex gap-3 text-nowrap"
-                >
-                  {t("navbar.pill-button")}
-                  <i className="fas fa-angle-double-right"
-                    style={{ marginRight: "15px", marginLeft: "5px" }} />
-                </a>
-              </Link>
-              <LangSwitcher locale={locale} type={"dark"} />
-              {/* menu sidebar */}
-              <div className="menu-sidebar">
-                <button onClick={() => sideBarToggle()}>
-                  <span className="icon-bar" />
-                  <span className="icon-bar" />
-                  <span className="icon-bar" />
-                </button>
+                <Link legacyBehavior href="/auth/signin">
+                  <a className="theme-btn style-three">
+                    {t("navbar.pill-button")}{" "}
+                    <i className="fas fa-angle-double-right" />
+                  </a>
+                </Link>
+                <LangSwitcher locale={locale} type={"dark"}/>
+                {/* menu sidebar */}
+                {/* Menu sidebar (visible only on md and up) */}
+                <div className="menu-sidebar d-none d-md-block">
+                  <button onClick={() => sideBarToggle()}>
+                    <span className="icon-bar" />
+                    <span className="icon-bar" />
+                    <span className="icon-bar" />
+                  </button>
+                </div>
               </div>
-            </div>
           </div>
         </div>
       </div>
@@ -368,11 +361,11 @@ const DefaultHeader = ({ locale }) => {
 };
 
 const Menu = ({ locale }) => {
-  const t = useTranslations('navbar');
+  const t = useTranslations("navbar");
   return (
     <ul
       className="navigation clearfix"
-      style={{ display: "flex", alignItems: "center", gap: '5px' }}
+      style={{ display: "flex", alignItems: "center", gap: "5px" }}
     >
       <li className="dropdown text-nowrap">
         <Link href="/">{t("home")} </Link>
@@ -398,10 +391,14 @@ const Menu = ({ locale }) => {
         </div>
       </li>
       <li className="dropdown text-nowrap">
-        <Link href="#" className="disabled-link">{t("standard")}</Link>
+        <Link href="#" className="disabled-link">
+          {t("standard")}
+        </Link>
       </li>
       <li className="dropdown text-nowrap">
-        <Link href="/authenticate" className="disabled-link">{t("authenticate")}</Link>
+        <Link href="/authenticate" className="disabled-link">
+          {t("authenticate")}
+        </Link>
       </li>
       <li className="text-nowrap">
         <Link href="/help-desk">{t("help")}</Link>
