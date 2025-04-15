@@ -86,13 +86,13 @@ const Hero1 = () => {
               <div className="slider-btns">
                 <Link legacyBehavior href="/contact">
                   <a className="theme-btn">
-                    {t("slider_btn_get_started")}{" "}
+                    {t("slider_btn_get_started")}
                     <i className="fas fa-angle-double-right" />
                   </a>
                 </Link>
                 <Link legacyBehavior href="/contact">
                   <a className="theme-btn style-three">
-                    {t("slider_btn_explore_services")}{" "}
+                    {t("slider_btn_explore_services")}
                     <i className="fas fa-angle-double-right" />
                   </a>
                 </Link>
@@ -106,28 +106,31 @@ const Hero1 = () => {
             }}
           >
             <a
-              // href="https://www.youtube.com"
-              className="mfp-iframe video-play"
+              href="https://www.youtube.com/embed/C0DPdy98e4c"
+              className="mfp-iframe video-play bg-transparent"
             >
-              <i className="fas fa-play" />
-            </a>
+              {/* <i className="fas fa-play" /> */}
+              
             <span
               style={{
-                fontFamily: "Catamaran",
-                textTransform: "none",
-                fontSize: "2.5rem",
-                bottom: "30%",
-                position: "absolute",
-                cursor: "pointer",
+                  fontFamily: ["Kumbh Sans", "sans-serif"],
+                  textTransform: "none",
+                  fontSize: "1.5rem",
+                  bottom: "30%",
+                  left:"-105%",
+                  position: "absolute",
+                  cursor: "pointer",
               }}
               className="video-title cd-headline clip"
             >
               <span
-                style={{ backgroundColor: "#416976", borderRadius: "50px" }}
-                className=" py-3 px-4"
+                  style={{
+                    backgroundColor: "#416976", borderRadius: "50px"
+                  }}
+                className=" py-2 px-3"
               >
                 <div className="d-flex flex-row align-items-center">
-                  <b className="is-visible">{t("slider_video_title_1")}</b>
+                  <b className="is-visible text-nowrap">{t("slider_video_title_1")}</b>
                   <div
                     className=" bg-white d-flex align-items-center p-3"
                     style={{ marginLeft: "15px", borderRadius: "50%" }}
@@ -144,6 +147,7 @@ const Hero1 = () => {
                 {/* <b>{t("slider_video_title_2")}</b> */}
               </span>
             </span>
+            </a>
           </div>
         </div>
 
