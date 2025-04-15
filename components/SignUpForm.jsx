@@ -132,13 +132,15 @@ const SignUpForm = () => {
             name="signUpAs"
             control={control}
             render={({ field, fieldState }) => (
-              <FormGroup>
+              <FormGroup style={{ position: "relative", zIndex: 10 }}>
                 <FormLabel htmlFor="signUpAs">Sign Up As</FormLabel>
                 <FormControl
                   as="select"
                   id="signUpAs"
                   {...field}
                   isInvalid={Boolean(fieldState.error?.message)}
+                  // Optionally add styling here if needed
+                  style={{ padding:"8px 10px", position: "relative", zIndex: 10 }}
                 >
                   <option value="Notary">{t("options.Notary")}</option>
                   <option value="Attorney">{t("options.Attorney")}</option>
