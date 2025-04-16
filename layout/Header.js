@@ -371,7 +371,7 @@ const Menu = ({ locale }) => {
         <Link href="/">{t("home")} </Link>
       </li>
       <li className="dropdown text-nowrap">
-        <a>{t("solutions")}</a>
+        <Link href="/solutions">{t("solutions")}</Link>
         <ul>
           <Link href="/solutions#1">
             <li className="dropdown">{t("solutions_dropdown.1")}</li>
@@ -379,10 +379,10 @@ const Menu = ({ locale }) => {
           <Link href="/solutions#2">
             <li className="dropdown">{t("solutions_dropdown.2")}</li>
           </Link>
-          <Link href="/solutions#3">
+          <Link href="/solutions#4">
             <li className="dropdown">{t("solutions_dropdown.3")}</li>
           </Link>
-          <Link href="/solutions#4">
+          <Link href="/solutions#3">
             <li className="dropdown">{t("solutions_dropdown.4")}</li>
           </Link>
         </ul>

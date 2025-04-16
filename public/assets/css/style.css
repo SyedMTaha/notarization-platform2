@@ -673,8 +673,8 @@ a.theme-btn {
   .slick-arrow:focus, .slick-arrow:hover {
     color: white;
     background: #01c9f5;
-    -webkit-box-shadow: 10px 0 60px rgba(118, 167, 19, 0.3);
-    box-shadow: 10px 0 60px rgba(118, 167, 19, 0.3); }
+    -webkit-box-shadow: 10px 0 60px rgba(65, 105, 118, 0.4);
+    box-shadow: 10px 0 60px rgba(65, 105, 118, 0.4); }
 
 /*** Slick Dots ***/
 .slick-dots {

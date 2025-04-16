@@ -1,10 +1,12 @@
 "use client";
+import { useTranslations } from "next-intl";
 import Layout from "../../../layout/Layout";
 import PageBanner from "../../../layout/PageBanner";
 const Contact = () => {
+  const t = useTranslations("contact_page");
   return (
     <Layout footer={1}>
-      <PageBanner titleHtml={`Conta<span>ct Us</span>`} titleText="Contact" />
+      <PageBanner titleHtml={`${t('titleHalf1')}<span>${t('titleHalf2')}</span>`} titleText="Contact" />
       <section className="contact-us-page-area py-130">
         <div className="container">
           <div className="row align-items-end justify-content-between">
@@ -12,20 +14,10 @@ const Contact = () => {
               <div className="contact-content rmb-65 wow fadeInRight delay-0-2s">
                 <div className="section-title mb-25">
                   <span className="sub-title style-two mb-15">Contact Us</span>
-                  <h2>
-                    Let’s Start New Project or work Together! Contact With us
-                  </h2>
+                  <h2>{t("heading")}</h2>
                 </div>
-                <p>
-                  Sed ut perspiciatis unde omnis iste natus error sit voluptatem
-                  accusantium doloremque lauda tiumes totam rem aperiam, eaque
-                  ipsa quae ab illo inventore veritatis et quasi architecto
-                </p>
-                <form
-                  onSubmit={(e) => e.preventDefault()}
-                  id="contactForm"
-                  className="contactForm z-1 rel"
-                >
+                <p>{t("secPara")}</p>
+                <form onSubmit={(e) => e.preventDefault()} id="contactForm" className="contactForm z-1 rel">
                   <div className="row pt-15">
                     <div className="col-md-12">
                       <div className="form-group">
@@ -106,8 +98,7 @@ const Contact = () => {
                     <div className="col-md-12">
                       <div className="form-group pt-5 mb-0">
                         <button type="submit" className="theme-btn w-100">
-                          Send Message{" "}
-                          <i className="fas fa-angle-double-right" />
+                          Send Message <i className="fas fa-angle-double-right" />
                         </button>
                         <div id="msgSubmit" className="hidden" />
                       </div>
@@ -124,9 +115,7 @@ const Contact = () => {
                   </div>
                   <div className="content">
                     <span className="title">Location</span>
-                    <span className="text">
-                    Lot 5 Camp & Hadfield Streets, Georgetown, Guyana
-                    </span>
+                    <span className="text">Lot 5 Camp & Hadfield Streets, Georgetown, Guyana</span>
                   </div>
                 </div>
                 <div className="contact-info-item style-two">
@@ -136,9 +125,7 @@ const Contact = () => {
                   <div className="content">
                     <span className="title">email address</span>
                     <span className="text">
-                      <a href="mailto:support@wiscribbles.com">
-                      support@wiscribbles.com
-                      </a>
+                      <a href="mailto:support@wiscribbles.com">support@wiscribbles.com</a>
                       {/* <br />
                       <a href="mailto:websitebuilding.net">
                         websitebuilding.net

@@ -490,5 +490,12 @@
     "login": "Iniciar sesión",
     "bottom": "Contáctanos"
   },
-  "business_centric_solutions": "Soluciones Centradas en el Negocio"
+  "business_centric_solutions": "Soluciones Centradas en el Negocio",
+  "contact_page": {
+    "title": "Contáctanos",
+    "titleHalf1": "Contáct",
+    "titleHalf2": "anos",
+    "heading": "Déjanos ayudarte a hacer crecer tu negocio.",
+    "secPara": "El equipo de West Indian Scribbles LLC se compromete a agilizar el proceso de firma y oficialización de documentos de tu negocio. Por favor, deja una consulta y uno de nuestros técnicos se pondrá en contacto contigo."
+  }
 }

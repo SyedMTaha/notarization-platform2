@@ -490,5 +490,12 @@
     "login": "Log in",
     "bottom": "Contact us"
   },
-  "business_centric_solutions":"Business Centric Solutions"
+  "business_centric_solutions": "Business Centric Solutions",
+  "contact_page": {
+    "title": "Contact Us",
+    "titleHalf1": "Conta",
+    "titleHalf2": "ct Us",
+    "heading":"Let us help you to grow your business.",
+    "secPara": "The team at West Indian Scribbles LLC is committed to streamlining the document signing and officiating aspect of your business. Please leave a query and one of our technical personnel will reach out to you."
+  }
 }

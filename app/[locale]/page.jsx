@@ -112,12 +112,12 @@ const IndexOnePage = ({ params }) => {
                                 {t("navbar.solutions_dropdown.2")}
                               </li>
                             </Link>
-                            <Link href="/solutions#3">
+                            <Link href="/solutions#4">
                               <li className="dropdown">
                                 {t("navbar.solutions_dropdown.3")}
                               </li>
                             </Link>
-                            <Link href="/solutions#4">
+                            <Link href="/solutions#3">
                               <li className="dropdown">
                                 {t("navbar.solutions_dropdown.4")}
                               </li>

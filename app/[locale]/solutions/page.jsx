@@ -29,7 +29,7 @@ const HowItWorks = ({ params: { form_id } }) => {
                     <p style={{ textAlign: "justify" }}>
                       {st(`sec${secNo}.para1`)} {st(`sec${secNo}.para2`)}
                     </p>
-                    <Link legacyBehavior href="/auth/signup">
+                    <Link legacyBehavior href="/about">
                       <a className="theme-btn mt-15">
                         {st(`sec${secNo}.button`)} <i className="fas fa-angle-double-right" />
                       </a>
@@ -94,13 +94,13 @@ const HowItWorks = ({ params: { form_id } }) => {
                     className="what-we-offer-content wow fadeInLeft delay-0-2s d-flex flex-column align-items-start"
                   >
                     <div className="section-title  d-flex flex-column align-items-start mb-25">
-                      <span className="sub-title style-two arrow mb-15">
-                        {st(`sec${secNo}.point`)}
-                      </span>
+                      <span className="sub-title style-two arrow mb-15">{st(`sec${secNo}.point`)}</span>
                       <h2 style={{ textAlign: "right" }}>{st(`sec${secNo}.heading`)}</h2>
                     </div>
-                    <p style={{ textAlign: "justify" }}>{st(`sec${secNo}.para1`)} {st(`sec${secNo}.para2`)}</p>
-                    <Link  legacyBehavior href="/about">
+                    <p style={{ textAlign: "justify" }}>
+                      {st(`sec${secNo}.para1`)} {st(`sec${secNo}.para2`)}
+                    </p>
+                    <Link legacyBehavior href="/about">
                       <a className="theme-btn mt-15 t">
                         {st(`sec${secNo}.button`)} <i className="fas fa-angle-double-right" />
                       </a>
