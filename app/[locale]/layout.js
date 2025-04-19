@@ -16,6 +16,7 @@ import "../../public/assets/css/nice-select.min.css";
 import "../../public/assets/css/slick.min.css";
 import "../../public/assets/css/style.css";
 import ClientProviders from "./ClientProviders";
+import ToasterProvider from "@/components/ToasterProvider";
 
 export async function generateMetadata({ params }) {
   const { locale, slug } = params;
@@ -44,6 +45,7 @@ export default async function LocaleLayout({ children, params }) {
     <html lang={locale}>
       <body>
         <NextIntlClientProvider locale={locale}>
+          <ToasterProvider />
           <ClientProviders>{children}</ClientProviders>
         </NextIntlClientProvider>
       </body>

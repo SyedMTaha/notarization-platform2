@@ -12,9 +12,10 @@ import { faqsData1, faqsData2 } from "./help-desk/page";
 import OxencyAccordion from "@/components/OxencyAccordion";
 import { useEffect, useState } from "react";
 import LangSwitcher from "@/components/LangSwitch";
-import { supabase } from "@/supabase/supabaseClient";
+import { useAuthStore } from "@/store/authStore";
 
 const IndexOnePage = ({ params }) => {
+  const { signOut,user } = useAuthStore();
   useEffect(() => {
     const timeoutId = setTimeout(() => {
       window.scrollTo(0, 0);
@@ -47,6 +48,7 @@ const IndexOnePage = ({ params }) => {
           type="image/x-icon"
         />
       </Head>
+   
       <header className="main-header header-two">
         {/*Header-Upper*/}
         <div className="header-upper">
@@ -269,6 +271,9 @@ const IndexOnePage = ({ params }) => {
           </div>
         </div>
       </section>
+      <button onClick={() => signOut()}>log out</button>
+      <div>{user?.email}</div>
+
       {/* About Us Area start */}
       <section id="about" className="about-area-one pt-130 pb-125 rel z-1">
         <div className="container">
@@ -417,7 +422,6 @@ const IndexOnePage = ({ params }) => {
         </div>
       </section>
       {/* Core Feature end */}
-
       {/* Design Featured Start */}
       <section
         id="featured"

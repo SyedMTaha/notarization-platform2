@@ -35,7 +35,7 @@ const CustomCheckbox = forwardRef(
 
 const SignInEmailForm = () => {
   const t = useTranslations();
-
+  
   const { login, control, errors } = useEmailSignIn();
   const [showPassword, setShowPassword] = useState(false);
   return (

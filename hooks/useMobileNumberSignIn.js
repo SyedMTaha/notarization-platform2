@@ -1,6 +1,8 @@
+import { useAuthStore } from "@/store/authStore";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
+import toast from "react-hot-toast";
 import * as yup from "yup";
 const useMobileNumberSignIn = () => {
   const [loading, setLoading] = useState(false);
@@ -25,22 +27,15 @@ const useMobileNumberSignIn = () => {
       keepMeLoggedIn: false,
     },
   });
-
+  const { signInWithPhone } = useAuthStore();
   const login = handleSubmit(async (values) => {
     try {
-      /// implement login
-      console.log(values);
+      const { data } = await signInWithPhone(values.phone, values.password);
+
+      console.log("signed in", data);
     } catch (e) {
-      if (e.response?.data?.error) {
-        control.setError("email", {
-          type: "custom",
-          message: e.response?.data?.error,
-        });
-        control.setError("password", {
-          type: "custom",
-          message: e.response?.data?.error,
-        });
-      }
+      console.error("Error signing in:", e.message);
+      toast.error(e.message);
     } finally {
       setLoading(false);
     }

@@ -14,7 +14,7 @@ import "react-phone-input-2/lib/bootstrap.css";
 import "../public/assets/v3/scss/style.scss";
 
 // components
-import { Controller, useForm } from "react-hook-form";
+import { Controller, set, useForm } from "react-hook-form";
 import Feedback from "react-bootstrap/esm/Feedback";
 import { forwardRef, useState } from "react";
 import { FiEye, FiEyeOff } from "react-icons/fi";
@@ -58,31 +58,14 @@ const CustomCheckbox = forwardRef(
   )
 );
 
-const readURL = (event, id) => {
-  console.log(id);
-  const selectedFile = event.target.files[0];
-  if (selectedFile) {
-    // Perform actions with the selected file
-    // Create a FileReader to read the file
-    const reader = new FileReader();
-
-    // Define the onload event for the reader
-    reader.onload = () => {
-      // Set the result as the source URL
-      document.getElementById(id).setAttribute("src", reader.result);
-    };
-
-    // Read the file as a data URL
-    reader.readAsDataURL(selectedFile);
-  }
-};
-
 const SignUpForm = () => {
   const t = useTranslations("sign-up");
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+  const [identificationFile, setIdentificationFile] = useState(null);
+  const [notaryCertificateFile, setNotaryCertificateFile] = useState(null);
   const signUp = useAuthStore((s) => s.signUp); // your existing wrapper
-  const [uploading, setUploading] = useState(false);
+  const [submitting, setSubmitting] = useState(false);
 
   // Define validation schema
   const schema = yup.object({
@@ -115,12 +98,8 @@ const SignUpForm = () => {
     name: yup.string().required(t("validation.name.required")),
     expiry_date: yup.date().required(t("validation.expiry_date.required")),
     CVV: yup.string().length(3, t("validation.CVV.length")),
-    identification: yup
-      .mixed()
-      .required(t("validation.identification.required")),
-    notary_certificate: yup
-      .mixed()
-      .required(t("validation.notary_certificate.required")),
+    identification: yup.mixed().notRequired(),
+    notary_certificate: yup.mixed().notRequired(),
   });
 
   // Initialize form with validation
@@ -129,6 +108,7 @@ const SignUpForm = () => {
     control,
     register,
     watch,
+    setValue,
     formState: { errors },
   } = useForm({
     resolver: yupResolver(schema),
@@ -146,55 +126,69 @@ const SignUpForm = () => {
     },
   });
 
+  const readURL = (event, id) => {
+    const selectedFile = event.target.files[0];
+    if (selectedFile) {
+      // Perform actions with the selected file
+      // Create a FileReader to read the file
+      const reader = new FileReader();
+
+      // Define the onload event for the reader
+      reader.onload = () => {
+        // Set the result as the source URL
+        if (id === "identification") setIdentificationFile(selectedFile);
+        else if (id === "notary_certificate")
+          setNotaryCertificateFile(selectedFile);
+        document.getElementById(id).setAttribute("src", reader.result);
+      };
+
+      // Read the file as a data URL
+      reader.readAsDataURL(selectedFile);
+    }
+  };
+
   const onSubmit = async (data) => {
     // Handle sign up logic here
     console.log("Form data:", data);
-    // 1) create auth user
-    const { data: authData, error: authError } = await supabase.auth.signUp({
-      email: data.email,
-      password: data.password,
-    });
-    if (authError) return console.error(authError.message);
+    let hasError = false;
 
-    const userId = authData.user.id;
-
-    // 2) upload files (if any)
-    setUploading(true);
-    const uploads = {};
-    for (let field of ["identification", "notary_certificate"]) {
-      if (data[field]?.[0]) {
-        const file = data[field][0];
-        const path = `${userId}/${field}-${Date.now()}-${file.name}`;
-        const { data: up, error: upErr } = await supabase.storage
-          .from("user-documents")
-          .upload(path, file);
-        if (upErr) console.error(upErr);
-        else
-          uploads[`${field}_url`] = supabase.storage
-            .from("user-documents")
-            .getPublicUrl(up.path).publicURL;
-      }
+    if (!identificationFile) {
+      setError("identification", {
+        type: "manual",
+        message: t("validation.identification.required"),
+      });
+      hasError = true;
     }
-    setUploading(false);
 
-    // 3) insert into profiles
-    const profilePayload = {
-      id: userId,
-      email: data.email,
-      full_name: data.name,
-      phone: data.phone,
-      sign_up_as: data.signUpAs,
-      terms_agreed: data.termsAgreed,
-      payment_method: data.payment_method,
-      card_last4: data.card_number.slice(-4),
-      expiry_date: data.expiry_date,
-      ...uploads, // identification_url, notary_certificate_url
+    if (!notaryCertificateFile) {
+      setError("notary_certificate", {
+        type: "manual",
+        message: t("validation.notary_certificate.required"),
+      });
+      hasError = true;
+    }
+
+    // stop here if any file is missing
+    if (hasError) return;
+
+    setSubmitting(true);
+
+    const payload = {
+      ...data,
+      identificationFile,
+      notaryCertificateFile,
     };
-    console.log("Profile Payload", profilePayload);
-    // const { error: profErr } = await supabase
-    //   .from("profiles")
-    //   .insert(profilePayload);
-    // if (profErr) return console.error(profErr.message);
+
+    const { error, user } = await signUp(payload);
+
+    setSubmitting(false);
+
+    // if (error) {
+    //   console.error(error.message);
+    // } else {
+    //   console.log("Signed up!", user);
+    //   // e.g. router.push("/")
+    // }
   };
 
   return (
@@ -213,7 +207,11 @@ const SignUpForm = () => {
                   {...field}
                   isInvalid={Boolean(fieldState.error?.message)}
                   // Optionally add styling here if needed
-                  style={{ padding:"8px 10px", position: "relative", zIndex: 10 }}
+                  style={{
+                    padding: "8px 10px",
+                    position: "relative",
+                    zIndex: 10,
+                  }}
                 >
                   <option value="Notary">{t("options.Notary")}</option>
                   <option value="Attorney">{t("options.Attorney")}</option>
@@ -369,29 +367,39 @@ const SignUpForm = () => {
             )}
           />
         </div>
-        {/* <p>Payment Details</p>
+        <p>Payment Details</p>
 
         <Form.Group controlId="payment_method" className="mb-3">
           <Form.Label>Payment Method</Form.Label>
 
-          <Form.Control as="select" {...register("payment_method")} style={{ cursor: "pointer" }}>
+          <Form.Control
+            as="select"
+            {...register("payment_method")}
+            style={{ cursor: "pointer" }}
+          >
             <option>Credit Card</option>
             <option>PayPal</option>
             <option>CashApp</option>
           </Form.Control>
 
           {errors.payment_method && (
-            <Form.Text className="text-danger">{errors.payment_method.message}</Form.Text>
+            <Form.Text className="text-danger">
+              {errors.payment_method.message}
+            </Form.Text>
           )}
         </Form.Group>
 
         <Form.Group controlId="name" className="mb-3">
           <Form.Label>Name</Form.Label>
           <Form.Control type="text" {...register("name")} />
-          {errors.name && <Form.Text className="text-danger">{errors.name.message}</Form.Text>}
+          {errors.name && (
+            <Form.Text className="text-danger">{errors.name.message}</Form.Text>
+          )}
         </Form.Group>
 
-        {["Credit Card", "PayPal", "CashApp"].includes(watch("payment_method")) && (
+        {["Credit Card", "PayPal", "CashApp"].includes(
+          watch("payment_method")
+        ) && (
           <>
             {watch("payment_method") === "Credit Card" && (
               <>
@@ -399,7 +407,9 @@ const SignUpForm = () => {
                   <Form.Label>Card Number</Form.Label>
                   <Form.Control type="text" {...register("card_number")} />
                   {errors.card_number && (
-                    <Form.Text className="text-danger">{errors.card_number.message}</Form.Text>
+                    <Form.Text className="text-danger">
+                      {errors.card_number.message}
+                    </Form.Text>
                   )}
                 </Form.Group>
                 <Row className="mb-3">
@@ -408,7 +418,9 @@ const SignUpForm = () => {
                       <Form.Label>Expiry Date</Form.Label>
                       <Form.Control type="date" {...register("expiry_date")} />
                       {errors.expiry_date && (
-                        <Form.Text className="text-danger">{errors.expiry_date.message}</Form.Text>
+                        <Form.Text className="text-danger">
+                          {errors.expiry_date.message}
+                        </Form.Text>
                       )}
                     </Form.Group>
                   </Col>
@@ -416,7 +428,11 @@ const SignUpForm = () => {
                     <Form.Group controlId="CVV">
                       <Form.Label>CVV</Form.Label>
                       <Form.Control type="text" {...register("CVV")} />
-                      {errors.CVV && <Form.Text className="text-danger">{errors.CVV.message}</Form.Text>}
+                      {errors.CVV && (
+                        <Form.Text className="text-danger">
+                          {errors.CVV.message}
+                        </Form.Text>
+                      )}
                     </Form.Group>
                   </Col>
                 </Row>
@@ -425,7 +441,7 @@ const SignUpForm = () => {
           </>
         )}
 
-         <Row className="mb-3 flex-nowrap">
+        <Row className="mb-3 flex-nowrap">
           <Col className="col-6">
             <div
               style={{
@@ -467,7 +483,9 @@ const SignUpForm = () => {
                 />
               </div>
             </div>
-            {errors.identification && <p className="text-danger">{errors.identification.message}</p>}
+            {errors.identification && (
+              <p className="text-danger">{errors.identification.message}</p>
+            )}
           </Col>
           <Col className="col-6">
             <div
@@ -507,9 +525,11 @@ const SignUpForm = () => {
                 />
               </div>
             </div>
-            {errors.notary_certificate && <p className="text-danger">{errors.notary_certificate.message}</p>}
-          </Col> 
-        </Row> */}
+            {errors.notary_certificate && (
+              <p className="text-danger">{errors.notary_certificate.message}</p>
+            )}
+          </Col>
+        </Row>
 
         <div className="mb-3">
           <Controller
