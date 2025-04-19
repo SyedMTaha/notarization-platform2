@@ -1,5 +1,14 @@
 "use client";
-import { Button, FormGroup, FormLabel, FormControl, FormCheck, Form, Row, Col } from "react-bootstrap";
+import {
+  Button,
+  FormGroup,
+  FormLabel,
+  FormControl,
+  FormCheck,
+  Form,
+  Row,
+  Col,
+} from "react-bootstrap";
 import PhoneInput from "react-phone-input-2";
 import "react-phone-input-2/lib/bootstrap.css";
 import "../public/assets/v3/scss/style.scss";
@@ -13,6 +22,7 @@ import { useTranslations } from "next-intl";
 import Link from "next/link";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
+import { useAuthStore } from "@/store/authStore";
 
 const CustomPhoneInput = forwardRef(({ value, onChange, onBlur }, ref) => (
   <PhoneInput
@@ -32,19 +42,21 @@ const CustomPhoneInput = forwardRef(({ value, onChange, onBlur }, ref) => (
   />
 ));
 
-const CustomCheckbox = forwardRef(({ label, name, onChange, onBlur, checked }, ref) => (
-  <FormGroup controlId={name}>
-    <FormCheck
-      label={label}
-      name={name}
-      ref={ref}
-      onChange={onChange}
-      className="gap-2"
-      onBlur={onBlur}
-      checked={checked}
-    />
-  </FormGroup>
-));
+const CustomCheckbox = forwardRef(
+  ({ label, name, onChange, onBlur, checked }, ref) => (
+    <FormGroup controlId={name}>
+      <FormCheck
+        label={label}
+        name={name}
+        ref={ref}
+        onChange={onChange}
+        className="gap-2"
+        onBlur={onBlur}
+        checked={checked}
+      />
+    </FormGroup>
+  )
+);
 
 const readURL = (event, id) => {
   console.log(id);
@@ -69,13 +81,21 @@ const SignUpForm = () => {
   const t = useTranslations("sign-up");
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+  const signUp = useAuthStore((s) => s.signUp); // your existing wrapper
+  const [uploading, setUploading] = useState(false);
 
   // Define validation schema
   const schema = yup.object({
     signUpAs: yup.string().required(t("validation.signUpAs.required")),
-    email: yup.string().email(t("validation.email.invalid")).required(t("validation.email.required")),
+    email: yup
+      .string()
+      .email(t("validation.email.invalid"))
+      .required(t("validation.email.required")),
     phone: yup.string().required(t("validation.phone.required")),
-    password: yup.string().min(8, t("validation.password.min")).required(t("validation.password.required")),
+    password: yup
+      .string()
+      .min(8, t("validation.password.min"))
+      .required(t("validation.password.required")),
     confirmPassword: yup
       .string()
       .oneOf([yup.ref("password"), null], t("validation.confirmPassword.oneOf"))
@@ -86,14 +106,21 @@ const SignUpForm = () => {
       .required(t("validation.termsAgreed.required")),
     payment_method: yup
       .string()
-      .oneOf(["Credit Card", "PayPal", "CashApp"], t("validation.payment_method.oneOf"))
+      .oneOf(
+        ["Credit Card", "PayPal", "CashApp"],
+        t("validation.payment_method.oneOf")
+      )
       .required(t("validation.payment_method.required")),
     card_number: yup.string().required(t("validation.card_number.required")),
     name: yup.string().required(t("validation.name.required")),
     expiry_date: yup.date().required(t("validation.expiry_date.required")),
     CVV: yup.string().length(3, t("validation.CVV.length")),
-    identification: yup.mixed().required(t("validation.identification.required")),
-    notary_certificate: yup.mixed().required(t("validation.notary_certificate.required")),
+    identification: yup
+      .mixed()
+      .required(t("validation.identification.required")),
+    notary_certificate: yup
+      .mixed()
+      .required(t("validation.notary_certificate.required")),
   });
 
   // Initialize form with validation
@@ -107,7 +134,7 @@ const SignUpForm = () => {
     resolver: yupResolver(schema),
     mode: "onChange",
     defaultValues: {
-      signUpAs: "",
+      signUpAs: "Notary",
       termsAgreed: false,
       payment_method: "Credit Card",
       card_number: "123",
@@ -119,9 +146,55 @@ const SignUpForm = () => {
     },
   });
 
-  const onSubmit = (data) => {
+  const onSubmit = async (data) => {
     // Handle sign up logic here
-    console.log(data.identification[0]);
+    console.log("Form data:", data);
+    // 1) create auth user
+    const { data: authData, error: authError } = await supabase.auth.signUp({
+      email: data.email,
+      password: data.password,
+    });
+    if (authError) return console.error(authError.message);
+
+    const userId = authData.user.id;
+
+    // 2) upload files (if any)
+    setUploading(true);
+    const uploads = {};
+    for (let field of ["identification", "notary_certificate"]) {
+      if (data[field]?.[0]) {
+        const file = data[field][0];
+        const path = `${userId}/${field}-${Date.now()}-${file.name}`;
+        const { data: up, error: upErr } = await supabase.storage
+          .from("user-documents")
+          .upload(path, file);
+        if (upErr) console.error(upErr);
+        else
+          uploads[`${field}_url`] = supabase.storage
+            .from("user-documents")
+            .getPublicUrl(up.path).publicURL;
+      }
+    }
+    setUploading(false);
+
+    // 3) insert into profiles
+    const profilePayload = {
+      id: userId,
+      email: data.email,
+      full_name: data.name,
+      phone: data.phone,
+      sign_up_as: data.signUpAs,
+      terms_agreed: data.termsAgreed,
+      payment_method: data.payment_method,
+      card_last4: data.card_number.slice(-4),
+      expiry_date: data.expiry_date,
+      ...uploads, // identification_url, notary_certificate_url
+    };
+    console.log("Profile Payload", profilePayload);
+    // const { error: profErr } = await supabase
+    //   .from("profiles")
+    //   .insert(profilePayload);
+    // if (profErr) return console.error(profErr.message);
   };
 
   return (
@@ -145,7 +218,9 @@ const SignUpForm = () => {
                   <option value="Notary">{t("options.Notary")}</option>
                   <option value="Attorney">{t("options.Attorney")}</option>
                   <option value="Business">{t("options.Business")}</option>
-                  <option value="Real Estate Agent">{t("options.Real_Estate_Agent")}</option>
+                  <option value="Real Estate Agent">
+                    {t("options.Real_Estate_Agent")}
+                  </option>
                 </FormControl>
                 {fieldState.error?.message && (
                   <Feedback type="invalid" className="text-danger">
@@ -191,7 +266,9 @@ const SignUpForm = () => {
             render={({ field, fieldState }) => (
               <>
                 <CustomPhoneInput {...field} />
-                {fieldState.error?.message && <p className="text-danger">{fieldState.error?.message}</p>}
+                {fieldState.error?.message && (
+                  <p className="text-danger">{fieldState.error?.message}</p>
+                )}
               </>
             )}
           />
@@ -225,9 +302,17 @@ const SignUpForm = () => {
                   >
                     {!fieldState.error &&
                       (showPassword ? (
-                        <FiEye height={18} width={18} className="cursor-pointer" />
+                        <FiEye
+                          height={18}
+                          width={18}
+                          className="cursor-pointer"
+                        />
                       ) : (
-                        <FiEyeOff height={18} width={18} className="cursor-pointer" />
+                        <FiEyeOff
+                          height={18}
+                          width={18}
+                          className="cursor-pointer"
+                        />
                       ))}
                   </span>
                 </div>
@@ -242,7 +327,9 @@ const SignUpForm = () => {
             control={control}
             render={({ field, fieldState }) => (
               <FormGroup>
-                <FormLabel htmlFor="confirmPassword">{t("confirm_password")}</FormLabel>
+                <FormLabel htmlFor="confirmPassword">
+                  {t("confirm_password")}
+                </FormLabel>
 
                 <div className="position-relative">
                   <FormControl
@@ -264,9 +351,17 @@ const SignUpForm = () => {
                   >
                     {!fieldState.error &&
                       (showConfirmPassword ? (
-                        <FiEye height={18} width={18} className="cursor-pointer" />
+                        <FiEye
+                          height={18}
+                          width={18}
+                          className="cursor-pointer"
+                        />
                       ) : (
-                        <FiEyeOff height={18} width={18} className="cursor-pointer" />
+                        <FiEyeOff
+                          height={18}
+                          width={18}
+                          className="cursor-pointer"
+                        />
                       ))}
                   </span>
                 </div>
@@ -432,18 +527,28 @@ const SignUpForm = () => {
                   <label htmlFor="termsAgreed" className="form-check-label">
                     <span>
                       {t("terms_agreement")}{" "}
-                      <Link href="/terms" className="text-decoration-none" style={{ color: "#0C1134" }}>
+                      <Link
+                        href="/terms"
+                        className="text-decoration-none"
+                        style={{ color: "#0C1134" }}
+                      >
                         {t("terms_conditions")}
                       </Link>{" "}
                       &{" "}
-                      <Link href="/privacy" className="text-decoration-none" style={{ color: "#0C1134" }}>
+                      <Link
+                        href="/privacy"
+                        className="text-decoration-none"
+                        style={{ color: "#0C1134" }}
+                      >
                         {t("privacy_policy")}
                       </Link>
                     </span>
                   </label>
                 </div>
                 {fieldState.error?.message && (
-                  <div className="text-danger small">{fieldState.error.message}</div>
+                  <div className="text-danger small">
+                    {fieldState.error.message}
+                  </div>
                 )}
               </FormGroup>
             )}

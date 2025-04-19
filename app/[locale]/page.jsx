@@ -12,6 +12,7 @@ import { faqsData1, faqsData2 } from "./help-desk/page";
 import OxencyAccordion from "@/components/OxencyAccordion";
 import { useEffect, useState } from "react";
 import LangSwitcher from "@/components/LangSwitch";
+import { supabase } from "@/supabase/supabaseClient";
 
 const IndexOnePage = ({ params }) => {
   useEffect(() => {

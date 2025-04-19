@@ -1,4 +1,5 @@
 // Import necessary modules
+"use server";
 import { NextIntlClientProvider, hasLocale } from "next-intl";
 import { notFound } from "next/navigation";
 import { routing } from "@/i18n/routing";
@@ -14,6 +15,7 @@ import "../../public/assets/css/magnific-popup.min.css";
 import "../../public/assets/css/nice-select.min.css";
 import "../../public/assets/css/slick.min.css";
 import "../../public/assets/css/style.css";
+import ClientProviders from "./ClientProviders";
 
 export async function generateMetadata({ params }) {
   const { locale, slug } = params;
@@ -42,7 +44,7 @@ export default async function LocaleLayout({ children, params }) {
     <html lang={locale}>
       <body>
         <NextIntlClientProvider locale={locale}>
-          {children}
+          <ClientProviders>{children}</ClientProviders>
         </NextIntlClientProvider>
       </body>
     </html>
