@@ -12,7 +12,7 @@ import Header from "./Header";
 import ScrollTop from "./ScrollTop";
 import SideBar from "./SideBar";
 
-const Layout = ({ children, header, className, footer, noHeader }) => {
+const Layout = ({ children, header, className, footer, noHeader, login }) => {
   const pathname = usePathname();
   const locale = pathname.split("/")[1]; // Extract locale from the URL
   const messages = useMessages(); // Auto-fetch messages
@@ -39,7 +39,7 @@ const Layout = ({ children, header, className, footer, noHeader }) => {
         <VideoPopup />
         <ImageView />
         <div className="page-wrapper">
-          {!noHeader && <Header header={header} locale={locale} />}
+          {!noHeader && <Header header={header} locale={locale} login={login} />}
           <SideBar />
           {children}
           {!footer && <CallToAction />}

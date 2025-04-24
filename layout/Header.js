@@ -4,7 +4,7 @@ import MobileMenu from "./MobileMenu";
 import { useTranslations } from "next-intl";
 import { useState, useEffect } from "react";
 import LangSwitcher from "@/components/LangSwitch";
-const Header = ({ header, locale }) => {
+const Header = ({ header, locale, login }) => {
   switch (header) {
     case 1:
       return <Header1 />;
@@ -13,7 +13,7 @@ const Header = ({ header, locale }) => {
     case 3:
       return <PlainHeader />;
     default:
-      return <DefaultHeader locale={locale} />;
+      return <DefaultHeader locale={locale} login={login} />;
   }
 };
 export default Header;
@@ -259,7 +259,7 @@ const Header2 = () => {
   );
 };
 
-const DefaultHeader = ({ locale }) => {
+const DefaultHeader = ({ locale, login }) => {
   const t = useTranslations();
   const [padding, setPadding] = useState("0rem 4rem");
   useEffect(() => {
@@ -335,23 +335,23 @@ const DefaultHeader = ({ locale }) => {
             </div>
             {/* Menu Button */}
             <div className="menu-btns">
-                <Link legacyBehavior href="/auth/signin">
-                  <a className="theme-btn style-three">
-                    {t("navbar.pill-button")}{" "}
-                    <i className="fas fa-angle-double-right" />
-                  </a>
-                </Link>
-                <LangSwitcher locale={locale} type={"dark"}/>
-                {/* menu sidebar */}
-                {/* Menu sidebar (visible only on md and up) */}
-                <div className="menu-sidebar d-none d-md-block">
-                  <button onClick={() => sideBarToggle()}>
-                    <span className="icon-bar" />
-                    <span className="icon-bar" />
-                    <span className="icon-bar" />
-                  </button>
-                </div>
+              <Link legacyBehavior href="/auth/signin">
+                <a className="theme-btn style-three">
+                  {login ? t("navbar.pill-login") : t("navbar.pill-button")}
+                  <i className="fas fa-angle-double-right" />
+                </a>
+              </Link>
+              <LangSwitcher locale={locale} type={"dark"} />
+              {/* menu sidebar */}
+              {/* Menu sidebar (visible only on md and up) */}
+              <div className="menu-sidebar d-none d-md-block">
+                <button onClick={() => sideBarToggle()}>
+                  <span className="icon-bar" />
+                  <span className="icon-bar" />
+                  <span className="icon-bar" />
+                </button>
               </div>
+            </div>
           </div>
         </div>
       </div>

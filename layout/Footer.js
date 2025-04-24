@@ -3,6 +3,8 @@ import Link from "next/link";
 
 const Footer = ({ footer }) => {
   switch (footer) {
+    case 3:
+      return null; //No footer
     case 1:
       return <Footer1 />;
     case 2:

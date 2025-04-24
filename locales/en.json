@@ -16,6 +16,7 @@
     "help": "Help Desk",
     "search_placeholder": "Search",
     "pill-button": "Notarize Now",
+    "pill-login": "Log In",
     "search_icon": "Search Icon",
     "search_button": "Search Button",
     "menu_button": "Menu Button",
@@ -495,7 +496,7 @@
     "title": "Contact Us",
     "titleHalf1": "Conta",
     "titleHalf2": "ct Us",
-    "heading":"Let us help you to grow your business.",
+    "heading": "Let us help you to grow your business.",
     "secPara": "The team at West Indian Scribbles LLC is committed to streamlining the document signing and officiating aspect of your business. Please leave a query and one of our technical personnel will reach out to you."
   }
 }

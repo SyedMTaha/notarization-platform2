@@ -1,3 +1,5 @@
+import Header from "@/layout/Header";
+import Link from "next/link";
 import React from "react";
 
 class StepOne extends React.Component {
@@ -15,146 +17,124 @@ class StepOne extends React.Component {
 
   render() {
     return (
-      <div
-        className="multisteps-form__panel js-active"
-        data-animation="slideHorz"
-      >
-        <div className="wizard-forms">
-          <div className="inner pb-100 clearfix">
-            <div className="wizard-title text-center">
-              <h3>Please, enter your personal information</h3>
-              <p>
-                has been a while. I would like to present you the project I work{" "}
-              </p>
-            </div>
-            <div className="wizard-photo-area">
-              <div className="wizard-photo-upload position-relative">
-                <label htmlFor="files">Upload Image</label>
+      <>
+        <div
+          className="multisteps-form__panel js-active"
+          style={{ minHeight: "120vh" }}
+          data-animation="slideHorz"
+        >
+          <Link legacyBehavior href="/">
+            <a>
+              <img
+                src="/assets/images/logos/logo.png"
+                style={{ marginLeft: "20px", marginTop: "20px" }}
+                alt="Logo"
+                title="Logo"
+              />
+            </a>
+          </Link>
+          <div className="wizard-forms " style={{ marginTop: "-100px" }}>
+            <div className="inner pb-100 clearfix">
+              <div className="wizard-title text-center">
+                <h3>Authenticate</h3>
+                <p>Find the Documents you need and download them </p>
+              </div>
+              <div className="wizard-form-input">
+                <label>Reference Number</label>
                 <input
-                  id="files"
-                  type="file"
-                  onClick={this.readURL}
-                  style={{ display: "none" }}
+                  style={{ border: "2px solid #ddeef9", color: "#a4b8d4" }}
+                  type="text"
+                  name="name"
+                  placeholder="XXXX-XXXX-XXXX--XXXX"
                 />
-                <div className="display-img text-center">
-                  <img
-                    id="profile-image"
-                    src={"/assets/v3/img/pf1.png"}
-                    alt="your image"
+              </div>
+              <div style={{ marginTop: "20px" }} className="wizard-form-input">
+                <label>Date Signed</label>
+                <div className="d-flex gap-4">
+                  <input
+                    style={{
+                      width: "70px",
+                      border: "2px solid #ddeef9",
+                      color: "#a4b8d4",
+                      padding: "10px",
+                    }}
+                    type="number"
+                    name="number"
+                    min={1}
+                    max={31}
+                  />
+                  <h1>/</h1>
+                  <input
+                    style={{
+                      width: "70px",
+                      border: "2px solid #ddeef9",
+                      color: "#a4b8d4",
+                      padding: "10px",
+                    }}
+                    min={1}
+                    max={12}
+                    type="number"
+                    name="number"
+                  />
+                  <h1>/</h1>
+
+                  <input
+                    style={{
+                      width: "70px",
+                      border: "2px solid #ddeef9",
+                      color: "#a4b8d4",
+                      padding: "10px",
+                    }}
+                    min={1900}
+                    type="number"
+                    name="number"
                   />
                 </div>
               </div>
-              <div className="photo-upload-text">
-                has been a while. I would like to present you the project I work
-                on a few
-              </div>
-            </div>
-            <div className="wizard-form-field mb-85">
-              <div className="wizard-form-input">
-                <label>Name</label>
-                <input type="text" name="name" />
-              </div>
-              <div className="wizard-form-input">
-                <label>Email</label>
-                <input type="email" name="email" />
-              </div>
-              <div className="wizard-form-input mb-60 mt-60">
-                <div className="line"></div>
-              </div>
-              <div className="wizard-form-input">
-                <label>What are you?</label>
-                <div className="wizard-checked">
-                  <label className="checkbox-circle">
-                    <input
-                      type="radio"
-                      defaultChecked
-                      name="student_type"
-                      value="University Student"
-                    />
-                    <span className="checkmark"></span>
-                    University Student
-                  </label>
-                </div>
-                <div className="wizard-checked">
-                  <label className="checkbox-circle">
-                    <input
-                      type="radio"
-                      name="student_type"
-                      value="Professional"
-                    />
-                    <span className="checkmark"></span>
-                    Professional
-                  </label>
-                </div>
-              </div>
-              <div className="wizard-form-input">
-                <label>University</label>
-                <input type="email" name="email" />
-              </div>
-              <div className="wizard-form-input">
-                <label>Major</label>
-                <input type="email" name="email" />
-              </div>
-              <div className="wizard-form-input">
-                <label>Graduation Date</label>
-                <input type="email" name="email" />
-              </div>
-              <div className="wizard-form-input mb-60 mt-60">
-                <div className="line"></div>
-              </div>
-              <div className="wizard-form-input">
-                <label>Do you have a Tax ID?</label>
-                <div className="wizard-checked">
-                  <label className="checkbox-circle">
-                    <input
-                      type="radio"
-                      defaultChecked
-                      name="ssn"
-                      value="I Have a US Tax ID (SSN)"
-                    />
-                    <span className="checkmark"></span>
-                    <span>I Have a US Tax ID (SSN)</span>
-                  </label>
-                </div>
-                <div className="wizard-checked">
-                  <label className="checkbox-circle">
-                    <input
-                      type="radio"
-                      name="ssn"
-                      value="I Don't have a US Tax ID (SSN)"
-                    />
-                    <span className="checkmark"></span>
-                    <span>I don’t have a US Tax ID (SSN)</span>
-                  </label>
-                </div>
-              </div>
-              <div className="form-field-text">
-                has been a while. I would like to present you the project I work
-                on a few months ago.
-              </div>
-            </div>
-            <div className="wizard-v3-progress">
-              <span>1 to 5 step</span>
-              <h3>0% to complete</h3>
-              <div className="progress">
-                <div className="progress-bar" style={{ width: "0%" }}></div>
-              </div>
-            </div>
-          </div>
-          <div className="vector-img-one">
-            <img src={"/assets/v3/img/vb1.png"} alt="" />
-          </div>
-          <div className="actions">
-            <ul>
-              <li>
-                <span className="js-btn-next" title="NEXT">
-                  NEXT <i className="fa fa-arrow-right"></i>
+
+              <div className="wizard-form-input my-4">
+                <h6>Found Documents</h6>
+
+                <span className="w-service-box text-center d-flex flex-column justify-content-center align-items-center position-relative">
+                  <span
+                    className="tooltip-info"
+                    data-toggle="tooltip"
+                    data-placement="top"
+                    title="Mr Leo Service officer"
+                  ></span>
+
+                  <span className="service-icon">
+                    <img src={"/assets/images/scale.png"} alt="" />
+                  </span>
+                  <h4>Power of Attorney</h4>
                 </span>
-              </li>
-            </ul>
+              </div>
+
+              <div className="wizard-v3-progress ">
+                <span>1 to 5 step</span>
+                <h3>0% to complete</h3>
+                <div className="progress">
+                  <div className="progress-bar" style={{ width: "0%" }}></div>
+                </div>
+              </div>
+            </div>
+
+            <div className="actions">
+              <ul>
+                <li>
+                  <span
+                    style={{ backgroundColor: "#274171" }}
+                    className="js-btn-next"
+                    title="NEXT"
+                  >
+                    Download <i className="fa fa-arrow-right"></i>
+                  </span>
+                </li>
+              </ul>
+            </div>
           </div>
         </div>
-      </div>
+      </>
     );
   }
 }
