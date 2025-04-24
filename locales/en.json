@@ -498,5 +498,25 @@
     "titleHalf2": "ct Us",
     "heading": "Let us help you to grow your business.",
     "secPara": "The team at West Indian Scribbles LLC is committed to streamlining the document signing and officiating aspect of your business. Please leave a query and one of our technical personnel will reach out to you."
+  },
+  "step3": {
+    "logoAlt": "Logo",
+    "header": {
+      "title": "Document Download",
+      "description": "Please select how you want to download your document"
+    },
+    "subtitle": "E-sign or Connect to a Notary",
+    "cards": {
+      "download": "Download",
+      "email": "Send Email"
+    },
+    "form": {
+      "emailLabel": "Email Address",
+      "emailPlaceholder": "johndoe@gmail.com"
+    },
+    "buttons": {
+      "next": "NEXT",
+      "back": "BACK"
+    }
   }
 }

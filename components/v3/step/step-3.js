@@ -1,131 +1,138 @@
-import React from "react";
+import React, { useState } from "react";
+import Link from "next/link";
+import { useTranslations } from "next-intl";
 
-class StepThree extends React.Component {
-    render() {
-        return (
-            <div className="multisteps-form__panel" data-animation="slideHorz">
-                <div className="wizard-forms">
-                    <div className="inner pb-100 clearfix">
-                        <div className="wizard-title text-center">
-                            <h3>Please, enter your personal information</h3>
-                            <p>has been a while. I would like to present you the project I work </p>
-                        </div>
-                        <div className="wizard-form-input select-caret">
-                            <select>
-                                <option>Subject 1</option>
-                                <option>Subject 2</option>
-                                <option>Subject 3</option>
-                                <option>Subject 4</option>
-                            </select>
-                        </div>
-                        <div className="wizard-form-input mb-60 mt-60">
-                            <div className="line line2"></div>
-                        </div>
-                        <div className="wizard-duration mb-60">
-                            <span className="wizard-sub-text">Duration Services</span>
-                            <div className="row">
-                                <div className="col-md-4">
-                                    <label className="duration-option">
-                                        <input type="radio" name="duration-service" value="4 weeks" className="d-checkbox" />
-                                        <span className="checkbox-circle-tick"></span>
-                                        <span className="duration-box text-center">
-                                            <span className="title">4</span>
-                                            <span>Weeks</span>
-                                        </span>
-                                    </label>
-                                </div>
-                                <div className="col-md-4">
-                                    <label className="duration-option">
-                                        <input type="radio" name="duration-service" value="6 weeks" className="d-checkbox" />
-                                        <span className="checkbox-circle-tick"></span>
-                                        <span className="duration-box text-center">
-                                            <span className="title">6</span>
-                                            <span>Weeks</span>
-                                        </span>
-                                    </label>
-                                </div>
-                                <div className="col-md-4">
-                                    <label className="duration-option">
-                                        <input type="radio" name="duration-service" value="9 weeks" className="d-checkbox" />
-                                        <span className="checkbox-circle-tick"></span>
-                                        <span className="duration-box text-center">
-                                            <span className="title">9</span>
-                                            <span>Weeks</span>
-                                        </span>
-                                    </label>
-                                </div>
-                            </div>
-                        </div>
-                        <div className="wizard-form-input mb-60 mt-60">
-                            <div className="line line2"></div>
-                        </div>
-                        <div className="wizard-day-item">
-                            <span className="wizard-sub-text">Choose the included services</span>
-                            <div className="wizard-checkbox-option">
-                                <ul>
-                                    <li>
-                                        <label className="block-option">
-                                            <input type="checkbox" name="day-checkout" className="checked-checkbox" />
-                                            <span className="checkbox-tick"></span>
-                                            <span className="day-label">Select Day</span>
-                                        </label>
-                                    </li>
-                                    <li>
-                                        <label className="block-option">
-                                            <input type="checkbox" name="day-checkout" className="checked-checkbox" />
-                                            <span className="checkbox-tick"></span>
-                                            <span className="day-label">Select Day</span>
-                                        </label>
-                                    </li>
-                                    <li>
-                                        <label className="block-option">
-                                            <input type="checkbox" name="day-checkout" className="checked-checkbox" />
-                                            <span className="checkbox-tick"></span>
-                                            <span className="day-label">Select Day</span>
-                                        </label>
-                                    </li>
-                                    <li>
-                                        <label className="block-option">
-                                            <input type="checkbox" name="day-checkout" className="checked-checkbox" />
-                                            <span className="checkbox-tick"></span>
-                                            <span className="day-label">Select Day</span>
-                                        </label>
-                                    </li>
-                                </ul>
-                            </div>
-                        </div>
-                        <div className="wizard-form-input mb-60 mt-60">
-                            <div className="line line2"></div>
-                        </div>
-                        <div className="wizard-document-upload pb-200">
-                            <span className="wizard-sub-text">Upload the documents</span>
-                            <div className="custom-file">
-                                <input type="file" className="custom-file-input" id="customFile" />
-                                <label className="custom-file-label" htmlFor="customFile">jpg or .pdf should  be more than 500KB or 300PI</label>
-                            </div>
-                        </div>
-                        <div className="wizard-v3-progress">
-                            <span>3 to 5 step</span>
-                            <h3>59% to complete</h3>
-                            <div className="progress">
-                                <div className="progress-bar" style={{ width: '59%' }}>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div className="vector-img-one">
-                        <img src={'/assets/v3/img/vb3.png'} alt="" />
-                    </div>
-                    <div className="actions">
-                        <ul>
-                            <li><span className="js-btn-prev" title="BACK"><i className="fa fa-arrow-left"></i> BACK </span></li>
-                            <li><span className="js-btn-next" title="NEXT">NEXT <i className="fa fa-arrow-right"></i></span></li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-        );
+export default function StepThree() {
+  const t = useTranslations("step3");
+  const [method, setMethod] = useState("download");
+  const [email, setEmail] = useState("");
+
+  const cardStyle = (active) => ({
+    width: 120,
+    height: 120,
+    borderRadius: 8,
+    border: "2px solid #B4D4E4",
+    backgroundColor: active ? "#D0E3ED" : "#FFFFFF",
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "center",
+    justifyContent: "center",
+    cursor: "pointer",
+    transition: "all .2s",
+  });
+
+  const iconImgStyle = { width: 40, height: 40, objectFit: "contain" };
+  const labelStyle = (active) => ({
+    marginTop: 8,
+    fontSize: 14,
+    fontWeight: 400,
+    color: "#000",
+    userSelect: "none",
+  });
+
+  const handleAction = () => {
+    if (method === "download") {
+      console.log("download document");
+    } else {
+      console.log("send to", email);
     }
-}
+  };
 
-export default StepThree;
+  return (
+    <div className="multisteps-form__panel" data-animation="slideHorz">
+      <Link legacyBehavior href="/">
+        <a>
+          <img
+            src="/assets/images/logos/logo.png"
+            style={{ marginLeft: "20px", marginTop: "20px" }}
+            alt="Logo"
+            title="Logo"
+          />
+        </a>
+      </Link>
+
+      <div className="wizard-forms">
+        <div className="inner pb-100 clearfix">
+          {/* Header */}
+          <div className="wizard-title text-center">
+            <h3 style={{ color: "#5856D6", fontWeight: 700 }}>{t("header.title")}</h3>
+            <p style={{ color: "#5856D6" }}>{t("header.description")}</p>
+          </div>
+
+          {/* Subtitle */}
+          <div className="text-center mb-3">
+            <p style={{ color: "#333333" }}>{t("subtitle")}</p>
+          </div>
+
+          {/* Cards */}
+          <div className="d-flex justify-content-center mb-4" style={{ gap: 16 }}>
+            <div style={cardStyle(method === "download")} onClick={() => setMethod("download")}>
+              <img src="/icons/download.svg" alt={t("cards.download")} style={iconImgStyle} />
+              <span style={labelStyle(method === "download")}>{t("cards.download")}</span>
+            </div>
+
+            <div style={cardStyle(method === "email")} onClick={() => setMethod("email")}>
+              <img src="/icons/email.svg" alt={t("cards.email")} style={iconImgStyle} />
+              <span style={labelStyle(method === "email")}>{t("cards.email")}</span>
+            </div>
+          </div>
+
+          {/* Email field */}
+          {method === "email" && (
+            <div className="wizard-form-input mb-4">
+              <label htmlFor="email" className="form-label" style={{ fontWeight: 500 }}>
+                {t("form.emailLabel")}
+              </label>
+              <input
+                id="email"
+                type="email"
+                className="form-control form-control-lg"
+                placeholder={t("form.emailPlaceholder")}
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+              />
+            </div>
+          )}
+
+          {/* Action button */}
+          <div className="d-flex justify-content-end">
+            <button
+              onClick={handleAction}
+              style={{
+                backgroundColor: "#274171",
+                color: "#fff",
+                padding: "14px 26px",
+                fontSize: "19px",
+                fontWeight: 700,
+              }}
+            >
+              {method === "download" ? t("cards.download") : t("cards.email")}{" "}
+              <i className="fa fa-arrow-right"></i>
+            </button>
+          </div>
+        </div>
+
+        {/* Decorative image */}
+        <div className="vector-img-one">
+          <img src="/assets/v3/img/vb3.png" alt="" />
+        </div>
+
+        {/* Back/Next nav */}
+        <div className="actions">
+          <ul>
+            <li>
+              <span className="js-btn-prev" title={t("buttons.back")}>
+                <i className="fa fa-arrow-left"></i> {t("buttons.back")}
+              </span>
+            </li>
+            <li>
+              <span className="js-btn-next" title={t("buttons.next")}>
+                {t("buttons.next")} <i className="fa fa-arrow-right"></i>
+              </span>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  );
+}

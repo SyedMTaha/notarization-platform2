@@ -20,7 +20,7 @@ export default function V3() {
           >
             {/* for rtl */}
             {/* <div className="wrapper wizard d-flex clearfix multisteps-form position-relative" dir='rtl'> */}
-            <div className="steps order-2 position-relative w-25 ">
+            <div className="steps order-2 position-relative w-25 " style={{backgroundColor: "#09123A", backgroundImage: "none"}}>
               <div className="multisteps-form__progress ">
                 <span
                   className="multisteps-form__progress-btn js-active"

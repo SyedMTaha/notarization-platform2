@@ -498,5 +498,25 @@
     "titleHalf2": "anos",
     "heading": "Déjanos ayudarte a hacer crecer tu negocio.",
     "secPara": "El equipo de West Indian Scribbles LLC se compromete a agilizar el proceso de firma y oficialización de documentos de tu negocio. Por favor, deja una consulta y uno de nuestros técnicos se pondrá en contacto contigo."
+  },
+  "step3": {
+    "logoAlt": "Logotipo",
+    "header": {
+      "title": "Descarga de documento",
+      "description": "Por favor selecciona cómo quieres descargar tu documento"
+    },
+    "subtitle": "Firma electrónica o conéctate a un notario",
+    "cards": {
+      "download": "Descargar",
+      "email": "Enviar por correo"
+    },
+    "form": {
+      "emailLabel": "Correo electrónico",
+      "emailPlaceholder": "usuario@ejemplo.com"
+    },
+    "buttons": {
+      "next": "SIGUIENTE",
+      "back": "ATRÁS"
+    }
   }
 }
