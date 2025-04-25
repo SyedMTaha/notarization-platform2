@@ -1,9 +1,10 @@
-import React from "react";
+import React, { useRef } from "react";
 import { useForm, Controller } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import CustomPhoneInput from "@/components/CustomPhoneInput"; // adjust path if needed
 import { FormLabel } from "react-bootstrap";
+import Link from "next/link";
 
 const currentYY = new Date().getFullYear() % 100;
 /* ------------------------------------------------------------------ */
@@ -75,25 +76,51 @@ export const schema = yup.object({
 });
 /* ------------------------------------------------------------------ */
 /* Component -------------------------------------------------------- */
-const StepTwo = ({ onNext }) => {
+const StepTwo = () => {
   const {
     register,
     control,
-    handleSubmit,
+    trigger, // ← get manual validator
+    getValues, // ← to read form data after validate
     watch,
     formState: { errors },
   } = useForm({
     resolver: yupResolver(schema),
     defaultValues: { paymentMethod: "CreditCard" },
     mode: "onTouched",
+    shouldUnregister: true,
   });
+  const nextBtnRef = useRef(null);
 
   const paymentMethod = watch("paymentMethod");
-  const submit = (data) => onNext?.(data);
+  const nextHandler = async () => {
+    const isValid = await trigger(); // validate everything
+    if (!isValid) return; // show errors, stay on page
+
+    // optional: access the validated data
+    const data = getValues();
+    console.log("validated data →", data);
+
+    // advance the wizard
+    nextBtnRef.current?.click();
+  };
 
   return (
-    <div className="multisteps-form__panel" data-animation="slideHorz">
-      <div className="wizard-forms section-padding">
+    <div className="multisteps-form__panel " data-animation="slideHorz">
+      <Link legacyBehavior href="/">
+        <a>
+          <img
+            src="/assets/images/logos/logo.png"
+            style={{ marginLeft: "20px", marginTop: "20px" }}
+            alt="Logo"
+            title="Logo"
+          />
+        </a>
+      </Link>
+      <div
+        className="wizard-forms section-padding"
+        style={{ marginTop: "-100px" }}
+      >
         <div className="inner pb-100 clearfix">
           {/* ---------------------------------------------------------------- */}
           {/* Heading -------------------------------------------------------- */}
@@ -515,15 +542,26 @@ const StepTwo = ({ onNext }) => {
         <div className="actions">
           <ul>
             <li>
-              <span
-                style={{ backgroundColor: "#09123A" }}
-                className="js-btn-next"
-                title="NEXT"
-                onClick={handleSubmit(submit)}
-              >
-                NEXT <i className="fa fa-arrow-right"></i>
+              <span className="js-btn-prev" title="BACK">
+                <i className="fa fa-arrow-left"></i> BACK{" "}
               </span>
             </li>
+            <li>
+              <span
+                style={{ backgroundColor: "#09123A" }}
+                title="NEXT"
+                onClick={nextHandler}
+              >
+                NEXT <i className="fa fa-arrow-right"></i>
+                {/* ///simulates click on below hidden button if fields are valid */}
+              </span>
+            </li>
+            <button
+              ref={nextBtnRef} // <- attach the ref
+              className="js-btn-next"
+              style={{ display: "none" }}
+              type="button"
+            />
           </ul>
         </div>
       </div>

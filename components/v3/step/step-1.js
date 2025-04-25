@@ -20,7 +20,7 @@ class StepOne extends React.Component {
       <>
         <div
           className="multisteps-form__panel js-active"
-          style={{ minHeight: "120vh" }}
+          style={{ minHeight: "100vh" }}
           data-animation="slideHorz"
         >
           <Link legacyBehavior href="/">

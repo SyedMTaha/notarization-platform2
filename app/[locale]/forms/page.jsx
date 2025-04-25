@@ -15,7 +15,7 @@ export default function V3() {
       <Layout footer={3} login={true}>
         <div style={{ marginTop: "150px" }}>
           <div
-            style={{ minHeight: "150vh" }}
+            style={{ minHeight: "190vh" }}
             className="wrapper wizard d-flex clearfix multisteps-form position-relative "
           >
             {/* for rtl */}
