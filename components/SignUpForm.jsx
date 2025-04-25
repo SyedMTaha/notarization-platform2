@@ -9,9 +9,7 @@ import {
   Row,
   Col,
 } from "react-bootstrap";
-import PhoneInput from "react-phone-input-2";
-import "react-phone-input-2/lib/bootstrap.css";
-import "../public/assets/v3/scss/style.scss";
+
 
 // components
 import { Controller, set, useForm } from "react-hook-form";
@@ -23,24 +21,8 @@ import Link from "next/link";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import { useAuthStore } from "@/store/authStore";
+import CustomPhoneInput from "./CustomPhoneInput";
 
-const CustomPhoneInput = forwardRef(({ value, onChange, onBlur }, ref) => (
-  <PhoneInput
-    country={"us"}
-    inputStyle={{
-      width: "100%",
-      paddingTop: "10px",
-      paddingBottom: "10px",
-      paddingRight: "5px",
-    }}
-    value={value}
-    onChange={onChange}
-    onBlur={onBlur}
-    inputProps={{
-      ref: ref, // Forward the ref to the input element
-    }}
-  />
-));
 
 const CustomCheckbox = forwardRef(
   ({ label, name, onChange, onBlur, checked }, ref) => (

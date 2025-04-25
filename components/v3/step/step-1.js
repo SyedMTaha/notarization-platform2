@@ -40,16 +40,16 @@ class StepOne extends React.Component {
                 <p>Find the Documents you need and download them </p>
               </div>
               <div className="wizard-form-input">
-                <label>Reference Number</label>
+                <label className="wizard-sub-text">Reference Number</label>
                 <input
                   style={{ border: "2px solid #ddeef9", color: "#a4b8d4" }}
-                  type="text"
+                  type="number"
                   name="name"
                   placeholder="XXXX-XXXX-XXXX--XXXX"
                 />
               </div>
               <div style={{ marginTop: "20px" }} className="wizard-form-input">
-                <label>Date Signed</label>
+                <label className="wizard-sub-text">Date Signed</label>
                 <div className="d-flex gap-4">
                   <input
                     style={{
@@ -93,7 +93,12 @@ class StepOne extends React.Component {
               </div>
 
               <div className="wizard-form-input my-4">
-                <h6>Found Documents</h6>
+                <h6
+                  className="wizard-sub-text "
+                  style={{ marginTop: "30px", marginBottom: "-5px" }}
+                >
+                  Found Documents
+                </h6>
 
                 <span className="w-service-box text-center d-flex flex-column justify-content-center align-items-center position-relative">
                   <span
