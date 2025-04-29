@@ -1,11 +1,52 @@
-import React, { useState } from "react";
+"use client";
+
+import React, { useRef, useEffect } from "react";
 import Link from "next/link";
 import { useTranslations } from "next-intl";
+import { Controller } from "react-hook-form";
+import useMultistepForm from "@/components/useMultistepForm";
 
 export default function StepThree() {
   const t = useTranslations("step3");
-  const [method, setMethod] = useState("download");
-  const [email, setEmail] = useState("");
+
+  const {
+    register,
+    control,
+    watch,
+    formState: { errors },
+    validateStep,
+    setValue,
+    clearErrors,
+  } = useMultistepForm(3);
+
+  const selectedMethod = watch("method");
+
+  // Handle email field clearing when switching to download method
+  useEffect(() => {
+    if (selectedMethod === "download") {
+      // Clear email-related errors when download is selected
+      clearErrors(["emailContact"]);
+
+      // Optional: Set email field to empty
+      setValue("emailContact", "");
+    }
+  }, [selectedMethod, clearErrors, setValue]);
+
+  const nextHandler = async () => {
+    // Validate only step 3 fields
+    const { isValid, data } = await validateStep();
+
+    if (!isValid) return;
+
+    console.log("validated data →", data);
+
+    // perform submission
+  };
+
+  // Handle selecting delivery method
+  const handleMethodSelect = (method) => {
+    setValue("method", method);
+  };
 
   const cardStyle = (active) => ({
     width: 120,
@@ -22,6 +63,7 @@ export default function StepThree() {
   });
 
   const iconImgStyle = { width: 40, height: 40, objectFit: "contain" };
+
   const labelStyle = (active) => ({
     marginTop: 8,
     fontSize: 14,
@@ -29,14 +71,6 @@ export default function StepThree() {
     color: "#000",
     userSelect: "none",
   });
-
-  const handleAction = () => {
-    if (method === "download") {
-      console.log("download document");
-    } else {
-      console.log("send to", email);
-    }
-  };
 
   return (
     <div className="multisteps-form__panel" data-animation="slideHorz">
@@ -55,7 +89,9 @@ export default function StepThree() {
         <div className="inner pb-100 clearfix">
           {/* Header */}
           <div className="wizard-title text-center">
-            <h3 style={{ color: "#5856D6", fontWeight: 700 }}>{t("header.title")}</h3>
+            <h3 style={{ color: "#5856D6", fontWeight: 700 }}>
+              {t("header.title")}
+            </h3>
             <p style={{ color: "#5856D6" }}>{t("header.description")}</p>
           </div>
 
@@ -65,50 +101,91 @@ export default function StepThree() {
           </div>
 
           {/* Cards */}
-          <div className="d-flex justify-content-center mb-4" style={{ gap: 16 }}>
-            <div style={cardStyle(method === "download")} onClick={() => setMethod("download")}>
-              <img src="/icons/download.svg" alt={t("cards.download")} style={iconImgStyle} />
-              <span style={labelStyle(method === "download")}>{t("cards.download")}</span>
+          <div
+            className="d-flex justify-content-center mb-4"
+            style={{ gap: 16 }}
+          >
+            <div
+              style={cardStyle(selectedMethod === "download")}
+              onClick={() => handleMethodSelect("download")}
+            >
+              <input
+                type="radio"
+                id="method-download"
+                value="download"
+                style={{ display: "none" }}
+                {...register("method")}
+              />
+              <img
+                src="/icons/download.svg"
+                alt={t("cards.download")}
+                style={iconImgStyle}
+              />
+              <span style={labelStyle(selectedMethod === "download")}>
+                {t("cards.download")}
+              </span>
             </div>
 
-            <div style={cardStyle(method === "email")} onClick={() => setMethod("email")}>
-              <img src="/icons/email.svg" alt={t("cards.email")} style={iconImgStyle} />
-              <span style={labelStyle(method === "email")}>{t("cards.email")}</span>
+            <div
+              style={cardStyle(selectedMethod === "email")}
+              onClick={() => handleMethodSelect("email")}
+            >
+              <input
+                type="radio"
+                id="method-email"
+                value="email"
+                style={{ display: "none" }}
+                {...register("method")}
+              />
+              <img
+                src="/icons/email.svg"
+                alt={t("cards.email")}
+                style={iconImgStyle}
+              />
+              <span style={labelStyle(selectedMethod === "email")}>
+                {t("cards.email")}
+              </span>
             </div>
           </div>
 
           {/* Email field */}
-          {method === "email" && (
+          {selectedMethod === "email" && (
             <div className="wizard-form-input mb-4">
-              <label htmlFor="email" className="form-label" style={{ fontWeight: 500 }}>
+              <label
+                htmlFor="emailContact"
+                className="form-label"
+                style={{ fontWeight: 500 }}
+              >
                 {t("form.emailLabel")}
               </label>
-              <input
-                id="email"
-                type="email"
-                className="form-control form-control-lg"
-                placeholder={t("form.emailPlaceholder")}
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
+              <Controller
+                name="emailContact"
+                control={control}
+                render={({ field }) => (
+                  <input
+                    {...field}
+                    id="emailContact"
+                    type="email"
+                    className="form-control form-control-lg"
+                    placeholder={t("form.emailPlaceholder")}
+                  />
+                )}
               />
+              {errors.emailContact && (
+                <p style={{ color: "red", fontSize: "14px" }}>
+                  {errors.emailContact.message}
+                </p>
+              )}
             </div>
           )}
 
-          {/* Action button */}
-          <div className="d-flex justify-content-end">
-            <button
-              onClick={handleAction}
-              style={{
-                backgroundColor: "#274171",
-                color: "#fff",
-                padding: "14px 26px",
-                fontSize: "19px",
-                fontWeight: 700,
-              }}
-            >
-              {method === "download" ? t("cards.download") : t("cards.email")}{" "}
-              <i className="fa fa-arrow-right"></i>
-            </button>
+          {/* Progress (added to match StepTwo) */}
+          <div className="wizard-v3-progress">
+            <span>3 to 5 step</span>
+            <h3>60% to complete</h3>
+            <div className="progress">
+              <div className="progress-bar" style={{ width: "60%" }}></div>
+            </div>
           </div>
         </div>
 
@@ -126,8 +203,15 @@ export default function StepThree() {
               </span>
             </li>
             <li>
-              <span className="js-btn-next" title={t("buttons.next")}>
-                {t("buttons.next")} <i className="fa fa-arrow-right"></i>
+              <span
+                title={t("buttons.next")}
+                style={{ backgroundColor: "#09123A" }}
+                onClick={nextHandler}
+              >
+                {selectedMethod === "download"
+                  ? t("cards.download")
+                  : t("cards.email")}{" "}
+                <i className="fa fa-arrow-right"></i>
               </span>
             </li>
           </ul>

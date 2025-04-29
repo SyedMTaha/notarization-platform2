@@ -1,107 +1,34 @@
 import React, { useRef } from "react";
-import { useForm, Controller } from "react-hook-form";
-import { yupResolver } from "@hookform/resolvers/yup";
-import * as yup from "yup";
-import CustomPhoneInput from "@/components/CustomPhoneInput"; // adjust path if needed
-import { FormLabel } from "react-bootstrap";
 import Link from "next/link";
+import { Controller } from "react-hook-form";
+import { useTranslations } from "next-intl";
+import useMultistepForm from "@/components/useMultistepForm";
+import CustomPhoneInput from "@/components/CustomPhoneInput";
+import { FormLabel } from "react-bootstrap";
 
-const currentYY = new Date().getFullYear() % 100;
-/* ------------------------------------------------------------------ */
-/* Yup validation schema -------------------------------------------- */
-export const schema = yup.object({
-  /* ------------------------------------------------------------ */
-  /* Payment method --------------------------------------------- */
-  paymentMethod: yup
-    .string()
-    .oneOf(["CreditCard", "PayPal"], "Select Credit Card or PayPal")
-    .required("Please select a payment method"),
-
-  /* ------------------------------------------------------------ */
-  /* Credit-card-only fields (validate only when CreditCard) ----- */
-  cardNumber: yup.string().when("paymentMethod", {
-    is: "CreditCard",
-    then: (s) =>
-      s
-        .required("Card number is required")
-        .matches(/^[0-9]{13,19}$/, "Card number must be 13–19 digits"),
-  }),
-
-  cardholderName: yup.string().when("paymentMethod", {
-    is: "CreditCard",
-    then: (s) => s.required("Cardholder name is required"),
-  }),
-
-  expiryMonth: yup.number().when("paymentMethod", {
-    is: "CreditCard",
-    then: (s) =>
-      s
-        .typeError("Expiry month is required")
-        .required("Expiry month is required")
-        .min(1, "Month must be between 1 and 12")
-        .max(12, "Month must be between 1 and 12"),
-  }),
-
-  expiryYear: yup.number().when("paymentMethod", {
-    is: "CreditCard",
-    then: (s) =>
-      s
-        .typeError("Expiry year is required")
-        .required("Expiry year is required")
-        .min(currentYY, "Card has already expired"),
-  }),
-
-  cvv: yup.string().when("paymentMethod", {
-    is: "CreditCard",
-    then: (s) =>
-      s
-        .required("CVV is required")
-        .matches(/^[0-9]{3,4}$/, "CVV must be 3 or 4 digits"),
-  }),
-
-  /* ------------------------------------------------------------ */
-  /* Personal info ---------------------------------------------- */
-  firstName: yup.string().required("First name is required"),
-  lastName: yup.string().required("Last name is required"),
-  email: yup
-    .string()
-    .email("Enter a valid email address")
-    .required("Email address is required"),
-  phone: yup.string().required("Phone number is required"),
-  country: yup.string().required("Country is required"),
-  province: yup.string().required("Province/state is required"),
-  zip: yup.string().required("ZIP/postal code is required"),
-  address: yup.string().required("Street address is required"),
-  city: yup.string().required("City is required"),
-});
-/* ------------------------------------------------------------------ */
-/* Component -------------------------------------------------------- */
 const StepTwo = () => {
+  const t = useTranslations();
+
   const {
     register,
     control,
-    trigger, // ← get manual validator
-    getValues, // ← to read form data after validate
     watch,
     formState: { errors },
-  } = useForm({
-    resolver: yupResolver(schema),
-    defaultValues: { paymentMethod: "CreditCard" },
-    mode: "onTouched",
-    shouldUnregister: true,
-  });
+    validateStep,
+  } = useMultistepForm(2);
+
   const nextBtnRef = useRef(null);
-
   const paymentMethod = watch("paymentMethod");
-  const nextHandler = async () => {
-    const isValid = await trigger(); // validate everything
-    if (!isValid) return; // show errors, stay on page
 
-    // optional: access the validated data
-    const data = getValues();
+  const nextHandler = async () => {
+    // Validate only step 2 fields
+    const { isValid, data } = await validateStep();
+
+    // if (!isValid) return;
+
     console.log("validated data →", data);
 
-    // advance the wizard
+    // Proceed to next step
     nextBtnRef.current?.click();
   };
 
@@ -125,15 +52,15 @@ const StepTwo = () => {
           {/* ---------------------------------------------------------------- */}
           {/* Heading -------------------------------------------------------- */}
           <div className="wizard-title text-center">
-            <h3>Payment Details</h3>
-            <p>Please Select Your preferred form of Payment</p>
+            <h3>{t("step2_payment_title")}</h3>
+            <p>{t("step2_payment_subtitle")}</p>
           </div>
 
           {/* ---------------------------------------------------------------- */}
           {/* Payment method ------------------------------------------------- */}
           <div className="wizard-duration mb-60">
             <span className="wizard-sub-text">
-              Please Select your Preferred form of Payment
+              {t("step2_payment_selection_text")}
             </span>
 
             <div className="col">
@@ -168,7 +95,9 @@ const StepTwo = () => {
                       }}
                       src="/assets/images/Credit card.png"
                     />
-                    <span style={{ fontSize: "25px" }}>Credit Card</span>
+                    <span style={{ fontSize: "25px" }}>
+                      {t("step2_credit_card")}
+                    </span>
                   </span>
                 </label>
               </div>
@@ -204,7 +133,9 @@ const StepTwo = () => {
                       }}
                       src="/assets/images/PayPal.png"
                     />
-                    <span style={{ fontSize: "25px" }}>PayPal</span>
+                    <span style={{ fontSize: "25px" }}>
+                      {t("step2_paypal")}
+                    </span>
                   </span>
                 </label>
               </div>
@@ -220,19 +151,20 @@ const StepTwo = () => {
           {paymentMethod === "CreditCard" && (
             <>
               <span className="wizard-sub-text" style={{ marginTop: "80px" }}>
-                Enter your Credit Card Details
+                {t("step2_credit_card_details_text")}
               </span>
 
               <div className="wizard-form-input">
-                <label className="wizard-sub-text">Card Number</label>
+                <label className="wizard-sub-text">
+                  {t("step2_card_number")}
+                </label>
                 <input
                   style={{
                     border: "2px solid #ddeef9",
                     color: "#B4D4E4",
-                    border: "2px solid #B4D4E4",
                   }}
                   type="text"
-                  placeholder="XXXX-XXXX-XXXX-XXXX"
+                  placeholder={t("step2_card_number_placeholder")}
                   {...register("cardNumber")}
                 />
                 {errors.cardNumber && (
@@ -241,15 +173,16 @@ const StepTwo = () => {
               </div>
 
               <div className="wizard-form-input" style={{ marginTop: "20px" }}>
-                <label className="wizard-sub-text">Cardholder Name</label>
+                <label className="wizard-sub-text">
+                  {t("step2_cardholder_name")}
+                </label>
                 <input
                   style={{
                     border: "2px solid #ddeef9",
                     color: "#B4D4E4",
-                    border: "2px solid #B4D4E4",
                   }}
                   type="text"
-                  placeholder="John Doe"
+                  placeholder={t("step2_cardholder_name_placeholder")}
                   {...register("cardholderName")}
                 />
                 {errors.cardholderName && (
@@ -263,7 +196,9 @@ const StepTwo = () => {
                   style={{ marginTop: "20px" }}
                   className="wizard-form-input"
                 >
-                  <label className="wizard-sub-text">Expiry Date</label>
+                  <label className="wizard-sub-text">
+                    {t("step2_expiry_date")}
+                  </label>
                   <div className="d-flex gap-4">
                     <input
                       style={{
@@ -271,10 +206,9 @@ const StepTwo = () => {
                         border: "2px solid #ddeef9",
                         color: "#B4D4E4",
                         padding: "10px",
-                        border: "2px solid #B4D4E4",
                       }}
                       type="number"
-                      placeholder="MM"
+                      placeholder={t("step2_month_placeholder")}
                       min={1}
                       max={12}
                       {...register("expiryMonth")}
@@ -286,15 +220,14 @@ const StepTwo = () => {
                         border: "2px solid #ddeef9",
                         color: "#B4D4E4",
                         padding: "10px",
-                        border: "2px solid #B4D4E4",
                       }}
                       type="number"
-                      placeholder="YY"
+                      placeholder={t("step2_year_placeholder")}
                       {...register("expiryYear")}
                     />
                   </div>
                   {(errors.expiryMonth || errors.expiryYear) && (
-                    <p className="text-danger">Invalid expiry</p>
+                    <p className="text-danger">{t("step2_invalid_expiry")}</p>
                   )}
                 </div>
 
@@ -303,7 +236,7 @@ const StepTwo = () => {
                   style={{ marginTop: "20px" }}
                   className="wizard-form-input"
                 >
-                  <label className="wizard-sub-text">CVV</label>
+                  <label className="wizard-sub-text">{t("step2_cvv")}</label>
                   <div className="d-flex gap-4">
                     <input
                       style={{
@@ -311,10 +244,9 @@ const StepTwo = () => {
                         border: "2px solid #ddeef9",
                         color: "#B4D4E4",
                         padding: "10px",
-                        border: "2px solid #B4D4E4",
                       }}
                       type="number"
-                      placeholder="123"
+                      placeholder={t("step2_cvv_placeholder")}
                       {...register("cvv")}
                     />
                   </div>
@@ -328,21 +260,17 @@ const StepTwo = () => {
 
           {/* ---------------------------------------------------------------- */}
           {/* Personal information ----------------------------------------- */}
-          <div className="d-flex" style={{ gap: "60px" }}>
+          <div className="d-flex" style={{ gap: "60px", marginTop: "80px" }}>
             {/* First name */}
             <div
               className="wizard-form-input"
               style={{ marginTop: "20px", flex: 1 }}
             >
-              <label className="wizard-sub-text">First Name</label>
+              <label className="wizard-sub-text">{t("step2_first_name")}</label>
               <input
-                style={{
-                  border: "2px solid #ddeef9",
-                  color: "#B4D4E4",
-                  border: "2px solid #B4D4E4",
-                }}
+                style={{ border: "2px solid #ddeef9", color: "#B4D4E4" }}
                 type="text"
-                placeholder="John"
+                placeholder={t("step2_first_name_placeholder")}
                 {...register("firstName")}
               />
               {errors.firstName && (
@@ -355,15 +283,11 @@ const StepTwo = () => {
               className="wizard-form-input"
               style={{ marginTop: "20px", flex: 1 }}
             >
-              <label className="wizard-sub-text">Last Name</label>
+              <label className="wizard-sub-text">{t("step2_last_name")}</label>
               <input
-                style={{
-                  border: "2px solid #ddeef9",
-                  color: "#B4D4E4",
-                  border: "2px solid #B4D4E4",
-                }}
+                style={{ border: "2px solid #ddeef9", color: "#B4D4E4" }}
                 type="text"
-                placeholder="Doe"
+                placeholder={t("step2_last_name_placeholder")}
                 {...register("lastName")}
               />
               {errors.lastName && (
@@ -378,15 +302,13 @@ const StepTwo = () => {
               className="wizard-form-input"
               style={{ marginTop: "20px", flex: 1 }}
             >
-              <label className="wizard-sub-text">Email Address</label>
+              <label className="wizard-sub-text">
+                {t("step2_email_address")}
+              </label>
               <input
-                style={{
-                  border: "2px solid #ddeef9",
-                  color: "#B4D4E4",
-                  border: "2px solid #B4D4E4",
-                }}
+                style={{ border: "2px solid #ddeef9", color: "#B4D4E4" }}
                 type="email"
-                placeholder="john@example.com"
+                placeholder={t("step2_email_placeholder")}
                 {...register("email")}
               />
               {errors.email && (
@@ -400,7 +322,7 @@ const StepTwo = () => {
               style={{ marginTop: "20px", flex: 1 }}
             >
               <FormLabel htmlFor="phone" className="wizard-sub-text">
-                Phone
+                {t("step2_phone")}
               </FormLabel>
               <Controller
                 name="phone"
@@ -423,15 +345,11 @@ const StepTwo = () => {
               className="wizard-form-input"
               style={{ marginTop: "20px", flex: 1 }}
             >
-              <label className="wizard-sub-text">Country</label>
+              <label className="wizard-sub-text">{t("step2_country")}</label>
               <input
-                style={{
-                  border: "2px solid #ddeef9",
-                  color: "#B4D4E4",
-                  border: "2px solid #B4D4E4",
-                }}
+                style={{ border: "2px solid #ddeef9", color: "#B4D4E4" }}
                 type="text"
-                placeholder="Country"
+                placeholder={t("step2_country_placeholder")}
                 {...register("country")}
               />
               {errors.country && (
@@ -444,15 +362,11 @@ const StepTwo = () => {
               className="wizard-form-input"
               style={{ marginTop: "20px", flex: 1 }}
             >
-              <label className="wizard-sub-text">Province</label>
+              <label className="wizard-sub-text">{t("step2_province")}</label>
               <input
-                style={{
-                  border: "2px solid #ddeef9",
-                  color: "#B4D4E4",
-                  border: "2px solid #B4D4E4",
-                }}
+                style={{ border: "2px solid #ddeef9", color: "#B4D4E4" }}
                 type="text"
-                placeholder="Province"
+                placeholder={t("step2_province_placeholder")}
                 {...register("province")}
               />
               {errors.province && (
@@ -465,15 +379,11 @@ const StepTwo = () => {
               className="wizard-form-input"
               style={{ marginTop: "20px", flex: 1 }}
             >
-              <label className="wizard-sub-text">Zip</label>
+              <label className="wizard-sub-text">{t("step2_zip")}</label>
               <input
-                style={{
-                  border: "2px solid #ddeef9",
-                  color: "#B4D4E4",
-                  border: "2px solid #B4D4E4",
-                }}
+                style={{ border: "2px solid #ddeef9", color: "#B4D4E4" }}
                 type="text"
-                placeholder="Zip"
+                placeholder={t("step2_zip_placeholder")}
                 {...register("zip")}
               />
               {errors.zip && (
@@ -488,15 +398,11 @@ const StepTwo = () => {
               className="wizard-form-input"
               style={{ marginTop: "20px", flex: 1 }}
             >
-              <label className="wizard-sub-text">Address</label>
+              <label className="wizard-sub-text">{t("step2_address")}</label>
               <input
-                style={{
-                  border: "2px solid #ddeef9",
-                  color: "#B4D4E4",
-                  border: "2px solid #B4D4E4",
-                }}
+                style={{ border: "2px solid #ddeef9", color: "#B4D4E4" }}
                 type="text"
-                placeholder="123 Street"
+                placeholder={t("step2_address_placeholder")}
                 {...register("address")}
               />
               {errors.address && (
@@ -509,15 +415,11 @@ const StepTwo = () => {
               className="wizard-form-input"
               style={{ marginTop: "20px", flex: 1 }}
             >
-              <label className="wizard-sub-text">City</label>
+              <label className="wizard-sub-text">{t("step2_city")}</label>
               <input
-                style={{
-                  border: "2px solid #ddeef9",
-                  color: "#B4D4E4",
-                  border: "2px solid #B4D4E4",
-                }}
+                style={{ border: "2px solid #ddeef9", color: "#B4D4E4" }}
                 type="text"
-                placeholder="City"
+                placeholder={t("step2_city_placeholder")}
                 {...register("city")}
               />
               {errors.city && (
@@ -529,8 +431,8 @@ const StepTwo = () => {
           {/* ---------------------------------------------------------------- */}
           {/* Progress (unchanged) ------------------------------------------ */}
           <div className="wizard-v3-progress">
-            <span>2 to 5 step</span>
-            <h3>38% to complete</h3>
+            <span>{t("step2_progress_status")}</span>
+            <h3>{t("step2_progress_percentage")}</h3>
             <div className="progress">
               <div className="progress-bar" style={{ width: "38%" }}></div>
             </div>
@@ -543,7 +445,7 @@ const StepTwo = () => {
           <ul>
             <li>
               <span className="js-btn-prev" title="BACK">
-                <i className="fa fa-arrow-left"></i> BACK{" "}
+                <i className="fa fa-arrow-left"></i> {t("step2_back_button")}
               </span>
             </li>
             <li>
@@ -552,12 +454,11 @@ const StepTwo = () => {
                 title="NEXT"
                 onClick={nextHandler}
               >
-                NEXT <i className="fa fa-arrow-right"></i>
-                {/* ///simulates click on below hidden button if fields are valid */}
+                {t("step2_next_button")} <i className="fa fa-arrow-right"></i>
               </span>
             </li>
             <button
-              ref={nextBtnRef} // <- attach the ref
+              ref={nextBtnRef}
               className="js-btn-next"
               style={{ display: "none" }}
               type="button"

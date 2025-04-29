@@ -1,57 +1,88 @@
-import Header from "@/layout/Header";
 import Link from "next/link";
-import React from "react";
+import React, { useRef } from "react";
+import useMultistepForm from "@/components/useMultistepForm";
+import { useTranslations } from "next-intl";
 
-class StepOne extends React.Component {
-  readURL(input) {
-    if (input.files && input.files[0]) {
-      var reader = new FileReader();
+const StepOne = () => {
+  const t = useTranslations();
+  const {
+    register,
+    formState: { errors },
+    validateStep,
+  } = useMultistepForm(1);
 
-      reader.onload = function (e) {
-        $("#profile-image").attr("src", e.target.result).width(150).height(200);
-      };
+  const nextBtnRef = useRef(null);
 
-      reader.readAsDataURL(input.files[0]);
-    }
-  }
+  const nextHandler = async () => {
+    // Validate only step 1 fields
+    const { isValid, data } = await validateStep();
 
-  render() {
-    return (
-      <>
-        <div
-          className="multisteps-form__panel js-active"
-          style={{ minHeight: "100vh" }}
-          data-animation="slideHorz"
-        >
-          <Link legacyBehavior href="/">
-            <a>
-              <img
-                src="/assets/images/logos/logo.png"
-                style={{ marginLeft: "20px", marginTop: "20px" }}
-                alt="Logo"
-                title="Logo"
+    if (!isValid) return;
+
+    // Process the validated data
+    const { referenceNumber, day, month, year } = data;
+
+    const structuredData = {
+      referenceNumber,
+      date_signed: new Date(year, month - 1, day), // month is 0-indexed
+    };
+
+    console.log("structured data →", structuredData);
+
+    // Proceed to next step
+    nextBtnRef.current?.click();
+  };
+
+  return (
+    <>
+      <div
+        className="multisteps-form__panel js-active"
+        style={{ minHeight: "100vh" }}
+        data-animation="slideHorz"
+      >
+        <Link legacyBehavior href="/">
+          <a>
+            <img
+              src="/assets/images/logos/logo.png"
+              style={{ marginLeft: "20px", marginTop: "20px" }}
+              alt={t("step1_logo_alt")}
+              title={t("step1_logo_title")}
+            />
+          </a>
+        </Link>
+        <div className="wizard-forms" style={{ marginTop: "-100px" }}>
+          <div className="inner pb-100 clearfix">
+            <div className="wizard-title text-center">
+              <h3>{t("step1_authenticate_title")}</h3>
+              <p>{t("step1_authenticate_subtitle")}</p>
+            </div>
+
+            {/* Reference Number */}
+            <div className="wizard-form-input">
+              <label className="wizard-sub-text">
+                {t("step1_reference_number_label")}
+              </label>
+              <input
+                {...register("referenceNumber")}
+                style={{ border: "2px solid #ddeef9", color: "#a4b8d4" }}
+                type="text"
+                name="referenceNumber"
+                placeholder={t("step1_reference_number_placeholder")}
               />
-            </a>
-          </Link>
-          <div className="wizard-forms " style={{ marginTop: "-100px" }}>
-            <div className="inner pb-100 clearfix">
-              <div className="wizard-title text-center">
-                <h3>Authenticate</h3>
-                <p>Find the Documents you need and download them </p>
-              </div>
-              <div className="wizard-form-input">
-                <label className="wizard-sub-text">Reference Number</label>
-                <input
-                  style={{ border: "2px solid #ddeef9", color: "#a4b8d4" }}
-                  type="number"
-                  name="name"
-                  placeholder="XXXX-XXXX-XXXX--XXXX"
-                />
-              </div>
-              <div style={{ marginTop: "20px" }} className="wizard-form-input">
-                <label className="wizard-sub-text">Date Signed</label>
-                <div className="d-flex gap-4">
+              {errors.referenceNumber && (
+                <p className="text-danger">{errors.referenceNumber.message}</p>
+              )}
+            </div>
+
+            {/* Date Signed */}
+            <div style={{ marginTop: "20px" }} className="wizard-form-input">
+              <label className="wizard-sub-text">
+                {t("step1_date_signed_label")}
+              </label>
+              <div className="d-flex gap-4">
+                <div className="d-flex flex-column">
                   <input
+                    {...register("day")}
                     style={{
                       width: "70px",
                       border: "2px solid #ddeef9",
@@ -59,89 +90,113 @@ class StepOne extends React.Component {
                       padding: "10px",
                     }}
                     type="number"
-                    name="number"
                     min={1}
                     max={31}
                   />
-                  <h1>/</h1>
+                  {errors.day && (
+                    <p className="text-danger">{errors.day.message}</p>
+                  )}
+                </div>
+                <h1>/</h1>
+                <div className="d-flex flex-column">
                   <input
+                    {...register("month")}
                     style={{
                       width: "70px",
                       border: "2px solid #ddeef9",
                       color: "#a4b8d4",
                       padding: "10px",
                     }}
+                    type="number"
                     min={1}
                     max={12}
-                    type="number"
-                    name="number"
                   />
-                  <h1>/</h1>
-
+                  {errors.month && (
+                    <p className="text-danger">{errors.month.message}</p>
+                  )}
+                </div>
+                <h1>/</h1>
+                <div className="d-flex flex-column">
                   <input
+                    {...register("year")}
                     style={{
-                      width: "70px",
+                      width: "90px",
                       border: "2px solid #ddeef9",
                       color: "#a4b8d4",
                       padding: "10px",
                     }}
-                    min={1900}
                     type="number"
-                    name="number"
+                    min={1900}
                   />
-                </div>
-              </div>
-
-              <div className="wizard-form-input my-4">
-                <h6
-                  className="wizard-sub-text "
-                  style={{ marginTop: "30px", marginBottom: "-5px" }}
-                >
-                  Found Documents
-                </h6>
-
-                <span className="w-service-box text-center d-flex flex-column justify-content-center align-items-center position-relative">
-                  <span
-                    className="tooltip-info"
-                    data-toggle="tooltip"
-                    data-placement="top"
-                    title="Mr Leo Service officer"
-                  ></span>
-
-                  <span className="service-icon">
-                    <img src={"/assets/images/scale.png"} alt="" />
-                  </span>
-                  <h4>Power of Attorney</h4>
-                </span>
-              </div>
-
-              <div className="wizard-v3-progress ">
-                <span>1 to 5 step</span>
-                <h3>0% to complete</h3>
-                <div className="progress">
-                  <div className="progress-bar" style={{ width: "0%" }}></div>
+                  {errors.year && (
+                    <p className="text-danger">{errors.year.message}</p>
+                  )}
                 </div>
               </div>
             </div>
 
-            <div className="actions">
-              <ul>
-                <li>
-                  <span
-                    style={{ backgroundColor: "#274171" }}
-                    className="js-btn-next"
-                    title="NEXT"
-                  >
-                    Download <i className="fa fa-arrow-right"></i>
-                  </span>
-                </li>
-              </ul>
+            {/* Found Documents */}
+            <div className="wizard-form-input my-4">
+              <h6
+                className="wizard-sub-text"
+                style={{ marginTop: "30px", marginBottom: "-5px" }}
+              >
+                {t("step1_found_documents_title")}
+              </h6>
+
+              <span className="w-service-box text-center d-flex flex-column justify-content-center align-items-center position-relative">
+                <span
+                  className="tooltip-info"
+                  data-toggle="tooltip"
+                  data-placement="top"
+                  title={t("step1_service_officer_tooltip")}
+                ></span>
+
+                <span className="service-icon">
+                  <img
+                    src={"/assets/images/scale.png"}
+                    alt={t("step1_scale_image_alt")}
+                  />
+                </span>
+                <h4>{t("step1_power_of_attorney_text")}</h4>
+              </span>
+            </div>
+
+            {/* Wizard Progress */}
+            <div className="wizard-v3-progress">
+              <span>{t("step1_progress_step_text")}</span>
+              <h3>{t("step1_progress_completion_text")}</h3>
+              <div className="progress">
+                <div className="progress-bar" style={{ width: "0%" }}></div>
+              </div>
             </div>
           </div>
+
+          {/* Actions */}
+          <div className="actions">
+            <ul>
+              <li>
+                <span
+                  style={{ backgroundColor: "#09123A" }}
+                  title={t("step1_next_button_title")}
+                  onClick={nextHandler}
+                >
+                  {t("step1_download_button_text")}{" "}
+                  <i className="fa fa-arrow-right"></i>
+                </span>
+              </li>
+              <button
+                ref={nextBtnRef}
+                className="js-btn-next"
+                style={{ display: "none" }}
+                type="button"
+              />
+            </ul>
+          </div>
         </div>
-      </>
-    );
-  }
-}
+      </div>
+    </>
+  );
+};
 
 export default StepOne;
