@@ -6,7 +6,7 @@ import useMultistepForm from "@/components/useMultistepForm";
 import CustomPhoneInput from "@/components/CustomPhoneInput";
 import { FormLabel } from "react-bootstrap";
 
-const StepTwo = () => {
+const StepTwo = ({ totalSteps }) => {
   const t = useTranslations();
 
   const {
@@ -434,7 +434,10 @@ const StepTwo = () => {
             <span>{t("step2_progress_status")}</span>
             <h3>{t("step2_progress_percentage")}</h3>
             <div className="progress">
-              <div className="progress-bar" style={{ width: "38%" }}></div>
+              <div
+                className="progress-bar"
+                style={{ width: totalSteps == 3 ? "66%" : "40%" }}
+              ></div>
             </div>
           </div>
         </div>

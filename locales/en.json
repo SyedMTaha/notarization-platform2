@@ -517,7 +517,10 @@
     "buttons": {
       "next": "NEXT",
       "back": "BACK"
-    }
+    },
+    "progress_step_text1": "to",
+    "progress_step_text2": "step",
+    "progress_step_text3": "to complete"
   },
   "step2_payment_title": "Payment Details",
   "step2_payment_subtitle": "Please Select Your preferred form of Payment",
@@ -552,7 +555,6 @@
   "step2_address_placeholder": "123 Street",
   "step2_city": "City",
   "step2_city_placeholder": "City",
-  "step2_progress_status": "2 to 5 step",
   "step2_progress_percentage": "38% to complete",
   "step2_back_button": "BACK",
   "step2_next_button": "NEXT",
@@ -567,8 +569,10 @@
   "step1_service_officer_tooltip": "Mr Leo Service officer",
   "step1_scale_image_alt": "",
   "step1_power_of_attorney_text": "Power of Attorney",
-  "step1_progress_step_text": "1 to 5 step",
-  "step1_progress_completion_text": "0% to complete",
+  "progress_step_text1": "to",
+  "progress_step_text2": "step",
+  "progress_step_text3": "to complete",
+
   "step1_next_button_title": "NEXT",
   "step1_download_button_text": "Download",
   "form_error_reference_number_required": "Reference Number is required",

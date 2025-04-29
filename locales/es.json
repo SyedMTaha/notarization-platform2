@@ -517,7 +517,10 @@
     "buttons": {
       "next": "SIGUIENTE",
       "back": "ATRÁS"
-    }
+    },
+    "progress_step_text1": "a",
+    "progress_step_text2": "paso",
+    "progress_step_text3": "para completar"
   },
   "step2_payment_title": "Detalles de Pago",
   "step2_payment_subtitle": "Por favor selecciona tu forma de pago preferida",
@@ -590,5 +593,8 @@
   "form_error_cvv_format": "El CVV debe tener 3 o 4 dígitos",
   "form_error_invalid_email": "Ingrese una dirección de correo válida",
   "form_error_invalid_email_contact": "Correo electrónico inválido",
-  "form_error_email_required": "Se requiere el correo electrónico"
+  "form_error_email_required": "Se requiere el correo electrónico",
+  "progress_step_text1": "a",
+  "progress_step_text2": "paso",
+  "progress_step_text3": "para completar"
 }

@@ -54,9 +54,11 @@ export default function V3() {
               id="wizard"
             >
               <div className="form-area position-relative">
-                <Step1 totalSteps={3} />
-                <Step2 totalSteps={3} />
-                <Step3 totalSteps={3} />
+                <Step1 />
+                <Step1 />
+                <Step1 />
+                <Step2 />
+                <Step3 />
               </div>
             </form>
           </div>

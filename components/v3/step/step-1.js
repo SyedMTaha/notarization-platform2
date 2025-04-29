@@ -3,7 +3,7 @@ import React, { useRef } from "react";
 import useMultistepForm from "@/components/useMultistepForm";
 import { useTranslations } from "next-intl";
 
-const StepOne = () => {
+const StepOne = ({totalSteps}) => {
   const t = useTranslations();
   const {
     register,
@@ -167,7 +167,7 @@ const StepOne = () => {
               <span>{t("step1_progress_step_text")}</span>
               <h3>{t("step1_progress_completion_text")}</h3>
               <div className="progress">
-                <div className="progress-bar" style={{ width: "0%" }}></div>
+                <div className="progress-bar" style={{ width: totalSteps == 3? "33%":"20%"  }}></div>
               </div>
             </div>
           </div>

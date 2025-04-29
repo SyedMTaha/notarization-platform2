@@ -6,7 +6,7 @@ import { useTranslations } from "next-intl";
 import { Controller } from "react-hook-form";
 import useMultistepForm from "@/components/useMultistepForm";
 
-export default function StepThree() {
+export default function StepThree({ form, totalSteps }) {
   const t = useTranslations("step3");
 
   const {
@@ -181,10 +181,18 @@ export default function StepThree() {
 
           {/* Progress (added to match StepTwo) */}
           <div className="wizard-v3-progress">
-            <span>3 to 5 step</span>
-            <h3>60% to complete</h3>
+            <span>
+              3 {t("progress_step_text1")} {totalSteps}{" "}
+              {t("progress_step_text2")}
+            </span>
+            <h3>
+              {totalSteps == 3 ? "100%" : "60%"} {t("progress_step_text3")}
+            </h3>
             <div className="progress">
-              <div className="progress-bar" style={{ width: "60%" }}></div>
+              <div
+                className="progress-bar"
+                style={{ width: totalSteps == 3 ? "100%" : "60%" }}
+              ></div>
             </div>
           </div>
         </div>
