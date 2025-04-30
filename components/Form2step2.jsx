@@ -2,12 +2,12 @@ import React, { useRef } from "react";
 import Link from "next/link";
 import { Controller } from "react-hook-form";
 import { useTranslations } from "next-intl";
-import useMultistepForm from "@/hooks/useMultistepForm";
 import CustomPhoneInput from "@/components/CustomPhoneInput";
 import { FormLabel } from "react-bootstrap";
 import CountrySelect from "@/components/CountrySelect";
+import useMultistepForm2 from "@/hooks/useMultistepForm2";
 
-const StepTwo = ({ totalSteps }) => {
+const Form2step2 = ({ totalSteps }) => {
   const t = useTranslations();
 
   const {
@@ -16,7 +16,7 @@ const StepTwo = ({ totalSteps }) => {
     watch,
     formState: { errors },
     validateStep,
-  } = useMultistepForm(2, { country: "Afghanistan" });
+  } = useMultistepForm2(2);
 
   const nextBtnRef = useRef(null);
   const paymentMethod = watch("paymentMethod");
@@ -57,207 +57,23 @@ const StepTwo = ({ totalSteps }) => {
             <p>{t("step2_payment_subtitle")}</p>
           </div>
 
-          {/* ---------------------------------------------------------------- */}
-          {/* Payment method ------------------------------------------------- */}
-          <div className="wizard-duration mb-60">
-            <span className="wizard-sub-text">
-              {t("step2_payment_selection_text")}
-            </span>
-
-            <div className="col">
-              {/* Credit Card option */}
-              <div style={{ width: "100%", height: "50px" }}>
-                <label
-                  className="duration-option "
-                  style={{ width: "100%", height: "50px" }}
-                >
-                  <input
-                    type="radio"
-                    value="CreditCard"
-                    className="d-checkbox"
-                    {...register("paymentMethod")}
-                  />
-                  <span
-                    className="duration-box "
-                    style={{
-                      width: "100%",
-                      height: "100px",
-                      borderRadius: "10px",
-                      display: "flex",
-                      gap: "10px",
-                      paddingLeft: "20px",
-                    }}
-                  >
-                    <img
-                      style={{
-                        width: "50px",
-                        height: "50px",
-                        marginTop: "-10px",
-                      }}
-                      src="/assets/images/Credit card.png"
-                    />
-                    <span style={{ fontSize: "25px" }}>
-                      {t("step2_credit_card")}
-                    </span>
-                  </span>
-                </label>
-              </div>
-
-              {/* PayPal option */}
-              <div style={{ width: "100%", height: "50px", marginTop: "70px" }}>
-                <label
-                  className="duration-option "
-                  style={{ width: "100%", height: "50px" }}
-                >
-                  <input
-                    type="radio"
-                    value="PayPal"
-                    className="d-checkbox"
-                    {...register("paymentMethod")}
-                  />
-                  <span
-                    className="duration-box "
-                    style={{
-                      width: "100%",
-                      height: "100px",
-                      borderRadius: "10px",
-                      gap: "10px",
-                      display: "flex",
-                      paddingLeft: "20px",
-                    }}
-                  >
-                    <img
-                      style={{
-                        width: "50px",
-                        height: "50px",
-                        marginTop: "-10px",
-                      }}
-                      src="/assets/images/PayPal.png"
-                    />
-                    <span style={{ fontSize: "25px" }}>
-                      {t("step2_paypal")}
-                    </span>
-                  </span>
-                </label>
-              </div>
-            </div>
-
-            {errors.paymentMethod && (
-              <p className="text-danger">{errors.paymentMethod.message}</p>
+          <div className="wizard-form-input" style={{ marginTop: "20px" }}>
+            <label className="wizard-sub-text">
+              {t("step2_cardholder_name")}
+            </label>
+            <input
+              style={{
+                border: "2px solid #ddeef9",
+                color: "#B4D4E4",
+              }}
+              type="text"
+              placeholder={t("step2_cardholder_name_placeholder")}
+              {...register("cardholderName")}
+            />
+            {errors.cardholderName && (
+              <p className="text-danger">{errors.cardholderName.message}</p>
             )}
           </div>
-
-          {/* ---------------------------------------------------------------- */}
-          {/* Credit-card fields (shown only if selected) -------------------- */}
-          {paymentMethod === "CreditCard" && (
-            <>
-              <span className="wizard-sub-text" style={{ marginTop: "80px" }}>
-                {t("step2_credit_card_details_text")}
-              </span>
-
-              <div className="wizard-form-input">
-                <label className="wizard-sub-text">
-                  {t("step2_card_number")}
-                </label>
-                <input
-                  style={{
-                    border: "2px solid #ddeef9",
-                    color: "#B4D4E4",
-                  }}
-                  type="text"
-                  placeholder={t("step2_card_number_placeholder")}
-                  {...register("cardNumber")}
-                />
-                {errors.cardNumber && (
-                  <p className="text-danger">{errors.cardNumber.message}</p>
-                )}
-              </div>
-
-              <div className="wizard-form-input" style={{ marginTop: "20px" }}>
-                <label className="wizard-sub-text">
-                  {t("step2_cardholder_name")}
-                </label>
-                <input
-                  style={{
-                    border: "2px solid #ddeef9",
-                    color: "#B4D4E4",
-                  }}
-                  type="text"
-                  placeholder={t("step2_cardholder_name_placeholder")}
-                  {...register("cardholderName")}
-                />
-                {errors.cardholderName && (
-                  <p className="text-danger">{errors.cardholderName.message}</p>
-                )}
-              </div>
-
-              <div className="d-flex" style={{ gap: "60px" }}>
-                {/* Expiry */}
-                <div
-                  style={{ marginTop: "20px" }}
-                  className="wizard-form-input"
-                >
-                  <label className="wizard-sub-text">
-                    {t("step2_expiry_date")}
-                  </label>
-                  <div className="d-flex gap-4">
-                    <input
-                      style={{
-                        width: "70px",
-                        border: "2px solid #ddeef9",
-                        color: "#B4D4E4",
-                        padding: "10px",
-                      }}
-                      type="number"
-                      placeholder={t("step2_month_placeholder")}
-                      min={1}
-                      max={12}
-                      {...register("expiryMonth")}
-                    />
-                    <h1>/</h1>
-                    <input
-                      style={{
-                        width: "70px",
-                        border: "2px solid #ddeef9",
-                        color: "#B4D4E4",
-                        padding: "10px",
-                      }}
-                      type="number"
-                      placeholder={t("step2_year_placeholder")}
-                      {...register("expiryYear")}
-                    />
-                  </div>
-                  {(errors.expiryMonth || errors.expiryYear) && (
-                    <p className="text-danger">{t("step2_invalid_expiry")}</p>
-                  )}
-                </div>
-
-                {/* CVV */}
-                <div
-                  style={{ marginTop: "20px" }}
-                  className="wizard-form-input"
-                >
-                  <label className="wizard-sub-text">{t("step2_cvv")}</label>
-                  <div className="d-flex gap-4">
-                    <input
-                      style={{
-                        width: "70px",
-                        border: "2px solid #ddeef9",
-                        color: "#B4D4E4",
-                        padding: "10px",
-                      }}
-                      type="number"
-                      placeholder={t("step2_cvv_placeholder")}
-                      {...register("cvv")}
-                    />
-                  </div>
-                  {errors.cvv && (
-                    <p className="text-danger">{errors.cvv.message}</p>
-                  )}
-                </div>
-              </div>
-            </>
-          )}
 
           {/* ---------------------------------------------------------------- */}
           {/* Personal information ----------------------------------------- */}
@@ -483,4 +299,4 @@ const StepTwo = ({ totalSteps }) => {
   );
 };
 
-export default StepTwo;
+export default Form2step2;

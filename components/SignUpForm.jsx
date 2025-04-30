@@ -10,7 +10,6 @@ import {
   Col,
 } from "react-bootstrap";
 
-
 // components
 import { Controller, set, useForm } from "react-hook-form";
 import Feedback from "react-bootstrap/esm/Feedback";
@@ -22,7 +21,6 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import { useAuthStore } from "@/store/authStore";
 import CustomPhoneInput from "./CustomPhoneInput";
-
 
 const CustomCheckbox = forwardRef(
   ({ label, name, onChange, onBlur, checked }, ref) => (
@@ -160,7 +158,6 @@ const SignUpForm = () => {
       identificationFile,
       notaryCertificateFile,
     };
-
     const { error, user } = await signUp(payload);
 
     setSubmitting(false);
@@ -436,7 +433,10 @@ const SignUpForm = () => {
               <label
                 htmlFor="identification_image"
                 className="text-center rounded"
-                style={{ fontSize: "10px" }}
+                style={{
+                  fontSize: "10px",
+                  position: identificationFile ? "relative" : "block",
+                }}
               >
                 Upload Identification
               </label>
@@ -481,7 +481,10 @@ const SignUpForm = () => {
               <label
                 htmlFor="notary_certificate_image"
                 className="text-center rounded"
-                style={{ fontSize: "10px" }}
+                style={{
+                  fontSize: "10px",
+                  position: notaryCertificateFile ? "relative" : "block",
+                }}
               >
                 Upload Certificate of Notary
               </label>

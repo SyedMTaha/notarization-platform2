@@ -8,6 +8,8 @@ import Step5 from "../../../components/v3/step/step-5";
 import Layout from "@/layout/Layout";
 import VideoPopup from "@/components/VideoPopup";
 import ImageView from "@/components/ImageView";
+import Form2step1 from "../../../components/Form2step1";
+import Form2step2 from "@/components/Form2step2";
 
 export default function V3() {
   return (
@@ -54,11 +56,12 @@ export default function V3() {
               id="wizard"
             >
               <div className="form-area position-relative">
-                <Step1 />
-                <Step1 />
-                <Step1 />
-                <Step2 />
-                <Step3 />
+                <Form2step1 totalSteps={5} />
+                <Form2step2 totalSteps={5} />
+                {/* <Form2step2 totalSteps={5} />
+                <Form2step3 totalSteps={5} />
+                <Form2step4 totalSteps={5} />
+                <Form2step5 totalSteps={5} /> */}
               </div>
             </form>
           </div>

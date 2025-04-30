@@ -4,7 +4,7 @@ import React, { useRef, useEffect } from "react";
 import Link from "next/link";
 import { useTranslations } from "next-intl";
 import { Controller } from "react-hook-form";
-import useMultistepForm from "@/components/useMultistepForm";
+import useMultistepForm from "@/hooks/useMultistepForm";
 
 export default function StepThree({ form, totalSteps }) {
   const t = useTranslations("step3");

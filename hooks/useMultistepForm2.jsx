@@ -5,13 +5,24 @@ import { useTranslations } from "next-intl";
 
 // Step-specific schema definitions
 const stepOneSchema = {
-  referenceNumber: true,
-  day: true,
-  month: true,
-  year: true,
+  firstName: true,
+  middleName: true,
+  lastName: true,
+  dateOfBirth: true,
+  countryOfResidence: true,
+  email: true,
+  identificationType: true,
+  dateOfIssue: true,
+  licenseIdNumber: true,
+  jurisdictionOfDocumentUse: true,
+  identificationImage: true,
 };
 
-const stepTwoSchema = {
+const stepTwoSchema = {};
+
+const stepThreeSchema = {};
+
+const stepFourSchema = {
   paymentMethod: true,
   cardNumber: true,
   cardholderName: true,
@@ -29,13 +40,13 @@ const stepTwoSchema = {
   city: true,
 };
 
-const stepThreeSchema = {
+const stepFiveSchema = {
   method: true,
   emailContact: true,
 };
 
 // Custom hook for multistep form
-const useMultistepForm = (step, defaultValues = {}) => {
+const useMultistepForm2 = (step, defaultValues = {}) => {
   const t = useTranslations();
 
   // Combined schema for all steps
@@ -44,26 +55,68 @@ const useMultistepForm = (step, defaultValues = {}) => {
 
     return yup.object().shape({
       // Step One Schema
-      referenceNumber: yup
+      firstName: yup
         .string()
-        .required(t("form_error_reference_number_required")),
-      day: yup
-        .number()
-        .required(t("form_error_day_required"))
-        .min(1, t("form_error_invalid_day"))
-        .max(31, t("form_error_invalid_day")),
-      month: yup
-        .number()
-        .required(t("form_error_month_required"))
-        .min(1, t("form_error_invalid_month"))
-        .max(12, t("form_error_invalid_month")),
-      year: yup
-        .number()
-        .required(t("form_error_year_required"))
-        .min(1900, t("form_error_invalid_year"))
-        .max(new Date().getFullYear(), t("form_error_invalid_year")),
+        .trim()
+        .required("First name is required")
+        .min(2, "First name must be at least 2 characters")
+        .max(50, "First name cannot exceed 50 characters"),
+
+      middleName: yup
+        .string()
+        .trim()
+        .max(50, "Middle name cannot exceed 50 characters"),
+
+      lastName: yup
+        .string()
+        .trim()
+        .required("Last name is required")
+        .min(2, "Last name must be at least 2 characters")
+        .max(50, "Last name cannot exceed 50 characters"),
+
+      dateOfBirth: yup
+        .date()
+        .typeError("Invalid Date of Birth")
+        .required("Date of birth is required")
+        .max(new Date(), "Date of birth cannot be in the future"),
+
+      countryOfResidence: yup
+        .string()
+        .required("Country of residence is required")
+        .min(2, "Please select a valid country"),
+
+      email: yup
+        .string()
+        .required("Email is required")
+        .email("Please enter a valid email address"),
+
+      identificationType: yup.string(),
+
+      dateOfIssue: yup
+        .date()
+        .typeError("Invalid Date of issue")
+        .required("Date of issue is required")
+        .max(new Date(), "Date of issue cannot be in the future"),
+
+      licenseIdNumber: yup
+        .string()
+        .required("License ID/TIN number is required")
+        .min(4, "ID number is too short")
+        .max(50, "ID number is too long"),
+
+      jurisdictionOfDocumentUse: yup
+        .string()
+        .required("Jurisdiction of document use is required"),
+
+      identificationImage: yup
+        .string()
+        .required("Please upload an image of your identification"),
 
       // Step Two Schema
+
+      // Step Three Schema
+
+      // Step four Schema
       paymentMethod: yup
         .string()
         .oneOf(["CreditCard", "PayPal"], t("form_error_select_payment_method"))
@@ -109,17 +162,17 @@ const useMultistepForm = (step, defaultValues = {}) => {
             .matches(/^[0-9]{3,4}$/, t("form_error_cvv_format")),
         otherwise: (schema) => schema.notRequired(),
       }),
-      firstName: yup.string().optional(),
-      lastName: yup.string().optional(),
-      email: yup.string().email(t("form_error_invalid_email")).optional(),
-      phone: yup.string().optional(),
-      country: yup.string().optional(),
-      province: yup.string().optional(),
-      zip: yup.string().optional(),
-      address: yup.string().optional(),
-      city: yup.string().optional(),
+      firstName: yup.string().required(),
+      lastName: yup.string().required(),
+      email: yup.string().email().required(),
+      phone: yup.string().max(15).required(),
+      country: yup.string().required(),
+      province: yup.string().required(),
+      zip: yup.string().required(),
+      address: yup.string().required(),
+      city: yup.string().required(),
 
-      // Step Three Schema
+      // Step five Schema
       method: yup.string().oneOf(["download", "email"]).optional(),
       emailContact: yup
         .string()
@@ -140,6 +193,10 @@ const useMultistepForm = (step, defaultValues = {}) => {
         return stepTwoSchema;
       case 3:
         return stepThreeSchema;
+      case 4:
+        return stepFourSchema;
+      case 5:
+        return stepFiveSchema;
       default:
         return {};
     }
@@ -172,7 +229,7 @@ const useMultistepForm = (step, defaultValues = {}) => {
     let fieldNames = Object.keys(stepFields);
 
     // Special handling for step 2 - conditionally validate credit card fields
-    if (step === 2 && currentValues.paymentMethod === "PayPal") {
+    if (step === 4 && currentValues.paymentMethod === "PayPal") {
       // When PayPal is selected, exclude credit card fields from validation
       fieldNames = fieldNames.filter(
         (field) =>
@@ -185,9 +242,8 @@ const useMultistepForm = (step, defaultValues = {}) => {
           ].includes(field)
       );
     }
-
     // Special handling for step 3 - conditionally validate email field
-    if (step === 3 && currentValues.method === "download") {
+    if (step === 5 && currentValues.method === "download") {
       // When download is selected, exclude email field from validation
       fieldNames = fieldNames.filter((field) => field !== "emailContact");
     }
@@ -217,4 +273,4 @@ const useMultistepForm = (step, defaultValues = {}) => {
   };
 };
 
-export default useMultistepForm;
+export default useMultistepForm2;
