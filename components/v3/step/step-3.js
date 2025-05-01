@@ -1,44 +1,36 @@
 "use client";
 
-import React, { useRef, useEffect } from "react";
+import React from "react";
 import Link from "next/link";
 import { useTranslations } from "next-intl";
 import { Controller } from "react-hook-form";
-import useMultistepForm from "@/hooks/useMultistepForm";
+import useForm1store from "@/store/form1store";
 
-export default function StepThree({ form, totalSteps }) {
+export default function StepThree({ totalSteps }) {
   const t = useTranslations("step3");
 
+  const { methods, getValidateStep } = useForm1store();
+
+  if (!methods) return;
   const {
     register,
     control,
     watch,
     formState: { errors },
-    validateStep,
     setValue,
-    clearErrors,
-  } = useMultistepForm(3);
-
+    getValues,
+  } = methods;
   const selectedMethod = watch("method");
-
-  // Handle email field clearing when switching to download method
-  useEffect(() => {
-    if (selectedMethod === "download") {
-      // Clear email-related errors when download is selected
-      clearErrors(["emailContact"]);
-
-      // Optional: Set email field to empty
-      setValue("emailContact", "");
-    }
-  }, [selectedMethod, clearErrors, setValue]);
 
   const nextHandler = async () => {
     // Validate only step 3 fields
+    const validateStep = await getValidateStep(3); // Use the custom validateStep
     const { isValid, data } = await validateStep();
 
     if (!isValid) return;
 
     console.log("validated data →", data);
+    console.log("All data →", getValues());
 
     // perform submission
   };
@@ -198,7 +190,7 @@ export default function StepThree({ form, totalSteps }) {
         </div>
 
         {/* Decorative image */}
-        <div className="vector-img-one">
+        <div className="vector-img-one " style={{ marginBottom: "-100px" }}>
           <img src="/assets/v3/img/vb3.png" alt="" />
         </div>
 

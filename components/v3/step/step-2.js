@@ -2,27 +2,30 @@ import React, { useRef } from "react";
 import Link from "next/link";
 import { Controller } from "react-hook-form";
 import { useTranslations } from "next-intl";
-import useMultistepForm from "@/hooks/useMultistepForm";
 import CustomPhoneInput from "@/components/CustomPhoneInput";
 import { FormLabel } from "react-bootstrap";
 import CountrySelect from "@/components/CountrySelect";
+import useForm1store from "@/store/form1store";
 
 const StepTwo = ({ totalSteps }) => {
   const t = useTranslations();
+
+  const { methods, getValidateStep } = useForm1store();
+
+  const nextBtnRef = useRef(null);
+  if (!methods) return;
 
   const {
     register,
     control,
     watch,
     formState: { errors },
-    validateStep,
-  } = useMultistepForm(2, { country: "Afghanistan" });
-
-  const nextBtnRef = useRef(null);
+  } = methods;
   const paymentMethod = watch("paymentMethod");
 
   const nextHandler = async () => {
     // Validate only step 2 fields
+    const validateStep = await getValidateStep(2); // Use the custom validateStep
     const { isValid, data } = await validateStep();
 
     if (!isValid) return;
@@ -209,9 +212,7 @@ const StepTwo = ({ totalSteps }) => {
                         padding: "10px",
                       }}
                       type="number"
-                      placeholder={t("step2_month_placeholder")}
-                      min={1}
-                      max={12}
+                      placeholder={"MM"}
                       {...register("expiryMonth")}
                     />
                     <h1>/</h1>
@@ -223,12 +224,14 @@ const StepTwo = ({ totalSteps }) => {
                         padding: "10px",
                       }}
                       type="number"
-                      placeholder={t("step2_year_placeholder")}
+                      placeholder="YY"
                       {...register("expiryYear")}
                     />
                   </div>
                   {(errors.expiryMonth || errors.expiryYear) && (
-                    <p className="text-danger">{t("step2_invalid_expiry")}</p>
+                    <p className="text-danger">
+                      {t("form2_step4_invalid_expiry")}
+                    </p>
                   )}
                 </div>
 

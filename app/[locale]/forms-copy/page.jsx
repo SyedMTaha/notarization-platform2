@@ -57,8 +57,7 @@ export default function V3() {
         >
           <div className="form-area position-relative">
             <Step1 />
-            <Step2 />
-            <Step3 />
+
             <Step4 />
             <Step5 />
           </div>

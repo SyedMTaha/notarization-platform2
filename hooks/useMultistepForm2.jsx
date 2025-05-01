@@ -18,9 +18,14 @@ const stepOneSchema = {
   identificationImage: true,
 };
 
-const stepTwoSchema = {};
+const stepTwoSchema = {
+  documentType: true,
+};
 
-const stepThreeSchema = {};
+const stepThreeSchema = {
+  signatureMethod: true,
+  signatureImage: true,
+};
 
 const stepFourSchema = {
   paymentMethod: true,
@@ -29,9 +34,9 @@ const stepFourSchema = {
   expiryMonth: true,
   expiryYear: true,
   cvv: true,
-  firstName: true,
-  lastName: true,
-  email: true,
+  paymentFirstName: true,
+  paymentLastName: true,
+  paymentEmail: true,
   phone: true,
   country: true,
   province: true,
@@ -90,8 +95,9 @@ const useMultistepForm2 = (step, defaultValues = {}) => {
         .required("Email is required")
         .email("Please enter a valid email address"),
 
-      identificationType: yup.string(),
-
+      identificationType: yup
+        .string()
+        .required("Identification type is required"),
       dateOfIssue: yup
         .date()
         .typeError("Invalid Date of issue")
@@ -110,11 +116,17 @@ const useMultistepForm2 = (step, defaultValues = {}) => {
 
       identificationImage: yup
         .string()
-        .required("Please upload an image of your identification"),
+        .required("Identification image is required"),
 
       // Step Two Schema
+      documentType: yup.string().required("Document type is required"),
 
       // Step Three Schema
+      signatureMethod: yup
+        .string()
+        .oneOf(["E-Sign", "Notary"])
+        .required("Signature method is required"),
+      signatureImage: yup.string().required("Image is required"),
 
       // Step four Schema
       paymentMethod: yup
@@ -162,9 +174,9 @@ const useMultistepForm2 = (step, defaultValues = {}) => {
             .matches(/^[0-9]{3,4}$/, t("form_error_cvv_format")),
         otherwise: (schema) => schema.notRequired(),
       }),
-      firstName: yup.string().required(),
-      lastName: yup.string().required(),
-      email: yup.string().email().required(),
+      paymentFirstName: yup.string().required(),
+      payemntLastName: yup.string().required(),
+      paymentEmail: yup.string().email().required(),
       phone: yup.string().max(15).required(),
       country: yup.string().required(),
       province: yup.string().required(),
@@ -204,8 +216,9 @@ const useMultistepForm2 = (step, defaultValues = {}) => {
 
   // Setup form with the combined schema
   const methods = useForm({
-    resolver: yupResolver(createSchema()),
+  resolver: yupResolver(createSchema()),
     mode: "onTouched",
+    shouldUnregister: false,
     defaultValues: {
       // Default values for step 1
       day: new Date().getDate(),

@@ -1,85 +1,68 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useRef, useState } from "react";
 import Link from "next/link";
 import { Controller } from "react-hook-form";
 import { useTranslations } from "next-intl";
-import { Col, FormControl, FormGroup, FormLabel, Row } from "react-bootstrap";
+import { Col, FormLabel, Row } from "react-bootstrap";
 import CountrySelect from "@/components/CountrySelect";
-import useMultistepForm2 from "@/hooks/useMultistepForm2";
+import useForm2store from "@/store/form2store";
 
-const options = ["Option 1", "Option 2", "Option 3"];
+const identificationOptions = [
+  { value: "", label: "form2_select_identification_type" },
+  { value: "passport", label: "form2_passport" },
+  { value: "driverLicense", label: "form2_drivers_license" },
+  { value: "nationalId", label: "form2_national_id" },
+];
 
 const Form2step1 = ({ totalSteps }) => {
   const t = useTranslations();
   const [isOpen, setIsOpen] = useState(false);
   const [identificationImage, setIdentificationImage] = useState(null);
 
-  // Initialize form without providing initial value for identificationType
+  const { methods, getValidateStep } = useForm2store();
+  const nextBtnRef = useRef(null);
+  if (!methods) return;
+
   const {
     register,
     control,
-    watch,
-    setValue,
     setError,
+    trigger,
+    getValues,
     formState: { errors },
-    validateStep,
-  } = useMultistepForm2(1);
-
-  const nextBtnRef = useRef(null);
-  const identificationType = watch("identificationType");
-
-  // Log identification type changes for debugging
-  useEffect(() => {
-    console.log("identificationType changed to:", identificationType);
-  }, [identificationType]);
+  } = methods;
 
   const nextHandler = async () => {
-    // Log current values before validation
-    console.log(
-      "Current identification type before validation:",
-      identificationType
-    );
-
-    // Validate only step 2 fields
+    const validateStep = await getValidateStep(1);
     const { isValid, data } = await validateStep();
-
     if (!isValid) return;
 
     if (!identificationImage) {
       setError("identificationImage", {
         type: "manual",
-        message: "Please upload your identification image",
+        message: t("form2_please_upload_identification_image"),
       });
       return;
     }
 
+    const imgUrl = "abc";
     const payload = {
       ...data,
-      identificationImage,
-      identificationType: identificationType || "Option 3", // Ensure we get the latest value
+      identificationImage: imgUrl,
     };
 
     console.log("validated data →", payload);
-
-    // Proceed to next step
-    // nextBtnRef.current?.click();
+    console.log("All data", getValues());
+    nextBtnRef.current?.click();
   };
 
   const readURL = (event, id) => {
     const selectedFile = event.target.files[0];
     if (selectedFile) {
-      // Perform actions with the selected file
-      // Create a FileReader to read the file
       const reader = new FileReader();
-
-      // Define the onload event for the reader
       reader.onload = () => {
-        // Set the result as the source URL
         setIdentificationImage(selectedFile);
-
         document.getElementById(id).setAttribute("src", reader.result);
       };
-
-      // Read the file as a data URL
       reader.readAsDataURL(selectedFile);
     }
   };
@@ -104,26 +87,21 @@ const Form2step1 = ({ totalSteps }) => {
         style={{ marginTop: "-100px" }}
       >
         <div className="inner pb-100 clearfix d-flex flex-column gap-4">
-          {/* ---------------------------------------------------------------- */}
-          {/* Heading -------------------------------------------------------- */}
           <div className="wizard-title text-center">
-            <h3>Please, enter your personal information</h3>
-            <p>Enter Your Details to Proceed with Notarisation</p>
+            <h3>{t("form2_heading_title")}</h3>
+            <p className="mt-2">{t("form2_heading_subtitle")}</p>
           </div>
 
-          {/* ---------------------------------------------------------------- */}
-          {/* Personal information ----------------------------------------- */}
           <div className="d-flex" style={{ gap: "60px" }}>
-            {/* First name */}
             <div
               className="wizard-form-input d-flex align-items-baseline gap-4"
               style={{ marginTop: "20px", flex: 1 }}
             >
               <label
-                className="wizard-sub-text "
+                className="wizard-sub-text"
                 style={{ whiteSpace: "nowrap" }}
               >
-                {t("step2_first_name")}
+                {t("form2_first_name")}
               </label>
               <div style={{ width: "100%" }}>
                 <input
@@ -137,7 +115,6 @@ const Form2step1 = ({ totalSteps }) => {
               </div>
             </div>
 
-            {/* Middle name */}
             <div
               className="wizard-form-input d-flex align-items-baseline gap-4"
               style={{ marginTop: "20px", flex: 1 }}
@@ -146,7 +123,7 @@ const Form2step1 = ({ totalSteps }) => {
                 className="wizard-sub-text"
                 style={{ whiteSpace: "nowrap" }}
               >
-                Middle Name
+                {t("form2_middle_name")}
               </label>
               <div style={{ width: "100%" }}>
                 <input
@@ -160,20 +137,17 @@ const Form2step1 = ({ totalSteps }) => {
               </div>
             </div>
           </div>
-          {/* Last name */}
+
           <div
             className="wizard-form-input d-flex align-items-baseline gap-4"
             style={{ marginTop: "20px" }}
           >
             <label className="wizard-sub-text" style={{ whiteSpace: "nowrap" }}>
-              {t("step2_last_name")}
+              {t("form2_last_name")}
             </label>
             <div style={{ width: "100%" }}>
               <input
-                style={{
-                  border: "2px solid #ddeef9",
-                  color: "#B4D4E4",
-                }}
+                style={{ border: "2px solid #ddeef9", color: "#B4D4E4" }}
                 type="text"
                 {...register("lastName")}
               />
@@ -182,20 +156,17 @@ const Form2step1 = ({ totalSteps }) => {
               )}
             </div>
           </div>
-          {/* DOB */}
+
           <div
             className="wizard-form-input d-flex align-items-baseline gap-4"
             style={{ marginTop: "20px" }}
           >
             <label className="wizard-sub-text" style={{ whiteSpace: "nowrap" }}>
-              Date of Birth
+              {t("form2_date_of_birth")}
             </label>
             <div style={{ width: "100%" }}>
               <input
-                style={{
-                  border: "2px solid #ddeef9",
-                  color: "#B4D4E4",
-                }}
+                style={{ border: "2px solid #ddeef9", color: "#B4D4E4" }}
                 type="date"
                 {...register("dateOfBirth")}
               />
@@ -204,13 +175,13 @@ const Form2step1 = ({ totalSteps }) => {
               )}
             </div>
           </div>
-          {/* Country */}
+
           <div
             className="wizard-form-input d-flex align-items-baseline gap-4"
             style={{ marginTop: "20px", flex: 1 }}
           >
             <FormLabel className="wizard-sub-text">
-              {t("step2_country")}
+              {t("form2_country_of_residence")}
             </FormLabel>
             <div style={{ width: "100%" }}>
               <Controller
@@ -227,13 +198,13 @@ const Form2step1 = ({ totalSteps }) => {
               />
             </div>
           </div>
-          {/* email */}
+
           <div
-            className="wizard-form-input  d-flex align-items-baseline gap-4"
+            className="wizard-form-input d-flex align-items-baseline gap-4"
             style={{ marginTop: "20px", flex: 1 }}
           >
             <label className="wizard-sub-text" style={{ whiteSpace: "nowrap" }}>
-              {t("step2_email_address")}
+              {t("form2_email_address")}
             </label>
             <div style={{ width: "100%" }}>
               <input
@@ -245,48 +216,99 @@ const Form2step1 = ({ totalSteps }) => {
               )}
             </div>
           </div>
-          {/* IdentificationType */}
+
           <div
-            className="wizard-form-input d-flex align-items-center gap-4"
+            className="wizard-form-input d-flex align-items-baseline gap-4"
             style={{ marginTop: "20px", flex: 1 }}
           >
-            <label className="wizard-sub-text">Select an Option</label>
-            <div style={{ width: "100%" }}>
+            <label className="wizard-sub-text">
+              {t("form2_identification_type_label")}
+            </label>
+            <div style={{ width: "100%", position: "relative" }}>
               <Controller
                 name="identificationType"
                 control={control}
-                render={({ field: { onChange, value, name, ref } }) => (
-                  <div className="relative">
-                    <select
-                      name={name}
-                      ref={ref}
-                      value={value || "Option 3"}
-                      onChange={(e) => {
-                        console.log("Select changed to:", e.target.value);
-                        onChange(e.target.value);
+                render={({ field, fieldState }) => (
+                  <div style={{ position: "relative" }}>
+                    <div
+                      onClick={() => setIsOpen(!isOpen)}
+                      style={{
+                        border: "2px solid #ddeef9",
+                        backgroundColor: "#fff",
+                        height: "60px",
+                        padding: "10px 20px",
+                        cursor: "pointer",
+                        display: "flex",
+                        alignItems: "center",
+                        justifyContent: "space-between",
+                        color: "#B4D4E4",
                       }}
-                      className="w-full appearance-none bg-white border border-gray-300 p-3 pr-10 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
-                      style={{ border: "2px solid #ddeef9", color: "#333" }}
                     >
-                      {options.map((opt, index) => (
-                        <option key={index} value={opt}>
-                          {opt}
-                        </option>
-                      ))}
-                    </select>
+                      <span>
+                        {t(
+                          identificationOptions.find(
+                            (opt) => opt.value === field.value
+                          )?.label || "form2_select_identification_type"
+                        )}
+                      </span>
+                      <i
+                        className={`fa fa-chevron-down ${
+                          isOpen ? "rotate-icon" : ""
+                        }`}
+                        style={{ transition: "transform 0.3s ease" }}
+                      />
+                    </div>
+                    {isOpen && (
+                      <div
+                        style={{
+                          border: "1px solid #ddeef9",
+                          position: "absolute",
+                          backgroundColor: "#fff",
+                          width: "100%",
+                          zIndex: 10,
+                        }}
+                      >
+                        {identificationOptions.map((option) => (
+                          <div
+                            key={option.value}
+                            onClick={() => {
+                              field.onChange(option.value);
+                              setIsOpen(false);
+                              trigger("identificationType");
+                            }}
+                            style={{
+                              padding: "10px 20px",
+                              cursor: "pointer",
+                              backgroundColor:
+                                field.value === option.value
+                                  ? "#ddeef9"
+                                  : "#fff",
+                            }}
+                            onMouseEnter={(e) => {
+                              e.currentTarget.style.backgroundColor = "#cce0f5";
+                            }}
+                            onMouseLeave={(e) => {
+                              e.currentTarget.style.backgroundColor =
+                                field.value === option.value
+                                  ? "#ddeef9"
+                                  : "#fff";
+                            }}
+                          >
+                            {t(option.label)}
+                          </div>
+                        ))}
+                      </div>
+                    )}
+                    {fieldState.error?.message && (
+                      <p className="text-danger">{fieldState.error.message}</p>
+                    )}
                   </div>
                 )}
               />
-              {errors.identificationType && (
-                <p className="text-danger">
-                  {errors.identificationType.message}
-                </p>
-              )}
             </div>
           </div>
 
           <div className="d-flex" style={{ gap: "60px" }}>
-            {/* date of issue */}
             <div
               className="wizard-form-input d-flex align-items-baseline gap-4"
               style={{ marginTop: "20px", flex: 1 }}
@@ -295,7 +317,7 @@ const Form2step1 = ({ totalSteps }) => {
                 className="wizard-sub-text"
                 style={{ whiteSpace: "nowrap" }}
               >
-                Date of Issue
+                {t("form2_date_of_issue")}
               </label>
               <div style={{ width: "100%", position: "relative" }}>
                 <input
@@ -303,20 +325,19 @@ const Form2step1 = ({ totalSteps }) => {
                     border: "2px solid #ddeef9",
                     color: "#B4D4E4",
                     width: "100%",
-                    paddingRight: "30px", // Make room for custom icon
+                    paddingRight: "30px",
                   }}
                   type="date"
                   {...register("dateOfIssue")}
                   className="custom-date-input"
                 />
-                {/* Custom calendar icon */}
                 <img
                   style={{
                     position: "absolute",
                     right: "15px",
                     top: "35%",
                     transform: "translateY(-50%)",
-                    pointerEvents: "none", // So it doesn't interfere with clicking the input
+                    pointerEvents: "none",
                     color: "#B4D4E4",
                   }}
                   src="/assets/images/calendar.png"
@@ -326,8 +347,6 @@ const Form2step1 = ({ totalSteps }) => {
                   <p className="text-danger">{errors.dateOfIssue.message}</p>
                 )}
               </div>
-
-              {/* CSS to hide default calendar icon */}
               <style>{`
                 .custom-date-input::-webkit-calendar-picker-indicator {
                   opacity: 0;
@@ -341,12 +360,11 @@ const Form2step1 = ({ totalSteps }) => {
               `}</style>
             </div>
 
-            {/* license id */}
             <div
-              className="wizard-form-input  d-flex align-items-center gap-4"
+              className="wizard-form-input d-flex align-items-center gap-4"
               style={{ marginTop: "20px", flex: 1 }}
             >
-              <label className="wizard-sub-text">License ID/TIN Number</label>
+              <label className="wizard-sub-text">{t("form2_license_id")}</label>
               <div style={{ width: "100%" }}>
                 <input
                   style={{ border: "2px solid #ddeef9", color: "#B4D4E4" }}
@@ -361,13 +379,13 @@ const Form2step1 = ({ totalSteps }) => {
               </div>
             </div>
           </div>
-          {/* Jurisdiction Country */}
+
           <div
             className="wizard-form-input d-flex align-items-baseline gap-4"
             style={{ marginTop: "20px", flex: 1 }}
           >
             <FormLabel className="wizard-sub-text">
-              Jurisdiction of Document Use
+              {t("form2_jurisdiction")}
             </FormLabel>
             <div style={{ width: "100%" }}>
               <Controller
@@ -379,11 +397,7 @@ const Form2step1 = ({ totalSteps }) => {
                     {fieldState.error?.message && (
                       <p className="text-danger">{fieldState.error.message}</p>
                     )}
-                    <p className="my-4">
-                      The jurisdiction for document use refers to the legal
-                      authority or region where a notarized document is valid
-                      and enforceable.
-                    </p>
+                    <p className="my-4">{t("form2_jurisdiction_note")}</p>
                   </>
                 )}
               />
@@ -392,7 +406,9 @@ const Form2step1 = ({ totalSteps }) => {
 
           <Row className="mb-3 flex-nowrap">
             <Col className="col-3">
-              <FormLabel className="wizard-sub-text">Upload Image</FormLabel>
+              <FormLabel className="wizard-sub-text">
+                {t("form2_upload_image")}
+              </FormLabel>
             </Col>
 
             <Col className="col-6">
@@ -412,7 +428,7 @@ const Form2step1 = ({ totalSteps }) => {
                     position: identificationImage ? "relative" : "block",
                   }}
                 >
-                  Upload Identification
+                  {t("form2_upload_identification")}
                 </label>
                 <input
                   id="identification_image"
@@ -423,19 +439,13 @@ const Form2step1 = ({ totalSteps }) => {
                 />
                 <div
                   className="display-img text-center"
-                  style={{
-                    maxWidth: "100%",
-                    height: "auto",
-                  }}
+                  style={{ maxWidth: "100%", height: "auto" }}
                 >
                   <img
                     id="form2_identification"
                     src={"/assets/v3/img/pf1.png"}
                     alt="your image"
-                    style={{
-                      maxWidth: "100%",
-                      height: "auto",
-                    }}
+                    style={{ maxWidth: "100%", height: "auto" }}
                   />
                 </div>
               </div>
@@ -446,11 +456,10 @@ const Form2step1 = ({ totalSteps }) => {
               )}
             </Col>
           </Row>
-          {/* ---------------------------------------------------------------- */}
-          {/* Progress (unchanged) ------------------------------------------ */}
+
           <div className="wizard-v3-progress">
             <span>
-              2 {t("progress_step_text1")} {totalSteps}{" "}
+              1 {t("progress_step_text1")} {totalSteps}{" "}
               {t("progress_step_text2")}
             </span>
             <h3>
@@ -465,8 +474,6 @@ const Form2step1 = ({ totalSteps }) => {
           </div>
         </div>
 
-        {/* ---------------------------------------------------------------- */}
-        {/* NEXT button (validates & submits) ------------------------------ */}
         <div className="actions">
           <ul>
             <li>
@@ -475,7 +482,7 @@ const Form2step1 = ({ totalSteps }) => {
                 title="NEXT"
                 onClick={nextHandler}
               >
-                {t("step2_next_button")} <i className="fa fa-arrow-right"></i>
+                {t("form2_next_button")} <i className="fa fa-arrow-right"></i>
               </span>
             </li>
             <button

@@ -2,33 +2,61 @@ import React, { useRef } from "react";
 import Link from "next/link";
 import { Controller } from "react-hook-form";
 import { useTranslations } from "next-intl";
-import CustomPhoneInput from "@/components/CustomPhoneInput";
-import { FormLabel } from "react-bootstrap";
-import CountrySelect from "@/components/CountrySelect";
-import useMultistepForm2 from "@/hooks/useMultistepForm2";
+
+import useForm2store from "@/store/form2store";
 
 const Form2step2 = ({ totalSteps }) => {
   const t = useTranslations();
+
+  const { methods, getValidateStep } = useForm2store();
+
+  const nextBtnRef = useRef(null);
+  if (!methods) return;
 
   const {
     register,
     control,
     watch,
+    getValues,
     formState: { errors },
-    validateStep,
-  } = useMultistepForm2(2);
+  } = methods;
 
-  const nextBtnRef = useRef(null);
-  const paymentMethod = watch("paymentMethod");
+  const services = [
+    { name: t("service_power_of_attorney"), imgUrl: "/assets/images/ws1.png" },
+    {
+      name: t("service_last_will_testament"),
+      imgUrl: "/assets/images/ws2.png",
+    },
+    { name: t("service_agreement_of_sale"), imgUrl: "/assets/images/ws3.png" },
+    { name: t("service_lease_agreement"), imgUrl: "/assets/images/ws4.png" },
+    { name: t("service_promissory_note"), imgUrl: "/assets/images/ws5.png" },
+    {
+      name: t("service_passport_application"),
+      imgUrl: "/assets/images/ws6.png",
+    },
+    {
+      name: t("service_affidavit_of_identity"),
+      imgUrl: "/assets/images/ws7.png",
+    },
+    {
+      name: t("service_property_management_agreement"),
+      imgUrl: "/assets/images/ws8.png",
+    },
+    {
+      name: t("service_upload_your_own_document"),
+      imgUrl: "/assets/images/ws9.png",
+    },
+  ];
 
   const nextHandler = async () => {
     // Validate only step 2 fields
+    const validateStep = await getValidateStep(2); // Use the custom validateStep
     const { isValid, data } = await validateStep();
 
     if (!isValid) return;
 
     console.log("validated data →", data);
-
+    console.log("All data", getValues());
     // Proceed to next step
     nextBtnRef.current?.click();
   };
@@ -53,200 +81,61 @@ const Form2step2 = ({ totalSteps }) => {
           {/* ---------------------------------------------------------------- */}
           {/* Heading -------------------------------------------------------- */}
           <div className="wizard-title text-center">
-            <h3>{t("step2_payment_title")}</h3>
-            <p>{t("step2_payment_subtitle")}</p>
+            <h3>{t("form2_step2_title")}</h3>
+            <p>{t("form2_step2_subtitle")}</p>
           </div>
 
-          <div className="wizard-form-input" style={{ marginTop: "20px" }}>
-            <label className="wizard-sub-text">
-              {t("step2_cardholder_name")}
-            </label>
-            <input
-              style={{
-                border: "2px solid #ddeef9",
-                color: "#B4D4E4",
-              }}
-              type="text"
-              placeholder={t("step2_cardholder_name_placeholder")}
-              {...register("cardholderName")}
+          <div
+            id="slider-service"
+            className="wizard-service-slide  text-center"
+          >
+            <Controller
+              control={control}
+              name="documentType"
+              render={({ field, fieldState }) => (
+                <>
+                  {services.map((service, index) => (
+                    <label className="services-box-item" key={index}>
+                      <input
+                        type="radio"
+                        name={field.name}
+                        value={service.name}
+                        checked={field.value === service.name}
+                        onChange={field.onChange}
+                        className="service-checkbox"
+                      />
+                      <span
+                        className="w-service-box text-center d-flex flex-column align-items-center justify-content-center position-relative "
+                        style={{ border: "2px solid #B4D4E4" }}
+                      >
+                        <span
+                          className="tooltip-info"
+                          data-toggle="tooltip"
+                          data-placement="top"
+                        ></span>
+                        <div className="d-flex flex-column align-items-center justify-content-center gap-2">
+                          <span className="service-icon">
+                            <img src={service.imgUrl} alt={service.name} />
+                          </span>
+                          <span
+                            className="service-text mb-4"
+                            style={{ fontSize: "18px" }}
+                          >
+                            {service.name}
+                          </span>
+                        </div>
+                        <span className="option-seclect">
+                          <span>{t("form2_step2_option_selected")}</span>
+                        </span>
+                      </span>
+                    </label>
+                  ))}
+                  {fieldState.error?.message && (
+                    <p className="text-danger">{fieldState.error.message}</p>
+                  )}
+                </>
+              )}
             />
-            {errors.cardholderName && (
-              <p className="text-danger">{errors.cardholderName.message}</p>
-            )}
-          </div>
-
-          {/* ---------------------------------------------------------------- */}
-          {/* Personal information ----------------------------------------- */}
-          <div className="d-flex" style={{ gap: "60px", marginTop: "80px" }}>
-            {/* First name */}
-            <div
-              className="wizard-form-input"
-              style={{ marginTop: "20px", flex: 1 }}
-            >
-              <label className="wizard-sub-text">{t("step2_first_name")}</label>
-              <input
-                style={{ border: "2px solid #ddeef9", color: "#B4D4E4" }}
-                type="text"
-                placeholder={t("step2_first_name_placeholder")}
-                {...register("firstName")}
-              />
-              {errors.firstName && (
-                <p className="text-danger">{errors.firstName.message}</p>
-              )}
-            </div>
-
-            {/* Last name */}
-            <div
-              className="wizard-form-input"
-              style={{ marginTop: "20px", flex: 1 }}
-            >
-              <label className="wizard-sub-text">{t("step2_last_name")}</label>
-              <input
-                style={{ border: "2px solid #ddeef9", color: "#B4D4E4" }}
-                type="text"
-                placeholder={t("step2_last_name_placeholder")}
-                {...register("lastName")}
-              />
-              {errors.lastName && (
-                <p className="text-danger">{errors.lastName.message}</p>
-              )}
-            </div>
-          </div>
-
-          <div className="d-flex" style={{ gap: "60px" }}>
-            {/* Email */}
-            <div
-              className="wizard-form-input"
-              style={{ marginTop: "20px", flex: 1 }}
-            >
-              <label className="wizard-sub-text">
-                {t("step2_email_address")}
-              </label>
-              <input
-                style={{ border: "2px solid #ddeef9", color: "#B4D4E4" }}
-                placeholder={t("step2_email_placeholder")}
-                {...register("email")}
-              />
-              {errors.email && (
-                <p className="text-danger">{errors.email.message}</p>
-              )}
-            </div>
-
-            {/* Phone (custom component) */}
-            <div
-              className="wizard-form-input"
-              style={{ marginTop: "20px", flex: 1 }}
-            >
-              <FormLabel htmlFor="phone" className="wizard-sub-text">
-                {t("step2_phone")}
-              </FormLabel>
-              <Controller
-                name="phone"
-                control={control}
-                render={({ field, fieldState }) => (
-                  <>
-                    <CustomPhoneInput {...field} />
-                    {fieldState.error?.message && (
-                      <p className="text-danger">{fieldState.error.message}</p>
-                    )}
-                  </>
-                )}
-              />
-            </div>
-          </div>
-
-          <div className="d-flex" style={{ gap: "60px" }}>
-            {/* Country */}
-            <div
-              className="wizard-form-input"
-              style={{ marginTop: "20px", flex: 1 }}
-            >
-              <FormLabel htmlFor="phone" className="wizard-sub-text">
-                {t("step2_country")}
-              </FormLabel>
-              <Controller
-                name="country"
-                control={control}
-                render={({ field, fieldState }) => (
-                  <>
-                    <CountrySelect {...field} />
-                    {fieldState.error?.message && (
-                      <p className="text-danger">{fieldState.error.message}</p>
-                    )}
-                  </>
-                )}
-              />
-            </div>
-
-            {/* Province */}
-            <div
-              className="wizard-form-input"
-              style={{ marginTop: "20px", flex: 1 }}
-            >
-              <label className="wizard-sub-text">{t("step2_province")}</label>
-              <input
-                style={{ border: "2px solid #ddeef9", color: "#B4D4E4" }}
-                type="text"
-                placeholder={t("step2_province_placeholder")}
-                {...register("province")}
-              />
-              {errors.province && (
-                <p className="text-danger">{errors.province.message}</p>
-              )}
-            </div>
-
-            {/* Zip */}
-            <div
-              className="wizard-form-input"
-              style={{ marginTop: "20px", flex: 1 }}
-            >
-              <label className="wizard-sub-text">{t("step2_zip")}</label>
-              <input
-                style={{ border: "2px solid #ddeef9", color: "#B4D4E4" }}
-                type="text"
-                placeholder={t("step2_zip_placeholder")}
-                {...register("zip")}
-              />
-              {errors.zip && (
-                <p className="text-danger">{errors.zip.message}</p>
-              )}
-            </div>
-          </div>
-
-          <div className="d-flex" style={{ gap: "60px" }}>
-            {/* Address */}
-            <div
-              className="wizard-form-input"
-              style={{ marginTop: "20px", flex: 1 }}
-            >
-              <label className="wizard-sub-text">{t("step2_address")}</label>
-              <input
-                style={{ border: "2px solid #ddeef9", color: "#B4D4E4" }}
-                type="text"
-                placeholder={t("step2_address_placeholder")}
-                {...register("address")}
-              />
-              {errors.address && (
-                <p className="text-danger">{errors.address.message}</p>
-              )}
-            </div>
-
-            {/* City */}
-            <div
-              className="wizard-form-input"
-              style={{ marginTop: "20px", flex: 1 }}
-            >
-              <label className="wizard-sub-text">{t("step2_city")}</label>
-              <input
-                style={{ border: "2px solid #ddeef9", color: "#B4D4E4" }}
-                type="text"
-                placeholder={t("step2_city_placeholder")}
-                {...register("city")}
-              />
-              {errors.city && (
-                <p className="text-danger">{errors.city.message}</p>
-              )}
-            </div>
           </div>
 
           {/* ---------------------------------------------------------------- */}
@@ -274,7 +163,8 @@ const Form2step2 = ({ totalSteps }) => {
           <ul>
             <li>
               <span className="js-btn-prev" title="BACK">
-                <i className="fa fa-arrow-left"></i> {t("step2_back_button")}
+                <i className="fa fa-arrow-left"></i>{" "}
+                {t("form2_step2_back_button")}
               </span>
             </li>
             <li>
@@ -283,7 +173,8 @@ const Form2step2 = ({ totalSteps }) => {
                 title="NEXT"
                 onClick={nextHandler}
               >
-                {t("step2_next_button")} <i className="fa fa-arrow-right"></i>
+                {t("form2_step2_next_button")}{" "}
+                <i className="fa fa-arrow-right"></i>
               </span>
             </li>
             <button

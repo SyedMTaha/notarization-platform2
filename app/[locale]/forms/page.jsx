@@ -1,15 +1,34 @@
 "use client";
-import Header from "@/layout/Header";
 import Step1 from "../../../components/v3/step/step-1";
 import Step2 from "../../../components/v3/step/step-2";
 import Step3 from "../../../components/v3/step/step-3";
-import Step4 from "../../../components/v3/step/step-4";
-import Step5 from "../../../components/v3/step/step-5";
+
 import Layout from "@/layout/Layout";
-import VideoPopup from "@/components/VideoPopup";
-import ImageView from "@/components/ImageView";
+import useForm1store from "@/store/form1store";
+import { useForm } from "react-hook-form";
+import { yupResolver } from "@hookform/resolvers/yup";
+import { useEffect } from "react";
+import { useTranslations } from "next-intl";
 
 export default function V3() {
+  const { createSchema, setMethods } = useForm1store();
+  const t = useTranslations();
+  const methods = useForm({
+    resolver: yupResolver(createSchema(t)),
+    mode: "onTouched",
+    shouldUnregister: false,
+    defaultValues: {
+      day: new Date().getDate(),
+      month: new Date().getMonth() + 1, // JavaScript months are 0-indexed
+      year: new Date().getFullYear(),
+      paymentMethod: "CreditCard",
+      method: "download",
+    },
+  });
+
+  useEffect(() => {
+    setMethods(methods);
+  }, [methods]);
   return (
     <>
       <Layout footer={3} login={true}>

@@ -1,20 +1,24 @@
 import Link from "next/link";
 import React, { useRef } from "react";
-import useMultistepForm from "@/hooks/useMultistepForm";
 import { useTranslations } from "next-intl";
+import useForm1store from "@/store/form1store";
 
 const StepOne = ({ totalSteps }) => {
   const t = useTranslations();
+
+  const { methods, getValidateStep } = useForm1store();
+
+  const nextBtnRef = useRef(null);
+  if (!methods) return;
+
   const {
     register,
     formState: { errors },
-    validateStep,
-  } = useMultistepForm(1);
-
-  const nextBtnRef = useRef(null);
+  } = methods;
 
   const nextHandler = async () => {
     // Validate only step 1 fields
+    const validateStep = await getValidateStep(1); // Use the custom validateStep
     const { isValid, data } = await validateStep();
 
     if (!isValid) return;
