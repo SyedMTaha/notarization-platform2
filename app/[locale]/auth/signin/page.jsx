@@ -33,7 +33,8 @@ const SignIn = () => {
                 src="/assets/images/logos/logo.png"
                 alt={t("logo_alt")}
                 title={t("logo_title")}
-                className="position-absolute top-0 start-0 mt-4 ms-4"
+                className="position-absolute top-0 start-0  mt-4 ms-4  "
+                style={{ maxWidth: "100px" }}
               />
           </Link>
             <div className="signin-form-container">
@@ -108,8 +109,9 @@ const SignIn = () => {
               alt="Login Illustration"
               className="img-fluid rounded "
               style={{
-                maxHeight: "95%",
-                maxWidth: "100%",
+                maxHeight: "950px",
+                maxWidth: "1000px",
+                marginTop: "100px",
               }}
             />
           </Col>

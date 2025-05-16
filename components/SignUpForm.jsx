@@ -1,13 +1,6 @@
 "use client";
 import {
-  Button,
-  FormGroup,
-  FormLabel,
-  FormControl,
-  FormCheck,
-  Form,
-  Row,
-  Col,
+  Button, FormGroup, FormLabel, FormControl, FormCheck, Form, Row, Col,
 } from "react-bootstrap";
 
 // components
@@ -21,7 +14,11 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import { useAuthStore } from "@/store/authStore";
 import CustomPhoneInput from "./CustomPhoneInput";
-
+import { useRouter } from 'next/navigation';
+import { storeUserData } from '../firebase';
+import { createUserWithEmailAndPassword } from 'firebase/auth';
+import { auth } from "/firebase.js"
+import { supabase } from "../lib/supabase";
 const CustomCheckbox = forwardRef(
   ({ label, name, onChange, onBlur, checked }, ref) => (
     <FormGroup controlId={name}>
@@ -46,6 +43,7 @@ const SignUpForm = () => {
   const [notaryCertificateFile, setNotaryCertificateFile] = useState(null);
   const signUp = useAuthStore((s) => s.signUp); // your existing wrapper
   const [submitting, setSubmitting] = useState(false);
+  const router = useRouter();
 
   // Define validation schema
   const schema = yup.object({
@@ -89,6 +87,7 @@ const SignUpForm = () => {
     register,
     watch,
     setValue,
+    setError,
     formState: { errors },
   } = useForm({
     resolver: yupResolver(schema),
@@ -127,47 +126,152 @@ const SignUpForm = () => {
     }
   };
 
+
+  // Add this function before onSubmit
+  const uploadFileToSupabase = async (file, path) => {
+    if (!file) return null;
+
+    try {
+      const fileExt = file.name.split('.').pop();
+      const fileName = `${Date.now()}.${fileExt}`;
+      const filePath = `${path}/${fileName}`;
+
+      // Upload file to user-files bucket
+      const { data, error } = await supabase.storage
+        .from('user-files')
+        .upload(filePath, file, {
+          cacheControl: '3600',
+          upsert: true // Changed to true to handle potential conflicts
+        });
+
+      if (error) {
+        console.error('Error uploading file:', error);
+        throw error;
+      }
+
+      // Get public URL for the file - using the same bucket name
+      const { data: urlData } = supabase.storage
+        .from('user-files') // Make sure this matches your upload bucket name
+        .getPublicUrl(filePath);
+
+      return urlData.publicUrl;
+    } catch (error) {
+      console.error('Error in file upload:', error);
+      throw error;
+    }
+  };
+
   const onSubmit = async (data) => {
-    // Handle sign up logic here
-    console.log("Form data:", data);
-    let hasError = false;
+    try {
+      console.log("Form data:", data);
+      let hasError = false;
 
-    if (!identificationFile) {
-      setError("identification", {
-        type: "manual",
-        message: t("validation.identification.required"),
-      });
-      hasError = true;
+      if (!identificationFile) {
+        setError("identification", {
+          type: "manual",
+          message: t("validation.identification.required"),
+        });
+        hasError = true;
+      }
+
+      if (!notaryCertificateFile) {
+        setError("notary_certificate", {
+          type: "manual",
+          message: t("validation.notary_certificate.required"),
+        });
+        hasError = true;
+      }
+
+      if (hasError) return;
+
+      setSubmitting(true);
+
+      // Create user in Firebase Authentication
+      const userCredential = await createUserWithEmailAndPassword(
+        auth,
+        data.email,
+        data.password
+      );
+
+      if (!userCredential.user) {
+        throw new Error('Failed to create user');
+      }
+
+      // Upload files to Supabase storage
+      const identificationFileUrl = await uploadFileToSupabase(
+        identificationFile,
+        `users/${userCredential.user.uid}/identification`
+      );
+
+      const certificateFileUrl = await uploadFileToSupabase(
+        notaryCertificateFile,
+        `users/${userCredential.user.uid}/certificate`
+      );
+
+      // Prepare user data with Supabase file URLs
+      const userData = {
+        uid: userCredential.user.uid,
+        signUpAs: data.signUpAs,
+        email: data.email,
+        phone: data.phone,
+        name: data.name,
+        payment_method: data.payment_method,
+        card_number: data.card_number,
+        expiry_date: data.expiry_date,
+        identificationUrl: identificationFileUrl,
+        certificateUrl: certificateFileUrl,
+        createdAt: new Date().toISOString()
+      };
+
+      // Store user data in Firebase
+      await storeUserData(userData);
+
+      console.log("User signed up and data stored successfully!");
+      router.push('/auth/signin');
+
+    } catch (error) {
+      console.error('Signup error:', error);
+      // Handle specific Firebase auth errors here
+      if (error.code === 'auth/email-already-in-use') {
+        setError("email", {
+          type: "manual",
+          message: "Email already in use"
+        });
+      } else {
+        // Handle other errors
+        setError("email", {
+          type: "manual",
+          message: error.message || "An error occurred during signup"
+        });
+      }
+    } finally {
+      setSubmitting(false);
     }
+  };
 
-    if (!notaryCertificateFile) {
-      setError("notary_certificate", {
-        type: "manual",
-        message: t("validation.notary_certificate.required"),
-      });
-      hasError = true;
+  // Example usage in any component
+  const checkUserData = async () => {
+    const user = auth.currentUser;
+    if (user) {
+      const { success, data } = await getUserData(user.uid);
+      if (success) {
+        // Check user category
+        switch (data.signUpAs) {
+          case 'Notary':
+            // Handle Notary specific logic
+            break;
+          case 'Attorney':
+            // Handle Attorney specific logic
+            break;
+          case 'Business':
+            // Handle Business specific logic
+            break;
+          case 'Real Estate Agent':
+            // Handle Real Estate Agent specific logic
+            break;
+        }
+      }
     }
-
-    // stop here if any file is missing
-    if (hasError) return;
-
-    setSubmitting(true);
-
-    const payload = {
-      ...data,
-      identificationFile,
-      notaryCertificateFile,
-    };
-    const { error, user } = await signUp(payload);
-
-    setSubmitting(false);
-
-    // if (error) {
-    //   console.error(error.message);
-    // } else {
-    //   console.log("Signed up!", user);
-    //   // e.g. router.push("/")
-    // }
   };
 
   return (
@@ -379,46 +483,46 @@ const SignUpForm = () => {
         {["Credit Card", "PayPal", "CashApp"].includes(
           watch("payment_method")
         ) && (
-          <>
-            {watch("payment_method") === "Credit Card" && (
-              <>
-                <Form.Group controlId="card_number" className="mb-3">
-                  <Form.Label>Card Number</Form.Label>
-                  <Form.Control type="text" {...register("card_number")} />
-                  {errors.card_number && (
-                    <Form.Text className="text-danger">
-                      {errors.card_number.message}
-                    </Form.Text>
-                  )}
-                </Form.Group>
-                <Row className="mb-3">
-                  <Col>
-                    <Form.Group controlId="expiry_date">
-                      <Form.Label>Expiry Date</Form.Label>
-                      <Form.Control type="date" {...register("expiry_date")} />
-                      {errors.expiry_date && (
-                        <Form.Text className="text-danger">
-                          {errors.expiry_date.message}
-                        </Form.Text>
-                      )}
-                    </Form.Group>
-                  </Col>
-                  <Col>
-                    <Form.Group controlId="CVV">
-                      <Form.Label>CVV</Form.Label>
-                      <Form.Control type="text" {...register("CVV")} />
-                      {errors.CVV && (
-                        <Form.Text className="text-danger">
-                          {errors.CVV.message}
-                        </Form.Text>
-                      )}
-                    </Form.Group>
-                  </Col>
-                </Row>
-              </>
-            )}
-          </>
-        )}
+            <>
+              {watch("payment_method") === "Credit Card" && (
+                <>
+                  <Form.Group controlId="card_number" className="mb-3">
+                    <Form.Label>Card Number</Form.Label>
+                    <Form.Control type="text" {...register("card_number")} />
+                    {errors.card_number && (
+                      <Form.Text className="text-danger">
+                        {errors.card_number.message}
+                      </Form.Text>
+                    )}
+                  </Form.Group>
+                  <Row className="mb-3">
+                    <Col>
+                      <Form.Group controlId="expiry_date">
+                        <Form.Label>Expiry Date</Form.Label>
+                        <Form.Control type="date" {...register("expiry_date")} />
+                        {errors.expiry_date && (
+                          <Form.Text className="text-danger">
+                            {errors.expiry_date.message}
+                          </Form.Text>
+                        )}
+                      </Form.Group>
+                    </Col>
+                    <Col>
+                      <Form.Group controlId="CVV">
+                        <Form.Label>CVV</Form.Label>
+                        <Form.Control type="text" {...register("CVV")} />
+                        {errors.CVV && (
+                          <Form.Text className="text-danger">
+                            {errors.CVV.message}
+                          </Form.Text>
+                        )}
+                      </Form.Group>
+                    </Col>
+                  </Row>
+                </>
+              )}
+            </>
+          )}
 
         <Row className="mb-3 flex-nowrap">
           <Col className="col-6">
@@ -484,6 +588,8 @@ const SignUpForm = () => {
                 style={{
                   fontSize: "10px",
                   position: notaryCertificateFile ? "relative" : "block",
+                  marginRight: "10px",
+
                 }}
               >
                 Upload Certificate of Notary
