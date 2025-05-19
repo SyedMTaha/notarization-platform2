@@ -31,7 +31,7 @@ export default function DashboardLayout({ children }) {
   // Show loading state while checking authentication
   if (loading) {
     return (
-      <Container fluid className="d-flex justify-content-center align-items-center" style={{ height: "100vh" }}>
+      <Container fluid className="d-flex justify-content-center align-items-center" style={{ height: "100vh", width:"100%" }}>
         <div className="spinner-border text-primary" role="status">
           <span className="visually-hidden">Loading...</span>
         </div>
