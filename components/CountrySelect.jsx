@@ -1,8 +1,8 @@
-import React, { useMemo } from "react";
+import React, { useMemo, forwardRef } from "react";
 import Select from "react-select";
 import countryList from "react-select-country-list";
 
-const CountrySelect = ({ value, onChange, onBlur }) => {
+const CountrySelect = forwardRef(({ value, onChange, onBlur }, ref) => {
   const options = useMemo(() => countryList().getData(), []);
 
   const customStyles = {
@@ -39,6 +39,7 @@ const CountrySelect = ({ value, onChange, onBlur }) => {
 
   return (
     <Select
+      ref={ref}
       options={options}
       value={options.find((option) => option.label === value)}
       onChange={(selected) => onChange(selected.label)}
@@ -47,6 +48,8 @@ const CountrySelect = ({ value, onChange, onBlur }) => {
       formatOptionLabel={formatOptionLabel}
     />
   );
-};
+});
+
+CountrySelect.displayName = 'CountrySelect';
 
 export default CountrySelect;

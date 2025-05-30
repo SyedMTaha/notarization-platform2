@@ -48,8 +48,6 @@ const SignInEmailForm = () => {
   const [serverError, setServerError] = useState(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
 
-  // Removed the useEffect hook that was causing automatic redirection
-
   const onSubmit = async (data) => {
     setServerError(null);
     setIsSubmitting(true);

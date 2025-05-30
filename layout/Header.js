@@ -391,8 +391,8 @@ const Menu = ({ locale }) => {
         </div>
       </li>
       <li className="dropdown text-nowrap">
-        <Link href="#" className="disabled-link">
-          {t("standard")}
+        <Link href="/standard-form">
+          {t("standard_Form")}
         </Link>
       </li>
       <li className="dropdown text-nowrap">

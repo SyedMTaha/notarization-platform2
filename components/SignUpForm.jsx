@@ -18,7 +18,8 @@ import { useRouter } from 'next/navigation';
 import { storeUserData } from '../firebase';
 import { createUserWithEmailAndPassword } from 'firebase/auth';
 import { auth } from "/firebase.js"
-import { supabase } from "../lib/supabase";
+import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
+import { storage } from '../firebase';
 const CustomCheckbox = forwardRef(
   ({ label, name, onChange, onBlur, checked }, ref) => (
     <FormGroup controlId={name}>
@@ -126,9 +127,8 @@ const SignUpForm = () => {
     }
   };
 
-
-  // Add this function before onSubmit
-  const uploadFileToSupabase = async (file, path) => {
+  // Replace uploadFileToSupabase with uploadFileToFirebase
+  const uploadFileToFirebase = async (file, path) => {
     if (!file) return null;
 
     try {
@@ -136,25 +136,15 @@ const SignUpForm = () => {
       const fileName = `${Date.now()}.${fileExt}`;
       const filePath = `${path}/${fileName}`;
 
-      // Upload file to user-files bucket
-      const { data, error } = await supabase.storage
-        .from('user-files')
-        .upload(filePath, file, {
-          cacheControl: '3600',
-          upsert: true // Changed to true to handle potential conflicts
-        });
+      // Create a reference to the file location in Firebase Storage
+      const storageRef = ref(storage, filePath);
 
-      if (error) {
-        console.error('Error uploading file:', error);
-        throw error;
-      }
+      // Upload the file
+      await uploadBytes(storageRef, file);
 
-      // Get public URL for the file - using the same bucket name
-      const { data: urlData } = supabase.storage
-        .from('user-files') // Make sure this matches your upload bucket name
-        .getPublicUrl(filePath);
-
-      return urlData.publicUrl;
+      // Get the download URL
+      const downloadURL = await getDownloadURL(storageRef);
+      return downloadURL;
     } catch (error) {
       console.error('Error in file upload:', error);
       throw error;
@@ -197,18 +187,18 @@ const SignUpForm = () => {
         throw new Error('Failed to create user');
       }
 
-      // Upload files to Supabase storage
-      const identificationFileUrl = await uploadFileToSupabase(
+      // Upload files to Firebase Storage
+      const identificationFileUrl = await uploadFileToFirebase(
         identificationFile,
         `users/${userCredential.user.uid}/identification`
       );
 
-      const certificateFileUrl = await uploadFileToSupabase(
+      const certificateFileUrl = await uploadFileToFirebase(
         notaryCertificateFile,
         `users/${userCredential.user.uid}/certificate`
       );
 
-      // Prepare user data with Supabase file URLs
+      // Prepare user data with Firebase Storage URLs
       const userData = {
         uid: userCredential.user.uid,
         signUpAs: data.signUpAs,

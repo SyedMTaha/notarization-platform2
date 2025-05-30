@@ -38,72 +38,8 @@ export default function V3() {
   
   return (
     <>
-      <Layout footer={3} login={true}>
-        <div style={{ marginTop: "150px" }}>
-          <div
-            style={{ minHeight: "200vh" }}
-            className="wrapper wizard d-flex clearfix multisteps-form position-relative "
-          >
-            {/* for rtl */}
-            {/* <div className="wrapper wizard d-flex clearfix multisteps-form position-relative" dir='rtl'> */}
-            <div
-              className="steps order-2 position-relative w-25 "
-              style={{ backgroundColor: "#09123A", backgroundImage: "none" }}
-            >
-              <div className="multisteps-form__progress ">
-                <span
-                  className="multisteps-form__progress-btn js-active"
-                  title="Application data"
-                >
-                  <i className="far fa-user"></i>
-                  <span>Personal information</span>
-                </span>
-                <span
-                  className="multisteps-form__progress-btn"
-                  title="Tax residency"
-                >
-                  <i className="far fa-user"></i>
-                  <span>Document Selection</span>
-                </span>
-                <span
-                  className="multisteps-form__progress-btn"
-                  title="Indentity documents"
-                >
-                  <i className="far fa-user"></i>
-                  <span>Signature & Notarization</span>
-                </span>
-                <span
-                  className="multisteps-form__progress-btn"
-                  title="Indentity documents"
-                >
-                  <i className="far fa-user"></i>
-                  <span>Payment Details</span>
-                </span>
-                <span
-                  className="multisteps-form__progress-btn"
-                  title="Indentity documents"
-                >
-                  <i className="far fa-user"></i>
-                  <span>Document Download</span>
-                </span>
-              </div>
-            </div>
-            <form
-              className="multisteps-form__form w-75 order-1"
-              action="#"
-              id="wizard"
-            >
-              <div className="form-area position-relative">
-                <Form2step1 totalSteps={5} />
-                <Form2step2 totalSteps={5} />
-                <Form2step3 totalSteps={5} />
-                <Form2step4 totalSteps={5} />
-                <Form2step5 totalSteps={5} />
-              </div>
-            </form>
-          </div>
-        </div>
-      </Layout>
+      <Form2step1/>
+      {/* <Form2step2/> */}
     </>
   );
 }

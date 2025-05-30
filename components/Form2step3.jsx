@@ -1,304 +1,207 @@
 "use client";
 
-import React, { useRef, useState } from "react";
-import Link from "next/link";
-import { useTranslations } from "next-intl";
-import useForm2store from "@/store/form2store";
+import React, { useState } from 'react';
+import Link from 'next/link';
+import { useRouter } from 'next/navigation';
+import { useTranslations } from 'next-intl';
+import FormProgressSidebar from './FormProgressSidebar';
 
-export default function Form2step3({ totalSteps }) {
+const Form2step3 = () => {
+  const router = useRouter();
   const t = useTranslations();
+  const [selectedOption, setSelectedOption] = useState(null);
+  const [uploadedDocument, setUploadedDocument] = useState(null);
 
-  const { methods, getValidateStep } = useForm2store();
-  const nextBtnRef = useRef(null);
-  const [signatureImage, setSignatureImage] = useState(null);
-  if (!methods) return;
+  const handleOptionSelect = (option) => {
+    setSelectedOption(option);
+  };
 
-  const {
-    register,
-    control,
-    setError,
-    getValues,
-    watch,
-    formState: { errors },
-    setValue,
-  } = methods;
-  const selectedMethod = watch("signatureMethod");
-  const nextHandler = async () => {
-    // Validate only step 3 fields
-    const validateStep = await getValidateStep(3); // Use the custom validateStep
-    const { isValid, data } = await validateStep();
-    if (!isValid) return;
-    if (!signatureImage) {
-      setError("signatureImage", {
-        type: "manual",
-        message: t("form2_step3_error_message"),
-      });
+  const handleDocumentUpload = (event) => {
+    const file = event.target.files[0];
+    if (file) {
+      setUploadedDocument(file);
+    }
+  };
+
+  const handleNext = () => {
+    if (!selectedOption) {
+      alert('Please select a signing option to proceed');
       return;
     }
-    ///upload image
-    const imgUrl = "abc";
-    const payload = {
-      ...data,
-      signatureImage: imgUrl,
-    };
-
-    console.log("validated data →", payload);
-    console.log("All data", getValues());
-    // Proceed to next step
-    nextBtnRef.current?.click();
-  };
-
-  // Handle selecting delivery method
-  const handleMethodSelect = (method) => {
-    setSignatureImage(null);
-    setValue("signatureMethod", method);
-  };
-  const readURL = (event, id) => {
-    const selectedFile = event.target.files[0];
-    if (selectedFile) {
-      // Perform actions with the selected file
-      // Create a FileReader to read the file
-      const reader = new FileReader();
-
-      // Define the onload event for the reader
-      reader.onload = () => {
-        // Set the result as the source URL
-        setSignatureImage(selectedFile);
-
-        document.getElementById(id).setAttribute("src", reader.result);
-      };
-
-      // Read the file as a data URL
-      reader.readAsDataURL(selectedFile);
+    if (!uploadedDocument) {
+      alert('Please upload your document to proceed');
+      return;
     }
+    router.push('/form2-page4');
   };
-
-  const cardStyle = (active) => ({
-    width: 170,
-    height: 170,
-    borderRadius: 8,
-    border: "2px solid #B4D4E4",
-    backgroundColor: active ? "#D0E3ED" : "#FFFFFF",
-    display: "flex",
-    flexDirection: "column",
-    alignItems: "center",
-    justifyContent: "center",
-    cursor: "pointer",
-    transition: "all .2s",
-  });
-
-  const iconImgStyle = { width: 60, height: 60, objectFit: "contain" };
-
-  const labelStyle = (active) => ({
-    marginTop: 8,
-    fontSize: 14,
-    fontWeight: 400,
-    color: "#000",
-    userSelect: "none",
-    fontWeight: "bold",
-  });
 
   return (
-    <div className="multisteps-form__panel" data-animation="slideHorz">
-      <Link legacyBehavior href="/">
-        <a>
-          <img
-            src="/assets/images/logos/logo.png"
-            style={{ marginLeft: "20px", marginTop: "20px" }}
-            alt="Logo"
-            title="Logo"
-          />
-        </a>
-      </Link>
+    <div className="d-flex">
+      <div className="flex-grow-1" style={{ marginRight: '320px' }}>
+        <div className="container py-4">
+          <div className="row justify-content-center">
+            <div className="col-lg-10">
+              <div className="multisteps-form__panel js-active" data-animation="slideHorz">
+                <Link legacyBehavior href="/">
+                  <a>
+                    <img
+                      src="/assets/images/logos/logo.png"
+                      style={{ height: '70px'  }}
+                      alt="Logo"
+                      title="Logo"
+                    />
+                  </a>
+                </Link>
 
-      <div className="wizard-forms">
-        <div className="inner pb-100 clearfix">
-          {/* Header */}
-          <div className="wizard-title text-center">
-            <h3 style={{ color: "#5856D6", fontWeight: 700 }}>
-              {t("form2_step3_signature_notarization_title")}
-            </h3>
-            <p className="mt-2" style={{ color: "#5856D6" }}>
-              {t("form2_step3_choose_signature_method")}
-            </p>
-          </div>
+                <div className="wizard-forms section-padding">
+                  <div className="container">
+                    <div className="text-center mb-5">
+                      <h2 style={{ color: '#5756A2', fontSize: '2.5rem', fontWeight: '600' }}>{t('Signature & Notarization')}</h2>
+                      <p className="mt-2" style={{ fontSize: '1.1rem', color: '#666' }}>{t('Choose whether you want to connect to a Notary or use E-Sign')}</p>
+                    </div>
 
-          {/* Subtitle */}
-          <div className="text-center mb-3">
-            <p style={{ color: "#333333", fontSize: 20, fontWeight: "bold" }}>
-              {t("form2_step3_e_sign_or_notary")}
-            </p>
-          </div>
+                    <div className="row justify-content-center mb-5">
+                      <div className="col-md-8">
+                        <div className="d-flex justify-content-center gap-4">
+                          {/* E-Sign Option */}
+                          <div
+                            className={`card signing-option ${selectedOption === 'esign' ? 'selected' : ''}`}
+                            onClick={() => handleOptionSelect('esign')}
+                            style={{
+                              cursor: 'pointer',
+                              width: '200px',
+                              border: selectedOption === 'esign' ? '2px solid #4CAF50' : '1px solid #ddd',
+                              borderRadius: '8px',
+                              transition: 'all 0.3s ease',
+                              backgroundColor: selectedOption === 'esign' ? '#f8f9fa' : 'white'
+                            }}
+                          >
+                            <div className="card-body text-center p-4">
+                              <img
+                                src="/assets/v3/img/form-img11.png"
+                                alt="E-Sign"
+                                style={{ width: '48px', height: '48px', marginBottom: '1rem' }}
+                              />
+                              <h5 className="card-title">E-Sign</h5>
+                            </div>
+                          </div>
 
-          {/* Cards */}
-          <div
-            className="d-flex justify-content-center mb-4 "
-            style={{ gap: 16 }}
-          >
-            <div
-              style={cardStyle(selectedMethod === "E-Sign")}
-              onClick={() => handleMethodSelect("E-Sign")}
-            >
-              <input
-                type="radio"
-                id="method-download"
-                value="download"
-                style={{ display: "none" }}
-                {...register("signatureMethod")}
-              />
-              <img
-                src="/assets/images/e-sign.png"
-                className="w-10"
-                style={iconImgStyle}
-              />
-              <span style={labelStyle(selectedMethod === "E-Sign")}>
-                {t("form2_step3_e_sign")}
-              </span>
-            </div>
+                          {/* Connect to Notary Option */}
+                          <div
+                            className={`card signing-option ${selectedOption === 'notary' ? 'selected' : ''}`}
+                            onClick={() => handleOptionSelect('notary')}
+                            style={{
+                              cursor: 'pointer',
+                              width: '200px',
+                              border: selectedOption === 'notary' ? '2px solid #4CAF50' : '1px solid #ddd',
+                              borderRadius: '8px',
+                              transition: 'all 0.3s ease',
+                              backgroundColor: selectedOption === 'notary' ? '#f8f9fa' : 'white'
+                            }}
+                          >
+                            <div className="card-body text-center p-4">
+                              <img
+                                src="/assets/v3/img/form-img12.png"
+                                alt="Connect to a Notary"
+                                style={{ width: '48px', height: '48px', marginBottom: '1rem' }}
+                              />
+                              <h5 className="card-title">Connect to a Notary</h5>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
 
-            <div
-              style={cardStyle(selectedMethod === "Notary")}
-              onClick={() => handleMethodSelect("Notary")}
-            >
-              <input
-                type="radio"
-                id="method-email"
-                value="email"
-                style={{ display: "none" }}
-                {...register("signatureMethod")}
-              />
-              <img
-                src="/assets/images/connect_to_notary.png"
-                style={iconImgStyle}
-              />
-              <span style={labelStyle(selectedMethod === "Notary")}>
-                {t("form2_step3_connect_notary")}
-              </span>
-            </div>
-          </div>
-          {/* Signature Image upload */}
-          <h4>{t("form2_step3_sign_to_continue")}</h4>
-          <div
-            style={{
-              width: "100%",
-            }}
-            className="p-2  "
-          >
-            <label
-              htmlFor="signatureImage"
-              className="text-center rounded  d-flex flex-column align-items-center justify-content-center"
-              style={{
-                width: "100%",
-                minHeight: "600px",
-                borderRadius: 8,
-                border: "2px solid #B4D4E4",
-                backgroundColor:
-                  selectedMethod === "E-Sign"
-                    ? "#FFFFFF"
-                    : signatureImage
-                    ? "#FFFFFF"
-                    : "gray",
-                display: "flex",
-                flexDirection: "column",
-                alignItems: "center",
-                justifyContent: "center",
-                cursor: "pointer",
-                transition: "all .2s",
-              }}
-            >
-              <input
-                id="signatureImage"
-                {...register("signatureImage")}
-                onChange={(e) => readURL(e, "signatureImage_identification")}
-                type="file"
-                style={{ display: "none" }}
-              />
-              <div
-                className="display-img text-center "
-                style={{
-                  maxWidth: "100%",
-                  height: "auto",
-                }}
-              >
-                <img
-                  id="signatureImage_identification"
-                  style={{
-                    width: signatureImage ? "300px" : "auto",
-                  }}
-                  src={
-                    selectedMethod === "E-Sign"
-                      ? "/assets/images/upload_doc.png"
-                      : "/assets/images/camera_icon.png"
-                  }
-                  alt="your image"
-                />
-                <p className="mt-2">
-                  {signatureImage
-                    ? ""
-                    : selectedMethod === "E-Sign"
-                    ? t("form2_step3_upload_image")
-                    : ""}
-                </p>
+                    {/* Document Upload Section */}
+                    <div className="row justify-content-center">
+                      <div className="col-md-8">
+                        <div className="upload-section p-4" style={{ 
+                          border: '2px dashed #ddd',
+                          borderRadius: '8px',
+                          backgroundColor: '#f8f9fa',
+                          minHeight: '300px',
+                          display: 'flex',
+                          flexDirection: 'column',
+                          alignItems: 'center',
+                          justifyContent: 'center'
+                        }}>
+                          <input
+                            type="file"
+                            id="document-upload"
+                            onChange={handleDocumentUpload}
+                            style={{ display: 'none' }}
+                            accept=".pdf,.doc,.docx"
+                          />
+                          <label htmlFor="document-upload" style={{ cursor: 'pointer', textAlign: 'center' }}>
+                            <img
+                              src="/assets/v3/img/form-img09.png"
+                              alt="Upload"
+                              style={{ width: '48px', height: '48px', marginBottom: '1rem' }}
+                            />
+                            <h5>Upload Document</h5>
+                            {uploadedDocument ? (
+                              <p className="text-success">File uploaded: {uploadedDocument.name}</p>
+                            ) : (
+                              <p className="text-muted">Click to upload or drag and drop your document here</p>
+                            )}
+                          </label>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div className="text-end mt-5">
+                      <div className="d-flex justify-content-between align-items-center">
+                        <Link href="/form2-page2" className="text-decoration-none">
+                          <span
+                            className="btn"
+                            style={{ 
+                              backgroundColor: "#274171",
+                              color: 'white',
+                              padding: '10px 30px',
+                              display: 'inline-flex',
+                              alignItems: 'center',
+                              gap: '8px'
+                            }}
+                          >
+                            <i className="fa fa-arrow-left"></i> Back
+                          </span>
+                        </Link>
+                        <button
+                          onClick={handleNext}
+                          className="btn"
+                          style={{
+                            backgroundColor: '#274171',
+                            color: 'white',
+                            padding: '10px 30px',
+                            display: 'inline-flex',
+                            alignItems: 'center',
+                            gap: '8px'
+                          }}
+                        >
+                          Next <i className="fa fa-arrow-right"></i>
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
               </div>
-            </label>
-          </div>
-          {errors.signatureImage && (
-            <p className="text-danger">{errors.signatureImage.message}</p>
-          )}
-
-          {/* Progress (added to match StepTwo) */}
-          <div className="wizard-v3-progress">
-            <span>
-              3 {t("progress_step_text1")} {totalSteps}{" "}
-              {t("progress_step_text2")}
-            </span>
-            <h3>
-              {totalSteps == 3 ? "66%" : "40%"} {t("progress_step_text3")}
-            </h3>
-            <div className="progress">
-              <div
-                className="progress-bar"
-                style={{ width: totalSteps == 3 ? "66%" : "40%" }}
-              ></div>
             </div>
           </div>
         </div>
-
-        {/* Decorative image */}
-        <div className="vector-img-one">
-          <img
-            src="/assets/v3/img/vb3.png"
-            alt=""
-            style={{ marginBottom: "-100px" }}
-          />
-        </div>
-
-        {/* Back/Next nav */}
-        <div className="actions">
-          <ul>
-            <li>
-              <span className="js-btn-prev" title="BACK">
-                <i className="fa fa-arrow-left"></i> {t("step2_back_button")}
-              </span>
-            </li>
-            <li>
-              <span
-                style={{ backgroundColor: "#09123A" }}
-                title="NEXT"
-                onClick={nextHandler}
-              >
-                {t("step2_next_button")} <i className="fa fa-arrow-right"></i>
-              </span>
-            </li>
-            <button
-              ref={nextBtnRef}
-              className="js-btn-next"
-              style={{ display: "none" }}
-              type="button"
-            />
-          </ul>
-        </div>
+      </div>
+      <div style={{ 
+        width: '300px', 
+        position: 'fixed', 
+        right: 0, 
+        top: 0, 
+        height: '100vh',
+        borderLeft: '1px solid rgba(0,0,0,0.1)',
+        backgroundColor: '#091534'
+      }}>
+        <FormProgressSidebar currentStep={3} />
       </div>
     </div>
   );
-}
+};
+
+export default Form2step3;

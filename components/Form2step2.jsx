@@ -1,190 +1,194 @@
-import React, { useRef } from "react";
-import Link from "next/link";
-import { Controller } from "react-hook-form";
-import { useTranslations } from "next-intl";
+'use client';
 
-import useForm2store from "@/store/form2store";
+import React from 'react';
+import Link from 'next/link';
+import { useRouter } from 'next/navigation';
+import { useTranslations } from 'next-intl';
+import FormProgressSidebar from './FormProgressSidebar';
 
-const Form2step2 = ({ totalSteps }) => {
+const documentTypes = [
+  {
+    id: 'power-of-attorney',
+    icon: '/assets/v3/img/form-img01.png',
+    title: 'Power of Attorney',
+    selected: false
+  },
+  {
+    id: 'last-will',
+    icon: '/assets/v3/img/form-img02.png',
+    title: 'Last Will & Testament',
+    selected: false
+  },
+  {
+    id: 'agreement-of-sale',
+    icon: '/assets/v3/img/form-img03.png',
+    title: 'Agreement of Sale',
+    selected: false
+  },
+  {
+    id: 'lease-agreement',
+    icon: '/assets/v3/img/form-img04.png',
+    title: 'Lease Agreement',
+    selected: false
+  },
+  {
+    id: 'promissory-note',
+    icon: '/assets/v3/img/form-img05.png',
+    title: 'Promissory Note',
+    selected: false
+  },
+  {
+    id: 'passport-application',
+    icon: '/assets/v3/img/form-img06.png',
+    title: 'Passport Application',
+    selected: false
+  },
+  {
+    id: 'affidavit-of-identity',
+    icon: '/assets/v3/img/form-img07.png',
+    title: 'Affidavit Of Identity',
+    selected: false
+  },
+  {
+    id: 'property-management',
+    icon: '/assets/v3/img/form-img08.png',
+    title: 'Property Management Agreement',
+    selected: false
+  },
+  {
+    id: 'custom-document',
+    icon: '/assets/v3/img/form-img09.png',
+    title: 'Upload your own Document',
+    selected: false
+  }
+];
+
+const Form2step2 = () => {
+  const router = useRouter();
   const t = useTranslations();
+  const [selectedDocument, setSelectedDocument] = React.useState(null);
 
-  const { methods, getValidateStep } = useForm2store();
+  const handleDocumentSelect = (documentId) => {
+    setSelectedDocument(documentId);
+  };
 
-  const nextBtnRef = useRef(null);
-  if (!methods) return;
-
-  const {
-    register,
-    control,
-    watch,
-    getValues,
-    formState: { errors },
-  } = methods;
-
-  const services = [
-    { name: t("service_power_of_attorney"), imgUrl: "/assets/images/ws1.png" },
-    {
-      name: t("service_last_will_testament"),
-      imgUrl: "/assets/images/ws2.png",
-    },
-    { name: t("service_agreement_of_sale"), imgUrl: "/assets/images/ws3.png" },
-    { name: t("service_lease_agreement"), imgUrl: "/assets/images/ws4.png" },
-    { name: t("service_promissory_note"), imgUrl: "/assets/images/ws5.png" },
-    {
-      name: t("service_passport_application"),
-      imgUrl: "/assets/images/ws6.png",
-    },
-    {
-      name: t("service_affidavit_of_identity"),
-      imgUrl: "/assets/images/ws7.png",
-    },
-    {
-      name: t("service_property_management_agreement"),
-      imgUrl: "/assets/images/ws8.png",
-    },
-    {
-      name: t("service_upload_your_own_document"),
-      imgUrl: "/assets/images/ws9.png",
-    },
-  ];
-
-  const nextHandler = async () => {
-    // Validate only step 2 fields
-    const validateStep = await getValidateStep(2); // Use the custom validateStep
-    const { isValid, data } = await validateStep();
-
-    if (!isValid) return;
-
-    console.log("validated data →", data);
-    console.log("All data", getValues());
-    // Proceed to next step
-    nextBtnRef.current?.click();
+  const handleNext = () => {
+    if (selectedDocument) {
+      router.push('/form2-page3');
+    } else {
+      // Show error or notification that document selection is required
+      alert('Please select a document to proceed');
+    }
   };
 
   return (
-    <div className="multisteps-form__panel " data-animation="slideHorz">
-      <Link legacyBehavior href="/">
-        <a>
-          <img
-            src="/assets/images/logos/logo.png"
-            style={{ marginLeft: "20px", marginTop: "20px" }}
-            alt="Logo"
-            title="Logo"
-          />
-        </a>
-      </Link>
-      <div
-        className="wizard-forms section-padding"
-        style={{ marginTop: "-100px" }}
-      >
-        <div className="inner pb-100 clearfix">
-          {/* ---------------------------------------------------------------- */}
-          {/* Heading -------------------------------------------------------- */}
-          <div className="wizard-title text-center">
-            <h3>{t("form2_step2_title")}</h3>
-            <p>{t("form2_step2_subtitle")}</p>
-          </div>
+    <div className="d-flex">
+      <div className="flex-grow-1" style={{ marginRight: '320px' }}>
+        <div className="container py-4">
+          <div className="row justify-content-center">
+            <div className="col-lg-10">
+              <div className="multisteps-form__panel js-active" data-animation="slideHorz">
+                <Link legacyBehavior href="/">
+                  <a>
+                    <img
+                      src="/assets/images/logos/logo.png"
+                      style={{ height: '70px' }}
+                      alt="Logo"
+                      title="Logo"
+                    />
+                  </a>
+                </Link>
 
-          <div
-            id="slider-service"
-            className="wizard-service-slide  text-center"
-          >
-            <Controller
-              control={control}
-              name="documentType"
-              render={({ field, fieldState }) => (
-                <>
-                  {services.map((service, index) => (
-                    <label className="services-box-item" key={index}>
-                      <input
-                        type="radio"
-                        name={field.name}
-                        value={service.name}
-                        checked={field.value === service.name}
-                        onChange={field.onChange}
-                        className="service-checkbox"
-                      />
-                      <span
-                        className="w-service-box text-center d-flex flex-column align-items-center justify-content-center position-relative "
-                        style={{ border: "2px solid #B4D4E4" }}
-                      >
-                        <span
-                          className="tooltip-info"
-                          data-toggle="tooltip"
-                          data-placement="top"
-                        ></span>
-                        <div className="d-flex flex-column align-items-center justify-content-center gap-2">
-                          <span className="service-icon">
-                            <img src={service.imgUrl} alt={service.name} />
-                          </span>
-                          <span
-                            className="service-text mb-4"
-                            style={{ fontSize: "18px" }}
+                <div className="wizard-forms section-padding">
+                  <div className="container">
+                    <div className="text-center mb-5">
+                      <h2 style={{ color: '#5756A2', fontSize: '2.5rem', fontWeight: '600' }}>{t('Standard Forms')}</h2>
+                      <p className="mt-2" style={{ fontSize: '1.1rem', color: '#666' }}>{t('Please choose the form you would like to apply for')}</p>
+                    </div>
+
+                    <div className="row g-4 justify-content-center">
+                      {documentTypes.map((doc) => (
+                        <div key={doc.id} className="col-md-4">
+                          <div
+                            className={`card h-100 document-card ${
+                              selectedDocument === doc.id ? 'selected' : ''
+                            }`}
+                            onClick={() => handleDocumentSelect(doc.id)}
+                            style={{
+                              cursor: 'pointer',
+                              border: selectedDocument === doc.id ? '2px solid #4CAF50' : '1px solid #ddd',
+                              borderRadius: '8px',
+                              transition: 'all 0.3s ease'
+                            }}
                           >
-                            {service.name}
-                          </span>
+                            <div className="card-body text-center p-4">
+                              <img
+                                src={doc.icon}
+                                alt={doc.title}
+                                style={{ 
+                                  width: '48px', 
+                                  height: '48px', 
+                                  marginBottom: '1rem',
+                                  
+                                }}
+                              />
+                              <h5 className="card-title">{doc.title}</h5>
+                            </div>
+                          </div>
                         </div>
-                        <span className="option-seclect">
-                          <span>{t("form2_step2_option_selected")}</span>
-                        </span>
-                      </span>
-                    </label>
-                  ))}
-                  {fieldState.error?.message && (
-                    <p className="text-danger">{fieldState.error.message}</p>
-                  )}
-                </>
-              )}
-            />
-          </div>
+                      ))}
+                    </div>
 
-          {/* ---------------------------------------------------------------- */}
-          {/* Progress (unchanged) ------------------------------------------ */}
-          <div className="wizard-v3-progress">
-            <span>
-              2 {t("progress_step_text1")} {totalSteps}{" "}
-              {t("progress_step_text2")}
-            </span>
-            <h3>
-              {totalSteps == 3 ? "66%" : "40%"} {t("progress_step_text3")}
-            </h3>
-            <div className="progress">
-              <div
-                className="progress-bar"
-                style={{ width: totalSteps == 3 ? "66%" : "40%" }}
-              ></div>
+                    <div className="text-end mt-5">
+                      <div className="d-flex justify-content-between align-items-center">
+                        <Link href="/forms2" className="text-decoration-none">
+                          <span
+                            className="btn"
+                            style={{ 
+                              backgroundColor: "#274171",
+                              color: 'white',
+                              padding: '10px 30px',
+                              display: 'inline-flex',
+                              alignItems: 'center',
+                              gap: '8px'
+                            }}
+                          >
+                            <i className="fa fa-arrow-left"></i> Back
+                          </span>
+                        </Link>
+                        <button
+                          onClick={handleNext}
+                          className="btn"
+                          style={{
+                            backgroundColor: '#274171',
+                            color: 'white',
+                            padding: '10px 30px',
+                            display: 'inline-flex',
+                            alignItems: 'center',
+                            gap: '8px'
+                          }}
+                        >
+                          Next <i className="fa fa-arrow-right"></i>
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
         </div>
-
-        {/* ---------------------------------------------------------------- */}
-        {/* NEXT button (validates & submits) ------------------------------ */}
-        <div className="actions">
-          <ul>
-            <li>
-              <span className="js-btn-prev" title="BACK">
-                <i className="fa fa-arrow-left"></i>{" "}
-                {t("form2_step2_back_button")}
-              </span>
-            </li>
-            <li>
-              <span
-                style={{ backgroundColor: "#09123A" }}
-                title="NEXT"
-                onClick={nextHandler}
-              >
-                {t("form2_step2_next_button")}{" "}
-                <i className="fa fa-arrow-right"></i>
-              </span>
-            </li>
-            <button
-              ref={nextBtnRef}
-              className="js-btn-next"
-              style={{ display: "none" }}
-              type="button"
-            />
-          </ul>
-        </div>
+      </div>
+      <div style={{ 
+        width: '300px', 
+        position: 'fixed', 
+        right: 0, 
+        top: 0, 
+        height: '100vh',
+        borderLeft: '1px solid rgba(0,0,0,0.1)',
+        backgroundColor: '#091534'
+      }}>
+        <FormProgressSidebar currentStep={2} />
       </div>
     </div>
   );
