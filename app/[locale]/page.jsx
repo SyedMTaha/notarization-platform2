@@ -136,9 +136,9 @@ const IndexOnePage = ({ params }) => {
                           </Link>
                         </li>
                         <li>
-                          <a className="disabled-link" href="#project">
+                          <Link href="/authenticate">
                             {t("navbar.authenticate")}
-                          </a>
+                          </Link>
                         </li>
                         <li>
                           <Link href="/help-desk">{t("navbar.help")}</Link>

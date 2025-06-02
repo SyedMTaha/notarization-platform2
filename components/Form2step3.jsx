@@ -120,13 +120,16 @@ const Form2step3 = () => {
                     <div className="upload-section p-4" style={{ 
                       border: '1px solid #E2E8F0',
                       borderRadius: '8px',
-                      backgroundColor: '#FFFFFF',
+                      backgroundColor: selectedOption ? '#FFFFFF' : '#F7F8FA',
                       minHeight: '300px',
                       display: 'flex',
                       flexDirection: 'column',
                       alignItems: 'center',
                       justifyContent: 'center',
-                      boxShadow: '0 1px 3px rgba(0,0,0,0.1)'
+                      boxShadow: '0 1px 3px rgba(0,0,0,0.1)',
+                      opacity: selectedOption ? 1 : 0.7,
+                      pointerEvents: selectedOption ? 'auto' : 'none',
+                      transition: 'all 0.3s ease'
                     }}>
                       <input
                         type="file"
@@ -134,18 +137,35 @@ const Form2step3 = () => {
                         onChange={handleDocumentUpload}
                         style={{ display: 'none' }}
                         accept=".pdf,.doc,.docx"
+                        disabled={!selectedOption}
                       />
-                      <label htmlFor="document-upload" style={{ cursor: 'pointer', textAlign: 'center' }}>
+                      <label 
+                        htmlFor="document-upload" 
+                        style={{ 
+                          cursor: selectedOption ? 'pointer' : 'not-allowed', 
+                          textAlign: 'center' 
+                        }}
+                      >
                         <img
                           src="/assets/v3/img/form-img09.png"
                           alt="Upload"
-                          style={{ width: '48px', height: '48px', marginBottom: '1rem' }}
+                          style={{ 
+                            width: '48px', 
+                            height: '48px', 
+                            marginBottom: '1rem',
+                            opacity: selectedOption ? 1 : 0.7
+                          }}
                         />
-                        <h5>Upload Document</h5>
+                        <h5 style={{ color: selectedOption ? '#2D3748' : '#718096' }}>Upload Document</h5>
                         {uploadedDocument ? (
                           <p className="text-success">File uploaded: {uploadedDocument.name}</p>
                         ) : (
-                          <p style={{ color: '#718096', fontSize: '14px' }}>Click to upload or drag and drop your document here</p>
+                          <p style={{ color: '#718096', fontSize: '14px' }}>
+                            {selectedOption 
+                              ? 'Click to upload or drag and drop your document here'
+                              : 'Please select a signing option above to enable upload'
+                            }
+                          </p>
                         )}
                       </label>
                     </div>
