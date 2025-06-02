@@ -9,7 +9,6 @@ import { Col, FormLabel, Row } from "react-bootstrap";
 import CountrySelect from "@/components/CountrySelect";
 import useForm2store from "@/store/form2store";
 import { useFormSteps } from "@/hooks/useFormSteps";
-
 import FormProgressSidebar from './FormProgressSidebar';
 
 const identificationOptions = [
@@ -77,434 +76,450 @@ const Form2step1 = ({ totalSteps }) => {
     }
   };
 
+  const inputStyle = {
+    border: "1px solid #E2E8F0",
+    borderRadius: "8px",
+    padding: "12px 16px",
+    fontSize: "16px",
+    width: "100%",
+    color: "#333333",
+    transition: "border-color 0.2s ease",
+    backgroundColor: "#FFFFFF",
+    boxShadow: "0 1px 2px rgba(0, 0, 0, 0.05)",
+  };
+
+  const labelStyle = {
+    fontSize: "14px",
+    fontWeight: "500",
+    color: "#4A5568",
+    marginBottom: "8px",
+  };
+
+  const errorStyle = {
+    color: "#E53E3E",
+    fontSize: "14px",
+    marginTop: "4px",
+  };
+
   return (
     <div className="d-flex">
       <div className="flex-grow-1" style={{ marginRight: '320px' }}>
-        <div className="container py-4">
+        <div className=" mt-4 ml-4">
+                  <Link legacyBehavior href="/">
+                    <a>
+                      <img
+                        src="/assets/images/logos/logo.png"
+                        style={{ height: '70px' }}
+                        alt="Logo"
+                        title="Logo"
+                        
+                      />
+                    </a>
+                  </Link>
+        </div>
+        <div className="container ">
           <div className="row justify-content-center">
-            <div className="col-lg-10">
-              <div className="multisteps-form__panel js-active" data-animation="slideHorz">
-                <Link legacyBehavior href="/">
-                  <a>
-                    <img
-                      src="/assets/images/logos/logo.png"
-                      style={{ height: '70px' }}
-                      alt="Logo"
-                      title="Logo"
-                    />
-                  </a>
-                </Link>
-                <div className="wizard-forms section-padding" style={{ marginTop: "-100px" }}>
-                  <div className="inner pb-100 clearfix d-flex flex-column gap-4">
-                    <div className="wizard-title text-center">
-                      <h3>{t("form2_heading_title")}</h3>
-                      <p className="mt-2">{t("form2_heading_subtitle")}</p>
-                    </div>
+            <div className="col-lg-10 ">
+              <div className="form-card bg-white p-4 rounded-3">
+                {/* Logo */}
 
-                    <div className="d-flex" style={{ gap: "60px" }}>
-                      <div
-                        className="wizard-form-input d-flex align-items-baseline gap-4"
-                        style={{ marginTop: "20px", flex: 1 }}
-                      >
-                        <label
-                          className="wizard-sub-text"
-                          style={{ whiteSpace: "nowrap" }}
-                        >
-                          {t("form2_first_name")}
-                        </label>
-                        <div style={{ width: "100%" }}>
-                          <input
-                            style={{ border: "2px solid #ddeef9", color: "#333333" }}
-                            type="text"
-                            {...register("firstName")}
-                          />
-                          {errors.firstName && (
-                            <p className="text-danger">{errors.firstName.message}</p>
-                          )}
-                        </div>
-                      </div>
+                {/* Form Header */}
+                <div className="text-center mb-5">
+                  <h2 style={{ color: '#2D3748', fontSize: '28px', fontWeight: '600' }}>{t("form2_heading_title")}</h2>
+                  <p style={{ color: '#718096', fontSize: '16px', marginTop: '8px' }}>{t("form2_heading_subtitle")}</p>
+                </div>
 
-                      <div
-                        className="wizard-form-input d-flex align-items-baseline gap-4"
-                        style={{ marginTop: "20px", flex: 1 }}
-                      >
-                        <label
-                          className="wizard-sub-text"
-                          style={{ whiteSpace: "nowrap" }}
-                        >
-                          {t("form2_middle_name")}
-                        </label>
-                        <div style={{ width: "100%" }}>
-                          <input
-                            style={{ border: "2px solid #ddeef9", color: "#333333" }}
-                            type="text"
-                            {...register("middleName")}
-                          />
-                          {errors.middleName && (
-                            <p className="text-danger">{errors.middleName.message}</p>
-                          )}
-                        </div>
-                      </div>
-                    </div>
-
-                    <div
-                      className="wizard-form-input d-flex align-items-baseline gap-4"
-                      style={{ marginTop: "20px" }}
-                    >
-                      <label className="wizard-sub-text" style={{ whiteSpace: "nowrap" }}>
-                        {t("form2_last_name")}
-                      </label>
-                      <div style={{ width: "100%" }}>
+                {/* Form Content */}
+                <div className="form-content">
+                  {/* Name Fields Row */}
+                  <Row className="mb-4">
+                    <Col md={6}>
+                      <div className="form-group">
+                        <label style={labelStyle}>{t("form2_first_name")}</label>
                         <input
-                          style={{ border: "2px solid #ddeef9", color: "#333333" }}
+                          style={inputStyle}
                           type="text"
-                          {...register("lastName")}
+                          {...register("firstName")}
+                          
                         />
-                        {errors.lastName && (
-                          <p className="text-danger">{errors.lastName.message}</p>
+                        {errors.firstName && (
+                          <p style={errorStyle}>{errors.firstName.message}</p>
                         )}
                       </div>
-                    </div>
-
-                    <div
-                      className="wizard-form-input d-flex align-items-baseline gap-4"
-                      style={{ marginTop: "20px" }}
-                    >
-                      <label className="wizard-sub-text" style={{ whiteSpace: "nowrap" }}>
-                        {t("form2_date_of_birth")}
-                      </label>
-                      <div style={{ width: "100%" }}>
+                    </Col>
+                    <Col md={6}>
+                      <div className="form-group">
+                        <label style={labelStyle}>{t("form2_middle_name")}</label>
                         <input
-                          style={{ border: "2px solid #ddeef9", color: "#333333" }}
-                          type="date"
-                          {...register("dateOfBirth")}
+                          style={inputStyle}
+                          type="text"
+                          {...register("middleName")}
+                          
                         />
-                        {errors.dateOfBirth && (
-                          <p className="text-danger">{errors.dateOfBirth.message}</p>
+                        {errors.middleName && (
+                          <p style={errorStyle}>{errors.middleName.message}</p>
                         )}
                       </div>
-                    </div>
+                    </Col>
+                  </Row>
 
-                    <div
-                      className="wizard-form-input d-flex align-items-baseline gap-4"
-                      style={{ marginTop: "20px", flex: 1 }}
-                    >
-                      <FormLabel className="wizard-sub-text">
-                        {t("form2_country_of_residence")}
-                      </FormLabel>
-                      <div style={{ width: "100%" }}>
-                        <Controller
-                          name="countryOfResidence"
-                          control={control}
-                          render={({ field, fieldState }) => (
-                            <>
-                              <CountrySelect {...field} />
-                              {fieldState.error?.message && (
-                                <p className="text-danger">{fieldState.error.message}</p>
-                              )}
-                            </>
+                  {/* Last Name Field */}
+                  <div className="form-group mb-4">
+                    <label style={labelStyle}>{t("form2_last_name")}</label>
+                    <input
+                      style={inputStyle}
+                      type="text"
+                      {...register("lastName")}
+                    
+                    />
+                    {errors.lastName && (
+                      <p style={errorStyle}>{errors.lastName.message}</p>
+                    )}
+                  </div>
+
+                  {/* Date of Birth Field */}
+                  <div className="form-group mb-4">
+                    <label style={labelStyle}>{t("form2_date_of_birth")}</label>
+                    <input
+                      style={inputStyle}
+                      type="date"
+                      {...register("dateOfBirth")}
+                    />
+                    {errors.dateOfBirth && (
+                      <p style={errorStyle}>{errors.dateOfBirth.message}</p>
+                    )}
+                  </div>
+
+                  {/* Country of Residence Field */}
+                  <div className="form-group mb-4">
+                    <label style={labelStyle}>{t("form2_country_of_residence")}</label>
+                    <Controller
+                      name="countryOfResidence"
+                      control={control}
+                      render={({ field, fieldState }) => (
+                        <>
+                          <CountrySelect {...field} />
+                          {fieldState.error?.message && (
+                            <p className="text-danger">{fieldState.error.message}</p>
                           )}
-                        />
-                      </div>
-                    </div>
+                        </>
+                      )}
+                    />
+                  </div>
 
-                    <div
-                      className="wizard-form-input d-flex align-items-baseline gap-4"
-                      style={{ marginTop: "20px", flex: 1 }}
-                    >
-                      <label className="wizard-sub-text" style={{ whiteSpace: "nowrap" }}>
-                        {t("form2_email_address")}
-                      </label>
-                      <div style={{ width: "100%" }}>
-                        <input
-                          style={{ border: "2px solid #ddeef9", color: "#333333" }}
-                          {...register("email")}
-                        />
-                        {errors.email && (
-                          <p className="text-danger">{errors.email.message}</p>
-                        )}
-                      </div>
-                    </div>
+                  {/* Email Field */}
+                  <div className="form-group mb-4">
+                    <label style={labelStyle}>{t("form2_email_address")}</label>
+                    <input
+                      style={inputStyle}
+                      type="email"
+                      {...register("email")}
+                      
+                    />
+                    {errors.email && (
+                      <p style={errorStyle}>{errors.email.message}</p>
+                    )}
+                  </div>
 
-                    <div
-                      className="wizard-form-input d-flex align-items-baseline gap-4"
-                      style={{ marginTop: "20px", flex: 1 }}
-                    >
-                      <label className="wizard-sub-text">
-                        {t("form2_identification_type_label")}
-                      </label>
-                      <div style={{ width: "100%", position: "relative" }}>
-                        <Controller
-                          name="identificationType"
-                          control={control}
-                          render={({ field, fieldState }) => (
-                            <div style={{ position: "relative" }}>
+                  {/* Identification Type Field */}
+                  <div className="form-group mb-4">
+                    <label style={labelStyle}>{t("form2_identification_type_label")}</label>
+                    <div style={{ width: "100%", position: "relative" }}>
+                      <Controller
+                        name="identificationType"
+                        control={control}
+                        render={({ field, fieldState }) => (
+                          <div style={{ position: "relative" }}>
+                            <div
+                              onClick={() => setIsOpen(!isOpen)}
+                              style={{
+                                border: "1px solid #E2E8F0",
+                                backgroundColor: "#fff",
+                                height: "60px",
+                                padding: "10px 20px",
+                                cursor: "pointer",
+                                display: "flex",
+                                alignItems: "center",
+                                justifyContent: "space-between",
+                                color: "#333333",
+                              }}
+                            >
+                              <span>
+                                {t(
+                                  identificationOptions.find(
+                                    (opt) => opt.value === field.value
+                                  )?.label || "form2_select_identification_type"
+                                )}
+                              </span>
+                              <i
+                                className={`fa fa-chevron-down ${
+                                  isOpen ? "rotate-icon" : ""
+                                }`}
+                                style={{ transition: "transform 0.3s ease" }}
+                              />
+                            </div>
+                            {isOpen && (
                               <div
-                                onClick={() => setIsOpen(!isOpen)}
                                 style={{
-                                  border: "2px solid #ddeef9",
+                                  border: "1px solid #E2E8F0",
+                                  position: "absolute",
                                   backgroundColor: "#fff",
-                                  height: "60px",
-                                  padding: "10px 20px",
-                                  cursor: "pointer",
-                                  display: "flex",
-                                  alignItems: "center",
-                                  justifyContent: "space-between",
-                                  color: "#333333",
+                                  width: "100%",
+                                  zIndex: 10,
                                 }}
                               >
-                                <span>
-                                  {t(
-                                    identificationOptions.find(
-                                      (opt) => opt.value === field.value
-                                    )?.label || "form2_select_identification_type"
-                                  )}
-                                </span>
-                                <i
-                                  className={`fa fa-chevron-down ${
-                                    isOpen ? "rotate-icon" : ""
-                                  }`}
-                                  style={{ transition: "transform 0.3s ease" }}
-                                />
+                                {identificationOptions.map((option) => (
+                                  <div
+                                    key={option.value}
+                                    onClick={() => {
+                                      field.onChange(option.value);
+                                      setIsOpen(false);
+                                      trigger("identificationType");
+                                    }}
+                                    style={{
+                                      padding: "10px 20px",
+                                      cursor: "pointer",
+                                      backgroundColor:
+                                        field.value === option.value
+                                          ? "#ddeef9"
+                                          : "#fff",
+                                    }}
+                                    onMouseEnter={(e) => {
+                                      e.currentTarget.style.backgroundColor = "#cce0f5";
+                                    }}
+                                    onMouseLeave={(e) => {
+                                      e.currentTarget.style.backgroundColor =
+                                        field.value === option.value
+                                          ? "#333333"
+                                          : "#fff";
+                                    }}
+                                  >
+                                    {t(option.label)}
+                                  </div>
+                                ))}
                               </div>
-                              {isOpen && (
-                                <div
-                                  style={{
-                                    border: "1px solid #ddeef9",
-                                    position: "absolute",
-                                    backgroundColor: "#fff",
-                                    width: "100%",
-                                    zIndex: 10,
-                                  }}
-                                >
-                                  {identificationOptions.map((option) => (
-                                    <div
-                                      key={option.value}
-                                      onClick={() => {
-                                        field.onChange(option.value);
-                                        setIsOpen(false);
-                                        trigger("identificationType");
-                                      }}
-                                      style={{
-                                        padding: "10px 20px",
-                                        cursor: "pointer",
-                                        backgroundColor:
-                                          field.value === option.value
-                                            ? "#ddeef9"
-                                            : "#fff",
-                                      }}
-                                      onMouseEnter={(e) => {
-                                        e.currentTarget.style.backgroundColor = "#cce0f5";
-                                      }}
-                                      onMouseLeave={(e) => {
-                                        e.currentTarget.style.backgroundColor =
-                                          field.value === option.value
-                                            ? "#333333"
-                                            : "#fff";
-                                      }}
-                                    >
-                                      {t(option.label)}
-                                    </div>
-                                  ))}
-                                </div>
-                              )}
-                              {fieldState.error?.message && (
-                                <p className="text-danger">{fieldState.error.message}</p>
-                              )}
-                            </div>
-                          )}
-                        />
-                      </div>
+                            )}
+                            {fieldState.error?.message && (
+                              <p className="text-danger">{fieldState.error.message}</p>
+                            )}
+                          </div>
+                        )}
+                      />
                     </div>
+                  </div>
 
-                    <div className="d-flex" style={{ gap: "60px" }}>
-                      <div
-                        className="wizard-form-input d-flex align-items-baseline gap-4"
-                        style={{ marginTop: "20px", flex: 1 }}
-                      >
-                        <label
-                          className="wizard-sub-text"
-                          style={{ whiteSpace: "nowrap" }}
-                        >
-                          {t("form2_date_of_issue")}
-                        </label>
-                        <div style={{ width: "100%", position: "relative" }}>
+                  {/* Date of Issue and License ID Fields */}
+                  <Row className="mb-4">
+                    <Col md={6}>
+                      <div className="form-group">
+                        <label style={labelStyle}>{t("form2_date_of_issue")}</label>
+                        <div style={{ position: "relative" }}>
                           <input
                             style={{
-                              border: "2px solid #ddeef9",
-                              color: "#333333",
-                              width: "100%",
-                              paddingRight: "30px",
+                              ...inputStyle,
+                              paddingRight: "15px",
                             }}
                             type="date"
                             {...register("dateOfIssue")}
                             className="custom-date-input"
                           />
-                          <img
-                            style={{
-                              position: "absolute",
-                              right: "15px",
-                              top: "35%",
-                              transform: "translateY(-50%)",
-                              pointerEvents: "none",
-                              color: "#B4D4E4",
-                            }}
-                            src="/assets/images/calendar.png"
-                            alt=""
-                          />
-                          {errors.dateOfIssue && (
-                            <p className="text-danger">{errors.dateOfIssue.message}</p>
-                          )}
+                          
                         </div>
-                        <style>{`
-                          .custom-date-input::-webkit-calendar-picker-indicator {
-                            opacity: 0;
-                            width: 100%;
-                            height: 100%;
-                            position: absolute;
-                            top: 0;
-                            left: 0;
-                            cursor: pointer;
-                          }
-                        `}</style>
+                        {errors.dateOfIssue && (
+                          <p style={errorStyle}>{errors.dateOfIssue.message}</p>
+                        )}
                       </div>
-
-                      <div
-                        className="wizard-form-input d-flex align-items-center gap-4"
-                        style={{ marginTop: "20px", flex: 1 }}
-                      >
-                        <label className="wizard-sub-text">{t("form2_license_id")}</label>
-                        <div style={{ width: "100%" }}>
-                          <input
-                            style={{ border: "2px solid #ddeef9", color: "#333333" }}
-                            type="text"
-                            {...register("licenseIdNumber")}
-                          />
-                          {errors.licenseIdNumber && (
-                            <p className="text-danger">
-                              {errors.licenseIdNumber.message}
-                            </p>
-                          )}
-                        </div>
-                      </div>
-                    </div>
-
-                    <div
-                      className="wizard-form-input d-flex align-items-baseline gap-4"
-                      style={{ marginTop: "20px", flex: 1 }}
-                    >
-                      <FormLabel className="wizard-sub-text">
-                        {t("form2_jurisdiction")}
-                      </FormLabel>
-                      <div style={{ width: "100%" }}>
-                        <Controller
-                          name="jurisdictionOfDocumentUse"
-                          control={control}
-                          render={({ field, fieldState }) => (
-                            <>
-                              <CountrySelect {...field} />
-                              {fieldState.error?.message && (
-                                <p className="text-danger">{fieldState.error.message}</p>
-                              )}
-                              <p className="my-4">{t("form2_jurisdiction_note")}</p>
-                            </>
-                          )}
+                    </Col>
+                    <Col md={6}>
+                      <div className="form-group">
+                        <label style={labelStyle}>{t("form2_license_id")}</label>
+                        <input
+                          style={inputStyle}
+                          type="text"
+                          {...register("licenseIdNumber")}
+                          
                         />
+                        {errors.licenseIdNumber && (
+                          <p style={errorStyle}>{errors.licenseIdNumber.message}</p>
+                        )}
                       </div>
-                    </div>
+                    </Col>
+                  </Row>
 
-                    <Row className="mb-3 flex-nowrap">
-                      <Col className="col-3">
-                        <FormLabel className="wizard-sub-text">
-                          {t("form2_upload_image")}
-                        </FormLabel>
-                      </Col>
+                  {/* Jurisdiction Field */}
+                  <div className="form-group mb-4">
+                    <label style={labelStyle}>{t("form2_jurisdiction")}</label>
+                    <Controller
+                      name="jurisdictionOfDocumentUse"
+                      control={control}
+                      render={({ field, fieldState }) => (
+                        <>
+                          <CountrySelect {...field} />
+                          {fieldState.error?.message && (
+                            <p className="text-danger">{fieldState.error.message}</p>
+                          )}
+                          <p className="my-4">{t("form2_jurisdiction_note")}</p>
+                        </>
+                      )}
+                    />
+                  </div>
 
-                      <Col className="col-6">
+                  {/* Upload Image Field */}
+                  <Row className="mb-3 flex-nowrap align-items-center">
+                    <Col className="col-3">
+                    <span style={{
+                        fontSize: "20px",
+                        fontWeight: "500",
+                        color: "#4A5568",
+                        display: "inline-block",
+                        marginRight: "15px",
+                        marginBottom: "120px"
+                      }}>
+                        {t("form2_upload_image")}
+                        </span>
+                    </Col>
+
+                    <Col className="col-6">
+                      <div className="upload-container">
                         <div
                           style={{
-                            border: "1px solid black",
-                            maxWidth: "100%",
-                            height: "auto",
+                            border: "1px solid #000000",
+                            borderRadius: "8px",
+                            padding: "20px",
+                            maxWidth: "120px",
+                            backgroundColor: "#fff",
+                            boxShadow: "0 1px 3px rgba(0,0,0,0.1)",
+                            cursor: "pointer",
+                            textAlign: "center",
+                            height: "100px",
+                            marginBottom: "50px",
+                            display: "flex",
+                            flexDirection: "column",
+                            justifyContent: "space-between",
+                            alignItems: "center"
                           }}
-                          className="wizard-photo-upload position-relative p-2"
+                          onClick={() => document.getElementById('new_identification_image').click()}
                         >
-                          <label
-                            htmlFor="identification_image"
-                            className="text-center rounded"
-                            style={{
-                              fontSize: "10px",
-                              position: identificationImage ? "relative" : "block",
-                            }}
-                          >
-                            {t("form2_upload_identification")}
-                          </label>
-                          <input
-                            id="identification_image"
-                            {...register("identificationImage")}
-                            onChange={(e) => readURL(e, "form2_identification")}
-                            type="file"
-                            style={{ display: "none" }}
-                          />
-                          <div
-                            className="display-img text-center"
-                            style={{ maxWidth: "100%", height: "auto" }}
-                          >
+                          <div className="preview-container">
                             <img
-                              id="form2_identification"
-                              src={"/assets/v3/img/pf1.png"}
-                              alt="your image"
-                              style={{ maxWidth: "100%", height: "auto" }}
+                              src={identificationImage ? URL.createObjectURL(identificationImage) : "/assets/v3/img/pf1.png"}
+                              alt="Preview"
+                              style={{
+                                maxWidth: "100%",
+                                height: "60px",
+                                borderRadius: "4px"
+                              }}
                             />
                           </div>
+                          
+                          <div 
+                            style={{
+                              backgroundColor: "#274171",
+                              color: "white",
+                              padding: "6px",
+                              borderRadius: "6px",
+                              display: "inline-flex",
+                              alignItems: "center",
+                              gap: "6px",
+                              fontSize: "9px",
+                              marginTop: "-10px",
+                              width: "100px",
+                              justifyContent: "center",
+                              position: "relative",
+                              left: "50%",
+                              transform: "translateX(-40%)"
+                            }}
+                          >
+                            <i className="fa fa-upload"></i>
+                            <span style={{ whiteSpace: "nowrap" }}>
+                              {identificationImage ? 'Change Image' : t("form2_upload_identification")}
+                            </span>
+                          </div>
+                          
+                          <input
+                            id="new_identification_image"
+                            type="file"
+                            accept="image/*"
+                            style={{ display: "none" }}
+                            onChange={(e) => {
+                              const file = e.target.files[0];
+                              if (file) {
+                                setIdentificationImage(file);
+                              }
+                            }}
+                            {...register("identificationImage")}
+                          />
                         </div>
+                        
+                        {identificationImage && (
+                          <div 
+                            style={{ 
+                              marginTop: "10px",
+                              fontSize: "14px",
+                              color: "#4A5568"
+                            }}
+                          >
+                            {identificationImage.name}
+                          </div>
+                        )}
+                        
                         {errors.identificationImage && (
-                          <p className="text-danger">
+                          <p style={{ 
+                            color: "#E53E3E",
+                            marginTop: "8px",
+                            fontSize: "14px"
+                          }}>
                             {errors.identificationImage.message}
                           </p>
                         )}
-                      </Col>
-                    </Row>
+                      </div>
+                    </Col>
+                  </Row>
+                  {/* Upload Image Field */}
 
-                  </div>
 
-                  <div className="actions">
-                    <div className="d-flex justify-content-between align-items-center">
-                      <Link href="/" className="text-decoration-none">
-                        <span
-                          className="btn"
-                          style={{ 
-                            backgroundColor: "#274171",
-                            color: 'white',
-                            padding: '10px 30px',
-                            display: 'inline-flex',
-                            alignItems: 'center',
-                            gap: '8px',
-                            marginRight: '465px'
-                          }}
-                        >
-                          <i className="fa fa-arrow-left"></i> Back
-                        </span>
-                      </Link>
-                      <Link href="/form2-page2" className="text-decoration-none">
-                        <span
-                          className="btn"
-                          style={{ 
-                            backgroundColor: "#274171",
-                            color: 'white',
-                            padding: '10px 30px',
-                            display: 'inline-flex',
-                            alignItems: 'center',
-                            gap: '8px'
-                          }}
-                          onClick={nextHandler}
-                        >
-                          Next <i className="fa fa-arrow-right"></i>
-                        </span>
-                      </Link>
-                    </div>
+                </div>
+
+                {/* Form Actions */}
+                <div className="actions" style={{ marginTop: '220px' }}>
+                  <div className="d-flex justify-content-between align-items-center">
+                    
+                      <span
+                        className="btn"
+                        style={{ 
+                          backgroundColor: "#274171",
+                          color: 'white',
+                          padding: '10px 30px',
+                          display: 'inline-flex',
+                          alignItems: 'center',
+                          gap: '8px',
+                          marginRight: '465px',
+                          marginBottom: '-70px',
+                        }}
+                      >
+                        <i className="fa fa-arrow-left"></i> Back
+                      </span>
+                    
+                    <Link href="/form2-page2" className="text-decoration-none">
+                      <span
+                        className="btn"
+                        style={{ 
+                          backgroundColor: "#274171",
+                          color: 'white',
+                          padding: '10px 30px',
+                          display: 'inline-flex',
+                          alignItems: 'center',
+                          gap: '8px',
+                          marginBottom: '-70px',
+                        }}
+                        onClick={nextHandler}
+                      >
+                        Next <i className="fa fa-arrow-right"></i>
+                      </span>
+                    </Link>
                   </div>
                 </div>
+
               </div>
             </div>
           </div>

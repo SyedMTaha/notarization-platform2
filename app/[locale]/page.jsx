@@ -271,9 +271,6 @@ const IndexOnePage = ({ params }) => {
           </div>
         </div>
       </section>
-      <button onClick={() => signOut()}>log out</button>
-      <div>{user?.email}</div>
-
       {/* About Us Area start */}
       <section id="about" className="about-area-one pt-130 pb-125 rel z-1">
         <div className="container">

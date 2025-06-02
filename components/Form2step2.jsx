@@ -84,101 +84,150 @@ const Form2step2 = () => {
   return (
     <div className="d-flex">
       <div className="flex-grow-1" style={{ marginRight: '320px' }}>
-        <div className="container py-4">
+        <div className="mt-4 ml-4">
+          <Link legacyBehavior href="/">
+            <a>
+              <img
+                src="/assets/images/logos/logo.png"
+                style={{ height: '70px' }}
+                alt="Logo"
+                title="Logo"
+              />
+            </a>
+          </Link>
+        </div>
+
+        <div className="container">
           <div className="row justify-content-center">
             <div className="col-lg-10">
-              <div className="multisteps-form__panel js-active" data-animation="slideHorz">
-                <Link legacyBehavior href="/">
-                  <a>
-                    <img
-                      src="/assets/images/logos/logo.png"
-                      style={{ height: '70px' }}
-                      alt="Logo"
-                      title="Logo"
-                    />
-                  </a>
-                </Link>
+              <div className="form-card bg-white p-4 rounded-3">
+                {/* Form Header */}
+                <div className="text-center mb-5">
+                  <h2 style={{ color: '#2D3748', fontSize: '28px', fontWeight: '600' }}>{t('Standard Forms')}</h2>
+                  <p style={{ color: '#718096', fontSize: '16px', marginTop: '8px' }}>{t('Please choose the form you would like to apply for')}</p>
+                </div>
 
-                <div className="wizard-forms section-padding">
-                  <div className="container">
-                    <div className="text-center mb-5">
-                      <h2 style={{ color: '#5756A2', fontSize: '2.5rem', fontWeight: '600' }}>{t('Standard Forms')}</h2>
-                      <p className="mt-2" style={{ fontSize: '1.1rem', color: '#666' }}>{t('Please choose the form you would like to apply for')}</p>
-                    </div>
-
-                    <div className="row g-4 justify-content-center">
-                      {documentTypes.map((doc) => (
-                        <div key={doc.id} className="col-md-4">
-                          <div
-                            className={`card h-100 document-card ${
-                              selectedDocument === doc.id ? 'selected' : ''
-                            }`}
-                            onClick={() => handleDocumentSelect(doc.id)}
+                <div className="form-content">
+                  <div className="row g-4">
+                    {documentTypes.map((doc) => (
+                      <div key={doc.id} className="col-md-4">
+                        <div
+                          onClick={(e) => {
+                            e.preventDefault();
+                            e.stopPropagation();
+                            handleDocumentSelect(doc.id);
+                          }}
+                          className="document-card"
+                          style={{
+                            cursor: 'pointer',
+                            border: selectedDocument === doc.id ? '2px solid #274171' : '1px solid #E2E8F0',
+                            borderRadius: '8px',
+                            transition: 'all 0.3s ease',
+                            padding: '20px',
+                            backgroundColor: selectedDocument === doc.id ? '#F7FAFC' : '#FFFFFF',
+                            height: '100%',
+                            display: 'flex',
+                            flexDirection: 'column',
+                            alignItems: 'center',
+                            justifyContent: 'center',
+                            gap: '15px',
+                            boxShadow: '0 1px 3px rgba(0,0,0,0.1)',
+                            minHeight: '160px',
+                            userSelect: 'none',
+                            WebkitUserSelect: 'none',
+                            MozUserSelect: 'none',
+                            msUserSelect: 'none'
+                          }}
+                        >
+                          <div 
                             style={{
-                              cursor: 'pointer',
-                              border: selectedDocument === doc.id ? '2px solid #4CAF50' : '1px solid #ddd',
-                              borderRadius: '8px',
-                              transition: 'all 0.3s ease'
+                              width: '100%',
+                              height: '100%',
+                              display: 'flex',
+                              flexDirection: 'column',
+                              alignItems: 'center',
+                              justifyContent: 'center',
+                              gap: '15px'
                             }}
                           >
-                            <div className="card-body text-center p-4">
-                              <img
-                                src={doc.icon}
-                                alt={doc.title}
-                                style={{ 
-                                  width: '48px', 
-                                  height: '48px', 
-                                  marginBottom: '1rem',
-                                  
-                                }}
-                              />
-                              <h5 className="card-title">{doc.title}</h5>
-                            </div>
+                            <img
+                              src={doc.icon}
+                              alt={doc.title}
+                              style={{ 
+                                width: '40px', 
+                                height: '40px',
+                                objectFit: 'contain',
+                                pointerEvents: 'none'
+                              }}
+                            />
+                            <h5 
+                              style={{
+                                margin: 0,
+                                fontSize: '14px',
+                                fontWeight: '500',
+                                color: '#2D3748',
+                                textAlign: 'center',
+                                pointerEvents: 'none'
+                              }}
+                            >
+                              {doc.title}
+                            </h5>
                           </div>
                         </div>
-                      ))}
-                    </div>
+                      </div>
+                    ))}
+                  </div>
 
-                    <div className="text-end mt-5">
-                      <div className="d-flex justify-content-between align-items-center">
-                        <Link href="/forms2" className="text-decoration-none">
-                          <span
-                            className="btn"
-                            style={{ 
-                              backgroundColor: "#274171",
-                              color: 'white',
-                              padding: '10px 30px',
-                              display: 'inline-flex',
-                              alignItems: 'center',
-                              gap: '8px'
-                            }}
-                          >
-                            <i className="fa fa-arrow-left"></i> Back
-                          </span>
-                        </Link>
-                        <button
-                          onClick={handleNext}
+                  {/* Form Actions */}
+                  <div className="actions">
+                    <div className="d-flex justify-content-between align-items-center mt-5" style={{ paddingBottom: '5px' }}>
+                      <Link href="/forms2" className="text-decoration-none">
+                        <span
                           className="btn"
-                          style={{
-                            backgroundColor: '#274171',
+                          style={{ 
+                            backgroundColor: "#274171",
                             color: 'white',
                             padding: '10px 30px',
                             display: 'inline-flex',
                             alignItems: 'center',
-                            gap: '8px'
+                            gap: '8px',
+                            marginRight: '465px',
+                            marginBottom: '-170px',
+                            position: 'relative',
+                            left: '20px'
                           }}
                         >
-                          Next <i className="fa fa-arrow-right"></i>
-                        </button>
-                      </div>
+                          <i className="fa fa-arrow-left"></i> Back
+                        </span>
+                      </Link>
+                      <span
+                        className="btn"
+                        style={{ 
+                          backgroundColor: "#274171",
+                          color: 'white',
+                          padding: '10px 30px',
+                          display: 'inline-flex',
+                          alignItems: 'center',
+                          gap: '8px',
+                          marginBottom: '-170px',
+                          cursor: 'pointer',
+                          position: 'relative',
+                          right: '20px'
+                        }}
+                        onClick={handleNext}
+                      >
+                        Next <i className="fa fa-arrow-right"></i>
+                      </span>
                     </div>
                   </div>
+                  
                 </div>
               </div>
             </div>
           </div>
         </div>
       </div>
+
       <div style={{ 
         width: '300px', 
         position: 'fixed', 

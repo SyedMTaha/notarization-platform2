@@ -38,150 +38,159 @@ const Form2step3 = () => {
   return (
     <div className="d-flex">
       <div className="flex-grow-1" style={{ marginRight: '320px' }}>
-        <div className="container py-4">
+        <div className="mt-4 ml-4">
+          <Link legacyBehavior href="/">
+            <a>
+              <img
+                src="/assets/images/logos/logo.png"
+                style={{ height: '70px' }}
+                alt="Logo"
+                title="Logo"
+              />
+            </a>
+          </Link>
+        </div>
+
+        <div className="container">
           <div className="row justify-content-center">
             <div className="col-lg-10">
-              <div className="multisteps-form__panel js-active" data-animation="slideHorz">
-                <Link legacyBehavior href="/">
-                  <a>
-                    <img
-                      src="/assets/images/logos/logo.png"
-                      style={{ height: '70px'  }}
-                      alt="Logo"
-                      title="Logo"
-                    />
-                  </a>
-                </Link>
+              <div className="form-card bg-white p-4 rounded-3">
+                <div className="text-center mb-5">
+                  <h2 style={{ color: '#2D3748', fontSize: '28px', fontWeight: '600' }}>{t('Signature & Notarization')}</h2>
+                  <p style={{ color: '#718096', fontSize: '16px', marginTop: '8px' }}>{t('Choose whether you want to connect to a Notary or use E-Sign')}</p>
+                </div>
 
-                <div className="wizard-forms section-padding">
-                  <div className="container">
-                    <div className="text-center mb-5">
-                      <h2 style={{ color: '#5756A2', fontSize: '2.5rem', fontWeight: '600' }}>{t('Signature & Notarization')}</h2>
-                      <p className="mt-2" style={{ fontSize: '1.1rem', color: '#666' }}>{t('Choose whether you want to connect to a Notary or use E-Sign')}</p>
-                    </div>
-
-                    <div className="row justify-content-center mb-5">
-                      <div className="col-md-8">
-                        <div className="d-flex justify-content-center gap-4">
-                          {/* E-Sign Option */}
-                          <div
-                            className={`card signing-option ${selectedOption === 'esign' ? 'selected' : ''}`}
-                            onClick={() => handleOptionSelect('esign')}
-                            style={{
-                              cursor: 'pointer',
-                              width: '200px',
-                              border: selectedOption === 'esign' ? '2px solid #4CAF50' : '1px solid #ddd',
-                              borderRadius: '8px',
-                              transition: 'all 0.3s ease',
-                              backgroundColor: selectedOption === 'esign' ? '#f8f9fa' : 'white'
-                            }}
-                          >
-                            <div className="card-body text-center p-4">
-                              <img
-                                src="/assets/v3/img/form-img11.png"
-                                alt="E-Sign"
-                                style={{ width: '48px', height: '48px', marginBottom: '1rem' }}
-                              />
-                              <h5 className="card-title">E-Sign</h5>
-                            </div>
-                          </div>
-
-                          {/* Connect to Notary Option */}
-                          <div
-                            className={`card signing-option ${selectedOption === 'notary' ? 'selected' : ''}`}
-                            onClick={() => handleOptionSelect('notary')}
-                            style={{
-                              cursor: 'pointer',
-                              width: '200px',
-                              border: selectedOption === 'notary' ? '2px solid #4CAF50' : '1px solid #ddd',
-                              borderRadius: '8px',
-                              transition: 'all 0.3s ease',
-                              backgroundColor: selectedOption === 'notary' ? '#f8f9fa' : 'white'
-                            }}
-                          >
-                            <div className="card-body text-center p-4">
-                              <img
-                                src="/assets/v3/img/form-img12.png"
-                                alt="Connect to a Notary"
-                                style={{ width: '48px', height: '48px', marginBottom: '1rem' }}
-                              />
-                              <h5 className="card-title">Connect to a Notary</h5>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-
-                    {/* Document Upload Section */}
-                    <div className="row justify-content-center">
-                      <div className="col-md-8">
-                        <div className="upload-section p-4" style={{ 
-                          border: '2px dashed #ddd',
+                <div className="row justify-content-center mb-5">
+                  <div className="col-md-8">
+                    <div className="d-flex justify-content-center gap-4">
+                      {/* E-Sign Option */}
+                      <div
+                        className={`card signing-option ${selectedOption === 'esign' ? 'selected' : ''}`}
+                        onClick={() => handleOptionSelect('esign')}
+                        style={{
+                          cursor: 'pointer',
+                          width: '200px',
+                          border: selectedOption === 'esign' ? '2px solid #274171' : '1px solid #E2E8F0',
                           borderRadius: '8px',
-                          backgroundColor: '#f8f9fa',
-                          minHeight: '300px',
-                          display: 'flex',
-                          flexDirection: 'column',
-                          alignItems: 'center',
-                          justifyContent: 'center'
-                        }}>
-                          <input
-                            type="file"
-                            id="document-upload"
-                            onChange={handleDocumentUpload}
-                            style={{ display: 'none' }}
-                            accept=".pdf,.doc,.docx"
+                          transition: 'all 0.3s ease',
+                          backgroundColor: selectedOption === 'esign' ? '#F7FAFC' : '#FFFFFF',
+                          boxShadow: '0 1px 3px rgba(0,0,0,0.1)'
+                        }}
+                      >
+                        <div className="card-body text-center p-4">
+                          <img
+                            src="/assets/v3/img/form-img11.png"
+                            alt="E-Sign"
+                            style={{ width: '48px', height: '48px', marginBottom: '1rem' }}
                           />
-                          <label htmlFor="document-upload" style={{ cursor: 'pointer', textAlign: 'center' }}>
-                            <img
-                              src="/assets/v3/img/form-img09.png"
-                              alt="Upload"
-                              style={{ width: '48px', height: '48px', marginBottom: '1rem' }}
-                            />
-                            <h5>Upload Document</h5>
-                            {uploadedDocument ? (
-                              <p className="text-success">File uploaded: {uploadedDocument.name}</p>
-                            ) : (
-                              <p className="text-muted">Click to upload or drag and drop your document here</p>
-                            )}
-                          </label>
+                          <h5 className="card-title">E-Sign</h5>
+                        </div>
+                      </div>
+
+                      {/* Connect to Notary Option */}
+                      <div
+                        className={`card signing-option ${selectedOption === 'notary' ? 'selected' : ''}`}
+                        onClick={() => handleOptionSelect('notary')}
+                        style={{
+                          cursor: 'pointer',
+                          width: '200px',
+                          border: selectedOption === 'notary' ? '2px solid #274171' : '1px solid #E2E8F0',
+                          borderRadius: '8px',
+                          transition: 'all 0.3s ease',
+                          backgroundColor: selectedOption === 'notary' ? '#F7FAFC' : '#FFFFFF',
+                          boxShadow: '0 1px 3px rgba(0,0,0,0.1)'
+                        }}
+                      >
+                        <div className="card-body text-center p-4">
+                          <img
+                            src="/assets/v3/img/form-img12.png"
+                            alt="Connect to a Notary"
+                            style={{ width: '48px', height: '48px', marginBottom: '1rem' }}
+                          />
+                          <h5 className="card-title">Connect to a Notary</h5>
                         </div>
                       </div>
                     </div>
+                  </div>
+                </div>
 
-                    <div className="text-end mt-5">
-                      <div className="d-flex justify-content-between align-items-center">
-                        <Link href="/form2-page2" className="text-decoration-none">
-                          <span
-                            className="btn"
-                            style={{ 
-                              backgroundColor: "#274171",
-                              color: 'white',
-                              padding: '10px 30px',
-                              display: 'inline-flex',
-                              alignItems: 'center',
-                              gap: '8px'
-                            }}
-                          >
-                            <i className="fa fa-arrow-left"></i> Back
-                          </span>
-                        </Link>
-                        <button
-                          onClick={handleNext}
-                          className="btn"
-                          style={{
-                            backgroundColor: '#274171',
-                            color: 'white',
-                            padding: '10px 30px',
-                            display: 'inline-flex',
-                            alignItems: 'center',
-                            gap: '8px'
-                          }}
-                        >
-                          Next <i className="fa fa-arrow-right"></i>
-                        </button>
-                      </div>
+                {/* Document Upload Section */}
+                <div className="row justify-content-center">
+                  <div className="col-md-8">
+                    <div className="upload-section p-4" style={{ 
+                      border: '1px solid #E2E8F0',
+                      borderRadius: '8px',
+                      backgroundColor: '#FFFFFF',
+                      minHeight: '300px',
+                      display: 'flex',
+                      flexDirection: 'column',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      boxShadow: '0 1px 3px rgba(0,0,0,0.1)'
+                    }}>
+                      <input
+                        type="file"
+                        id="document-upload"
+                        onChange={handleDocumentUpload}
+                        style={{ display: 'none' }}
+                        accept=".pdf,.doc,.docx"
+                      />
+                      <label htmlFor="document-upload" style={{ cursor: 'pointer', textAlign: 'center' }}>
+                        <img
+                          src="/assets/v3/img/form-img09.png"
+                          alt="Upload"
+                          style={{ width: '48px', height: '48px', marginBottom: '1rem' }}
+                        />
+                        <h5>Upload Document</h5>
+                        {uploadedDocument ? (
+                          <p className="text-success">File uploaded: {uploadedDocument.name}</p>
+                        ) : (
+                          <p style={{ color: '#718096', fontSize: '14px' }}>Click to upload or drag and drop your document here</p>
+                        )}
+                      </label>
                     </div>
+                  </div>
+                </div>
+
+                {/* Form Actions */}
+                <div className="actions">
+                  <div className="d-flex justify-content-between align-items-center mt-5">
+                    <Link href="/form2-page2" className="text-decoration-none">
+                      <span
+                        className="btn"
+                        style={{ 
+                          backgroundColor: "#274171",
+                          color: 'white',
+                          padding: '10px 30px',
+                          display: 'inline-flex',
+                          alignItems: 'center',
+                          gap: '8px',
+                          marginRight: '465px',
+                          marginBottom: '-170px',
+                          position: 'relative',
+                          left: '20px'
+                        }}
+                      >
+                        <i className="fa fa-arrow-left"></i> Back
+                      </span>
+                    </Link>
+                    <button
+                      onClick={handleNext}
+                      className="btn"
+                      style={{
+                        backgroundColor: '#274171',
+                        color: 'white',
+                        padding: '10px 30px',
+                        display: 'inline-flex',
+                        alignItems: 'center',
+                        gap: '8px',
+                        marginBottom: '-170px',
+                        position: 'relative',
+                        right: '20px'
+                      }}
+                    >
+                      Next <i className="fa fa-arrow-right"></i>
+                    </button>
                   </div>
                 </div>
               </div>
