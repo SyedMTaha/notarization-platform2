@@ -40,13 +40,13 @@ const SideBar = () => {
                 style={{ borderBottom: "1px solid #5872A3" }}
                 className=" text-white p-15  fs-4 "
               >
-                <Link href="/auth/signup">{t("sign-up")}</Link>
+                <Link href="/signUp">{t("sign-up")}</Link>
               </li>
               <li
                 style={{ borderBottom: "1px solid #5872A3" }}
                 className=" text-white p-15 fs-4 "
               >
-                <Link href="/auth/signin">{t("login")}</Link>
+                <Link href="/signIn">{t("login")}</Link>
               </li>
             </ul>
             <ul className="sidebar-menu">

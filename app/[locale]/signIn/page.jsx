@@ -8,14 +8,14 @@ import Nav from "react-bootstrap/Nav";
 import Link from "next/link";
 import { useTranslations } from "next-intl";
 import { useEffect, useState } from "react";
-import SignInMobileForm from "@/components/SignInMobileForm";
-import SignInEmailForm from "@/components/SignInEmailForm2";
+import SignInMobileForm from "@/components/SignInMobileForm2";
+import SignInEmailForm from "@/components/SignInEmailForm";
 
 const SignIn = () => {
   const t = useTranslations();
   const [formType, setFormType] = useState("mobile");
   useEffect(()=>{
-    console.log("")
+    console.log("Component Mounted")
   },[])
   return (
     <>
@@ -86,7 +86,7 @@ const SignIn = () => {
                   </p>
                   <p>
                     {t("need_account")}{" "}
-                    <Link href={"/auth/signup"} className="text-black-50 ms-1">
+                    <Link href={"/signUp"} className="text-black-50 ms-1">
                       <span
                         style={{
                           color: "#0C1134",

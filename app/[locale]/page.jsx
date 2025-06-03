@@ -28,8 +28,8 @@ const IndexOnePage = ({ params }) => {
   const sidebarLinks = [
     { href: "/how-it-works", labelKey: "how_it_works" },
     { href: "/about", labelKey: "about" },
-    { href: "/auth/signup", labelKey: "sign-up" },
-    { href: "/auth/signin", labelKey: "login" },
+    { href: "/signUp", labelKey: "sign-up" },
+    { href: "/signIn", labelKey: "login" },
     { href: "/contact", labelKey: "bottom" },
   ];
 
@@ -180,11 +180,9 @@ const IndexOnePage = ({ params }) => {
               </div>
               {/* Menu Button */}
               <div className="menu-btns">
-                <Link legacyBehavior href="/auth/signin">
-                  <a className="theme-btn style-three">
+                <Link href="/signIn" className="theme-btn style-three">
                     {t("navbar.pill-button")}{" "}
                     <i className="fas fa-angle-double-right" />
-                  </a>
                 </Link>
                 <LangSwitcher locale={locale} />
                 {/* menu sidebar */}
@@ -739,7 +737,7 @@ const IndexOnePage = ({ params }) => {
                     <i className="flaticon-target" />
                   </div>
                   <h4 className="w-100">{t("cta_project_title")}</h4>
-                  <Link legacyBehavior href="/auth/signup">
+                  <Link legacyBehavior href="/auth/signUp">
                     <a className="details-btn">
                       <i className="far fa-arrow-right" />
                     </a>
