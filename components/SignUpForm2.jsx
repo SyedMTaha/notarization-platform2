@@ -18,8 +18,7 @@ import { useRouter } from 'next/navigation';
 import { storeUserData } from '../firebase';
 import { createUserWithEmailAndPassword } from 'firebase/auth';
 import { auth } from "/firebase.js"
-import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
-import { storage } from '../firebase';
+
 
 
 const CustomCheckbox = forwardRef(
@@ -130,35 +129,41 @@ const SignUpForm = () => {
   };
 
   // Replace uploadFileToSupabase with uploadFileToFirebase
-  const uploadFileToFirebase = async (file, path) => {
-    if (!file) return null;
+  // REPLACE the entire uploadFileToFirebase function with this:
+const uploadFileToCloudinary = async (file, folder = '') => {
+  if (!file) return null;
 
-    try {
-      const fileExt = file.name.split('.').pop();
-      const fileName = `${Date.now()}.${fileExt}`;
-      const filePath = `${path}/${fileName}`;
-
-      // Create a reference to the file location in Firebase Storage
-      const storageRef = ref(storage, filePath);
-
-      // Set metadata including content type
-      const metadata = {
-        contentType: file.type,
-        'Access-Control-Allow-Origin': '*',
-        'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, HEAD'
-      };
-
-      // Upload the file with metadata
-      await uploadBytes(storageRef, file, metadata);
-
-      // Get the download URL
-      const downloadURL = await getDownloadURL(storageRef);
-      return downloadURL;
-    } catch (error) {
-      console.error('Error in file upload:', error);
-      throw error;
+  try {
+    const formData = new FormData();
+    formData.append('file', file);
+    formData.append('upload_preset', 'WiScribbles');
+    formData.append('cloud_name', 'dvhrg7bkp');
+    
+    // Optional: Add folder structure
+    if (folder) {
+      formData.append('folder', folder);
     }
-  };
+
+    const response = await fetch(
+      `https://api.cloudinary.com/v1_1/dvhrg7bkp/image/upload`,
+      {
+        method: 'POST',
+        body: formData,
+      }
+    );
+
+    if (!response.ok) {
+      throw new Error(`Upload failed: ${response.statusText}`);
+    }
+
+    const data = await response.json();
+    return data.secure_url; // Returns the Cloudinary URL
+    
+  } catch (error) {
+    console.error('Cloudinary upload error:', error);
+    throw error;
+  }
+};
 
   const onSubmit = async (data) => {
     try {
@@ -197,16 +202,15 @@ const SignUpForm = () => {
       }
 
       // Upload files to Firebase Storage
-      const identificationFileUrl = await uploadFileToFirebase(
+      const identificationFileUrl = await uploadFileToCloudinary(
         identificationFile,
         `users/${userCredential.user.uid}/identification`
       );
-
-      const certificateFileUrl = await uploadFileToFirebase(
+      
+      const certificateFileUrl = await uploadFileToCloudinary(
         notaryCertificateFile,
-        `users/${userCredential.user.uid}/certificate`
+        `users/${userCredential.user.uid}/certificates`
       );
-
       // Prepare user data with Firebase Storage URLs
       const userData = {
         uid: userCredential.user.uid,

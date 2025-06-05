@@ -18,8 +18,7 @@ import { useRouter } from 'next/navigation';
 import { storeUserData } from '../firebase';
 import { createUserWithEmailAndPassword } from 'firebase/auth';
 import { auth } from "/firebase.js"
-import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
-import { storage } from '../firebase';
+
 const CustomCheckbox = forwardRef(
   ({ label, name, onChange, onBlur, checked }, ref) => (
     <FormGroup controlId={name}>
@@ -127,29 +126,64 @@ const SignUpForm = () => {
     }
   };
 
-  // Replace uploadFileToSupabase with uploadFileToFirebase
-  const uploadFileToFirebase = async (file, path) => {
+  const uploadFileToCloudinary = async (file, folder = '') => {
     if (!file) return null;
 
     try {
-      const fileExt = file.name.split('.').pop();
-      const fileName = `${Date.now()}.${fileExt}`;
-      const filePath = `${path}/${fileName}`;
+      const formData = new FormData();
+      formData.append('file', file);
+      formData.append('upload_preset', 'WiScribbles');
+      formData.append('cloud_name', 'dvhrg7bkp');
 
-      // Create a reference to the file location in Firebase Storage
-      const storageRef = ref(storage, filePath);
+      // Optional: Add folder structure
+      if (folder) {
+        formData.append('folder', folder);
+      }
 
-      // Upload the file
-      await uploadBytes(storageRef, file);
+      const response = await fetch(
+        `https://api.cloudinary.com/v1_1/dvhrg7bkp/image/upload`,
+        {
+          method: 'POST',
+          body: formData,
+        }
+      );
 
-      // Get the download URL
-      const downloadURL = await getDownloadURL(storageRef);
-      return downloadURL;
+      if (!response.ok) {
+        throw new Error(`Upload failed: ${response.statusText}`);
+      }
+
+      const data = await response.json();
+      return data.secure_url; // Returns the Cloudinary URL
+
     } catch (error) {
-      console.error('Error in file upload:', error);
+      console.error('Cloudinary upload error:', error);
       throw error;
     }
   };
+
+  // Replace uploadFileToSupabase with uploadFileToFirebase
+  // const uploadFileToFirebase = async (file, path) => {
+  //   if (!file) return null;
+
+  //   try {
+  //     const fileExt = file.name.split('.').pop();
+  //     const fileName = `${Date.now()}.${fileExt}`;
+  //     const filePath = `${path}/${fileName}`;
+
+  //     // Create a reference to the file location in Firebase Storage
+  //     const storageRef = ref(storage, filePath);
+
+  //     // Upload the file
+  //     await uploadBytes(storageRef, file);
+
+  //     // Get the download URL
+  //     const downloadURL = await getDownloadURL(storageRef);
+  //     return downloadURL;
+  //   } catch (error) {
+  //     console.error('Error in file upload:', error);
+  //     throw error;
+  //   }
+  // };
 
   const onSubmit = async (data) => {
     try {
@@ -188,17 +222,20 @@ const SignUpForm = () => {
       }
 
       // Upload files to Firebase Storage
-      const identificationFileUrl = await uploadFileToFirebase(
+      // Replace this section in your onSubmit function:
+
+      // Upload files to Cloudinary instead of Firebase Storage
+      const identificationFileUrl = await uploadFileToCloudinary(
         identificationFile,
         `users/${userCredential.user.uid}/identification`
       );
 
-      const certificateFileUrl = await uploadFileToFirebase(
+      const certificateFileUrl = await uploadFileToCloudinary(
         notaryCertificateFile,
-        `users/${userCredential.user.uid}/certificate`
+        `users/${userCredential.user.uid}/certificates`
       );
 
-      // Prepare user data with Firebase Storage URLs
+      // Rest of your userData object remains the same
       const userData = {
         uid: userCredential.user.uid,
         signUpAs: data.signUpAs,
@@ -208,8 +245,8 @@ const SignUpForm = () => {
         payment_method: data.payment_method,
         card_number: data.card_number,
         expiry_date: data.expiry_date,
-        identificationUrl: identificationFileUrl,
-        certificateUrl: certificateFileUrl,
+        identificationUrl: identificationFileUrl, // Now Cloudinary URL
+        certificateUrl: certificateFileUrl,       // Now Cloudinary URL
         createdAt: new Date().toISOString()
       };
 

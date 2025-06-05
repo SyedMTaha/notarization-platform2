@@ -24,6 +24,42 @@ const Form2step1 = ({ totalSteps }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [identificationImage, setIdentificationImage] = useState(null);
 
+  // Add Cloudinary upload function
+  const uploadFileToCloudinary = async (file, folder = '') => {
+    if (!file) return null;
+
+    try {
+      const formData = new FormData();
+      formData.append('file', file);
+      formData.append('upload_preset', 'WiScribbles');
+      formData.append('cloud_name', 'dvhrg7bkp');
+
+      // Optional: Add folder structure
+      if (folder) {
+        formData.append('folder', folder);
+      }
+
+      const response = await fetch(
+        `https://api.cloudinary.com/v1_1/dvhrg7bkp/image/upload`,
+        {
+          method: 'POST',
+          body: formData,
+        }
+      );
+
+      if (!response.ok) {
+        throw new Error(`Upload failed: ${response.statusText}`);
+      }
+
+      const data = await response.json();
+      return data.secure_url; // Returns the Cloudinary URL
+
+    } catch (error) {
+      console.error('Cloudinary upload error:', error);
+      throw error;
+    }
+  };
+
   // Initialize form steps
   useFormSteps();
 
@@ -53,26 +89,42 @@ const Form2step1 = ({ totalSteps }) => {
       return;
     }
 
-    const imgUrl = "abc";
-    const payload = {
-      ...data,
-      identificationImage: imgUrl,
-    };
+    try {
+      // Upload image to Cloudinary
+      const imageUrl = await uploadFileToCloudinary(identificationImage, 'identification');
+      
+      if (!imageUrl) {
+        throw new Error('Failed to upload image');
+      }
 
-    console.log("validated data →", payload);
-    console.log("All data", getValues());
-    router.push('/form2-page2');
+      const payload = {
+        ...data,
+        identificationImage: imageUrl,
+      };
+
+      console.log("validated data →", payload);
+      console.log("All data", getValues());
+      router.push('/form2-page2');
+    } catch (error) {
+      console.error('Error uploading image:', error);
+      setError("identificationImage", {
+        type: "manual",
+        message: t("form2_error_uploading_image"),
+      });
+    }
   };
 
-  const readURL = (event, id) => {
-    const selectedFile = event.target.files[0];
-    if (selectedFile) {
+  const readURL = (event, previewId) => {
+    const file = event.target.files[0];
+    if (file) {
       const reader = new FileReader();
-      reader.onload = () => {
-        setIdentificationImage(selectedFile);
-        document.getElementById(id).setAttribute("src", reader.result);
+      reader.onload = (e) => {
+        const previewImg = document.getElementById(previewId);
+        if (previewImg) {
+          previewImg.src = e.target.result;
+        }
       };
-      reader.readAsDataURL(selectedFile);
+      reader.readAsDataURL(file);
     }
   };
 
@@ -402,6 +454,7 @@ const Form2step1 = ({ totalSteps }) => {
                         >
                           <div className="preview-container">
                             <img
+                              id="preview-image"
                               src={identificationImage ? URL.createObjectURL(identificationImage) : "/assets/v3/img/pf1.png"}
                               alt="Preview"
                               style={{
@@ -444,7 +497,15 @@ const Form2step1 = ({ totalSteps }) => {
                             onChange={(e) => {
                               const file = e.target.files[0];
                               if (file) {
+                                if (file.size > 5 * 1024 * 1024) { // 5MB limit
+                                  setError("identificationImage", {
+                                    type: "manual",
+                                    message: t("form2_image_too_large"),
+                                  });
+                                  return;
+                                }
                                 setIdentificationImage(file);
+                                readURL(e, "preview-image"); // Make sure this matches your preview image ID
                               }
                             }}
                             {...register("identificationImage")}

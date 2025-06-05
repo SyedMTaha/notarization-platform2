@@ -11,6 +11,7 @@ const Form2step4 = () => {
   const router = useRouter();
   const t = useTranslations();
   const [paymentMethod, setPaymentMethod] = useState('credit-card');
+  const [errors, setErrors] = useState({});
   const [formData, setFormData] = useState({
     cardNumber: '',
     cardholderName: '',
@@ -34,11 +35,59 @@ const Form2step4 = () => {
       ...prev,
       [name]: value
     }));
+    // Clear error when user types
+    if (errors[name]) {
+      setErrors(prev => ({
+        ...prev,
+        [name]: ''
+      }));
+    }
+  };
+
+  const validateForm = () => {
+    const newErrors = {};
+    
+    // Required fields for credit card payment
+    if (paymentMethod === 'credit-card') {
+      if (!formData.cardNumber) newErrors.cardNumber = 'Card number is required';
+      if (!formData.cardholderName) newErrors.cardholderName = 'Cardholder name is required';
+      if (!formData.expiryMonth) newErrors.expiryMonth = 'Expiry month is required';
+      if (!formData.expiryYear) newErrors.expiryYear = 'Expiry year is required';
+      if (!formData.cvv) newErrors.cvv = 'CVV is required';
+    }
+
+    // Required billing address fields
+    if (!formData.firstName) newErrors.firstName = 'First name is required';
+    if (!formData.lastName) newErrors.lastName = 'Last name is required';
+    if (!formData.email) newErrors.email = 'Email is required';
+    if (!formData.phone) newErrors.phone = 'Phone is required';
+    if (!formData.country) newErrors.country = 'Country is required';
+    if (!formData.address) newErrors.address = 'Address is required';
+    if (!formData.city) newErrors.city = 'City is required';
+    if (!formData.zipCode) newErrors.zipCode = 'ZIP code is required';
+
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
   };
 
   const handleNext = () => {
     // Add validation here
-    router.push('/form2-page5');
+    if (validateForm()) {
+      router.push('/video-call');
+    }
+  };
+
+  const handleBack = (e) => {
+    e.preventDefault(); // Prevent default link behavior
+    router.push('/form2-page3');
+  };
+
+  const renderError = (fieldName) => {
+    return errors[fieldName] ? (
+      <div style={{ color: '#E53E3E', fontSize: '14px', marginTop: '4px' }}>
+        {errors[fieldName]}
+      </div>
+    ) : null;
   };
 
   return (
@@ -137,6 +186,7 @@ const Form2step4 = () => {
                               fontSize: '14px'
                             }}
                           />
+                          {renderError('cardNumber')}
                         </div>
                         <div className="col-12">
                           <label className="form-label" style={{ color: '#4A5568', fontWeight: '500' }}>Cardholder Name</label>
@@ -154,6 +204,7 @@ const Form2step4 = () => {
                               fontSize: '14px'
                             }}
                           />
+                          {renderError('cardholderName')}
                         </div>
                         <div className="col-md-4">
                           <label className="form-label" style={{ color: '#4A5568', fontWeight: '500' }}>Expiry Month</label>
@@ -171,6 +222,7 @@ const Form2step4 = () => {
                               fontSize: '14px'
                             }}
                           />
+                          {renderError('expiryMonth')}
                         </div>
                         <div className="col-md-4">
                           <label className="form-label" style={{ color: '#4A5568', fontWeight: '500' }}>Expiry Year</label>
@@ -188,6 +240,7 @@ const Form2step4 = () => {
                               fontSize: '14px'
                             }}
                           />
+                          {renderError('expiryYear')}
                         </div>
                         <div className="col-md-4">
                           <label className="form-label" style={{ color: '#4A5568', fontWeight: '500' }}>CVV</label>
@@ -205,6 +258,7 @@ const Form2step4 = () => {
                               fontSize: '14px'
                             }}
                           />
+                          {renderError('cvv')}
                         </div>
                       </div>
                     </div>
@@ -237,6 +291,7 @@ const Form2step4 = () => {
                             fontSize: '14px'
                           }}
                         />
+                        {renderError('firstName')}
                       </div>
                       <div className="col-md-6">
                         <label className="form-label" style={{ color: '#4A5568', fontWeight: '500' }}>Last Name</label>
@@ -253,6 +308,7 @@ const Form2step4 = () => {
                             fontSize: '14px'
                           }}
                         />
+                        {renderError('lastName')}
                       </div>
                       <div className="col-md-6">
                         <label className="form-label" style={{ color: '#4A5568', fontWeight: '500' }}>Email Address</label>
@@ -269,6 +325,7 @@ const Form2step4 = () => {
                             fontSize: '14px'
                           }}
                         />
+                        {renderError('email')}
                       </div>
                       <div className="col-md-6">
                         <label className="form-label" style={{ color: '#4A5568', fontWeight: '500' }}>Phone</label>
@@ -285,6 +342,7 @@ const Form2step4 = () => {
                             fontSize: '14px'
                           }}
                         />
+                        {renderError('phone')}
                       </div>
                       <div className="col-md-6">
                         <label className="form-label" style={{ color: '#4A5568', fontWeight: '500' }}>Country</label>
@@ -298,6 +356,7 @@ const Form2step4 = () => {
                             fontSize: '14px'
                           }}
                         />
+                        {renderError('country')}
                       </div>
                       <div className="col-md-6">
                         <label className="form-label" style={{ color: '#4A5568', fontWeight: '500' }}>Province/State</label>
@@ -314,6 +373,7 @@ const Form2step4 = () => {
                             fontSize: '14px'
                           }}
                         />
+                        {renderError('province')}
                       </div>
                       <div className="col-12">
                         <label className="form-label" style={{ color: '#4A5568', fontWeight: '500' }}>Address</label>
@@ -330,6 +390,7 @@ const Form2step4 = () => {
                             fontSize: '14px'
                           }}
                         />
+                        {renderError('address')}
                       </div>
                       <div className="col-md-6">
                         <label className="form-label" style={{ color: '#4A5568', fontWeight: '500' }}>City</label>
@@ -346,6 +407,7 @@ const Form2step4 = () => {
                             fontSize: '14px'
                           }}
                         />
+                        {renderError('city')}
                       </div>
                       <div className="col-md-6">
                         <label className="form-label" style={{ color: '#4A5568', fontWeight: '500' }}>ZIP Code</label>
@@ -362,6 +424,7 @@ const Form2step4 = () => {
                             fontSize: '14px'
                           }}
                         />
+                        {renderError('zipCode')}
                       </div>
                     </div>
                   </div>
@@ -370,25 +433,25 @@ const Form2step4 = () => {
                 {/* Form Actions */}
                 <div className="actions">
                   <div className="d-flex justify-content-between align-items-center mt-5" style={{ paddingBottom: '5px' }}>
-                    <Link href="/form2-page3" className="text-decoration-none">
-                      <span
-                        className="btn"
-                        style={{ 
-                          backgroundColor: "#274171",
-                          color: 'white',
-                          padding: '10px 30px',
-                          display: 'inline-flex',
-                          alignItems: 'center',
-                          gap: '8px',
-                          marginRight: '465px',
-                          marginBottom: '-170px',
-                          position: 'relative',
-                          left: '20px'
-                        }}
-                      >
-                        <i className="fa fa-arrow-left"></i> Back
-                      </span>
-                    </Link>
+                    <button
+                      onClick={handleBack}
+                      className="btn"
+                      style={{ 
+                        backgroundColor: "#274171",
+                        color: 'white',
+                        padding: '10px 30px',
+                        display: 'inline-flex',
+                        alignItems: 'center',
+                        gap: '8px',
+                        marginRight: '465px',
+                        marginBottom: '-170px',
+                        position: 'relative',
+                        left: '20px',
+                        border: 'none'
+                      }}
+                    >
+                      <i className="fa fa-arrow-left"></i> Back
+                    </button>
                     <button
                       onClick={handleNext}
                       className="btn"
@@ -401,7 +464,8 @@ const Form2step4 = () => {
                         gap: '8px',
                         marginBottom: '-170px',
                         position: 'relative',
-                        right: '20px'
+                        right: '20px',
+                        border: 'none'
                       }}
                     >
                       Next <i className="fa fa-arrow-right"></i>
