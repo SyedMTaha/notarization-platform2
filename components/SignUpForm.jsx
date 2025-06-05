@@ -247,7 +247,8 @@ const SignUpForm = () => {
         expiry_date: data.expiry_date,
         identificationUrl: identificationFileUrl, // Now Cloudinary URL
         certificateUrl: certificateFileUrl,       // Now Cloudinary URL
-        createdAt: new Date().toISOString()
+        createdAt: new Date().toISOString(),
+        status: "pending"
       };
 
       // Store user data in Firebase

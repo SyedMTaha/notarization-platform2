@@ -70,10 +70,27 @@ const Form2step4 = () => {
     return Object.keys(newErrors).length === 0;
   };
 
-  const handleNext = () => {
-    // Add validation here
+  const handleNext = async () => {
     if (validateForm()) {
-      router.push('/video-call');
+      try {
+        if (paymentMethod === 'paypal') {
+          // Handle Stripe/PayPal payment
+          const stripeUrl = await handleStripe();
+          if (stripeUrl) {
+            window.location.href = stripeUrl; // Redirect to Stripe onboarding
+            return;
+          }
+        } else {
+          // For credit card payment, proceed to video call
+          router.push('/video-call');
+        }
+      } catch (error) {
+        console.error('Payment error:', error);
+        setErrors(prev => ({
+          ...prev,
+          payment: 'Payment processing failed. Please try again.'
+        }));
+      }
     }
   };
 
@@ -88,6 +105,28 @@ const Form2step4 = () => {
         {errors[fieldName]}
       </div>
     ) : null;
+  };
+
+  const handleStripe = async () => {
+    try {
+      const response = await fetch('/api/stripe', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        }
+      });
+
+      if (!response.ok) {
+        const error = await response.json();
+        throw new Error(error.error || 'Payment processing failed');
+      }
+
+      const data = await response.json();
+      return data.url;
+    } catch (err) {
+      console.error('Stripe error:', err);
+      throw err;
+    }
   };
 
   return (
@@ -156,6 +195,11 @@ const Form2step4 = () => {
                       </div>
                     </div>
                   </div>
+                  {errors.payment && (
+                    <div className="mt-2" style={{ color: '#E53E3E', fontSize: '14px' }}>
+                      {errors.payment}
+                    </div>
+                  )}
                 </div>
 
                 {/* Credit Card Details */}
