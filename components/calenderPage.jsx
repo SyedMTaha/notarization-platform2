@@ -2,6 +2,7 @@
 
 import { useState } from "react"
 import { ArrowLeft } from "lucide-react"
+import Link from "next/link"
 
 // Sample meeting data
 const meetings = [
@@ -396,6 +397,7 @@ export default function CalendarPage() {
                 </svg>
               </button>
 
+              <Link href="/video-call">
               <button style={styles.newMeetingButton}>
                 <svg
                   width="16"
@@ -409,6 +411,7 @@ export default function CalendarPage() {
                 </svg>
                 New Meeting
               </button>
+              </Link>
             </div>
           </div>
 

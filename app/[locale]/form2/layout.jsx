@@ -1,9 +1,37 @@
 'use client';
 
-import React from 'react';
+import React, { useEffect } from 'react';
 import { FiUser, FiFileText, FiEdit, FiCreditCard, FiDownload } from 'react-icons/fi';
+import useForm2store from '@/store/form2store';
+import { useForm } from 'react-hook-form';
+import { yupResolver } from '@hookform/resolvers/yup';
+import { useTranslations } from 'next-intl';
 
 const FormLayout = ({ children }) => {
+  const { createSchema, setMethods } = useForm2store();
+  const t = useTranslations();
+
+  const methods = useForm({
+    resolver: yupResolver(createSchema(t)),
+    mode: "onTouched",
+    shouldUnregister: false,
+    defaultValues: {
+      // Default values for step 1
+      day: new Date().getDate(),
+      month: new Date().getMonth() + 1,
+      year: new Date().getFullYear(),
+      // Default values for step 2
+      paymentMethod: "CreditCard",
+      // Default values for step 3
+      method: "download",
+      signatureMethod: "E-Sign",
+    },
+  });
+
+  useEffect(() => {
+    setMethods(methods);
+  }, [methods, setMethods]);
+
   const steps = [
     { icon: <FiUser size={20} />, label: 'Personal information' },
     { icon: <FiFileText size={20} />, label: 'Document Selection' },
@@ -27,7 +55,7 @@ const FormLayout = ({ children }) => {
       </div>
       
       {/* Right Sidebar */}
-      <div style={{ width: '300px', backgroundColor: '#09123A', height: '100vh', position: 'sticky', top: 0 }}>
+      {/* <div style={{ width: '300px', backgroundColor: '#09123A', height: '100vh', position: 'sticky', top: 0 }}>
         <div className="d-flex flex-column h-100 text-white p-4">
           {steps.map((step, index) => (
             <div key={index} className="d-flex align-items-center mb-4">
@@ -74,7 +102,7 @@ const FormLayout = ({ children }) => {
           ))}
           
           {/* Progress percentage */}
-          <div className="mt-auto">
+          {/* <div className="mt-auto">
             <p className="mb-2">{currentStep} to {steps.length} step</p>
             <h3 className="mb-2">{Math.round((currentStep - 1) / (steps.length - 1) * 100)}% to complete</h3>
             <div className="progress" style={{ height: '8px' }}>
@@ -86,10 +114,9 @@ const FormLayout = ({ children }) => {
                 }}
               />
             </div>
-          </div>
+          </div> */}
         </div>
-      </div>
-    </div>
+        
   );
 };
 

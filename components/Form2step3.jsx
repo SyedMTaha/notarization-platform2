@@ -23,6 +23,41 @@ const Form2step3 = () => {
     }
   };
 
+  const uploadFileToCloudinary = async (file, folder = '') => {
+    if (!file) return null;
+
+    try {
+      const formData = new FormData();
+      formData.append('file', file);
+      formData.append('upload_preset', 'WiScribbles');
+      formData.append('cloud_name', 'dvhrg7bkp');
+
+      // Optional: Add folder structure
+      if (folder) {
+        formData.append('folder', folder);
+      }
+
+      const response = await fetch(
+        `https://api.cloudinary.com/v1_1/dvhrg7bkp/raw/upload`,
+        {
+          method: 'POST',
+          body: formData,
+        }
+      );
+
+      if (!response.ok) {
+        throw new Error(`Upload failed: ${response.statusText}`);
+      }
+
+      const data = await response.json();
+      return data.secure_url; // Returns the Cloudinary URL
+
+    } catch (error) {
+      console.error('Cloudinary upload error:', error);
+      throw error;
+    }
+  };
+
   const handleNext = () => {
     if (!selectedOption) {
       alert('Please select a signing option to proceed');

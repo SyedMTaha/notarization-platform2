@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useRef, useState } from "react";
+import React, { useRef, useState, useEffect } from "react";
 import Link from "next/link";
 import { useRouter } from 'next/navigation';
 import { Controller } from "react-hook-form";
@@ -10,6 +10,9 @@ import CountrySelect from "@/components/CountrySelect";
 import useForm2store from "@/store/form2store";
 import { useFormSteps } from "@/hooks/useFormSteps";
 import FormProgressSidebar from './FormProgressSidebar';
+import { saveFormData, getFormData, uploadToCloudinary } from '@/utils/formStorage';
+
+import {  Upload } from 'lucide-react'
 
 const identificationOptions = [
   { value: "", label: "form2_select_identification_type" },
@@ -23,40 +26,105 @@ const Form2step1 = ({ totalSteps }) => {
   const t = useTranslations();
   const [isOpen, setIsOpen] = useState(false);
   const [identificationImage, setIdentificationImage] = useState(null);
+  const [imagePreview, setImagePreview] = useState(null);
+  const [formData, setFormData] = useState({
+    firstName: '',
+    middleName: '',
+    lastName: '',
+    dateOfBirth: '',
+    countryOfResidence: '',
+    email: '',
+    identificationType: '',
+    dateOfIssue: '',
+    licenseIdNumber: '',
+    jurisdictionOfDocumentUse: '',
+    identificationImage: null,
+    identificationImageUrl: '',
+  });
+  const [errors, setErrors] = useState({});
+  const [isUploading, setIsUploading] = useState(false);
 
-  // Add Cloudinary upload function
-  const uploadFileToCloudinary = async (file, folder = '') => {
-    if (!file) return null;
+  // Load saved data when component mounts
+  useEffect(() => {
+    const savedData = getFormData().step1;
+    if (savedData) {
+      setFormData(prev => ({
+        ...prev,
+        ...savedData
+      }));
+    }
+  }, []);
 
-    try {
-      const formData = new FormData();
-      formData.append('file', file);
-      formData.append('upload_preset', 'WiScribbles');
-      formData.append('cloud_name', 'dvhrg7bkp');
+  // Save data when it changes
+  useEffect(() => {
+    const dataToSave = { ...formData };
+    delete dataToSave.identificationImage; // Don't save the file object
+    saveFormData(1, dataToSave);
+  }, [formData]);
 
-      // Optional: Add folder structure
-      if (folder) {
-        formData.append('folder', folder);
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setFormData(prev => ({
+      ...prev,
+      [name]: value
+    }));
+    // Clear error when user types
+    if (errors[name]) {
+      setErrors(prev => ({
+        ...prev,
+        [name]: ''
+      }));
+    }
+  };
+
+  const handleImageUpload = async (event) => {
+    const file = event.target.files?.[0];
+    if (file) {
+      if (file.size > 5 * 1024 * 1024) {
+        setErrors(prev => ({ ...prev, identificationImage: 'Image size must be less than 5MB' }));
+        return;
       }
 
-      const response = await fetch(
-        `https://api.cloudinary.com/v1_1/dvhrg7bkp/image/upload`,
-        {
-          method: 'POST',
-          body: formData,
+      setIsUploading(true);
+      try {
+        // Upload to Cloudinary
+        const imageUrl = await uploadToCloudinary(file, 'identification');
+        
+        // Update form data with file and URL
+        setFormData(prev => ({
+          ...prev,
+          identificationImage: file,
+          identificationImageUrl: imageUrl
+        }));
+
+        // Clear error
+        if (errors.identificationImage) {
+          setErrors(prev => ({ ...prev, identificationImage: '' }));
         }
-      );
-
-      if (!response.ok) {
-        throw new Error(`Upload failed: ${response.statusText}`);
+      } catch (error) {
+        console.error('Error uploading image:', error);
+        setErrors(prev => ({ ...prev, identificationImage: 'Failed to upload image. Please try again.' }));
+      } finally {
+        setIsUploading(false);
       }
+    }
+  };
 
-      const data = await response.json();
-      return data.secure_url; // Returns the Cloudinary URL
+  const validateForm = () => {
+    const newErrors = {};
+    
+    // Add your validation logic here
+    if (!formData.firstName) newErrors.firstName = 'First name is required';
+    if (!formData.lastName) newErrors.lastName = 'Last name is required';
+    // ... add more validation rules
 
-    } catch (error) {
-      console.error('Cloudinary upload error:', error);
-      throw error;
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
+  };
+
+  const handleNext = () => {
+    if (validateForm()) {
+      router.push('/form2-page2');
     }
   };
 
@@ -73,7 +141,7 @@ const Form2step1 = ({ totalSteps }) => {
     setError,
     trigger,
     getValues,
-    formState: { errors },
+   
   } = methods;
 
   const nextHandler = async () => {
@@ -89,21 +157,35 @@ const Form2step1 = ({ totalSteps }) => {
       return;
     }
 
+    const formValues = getValues();
+    if (!formValues.identificationType) {
+      setError("identificationType", {
+        type: "manual",
+        message: t("form2_identification_type_required"),
+      });
+      return;
+    }
+
     try {
       // Upload image to Cloudinary
-      const imageUrl = await uploadFileToCloudinary(identificationImage, 'identification');
+      const imageUrl = await uploadToCloudinary(identificationImage, 'identification');
       
       if (!imageUrl) {
         throw new Error('Failed to upload image');
       }
 
+      // Ensure all required fields are present
       const payload = {
         ...data,
         identificationImage: imageUrl,
+        document_info: {
+          ...data.document_info,
+          documentType: formValues.identificationType || 'other', // Provide a default value
+        }
       };
 
       console.log("validated data →", payload);
-      console.log("All data", getValues());
+      console.log("All data", formValues);
       router.push('/form2-page2');
     } catch (error) {
       console.error('Error uploading image:', error);
@@ -417,7 +499,7 @@ const Form2step1 = ({ totalSteps }) => {
                   </div>
 
                   {/* Upload Image Field */}
-                  <Row className="mb-3 flex-nowrap align-items-center">
+                  {/* <Row className="mb-3 flex-nowrap align-items-center">
                     <Col className="col-3">
                     <span style={{
                         fontSize: "20px",
@@ -427,8 +509,8 @@ const Form2step1 = ({ totalSteps }) => {
                         marginRight: "15px",
                         marginBottom: "120px"
                       }}>
-                        {t("form2_upload_image")}
-                        </span>
+                          {t("form2_upload_image")}
+                          </span>
                     </Col>
 
                     <Col className="col-6">
@@ -535,53 +617,88 @@ const Form2step1 = ({ totalSteps }) => {
                         )}
                       </div>
                     </Col>
-                  </Row>
+                  </Row> */}
+
+                   {/* Image Upload */}
+                <div>
+                  <div className="flex items-start space-x-6">
+                    <div className="flex-shrink-0">
+                      <label className="block text-lg font-medium text-gray-700 mb-4">
+                        Upload Image *
+                      </label>
+                    </div>
+                    <div className="flex-1 ">
+                      <div
+                        onClick={() => document.getElementById('identification-image')?.click()}
+                        className="border-2 border-gray-900 rounded-lg p-3 cursor-pointer bg-white shadow-sm hover:shadow-md transition-all duration-200 text-center"
+                      >
+                       
+                        <div className="bg-[#274171] text-white px-3 py-2 rounded text-xs font-medium inline-flex items-center space-x-2">
+                          <Upload className="w-3 h-3" />
+                          <span>{formData.identificationImage ? 'Change Image' : 'Upload ID'}</span>
+                        </div>
+                        <input
+                          id="identification-image"
+                          type="file"
+                          accept="image/*"
+                          onChange={handleImageUpload}
+                          className="hidden"
+                        />
+                      </div>
+                      {formData.identificationImage && (
+                        <p className="mt-2 text-sm text-gray-600">{formData.identificationImage.name}</p>
+                      )}
+                      {errors.identificationImage && <p className={errorClassName}>{errors.identificationImage}</p>}
+                    </div>
+                  </div>
+                </div>
+                
+              </div>
                   {/* Upload Image Field */}
 
 
-                </div>
-
-                {/* Form Actions */}
-                <div className="actions" style={{ marginTop: '220px' }}>
-                  <div className="d-flex justify-content-between align-items-center">
-                    
-                      <span
-                        className="btn"
-                        style={{ 
-                          backgroundColor: "#274171",
-                          color: 'white',
-                          padding: '10px 30px',
-                          display: 'inline-flex',
-                          alignItems: 'center',
-                          gap: '8px',
-                          marginRight: '465px',
-                          marginBottom: '-70px',
-                        }}
-                      >
-                        <i className="fa fa-arrow-left"></i> Back
-                      </span>
-                    
-                    <Link href="/form2-page2" className="text-decoration-none">
-                      <span
-                        className="btn"
-                        style={{ 
-                          backgroundColor: "#274171",
-                          color: 'white',
-                          padding: '10px 30px',
-                          display: 'inline-flex',
-                          alignItems: 'center',
-                          gap: '8px',
-                          marginBottom: '-70px',
-                        }}
-                        onClick={nextHandler}
-                      >
-                        Next <i className="fa fa-arrow-right"></i>
-                      </span>
-                    </Link>
-                  </div>
-                </div>
-
               </div>
+
+              {/* Form Actions */}
+              <div className="actions" style={{ marginTop: '220px' }}>
+                <div className="d-flex justify-content-between align-items-center">
+                  
+                    <span
+                      className="btn"
+                      style={{ 
+                        backgroundColor: "#274171",
+                        color: 'white',
+                        padding: '10px 30px',
+                        display: 'inline-flex',
+                        alignItems: 'center',
+                        gap: '8px',
+                        marginRight: '465px',
+                        marginBottom: '-90px',
+                      }}
+                    >
+                      <i className="fa fa-arrow-left"></i> Back
+                    </span>
+                  
+                  <Link href="/form2-page2" className="text-decoration-none">
+                    <span
+                      className="btn"
+                      style={{ 
+                        backgroundColor: "#274171",
+                        color: 'white',
+                        padding: '10px 30px',
+                        display: 'inline-flex',
+                        alignItems: 'center',
+                        gap: '8px',
+                        marginBottom: '-90px',
+                      }}
+                      onClick={nextHandler}
+                    >
+                      Next <i className="fa fa-arrow-right"></i>
+                    </span>
+                  </Link>
+                </div>
+              </div>
+
             </div>
           </div>
         </div>

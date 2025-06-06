@@ -1,46 +1,108 @@
 "use client";
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { useTranslations } from 'next-intl';
 import FormProgressSidebar from './FormProgressSidebar';
+import { toast } from 'react-hot-toast';
+import { getFormData, saveFormData, clearFormData } from '@/utils/formStorage';
 
 const Form2step5 = () => {
   const router = useRouter();
   const t = useTranslations();
-  const [deliveryMethod, setDeliveryMethod] = useState(null);
+  const [deliveryMethod, setDeliveryMethod] = useState('download');
   const [email, setEmail] = useState('');
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
-  const handleMethodSelect = (method) => {
-    setDeliveryMethod(method);
-  };
-
-  const handleSubmit = () => {
-    if (!deliveryMethod) {
-      alert('Please select a delivery method');
-      return;
+  // Load saved data when component mounts
+  useEffect(() => {
+    const savedData = getFormData().step5;
+    if (savedData) {
+      setDeliveryMethod(savedData.deliveryMethod || 'download');
+      setEmail(savedData.email || '');
     }
+  }, []);
+
+  // Save data when values change
+  useEffect(() => {
+    saveFormData(5, {
+      deliveryMethod,
+      email: deliveryMethod === 'email' ? email : ''
+    });
+  }, [deliveryMethod, email]);
+
+  const handleSubmit = async () => {
     if (deliveryMethod === 'email' && !email) {
-      alert('Please enter your email address');
+      toast.error('Please enter your email address');
       return;
     }
-    // Handle document delivery
-    console.log('Delivering document via:', deliveryMethod, email);
-    router.push('/');
+
+    setIsSubmitting(true);
+    try {
+      // Get all form data from localStorage
+      const allFormData = getFormData();
+      
+      // Validate that we have data from all previous steps
+      if (!allFormData.step1 || !allFormData.step2 || !allFormData.step3 || !allFormData.step4) {
+        throw new Error('Please complete all previous steps first');
+      }
+
+      // Prepare the final payload
+      const payload = {
+        personal_info: allFormData.step1,
+        document_info: allFormData.step2,
+        signature_info: allFormData.step3,
+        payment_info: allFormData.step4,
+        delivery_info: {
+          method: deliveryMethod,
+          email: deliveryMethod === 'email' ? email : null
+        },
+        created_at: new Date().toISOString(),
+        status: 'pending'
+      };
+
+      // Submit to API
+      const response = await fetch('/api/form2/submit', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(payload),
+      });
+
+      const result = await response.json();
+
+      if (!result.success) {
+        throw new Error(result.error || 'Failed to submit form');
+      }
+
+      // Clear form data from localStorage after successful submission
+      clearFormData();
+      
+      toast.success('Form submitted successfully!');
+      
+      // Redirect to success page
+      router.push('/success');
+    } catch (error) {
+      console.error('Form submission error:', error);
+      toast.error(error.message || 'Failed to submit form. Please try again.');
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
-    <div className="d-flex min-vh-100">
+    <div className="d-flex">
       <div className="flex-grow-1" style={{ marginRight: '320px' }}>
         <div className="mt-4 ml-4">
           <Link legacyBehavior href="/">
             <a>
               <img
                 src="/assets/images/logos/logo.png"
+                style={{ height: '70px' }}
                 alt="Logo"
                 title="Logo"
-                style={{ height: '70px' }}
               />
             </a>
           </Link>
@@ -50,62 +112,48 @@ const Form2step5 = () => {
           <div className="row justify-content-center">
             <div className="col-lg-10">
               <div className="form-card bg-white p-4 rounded-3">
-                {/* Page Title */}
+                {/* Form Header */}
                 <div className="text-center mb-5">
-                  <h2 style={{ color: '#2D3748', fontSize: '28px', fontWeight: '600' }}>{t('Document Download')}</h2>
-                  <p style={{ color: '#718096', fontSize: '16px', marginTop: '8px' }}>{t('Please Select How you want to Download your Document')}</p>
+                  <h2 style={{ color: '#2D3748', fontSize: '28px', fontWeight: '600' }}>{t('Delivery Method')}</h2>
+                  <p style={{ color: '#718096', fontSize: '16px', marginTop: '8px' }}>{t('Choose how you would like to receive your document')}</p>
                 </div>
 
                 {/* Delivery Method Selection */}
                 <div className="row justify-content-center mb-5">
-                  <div className="col-md-10">
-                    <div className="d-flex justify-content-center gap-4">
-                      {/* Download Option */}
+                  <div className="col-md-8">
+                    <div className="d-flex gap-4">
                       <div
-                        className={`card delivery-option ${deliveryMethod === 'download' ? 'selected' : ''}`}
-                        onClick={() => handleMethodSelect('download')}
+                        className={`delivery-option ${deliveryMethod === 'download' ? 'selected' : ''}`}
+                        onClick={() => setDeliveryMethod('download')}
                         style={{
-                          cursor: 'pointer',
-                          width: '200px',
-                          border: deliveryMethod === 'download' ? '2px solid #274171' : '1px solid #E2E8F0',
+                          flex: 1,
+                          padding: '20px',
+                          border: '2px solid',
+                          borderColor: deliveryMethod === 'download' ? '#274171' : '#E2E8F0',
                           borderRadius: '8px',
-                          transition: 'all 0.3s ease',
-                          backgroundColor: deliveryMethod === 'download' ? '#F7FAFC' : '#FFFFFF',
-                          boxShadow: '0 1px 3px rgba(0,0,0,0.1)'
+                          cursor: 'pointer',
+                          backgroundColor: deliveryMethod === 'download' ? '#F7FAFC' : 'white',
                         }}
                       >
-                        <div className="card-body text-center p-4">
-                          <img
-                            src="/assets/v3/img/form-img09.png"
-                            alt="Download"
-                            style={{ width: '48px', height: '48px', marginBottom: '1rem' }}
-                          />
-                          <h5 className="card-title" style={{ color: '#2D3748', fontSize: '16px', fontWeight: '500' }}>Download</h5>
-                        </div>
+                        <h5 style={{ color: '#2D3748', marginBottom: '10px' }}>{t('Download')}</h5>
+                        <p style={{ color: '#718096', margin: 0 }}>{t('Download your document directly')}</p>
                       </div>
 
-                      {/* Email Option */}
                       <div
-                        className={`card delivery-option ${deliveryMethod === 'email' ? 'selected' : ''}`}
-                        onClick={() => handleMethodSelect('email')}
+                        className={`delivery-option ${deliveryMethod === 'email' ? 'selected' : ''}`}
+                        onClick={() => setDeliveryMethod('email')}
                         style={{
-                          cursor: 'pointer',
-                          width: '200px',
-                          border: deliveryMethod === 'email' ? '2px solid #274171' : '1px solid #E2E8F0',
+                          flex: 1,
+                          padding: '20px',
+                          border: '2px solid',
+                          borderColor: deliveryMethod === 'email' ? '#274171' : '#E2E8F0',
                           borderRadius: '8px',
-                          transition: 'all 0.3s ease',
-                          backgroundColor: deliveryMethod === 'email' ? '#F7FAFC' : '#FFFFFF',
-                          boxShadow: '0 1px 3px rgba(0,0,0,0.1)'
+                          cursor: 'pointer',
+                          backgroundColor: deliveryMethod === 'email' ? '#F7FAFC' : 'white',
                         }}
                       >
-                        <div className="card-body text-center p-4">
-                          <img
-                            src="/assets/v3/img/form-img13.png"
-                            alt="Send Email"
-                            style={{ width: '48px', height: '48px', marginBottom: '1rem' }}
-                          />
-                          <h5 className="card-title" style={{ color: '#2D3748', fontSize: '16px', fontWeight: '500' }}>Send Email</h5>
-                        </div>
+                        <h5 style={{ color: '#2D3748', marginBottom: '10px' }}>{t('Email')}</h5>
+                        <p style={{ color: '#718096', margin: 0 }}>{t('Receive your document via email')}</p>
                       </div>
                     </div>
                   </div>
@@ -138,7 +186,7 @@ const Form2step5 = () => {
 
                 {/* Form Actions */}
                 <div className="actions">
-                  <div className="d-flex justify-content-between align-items-center mt-5" style={{ paddingBottom: '5px' }}>
+                  <div className="d-flex justify-content-between align-items-center mt-5">
                     <Link href="/form2-page4" className="text-decoration-none">
                       <span
                         className="btn"
@@ -152,7 +200,7 @@ const Form2step5 = () => {
                           marginRight: '465px',
                           marginBottom: '-170px',
                           position: 'relative',
-                          left: '55px'
+                          left: '20px'
                         }}
                       >
                         <i className="fa fa-arrow-left"></i> Back
@@ -160,6 +208,7 @@ const Form2step5 = () => {
                     </Link>
                     <button
                       onClick={handleSubmit}
+                      disabled={isSubmitting}
                       className="btn"
                       style={{
                         backgroundColor: '#274171',
@@ -170,21 +219,21 @@ const Form2step5 = () => {
                         gap: '8px',
                         marginBottom: '-170px',
                         position: 'relative',
-                        right: '20px'
+                        right: '20px',
+                        opacity: isSubmitting ? 0.7 : 1,
+                        cursor: isSubmitting ? 'not-allowed' : 'pointer'
                       }}
                     >
-                      {deliveryMethod === 'email' ? t('Send Email') : t('Download')}
-                      {' '}<i className={`fa fa-${deliveryMethod === 'email' ? 'paper-plane' : 'download'}`}></i>
+                      {isSubmitting ? 'Submitting...' : 'Submit'} <i className="fa fa-arrow-right"></i>
                     </button>
                   </div>
                 </div>
-
-                
               </div>
             </div>
           </div>
         </div>
       </div>
+
       <div style={{ 
         width: '300px', 
         position: 'fixed', 

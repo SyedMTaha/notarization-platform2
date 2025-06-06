@@ -1,17 +1,20 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { useTranslations } from 'next-intl';
 import FormProgressSidebar from './FormProgressSidebar';
 import CountrySelect from '@/components/CountrySelect';
+import { saveFormData, getFormData } from '@/utils/formStorage';
 
 const Form2step4 = () => {
   const router = useRouter();
   const t = useTranslations();
   const [paymentMethod, setPaymentMethod] = useState('credit-card');
   const [errors, setErrors] = useState({});
+  const [isProcessing, setIsProcessing] = useState(false);
+
   const [formData, setFormData] = useState({
     cardNumber: '',
     cardholderName: '',
@@ -24,10 +27,30 @@ const Form2step4 = () => {
     phone: '',
     country: '',
     province: '',
-    zipCode: '',
     address: '',
-    city: ''
+    city: '',
+    zipCode: ''
   });
+
+  // Load saved data when component mounts
+  useEffect(() => {
+    const savedData = getFormData().step4;
+    if (savedData) {
+      setPaymentMethod(savedData.paymentMethod || 'credit-card');
+      setFormData(prev => ({
+        ...prev,
+        ...savedData
+      }));
+    }
+  }, []);
+
+  // Save data when it changes
+  useEffect(() => {
+    saveFormData(4, {
+      paymentMethod,
+      ...formData
+    });
+  }, [paymentMethod, formData]);
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -47,7 +70,6 @@ const Form2step4 = () => {
   const validateForm = () => {
     const newErrors = {};
     
-    // Required fields for credit card payment
     if (paymentMethod === 'credit-card') {
       if (!formData.cardNumber) newErrors.cardNumber = 'Card number is required';
       if (!formData.cardholderName) newErrors.cardholderName = 'Cardholder name is required';
@@ -56,12 +78,12 @@ const Form2step4 = () => {
       if (!formData.cvv) newErrors.cvv = 'CVV is required';
     }
 
-    // Required billing address fields
     if (!formData.firstName) newErrors.firstName = 'First name is required';
     if (!formData.lastName) newErrors.lastName = 'Last name is required';
     if (!formData.email) newErrors.email = 'Email is required';
     if (!formData.phone) newErrors.phone = 'Phone is required';
     if (!formData.country) newErrors.country = 'Country is required';
+    if (!formData.province) newErrors.province = 'Province is required';
     if (!formData.address) newErrors.address = 'Address is required';
     if (!formData.city) newErrors.city = 'City is required';
     if (!formData.zipCode) newErrors.zipCode = 'ZIP code is required';
@@ -70,67 +92,19 @@ const Form2step4 = () => {
     return Object.keys(newErrors).length === 0;
   };
 
-  const handleNext = async () => {
+  const handleNext = () => {
     if (validateForm()) {
-      try {
-        if (paymentMethod === 'paypal') {
-          // Handle Stripe/PayPal payment
-          const stripeUrl = await handleStripe();
-          if (stripeUrl) {
-            window.location.href = stripeUrl; // Redirect to Stripe onboarding
-            return;
-          }
-        } else {
-          // For credit card payment, proceed to video call
-          router.push('/video-call');
-        }
-      } catch (error) {
-        console.error('Payment error:', error);
-        setErrors(prev => ({
-          ...prev,
-          payment: 'Payment processing failed. Please try again.'
-        }));
-      }
+      router.push('/form2-page5');
     }
   };
 
   const handleBack = (e) => {
-    e.preventDefault(); // Prevent default link behavior
+    e.preventDefault();
     router.push('/form2-page3');
   };
 
-  const renderError = (fieldName) => {
-    return errors[fieldName] ? (
-      <div style={{ color: '#E53E3E', fontSize: '14px', marginTop: '4px' }}>
-        {errors[fieldName]}
-      </div>
-    ) : null;
-  };
-
-  const handleStripe = async () => {
-    try {
-      const response = await fetch('/api/stripe', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        }
-      });
-
-      if (!response.ok) {
-        const error = await response.json();
-        throw new Error(error.error || 'Payment processing failed');
-      }
-
-      const data = await response.json();
-      return data.url;
-    } catch (err) {
-      console.error('Stripe error:', err);
-      throw err;
-    }
-  };
-
   return (
-    <div className="d-flex min-vh-100">
+    <div className="d-flex">
       <div className="flex-grow-1" style={{ marginRight: '320px' }}>
         <div className="mt-4 ml-4">
           <Link legacyBehavior href="/">
@@ -195,20 +169,11 @@ const Form2step4 = () => {
                       </div>
                     </div>
                   </div>
-                  {errors.payment && (
-                    <div className="mt-2" style={{ color: '#E53E3E', fontSize: '14px' }}>
-                      {errors.payment}
-                    </div>
-                  )}
                 </div>
 
-                {/* Credit Card Details */}
+                {/* Credit Card Form */}
                 {paymentMethod === 'credit-card' && (
-                  <div className="card" style={{ 
-                    border: '1px solid #E2E8F0',
-                    boxShadow: '0 1px 3px rgba(0,0,0,0.1)',
-                    borderRadius: '8px'
-                  }}>
+                  <div className="card mb-4" style={{ border: '1px solid #E2E8F0', boxShadow: '0 1px 3px rgba(0,0,0,0.1)' }}>
                     <div className="card-body p-4">
                       <h5 style={{ color: '#2D3748', fontSize: '18px', fontWeight: '600', marginBottom: '20px' }}>
                         {t('Enter your Credit Card Details')}
@@ -218,91 +183,90 @@ const Form2step4 = () => {
                           <label className="form-label" style={{ color: '#4A5568', fontWeight: '500' }}>Card Number</label>
                           <input
                             type="text"
-                            className="form-control"
+                            className={`form-control ${errors.cardNumber ? 'is-invalid' : ''}`}
                             name="cardNumber"
-                            placeholder="XXXX-XXXX-XXXX-XXXX"
                             value={formData.cardNumber}
                             onChange={handleInputChange}
+                            placeholder="XXXX XXXX XXXX XXXX"
+                            maxLength="19"
                             style={{
-                              border: '1px solid #E2E8F0',
+                              border: errors.cardNumber ? '1px solid #dc3545' : '1px solid #E2E8F0',
                               borderRadius: '6px',
-                              padding: '10px',
-                              fontSize: '14px'
+                              padding: '10px'
                             }}
                           />
-                          {renderError('cardNumber')}
+                          {errors.cardNumber && <div className="invalid-feedback">{errors.cardNumber}</div>}
                         </div>
                         <div className="col-12">
                           <label className="form-label" style={{ color: '#4A5568', fontWeight: '500' }}>Cardholder Name</label>
                           <input
                             type="text"
-                            className="form-control"
+                            className={`form-control ${errors.cardholderName ? 'is-invalid' : ''}`}
                             name="cardholderName"
-                            placeholder="John Doe"
                             value={formData.cardholderName}
                             onChange={handleInputChange}
+                            placeholder="John Doe"
                             style={{
-                              border: '1px solid #E2E8F0',
+                              border: errors.cardholderName ? '1px solid #dc3545' : '1px solid #E2E8F0',
                               borderRadius: '6px',
-                              padding: '10px',
-                              fontSize: '14px'
+                              padding: '10px'
                             }}
                           />
-                          {renderError('cardholderName')}
+                          {errors.cardholderName && <div className="invalid-feedback">{errors.cardholderName}</div>}
                         </div>
                         <div className="col-md-4">
                           <label className="form-label" style={{ color: '#4A5568', fontWeight: '500' }}>Expiry Month</label>
                           <input
                             type="text"
-                            className="form-control"
+                            className={`form-control ${errors.expiryMonth ? 'is-invalid' : ''}`}
                             name="expiryMonth"
-                            placeholder="MM"
                             value={formData.expiryMonth}
                             onChange={handleInputChange}
+                            placeholder="MM"
+                            maxLength="2"
                             style={{
-                              border: '1px solid #E2E8F0',
+                              border: errors.expiryMonth ? '1px solid #dc3545' : '1px solid #E2E8F0',
                               borderRadius: '6px',
-                              padding: '10px',
-                              fontSize: '14px'
+                              padding: '10px'
                             }}
                           />
-                          {renderError('expiryMonth')}
+                          {errors.expiryMonth && <div className="invalid-feedback">{errors.expiryMonth}</div>}
                         </div>
                         <div className="col-md-4">
                           <label className="form-label" style={{ color: '#4A5568', fontWeight: '500' }}>Expiry Year</label>
                           <input
                             type="text"
-                            className="form-control"
+                            className={`form-control ${errors.expiryYear ? 'is-invalid' : ''}`}
                             name="expiryYear"
-                            placeholder="YYYY"
                             value={formData.expiryYear}
                             onChange={handleInputChange}
+                            placeholder="YYYY"
+                            maxLength="4"
                             style={{
-                              border: '1px solid #E2E8F0',
+                              border: errors.expiryYear ? '1px solid #dc3545' : '1px solid #E2E8F0',
                               borderRadius: '6px',
-                              padding: '10px',
-                              fontSize: '14px'
+                              padding: '10px'
                             }}
                           />
-                          {renderError('expiryYear')}
+                          {errors.expiryYear && <div className="invalid-feedback">{errors.expiryYear}</div>}
                         </div>
                         <div className="col-md-4">
                           <label className="form-label" style={{ color: '#4A5568', fontWeight: '500' }}>CVV</label>
                           <input
-                            type="text"
-                            className="form-control"
+                            type="password"
+                            className={`form-control ${errors.cvv ? 'is-invalid' : ''}`}
                             name="cvv"
-                            placeholder="123"
                             value={formData.cvv}
                             onChange={handleInputChange}
+                            placeholder="***"
+                            maxLength="4"
                             style={{
-                              border: '1px solid #E2E8F0',
+                              border: errors.cvv ? '1px solid #dc3545' : '1px solid #E2E8F0',
                               borderRadius: '6px',
-                              padding: '10px',
-                              fontSize: '14px'
+                              padding: '10px'
                             }}
                           />
-                          {renderError('cvv')}
+                          {errors.cvv && <div className="invalid-feedback">{errors.cvv}</div>}
                         </div>
                       </div>
                     </div>
@@ -310,11 +274,7 @@ const Form2step4 = () => {
                 )}
 
                 {/* Billing Address */}
-                <div className="card mt-4" style={{ 
-                  border: '1px solid #E2E8F0',
-                  boxShadow: '0 1px 3px rgba(0,0,0,0.1)',
-                  borderRadius: '8px'
-                }}>
+                <div className="card" style={{ border: '1px solid #E2E8F0', boxShadow: '0 1px 3px rgba(0,0,0,0.1)' }}>
                   <div className="card-body p-4">
                     <h5 style={{ color: '#2D3748', fontSize: '18px', fontWeight: '600', marginBottom: '20px' }}>
                       {t('Enter your Billing Address')}
@@ -324,69 +284,65 @@ const Form2step4 = () => {
                         <label className="form-label" style={{ color: '#4A5568', fontWeight: '500' }}>First Name</label>
                         <input
                           type="text"
-                          className="form-control"
+                          className={`form-control ${errors.firstName ? 'is-invalid' : ''}`}
                           name="firstName"
                           value={formData.firstName}
                           onChange={handleInputChange}
                           style={{
-                            border: '1px solid #E2E8F0',
+                            border: errors.firstName ? '1px solid #dc3545' : '1px solid #E2E8F0',
                             borderRadius: '6px',
-                            padding: '10px',
-                            fontSize: '14px'
+                            padding: '10px'
                           }}
                         />
-                        {renderError('firstName')}
+                        {errors.firstName && <div className="invalid-feedback">{errors.firstName}</div>}
                       </div>
                       <div className="col-md-6">
                         <label className="form-label" style={{ color: '#4A5568', fontWeight: '500' }}>Last Name</label>
                         <input
                           type="text"
-                          className="form-control"
+                          className={`form-control ${errors.lastName ? 'is-invalid' : ''}`}
                           name="lastName"
                           value={formData.lastName}
                           onChange={handleInputChange}
                           style={{
-                            border: '1px solid #E2E8F0',
+                            border: errors.lastName ? '1px solid #dc3545' : '1px solid #E2E8F0',
                             borderRadius: '6px',
-                            padding: '10px',
-                            fontSize: '14px'
+                            padding: '10px'
                           }}
                         />
-                        {renderError('lastName')}
+                        {errors.lastName && <div className="invalid-feedback">{errors.lastName}</div>}
                       </div>
                       <div className="col-md-6">
-                        <label className="form-label" style={{ color: '#4A5568', fontWeight: '500' }}>Email Address</label>
+                        <label className="form-label" style={{ color: '#4A5568', fontWeight: '500' }}>Email</label>
                         <input
                           type="email"
-                          className="form-control"
+                          className={`form-control ${errors.email ? 'is-invalid' : ''}`}
                           name="email"
                           value={formData.email}
                           onChange={handleInputChange}
                           style={{
-                            border: '1px solid #E2E8F0',
+                            border: errors.email ? '1px solid #dc3545' : '1px solid #E2E8F0',
                             borderRadius: '6px',
-                            padding: '10px',
-                            fontSize: '14px'
+                            padding: '10px'
                           }}
                         />
-                        {renderError('email')}
+                        {errors.email && <div className="invalid-feedback">{errors.email}</div>}
                       </div>
                       <div className="col-md-6">
                         <label className="form-label" style={{ color: '#4A5568', fontWeight: '500' }}>Phone</label>
                         <input
                           type="tel"
-                          className="form-control"
+                          className={`form-control ${errors.phone ? 'is-invalid' : ''}`}
                           name="phone"
                           value={formData.phone}
                           onChange={handleInputChange}
                           style={{
-                            border: '1px solid #E2E8F0',
+                            border: errors.phone ? '1px solid #dc3545' : '1px solid #E2E8F0',
                             borderRadius: '6px',
-                            padding: '10px',
-                            fontSize: '14px'
+                            padding: '10px'
                           }}
                         />
-                        {renderError('phone')}
+                        {errors.phone && <div className="invalid-feedback">{errors.phone}</div>}
                       </div>
                       <div className="col-md-6">
                         <label className="form-label" style={{ color: '#4A5568', fontWeight: '500' }}>Country</label>
@@ -394,81 +350,77 @@ const Form2step4 = () => {
                           value={formData.country}
                           onChange={(value) => handleInputChange({ target: { name: 'country', value }})}
                           style={{
-                            border: '1px solid #E2E8F0',
+                            border: errors.country ? '1px solid #dc3545' : '1px solid #E2E8F0',
                             borderRadius: '6px',
-                            padding: '10px',
-                            fontSize: '14px'
+                            padding: '10px'
                           }}
                         />
-                        {renderError('country')}
+                        {errors.country && <div className="invalid-feedback">{errors.country}</div>}
                       </div>
                       <div className="col-md-6">
                         <label className="form-label" style={{ color: '#4A5568', fontWeight: '500' }}>Province/State</label>
                         <input
                           type="text"
-                          className="form-control"
+                          className={`form-control ${errors.province ? 'is-invalid' : ''}`}
                           name="province"
                           value={formData.province}
                           onChange={handleInputChange}
                           style={{
-                            border: '1px solid #E2E8F0',
+                            border: errors.province ? '1px solid #dc3545' : '1px solid #E2E8F0',
                             borderRadius: '6px',
-                            padding: '10px',
-                            fontSize: '14px'
+                            padding: '10px'
                           }}
                         />
-                        {renderError('province')}
+                        {errors.province && <div className="invalid-feedback">{errors.province}</div>}
                       </div>
                       <div className="col-12">
                         <label className="form-label" style={{ color: '#4A5568', fontWeight: '500' }}>Address</label>
                         <input
                           type="text"
-                          className="form-control"
+                          className={`form-control ${errors.address ? 'is-invalid' : ''}`}
                           name="address"
                           value={formData.address}
                           onChange={handleInputChange}
                           style={{
-                            border: '1px solid #E2E8F0',
+                            border: errors.address ? '1px solid #dc3545' : '1px solid #E2E8F0',
                             borderRadius: '6px',
-                            padding: '10px',
-                            fontSize: '14px'
+                            padding: '10px'
                           }}
                         />
-                        {renderError('address')}
+                        {errors.address && <div className="invalid-feedback">{errors.address}</div>}
                       </div>
                       <div className="col-md-6">
                         <label className="form-label" style={{ color: '#4A5568', fontWeight: '500' }}>City</label>
                         <input
                           type="text"
-                          className="form-control"
+                          className={`form-control ${errors.city ? 'is-invalid' : ''}`}
                           name="city"
                           value={formData.city}
                           onChange={handleInputChange}
                           style={{
-                            border: '1px solid #E2E8F0',
+                            border: errors.city ? '1px solid #dc3545' : '1px solid #E2E8F0',
                             borderRadius: '6px',
-                            padding: '10px',
-                            fontSize: '14px'
+                            padding: '10px'
                           }}
                         />
-                        {renderError('city')}
+                        {errors.city && <div className="invalid-feedback">{errors.city}</div>}
                       </div>
                       <div className="col-md-6">
                         <label className="form-label" style={{ color: '#4A5568', fontWeight: '500' }}>ZIP Code</label>
                         <input
                           type="text"
-                          className="form-control"
+                          className={`form-control ${errors.zipCode ? 'is-invalid' : ''}`}
                           name="zipCode"
                           value={formData.zipCode}
                           onChange={handleInputChange}
+                          maxLength="10"
                           style={{
-                            border: '1px solid #E2E8F0',
+                            border: errors.zipCode ? '1px solid #dc3545' : '1px solid #E2E8F0',
                             borderRadius: '6px',
-                            padding: '10px',
-                            fontSize: '14px'
+                            padding: '10px'
                           }}
                         />
-                        {renderError('zipCode')}
+                        {errors.zipCode && <div className="invalid-feedback">{errors.zipCode}</div>}
                       </div>
                     </div>
                   </div>
@@ -498,6 +450,7 @@ const Form2step4 = () => {
                     </button>
                     <button
                       onClick={handleNext}
+                      disabled={isProcessing}
                       className="btn"
                       style={{
                         backgroundColor: '#274171',
@@ -509,10 +462,12 @@ const Form2step4 = () => {
                         marginBottom: '-170px',
                         position: 'relative',
                         right: '20px',
-                        border: 'none'
+                        border: 'none',
+                        opacity: isProcessing ? 0.7 : 1,
+                        cursor: isProcessing ? 'not-allowed' : 'pointer'
                       }}
                     >
-                      Next <i className="fa fa-arrow-right"></i>
+                      {isProcessing ? 'Processing...' : 'Next'} {!isProcessing && <i className="fa fa-arrow-right"></i>}
                     </button>
                   </div>
                 </div>
@@ -521,6 +476,8 @@ const Form2step4 = () => {
           </div>
         </div>
       </div>
+
+      {/* Right Sidebar */}
       <div style={{ 
         width: '300px', 
         position: 'fixed', 
