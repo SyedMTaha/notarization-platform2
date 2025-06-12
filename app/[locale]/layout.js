@@ -9,7 +9,7 @@ import "./globals.css";
 import "../../public/assets/css/animate.min.css";
 import "../../public/assets/css/bootstrap.min.css";
 import "../../public/assets/css/flaticon.min.css";
-import "../../public/assets/css/fontawesome-5.14.0.min.css";
+//import "../../public/assets/css/fontawesome-5.14.0.min.css";
 import "../../public/assets/css/jquery.animatedheadline.css";
 import "../../public/assets/css/magnific-popup.min.css";
 import "../../public/assets/css/nice-select.min.css";

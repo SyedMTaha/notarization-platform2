@@ -94,7 +94,7 @@ const Form2step4 = () => {
 
   const handleNext = () => {
     if (validateForm()) {
-      router.push('/form2-page5');
+      router.push('/video-call');
     }
   };
 
