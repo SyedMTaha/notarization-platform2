@@ -1,9 +1,9 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
+import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { useTranslations } from 'next-intl';
-import Link from 'next/link';
 import FormProgressSidebar from './FormProgressSidebar';
 import CountrySelect from '@/components/CountrySelect';
 import { saveFormData, getFormData } from '@/utils/formStorage';
@@ -35,6 +35,7 @@ const PaymentForm = () => {
 
   const [formData, setFormData] = useState(initialFormState);
 
+  // Load saved data when component mounts
   useEffect(() => {
     const savedData = getFormData().step4;
     if (savedData) {
@@ -46,6 +47,7 @@ const PaymentForm = () => {
     }
   }, []);
 
+  // Save data when it changes
   useEffect(() => {
     saveFormData(4, {
       paymentMethod,
@@ -59,7 +61,7 @@ const PaymentForm = () => {
       ...prev,
       [name]: value
     }));
-    
+    // Clear error when user types
     if (errors[name]) {
       setErrors(prev => ({
         ...prev,
@@ -79,16 +81,15 @@ const PaymentForm = () => {
       if (!formData.cvv) newErrors.cvv = 'CVV is required';
     }
 
-    const requiredFields = [
-      'firstName', 'lastName', 'email', 'phone', 
-      'country', 'province', 'address', 'city', 'zipCode'
-    ];
-
-    requiredFields.forEach(field => {
-      if (!formData[field]) {
-        newErrors[field] = `${field.charAt(0).toUpperCase() + field.slice(1)} is required`;
-      }
-    });
+    if (!formData.firstName) newErrors.firstName = 'First name is required';
+    if (!formData.lastName) newErrors.lastName = 'Last name is required';
+    if (!formData.email) newErrors.email = 'Email is required';
+    if (!formData.phone) newErrors.phone = 'Phone is required';
+    if (!formData.country) newErrors.country = 'Country is required';
+    if (!formData.province) newErrors.province = 'Province is required';
+    if (!formData.address) newErrors.address = 'Address is required';
+    if (!formData.city) newErrors.city = 'City is required';
+    if (!formData.zipCode) newErrors.zipCode = 'ZIP code is required';
 
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
@@ -106,302 +107,388 @@ const PaymentForm = () => {
   };
 
   const inputClasses = (error) => `
-    w-full px-4 py-2.5 rounded-lg border font-poppins
-    ${error ? 'border-red-500' : 'border-gray-200'} 
-    focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent
-    transition duration-200
+    
   `;
 
   const labelClasses = 'block text-sm font-medium text-gray-700 mb-1 font-poppins';
 
+  const errorMessageClasses = 'mt-1 text-sm text-[#dc3545] font-poppins';
+
   return (
-    <div className="flex font-poppins">
-      <div className="flex-grow mr-80">
+    <div className="d-flex">
+      <div className="flex-grow-1" style={{ marginRight: '320px' }}>
         <div className="mt-4 ml-4">
-          <Link href="/">
-            <img
-              src="/assets/images/logos/logo.png"
-              alt="Logo"
-              title="Logo"
-              className="h-[70px] ml-4"
-            />
+          <Link legacyBehavior href="/">
+            <a>
+              <img
+                src="/assets/images/logos/logo.png"
+                alt="Logo"
+                title="Logo"
+                style={{ height: '70px' }}
+              />
+            </a>
           </Link>
         </div>
 
-        <div className="container mx-auto px-4">
-          <div className="max-w-4xl mx-auto">
-            <div className="bg-white rounded-xl shadow-sm p-8">
-              {/* Page Title */}
-              <div className="text-center mb-8">
-                <h2 className="text-2xl font-semibold text-gray-800 font-poppins">{t('Payment Details')}</h2>
-                <p className="text-gray-600 mt-2 font-poppins">{t('Please Select Your preferred form of Payment')}</p>
-              </div>
+        <div className="container">
+          <div className="row justify-content-center">
+            <div className="col-lg-10">
+              <div className="form-card bg-white p-4 rounded-3">
+                {/* Page Title */}
+                <div className="text-center mb-5">
+                  <h2 style={{ color: '#2D3748', fontSize: '28px', fontWeight: '600' }}>{t('Payment Details')}</h2>
+                  <p style={{ color: '#718096', fontSize: '16px', marginTop: '8px' }}>{t('Please Select Your preferred form of Payment')}</p>
+                </div>
 
-              {/* Payment Method Selection */}
-              <div className="space-y-4 mb-8">
-                {['credit-card', 'paypal'].map((method) => (
-                  <div
-                    key={method}
-                    onClick={() => setPaymentMethod(method)}
-                    onMouseEnter={() => setHoveredMethod(method)}
-                    onMouseLeave={() => setHoveredMethod(null)}
-                    className={`
-                      p-4 rounded-lg cursor-pointer transition-all duration-200
-                      ${paymentMethod === method 
-                        ? 'border-2 border-blue-700 bg-blue-50' 
-                        : hoveredMethod === method
-                          ? 'border-2 border-blue-500 bg-blue-50'
-                          : 'border border-gray-200'}
-                      hover:border-blue-500 hover:bg-blue-50
-                    `}
-                  >
-                    <div className="flex items-center">
-                      <img 
-                        src={`/assets/v3/img/${method}.png`} 
-                        alt={method} 
-                        className="w-6 mr-3" 
-                      />
-                      <span className="font-medium text-gray-800 capitalize font-poppins">
-                        {method === 'credit-card' ? 'Credit Card' : 'PayPal'}
-                      </span>
+                {/* Payment Method Selection */}
+                <div className="mb-4">
+                  <div className="row g-3">
+                    <div className="col-12">
+                      <div 
+                        className={`p-3 rounded cursor-pointer`}
+                        onClick={() => setPaymentMethod('credit-card')}
+                        style={{ 
+                          cursor: 'pointer',
+                          border: paymentMethod === 'credit-card' ? '2px solid #274171' : '1px solid #E2E8F0',
+                          backgroundColor: paymentMethod === 'credit-card' ? '#F7FAFC' : '#FFFFFF',
+                          transition: 'all 0.3s ease',
+                          boxShadow: '0 1px 3px rgba(0,0,0,0.1)'
+                        }}
+                      >
+                        <div className="d-flex align-items-center">
+                          <img src="/assets/v3/img/creditCard.png" alt="Credit Card" style={{ width: '24px', marginRight: '12px' }} />
+                          <span style={{ color: '#2D3748', fontWeight: '500' }}>Credit Card</span>
+                        </div>
+                      </div>
                     </div>
-                  </div>
-                ))}
-              </div>
-
-              {/* Credit Card Form */}
-              {paymentMethod === 'credit-card' && (
-                <div className="bg-white rounded-lg border border-gray-200 shadow-sm p-6 mb-8">
-                  <h5 className="text-lg font-semibold text-gray-800 mb-6">
-                    {t('Enter your Credit Card Details')}
-                  </h5>
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    <div className="col-span-2">
-                      <label className={labelClasses}>Card Number</label>
-                      <input
-                        type="text"
-                        name="cardNumber"
-                        value={formData.cardNumber}
-                        onChange={handleInputChange}
-                        placeholder="XXXX XXXX XXXX XXXX"
-                        maxLength="19"
-                        className={inputClasses(errors.cardNumber)}
-                      />
-                      {errors.cardNumber && (
-                        <p className="mt-1 text-sm text-red-500">{errors.cardNumber}</p>
-                      )}
-                    </div>
-                    <div className="col-span-2">
-                      <label className={labelClasses}>Cardholder Name</label>
-                      <input
-                        type="text"
-                        name="cardholderName"
-                        value={formData.cardholderName}
-                        onChange={handleInputChange}
-                        placeholder="John Doe"
-                        className={inputClasses(errors.cardholderName)}
-                      />
-                      {errors.cardholderName && (
-                        <p className="mt-1 text-sm text-red-500">{errors.cardholderName}</p>
-                      )}
-                    </div>
-                    <div>
-                      <label className={labelClasses}>Expiry Month</label>
-                      <input
-                        type="text"
-                        name="expiryMonth"
-                        value={formData.expiryMonth}
-                        onChange={handleInputChange}
-                        placeholder="MM"
-                        maxLength="2"
-                        className={inputClasses(errors.expiryMonth)}
-                      />
-                      {errors.expiryMonth && (
-                        <p className="mt-1 text-sm text-red-500">{errors.expiryMonth}</p>
-                      )}
-                    </div>
-                    <div>
-                      <label className={labelClasses}>Expiry Year</label>
-                      <input
-                        type="text"
-                        name="expiryYear"
-                        value={formData.expiryYear}
-                        onChange={handleInputChange}
-                        placeholder="YYYY"
-                        maxLength="4"
-                        className={inputClasses(errors.expiryYear)}
-                      />
-                      {errors.expiryYear && (
-                        <p className="mt-1 text-sm text-red-500">{errors.expiryYear}</p>
-                      )}
-                    </div>
-                    <div>
-                      <label className={labelClasses}>CVV</label>
-                      <input
-                        type="password"
-                        name="cvv"
-                        value={formData.cvv}
-                        onChange={handleInputChange}
-                        placeholder="***"
-                        maxLength="4"
-                        className={inputClasses(errors.cvv)}
-                      />
-                      {errors.cvv && (
-                        <p className="mt-1 text-sm text-red-500">{errors.cvv}</p>
-                      )}
+                    <div className="col-12">
+                      <div 
+                        className={`p-3 rounded`}
+                        onClick={() => setPaymentMethod('paypal')}
+                        style={{ 
+                          cursor: 'pointer',
+                          border: paymentMethod === 'paypal' ? '2px solid #274171' : '1px solid #E2E8F0',
+                          backgroundColor: paymentMethod === 'paypal' ? '#F7FAFC' : '#FFFFFF',
+                          transition: 'all 0.3s ease',
+                          boxShadow: '0 1px 3px rgba(0,0,0,0.1)'
+                        }}
+                      >
+                        <div className="d-flex align-items-center">
+                          <img src="/assets/v3/img/payPal.png" alt="PayPal" style={{ width: '24px', marginRight: '12px' }} />
+                          <span style={{ color: '#2D3748', fontWeight: '500' }}>PayPal</span>
+                        </div>
+                      </div>
                     </div>
                   </div>
                 </div>
-              )}
 
-              {/* Billing Address */}
-              <div className="bg-white rounded-lg border border-gray-200 shadow-sm p-6">
-                <h5 className="text-lg font-semibold text-gray-800 mb-6">
-                  {t('Enter your Billing Address')}
-                </h5>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                  <div>
-                    <label className={labelClasses}>First Name</label>
-                    <input
-                      type="text"
-                      name="firstName"
-                      value={formData.firstName}
-                      onChange={handleInputChange}
-                      className={inputClasses(errors.firstName)}
-                    />
-                    {errors.firstName && (
-                      <p className="mt-1 text-sm text-red-500">{errors.firstName}</p>
-                    )}
+                {/* Credit Card Form */}
+                {paymentMethod === 'credit-card' && (
+                  <div className="card mb-4" style={{ border: '1px solid #E2E8F0', boxShadow: '0 1px 3px rgba(0,0,0,0.1)' }}>
+                    <div className="card-body p-4">
+                      <h5 style={{ color: '#2D3748', fontSize: '18px', fontWeight: '600', marginBottom: '20px' }}>
+                        {t('Enter your Credit Card Details')}
+                      </h5>
+                      <div className="row g-3">
+                        <div className="col-12">
+                          <label className="form-label" style={{ color: '#4A5568', fontWeight: '500' }}>Card Number</label>
+                          <input
+                            type="text"
+                            className={`form-control ${errors.cardNumber ? 'is-invalid' : ''}`}
+                            name="cardNumber"
+                            value={formData.cardNumber}
+                            onChange={handleInputChange}
+                            placeholder="XXXX XXXX XXXX XXXX"
+                            maxLength="19"
+                            style={{
+                              border: errors.cardNumber ? '1px solid #dc3545' : '1px solid #E2E8F0',
+                              borderRadius: '6px',
+                              padding: '10px'
+                            }}
+                          />
+                          {errors.cardNumber && <div className="invalid-feedback">{errors.cardNumber}</div>}
+                        </div>
+                        <div className="col-12">
+                          <label className="form-label" style={{ color: '#4A5568', fontWeight: '500' }}>Cardholder Name</label>
+                          <input
+                            type="text"
+                            className={`form-control ${errors.cardholderName ? 'is-invalid' : ''}`}
+                            name="cardholderName"
+                            value={formData.cardholderName}
+                            onChange={handleInputChange}
+                            placeholder="John Doe"
+                            style={{
+                              border: errors.cardholderName ? '1px solid #dc3545' : '1px solid #E2E8F0',
+                              borderRadius: '6px',
+                              padding: '10px'
+                            }}
+                          />
+                          {errors.cardholderName && <div className="invalid-feedback">{errors.cardholderName}</div>}
+                        </div>
+                        <div className="col-md-4">
+                          <label className="form-label" style={{ color: '#4A5568', fontWeight: '500' }}>Expiry Month</label>
+                          <input
+                            type="text"
+                            className={`form-control ${errors.expiryMonth ? 'is-invalid' : ''}`}
+                            name="expiryMonth"
+                            value={formData.expiryMonth}
+                            onChange={handleInputChange}
+                            placeholder="MM"
+                            maxLength="2"
+                            style={{
+                              border: errors.expiryMonth ? '1px solid #dc3545' : '1px solid #E2E8F0',
+                              borderRadius: '6px',
+                              padding: '10px'
+                            }}
+                          />
+                          {errors.expiryMonth && <div className="invalid-feedback">{errors.expiryMonth}</div>}
+                        </div>
+                        <div className="col-md-4">
+                          <label className="form-label" style={{ color: '#4A5568', fontWeight: '500' }}>Expiry Year</label>
+                          <input
+                            type="text"
+                            className={`form-control ${errors.expiryYear ? 'is-invalid' : ''}`}
+                            name="expiryYear"
+                            value={formData.expiryYear}
+                            onChange={handleInputChange}
+                            placeholder="YYYY"
+                            maxLength="4"
+                            style={{
+                              border: errors.expiryYear ? '1px solid #dc3545' : '1px solid #E2E8F0',
+                              borderRadius: '6px',
+                              padding: '10px'
+                            }}
+                          />
+                          {errors.expiryYear && <div className="invalid-feedback">{errors.expiryYear}</div>}
+                        </div>
+                        <div className="col-md-4">
+                          <label className="form-label" style={{ color: '#4A5568', fontWeight: '500' }}>CVV</label>
+                          <input
+                            type="password"
+                            className={`form-control ${errors.cvv ? 'is-invalid' : ''}`}
+                            name="cvv"
+                            value={formData.cvv}
+                            onChange={handleInputChange}
+                            placeholder="***"
+                            maxLength="4"
+                            style={{
+                              border: errors.cvv ? '1px solid #dc3545' : '1px solid #E2E8F0',
+                              borderRadius: '6px',
+                              padding: '10px'
+                            }}
+                          />
+                          {errors.cvv && <div className="invalid-feedback">{errors.cvv}</div>}
+                        </div>
+                      </div>
+                    </div>
                   </div>
-                  <div>
-                    <label className={labelClasses}>Last Name</label>
-                    <input
-                      type="text"
-                      name="lastName"
-                      value={formData.lastName}
-                      onChange={handleInputChange}
-                      className={inputClasses(errors.lastName)}
-                    />
-                    {errors.lastName && (
-                      <p className="mt-1 text-sm text-red-500">{errors.lastName}</p>
-                    )}
-                  </div>
-                  <div>
-                    <label className={labelClasses}>Email</label>
-                    <input
-                      type="email"
-                      name="email"
-                      value={formData.email}
-                      onChange={handleInputChange}
-                      className={inputClasses(errors.email)}
-                    />
-                    {errors.email && (
-                      <p className="mt-1 text-sm text-red-500">{errors.email}</p>
-                    )}
-                  </div>
-                  <div>
-                    <label className={labelClasses}>Phone</label>
-                    <input
-                      type="tel"
-                      name="phone"
-                      value={formData.phone}
-                      onChange={handleInputChange}
-                      className={inputClasses(errors.phone)}
-                    />
-                    {errors.phone && (
-                      <p className="mt-1 text-sm text-red-500">{errors.phone}</p>
-                    )}
-                  </div>
-                  <div>
-                    <label className={labelClasses}>Country</label>
-                    <CountrySelect
-                      value={formData.country}
-                      onChange={(value) => handleInputChange({ target: { name: 'country', value }})}
-                      className={inputClasses(errors.country)}
-                    />
-                    {errors.country && (
-                      <p className="mt-1 text-sm text-red-500">{errors.country}</p>
-                    )}
-                  </div>
-                  <div>
-                    <label className={labelClasses}>Province/State</label>
-                    <input
-                      type="text"
-                      name="province"
-                      value={formData.province}
-                      onChange={handleInputChange}
-                      className={inputClasses(errors.province)}
-                    />
-                    {errors.province && (
-                      <p className="mt-1 text-sm text-red-500">{errors.province}</p>
-                    )}
-                  </div>
-                  <div className="col-span-2">
-                    <label className={labelClasses}>Address</label>
-                    <input
-                      type="text"
-                      name="address"
-                      value={formData.address}
-                      onChange={handleInputChange}
-                      className={inputClasses(errors.address)}
-                    />
-                    {errors.address && (
-                      <p className="mt-1 text-sm text-red-500">{errors.address}</p>
-                    )}
-                  </div>
-                  <div>
-                    <label className={labelClasses}>City</label>
-                    <input
-                      type="text"
-                      name="city"
-                      value={formData.city}
-                      onChange={handleInputChange}
-                      className={inputClasses(errors.city)}
-                    />
-                    {errors.city && (
-                      <p className="mt-1 text-sm text-red-500">{errors.city}</p>
-                    )}
-                  </div>
-                  <div>
-                    <label className={labelClasses}>ZIP Code</label>
-                    <input
-                      type="text"
-                      name="zipCode"
-                      value={formData.zipCode}
-                      onChange={handleInputChange}
-                      maxLength="10"
-                      className={inputClasses(errors.zipCode)}
-                    />
-                    {errors.zipCode && (
-                      <p className="mt-1 text-sm text-red-500">{errors.zipCode}</p>
-                    )}
+                )}
+
+                {/* Billing Address */}
+                <div className="card" style={{ border: '1px solid #E2E8F0', boxShadow: '0 1px 3px rgba(0,0,0,0.1)' }}>
+                  <div className="card-body p-4">
+                    <h5 style={{ color: '#2D3748', fontSize: '18px', fontWeight: '600', marginBottom: '20px' }}>
+                      {t('Enter your Billing Address')}
+                    </h5>
+                    <div className="row g-3">
+                      <div className="col-md-6">
+                        <label className="form-label" style={{ color: '#4A5568', fontWeight: '500' }}>First Name</label>
+                        <input
+                          type="text"
+                          className={`form-control ${errors.firstName ? 'is-invalid' : ''}`}
+                          name="firstName"
+                          value={formData.firstName}
+                          onChange={handleInputChange}
+                          style={{
+                            border: errors.firstName ? '1px solid #dc3545' : '1px solid #E2E8F0',
+                            borderRadius: '6px',
+                            padding: '10px'
+                          }}
+                        />
+                        {errors.firstName && <div className="invalid-feedback">{errors.firstName}</div>}
+                      </div>
+                      <div className="col-md-6">
+                        <label className="form-label" style={{ color: '#4A5568', fontWeight: '500' }}>Last Name</label>
+                        <input
+                          type="text"
+                          className={`form-control ${errors.lastName ? 'is-invalid' : ''}`}
+                          name="lastName"
+                          value={formData.lastName}
+                          onChange={handleInputChange}
+                          style={{
+                            border: errors.lastName ? '1px solid #dc3545' : '1px solid #E2E8F0',
+                            borderRadius: '6px',
+                            padding: '10px'
+                          }}
+                        />
+                        {errors.lastName && <div className="invalid-feedback">{errors.lastName}</div>}
+                      </div>
+                      <div className="col-md-6">
+                        <label className="form-label" style={{ color: '#4A5568', fontWeight: '500' }}>Email</label>
+                        <input
+                          type="email"
+                          className={`form-control ${errors.email ? 'is-invalid' : ''}`}
+                          name="email"
+                          value={formData.email}
+                          onChange={handleInputChange}
+                          style={{
+                            border: errors.email ? '1px solid #dc3545' : '1px solid #E2E8F0',
+                            borderRadius: '6px',
+                            padding: '10px'
+                          }}
+                        />
+                        {errors.email && <div className="invalid-feedback">{errors.email}</div>}
+                      </div>
+                      <div className="col-md-6">
+                        <label className="form-label" style={{ color: '#4A5568', fontWeight: '500' }}>Phone</label>
+                        <input
+                          type="tel"
+                          className={`form-control ${errors.phone ? 'is-invalid' : ''}`}
+                          name="phone"
+                          value={formData.phone}
+                          onChange={handleInputChange}
+                          style={{
+                            border: errors.phone ? '1px solid #dc3545' : '1px solid #E2E8F0',
+                            borderRadius: '6px',
+                            padding: '10px'
+                          }}
+                        />
+                        {errors.phone && <div className="invalid-feedback">{errors.phone}</div>}
+                      </div>
+                      <div className="col-md-6">
+                        <label className="form-label" style={{ color: '#4A5568', fontWeight: '500' }}>Country</label>
+                        <CountrySelect
+                          value={formData.country}
+                          onChange={(value) => handleInputChange({ target: { name: 'country', value }})}
+                          style={{
+                            border: errors.country ? '1px solid #dc3545' : '1px solid #E2E8F0',
+                            borderRadius: '6px',
+                            padding: '10px'
+                          }}
+                        />
+                        {errors.country && <div className="invalid-feedback">{errors.country}</div>}
+                      </div>
+                      <div className="col-md-6">
+                        <label className="form-label" style={{ color: '#4A5568', fontWeight: '500' }}>Province/State</label>
+                        <input
+                          type="text"
+                          className={`form-control ${errors.province ? 'is-invalid' : ''}`}
+                          name="province"
+                          value={formData.province}
+                          onChange={handleInputChange}
+                          style={{
+                            border: errors.province ? '1px solid #dc3545' : '1px solid #E2E8F0',
+                            borderRadius: '6px',
+                            padding: '10px'
+                          }}
+                        />
+                        {errors.province && <div className="invalid-feedback">{errors.province}</div>}
+                      </div>
+                      <div className="col-12">
+                        <label className="form-label" style={{ color: '#4A5568', fontWeight: '500' }}>Address</label>
+                        <input
+                          type="text"
+                          className={`form-control ${errors.address ? 'is-invalid' : ''}`}
+                          name="address"
+                          value={formData.address}
+                          onChange={handleInputChange}
+                          style={{
+                            border: errors.address ? '1px solid #dc3545' : '1px solid #E2E8F0',
+                            borderRadius: '6px',
+                            padding: '10px'
+                          }}
+                        />
+                        {errors.address && <div className="invalid-feedback">{errors.address}</div>}
+                      </div>
+
+                      <div className="col-md-6" >
+                      <label className="form-label" style={{ color: '#4A5568', fontWeight: '500' }}>City</label>
+                      <input
+                        type="text"
+                        name="city"
+                        value={formData.city}
+                        onChange={handleInputChange}
+                        className={`form-control ${errors.city ? 'is-invalid' : ''}`}
+                        style={{
+                            border: errors.city ? '1px solid #dc3545' : '1px solid #E2E8F0',
+                            borderRadius: '6px',
+                            padding: '10px'
+                          }}
+                      />
+                      {errors.city &&
+                       <div className="invalid-feedback">{errors.city}
+                        </div>}
+                    </div>
+
+                    <div className="col-md-6">
+                      <label className="form-label" style={{ color: '#4A5568', fontWeight: '500' }}>ZIP Code</label>
+                      <input
+                        type="text"
+                        name="zipCode"
+                        value={formData.zipCode}
+                        onChange={handleInputChange}
+                        maxLength="10"
+                        className={`form-control ${errors.zipCode ? 'is-invalid' : ''}`}
+                        style={{
+                            border: errors.zipCode ? '1px solid #dc3545' : '1px solid #E2E8F0',
+                            borderRadius: '6px',
+                            padding: '10px'
+                          }}
+                      />
+                      {errors.zipCode && 
+                      <div className="invalid-feedback">{errors.zipCode}
+                      </div>}
+                    </div>
+                      
+                    </div>
                   </div>
                 </div>
-              </div>
 
-              {/* Form Actions */}
-              <div className="flex justify-between items-center mt-8">
-                <button
-                  onClick={handleBack}
-                  className="flex items-center gap-2 px-8 py-2.5 bg-[#274171] text-white rounded-lg hover:bg-[#1e3254] transition-colors duration-200 font-poppins"
-                >
-                  <i className="fa fa-arrow-left"></i> Back
-                </button>
-                <button
-                  onClick={handleNext}
-                  disabled={isProcessing}
-                  className={`
-                    flex items-center gap-2 px-8 py-2.5 bg-[#274171] text-white rounded-lg
-                    ${isProcessing ? 'opacity-70 cursor-not-allowed' : 'hover:bg-[#1e3254]'}
-                    transition-all duration-200 font-poppins
-                  `}
-                >
-                  {isProcessing ? 'Processing...' : (
-                    <>
-                      Next <i className="fa fa-arrow-right"></i>
-                    </>
-                  )}
-                </button>
+                {/* Form Actions */}
+                <div className="actions">
+                  <div className="d-flex justify-content-between align-items-center mt-5" style={{ paddingBottom: '5px' }}>
+                    <button
+                      onClick={handleBack}
+                      className="btn"
+                      style={{ 
+                        backgroundColor: "#274171",
+                        color: 'white',
+                        padding: '10px 30px',
+                        display: 'inline-flex',
+                        alignItems: 'center',
+                        gap: '8px',
+                        marginRight: '465px',
+                        marginBottom: '-170px',
+                        position: 'relative',
+                        left: '20px',
+                        border: 'none'
+                      }}
+                    >
+                      <i className="fa fa-arrow-left"></i> Back
+                    </button>
+                    <button
+                      onClick={handleNext}
+                      disabled={isProcessing}
+                      className="btn"
+                      style={{
+                        backgroundColor: '#274171',
+                        color: 'white',
+                        padding: '10px 30px',
+                        display: 'inline-flex',
+                        alignItems: 'center',
+                        gap: '8px',
+                        marginBottom: '-170px',
+                        position: 'relative',
+                        right: '20px',
+                        border: 'none',
+                        opacity: isProcessing ? 0.7 : 1,
+                        cursor: isProcessing ? 'not-allowed' : 'pointer'
+                      }}
+                    >
+                      {isProcessing ? 'Processing...' : 'Next'} {!isProcessing && <i className="fa fa-arrow-right"></i>}
+                    </button>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
@@ -409,11 +496,19 @@ const PaymentForm = () => {
       </div>
 
       {/* Right Sidebar */}
-      <div className="fixed right-0 top-0 w-80 h-screen border-l border-gray-200 bg-[#091534]">
+      <div style={{ 
+        width: '300px', 
+        position: 'fixed', 
+        right: 0, 
+        top: 0, 
+        height: '100vh',
+        borderLeft: '1px solid rgba(0,0,0,0.1)',
+        backgroundColor: '#091534'
+      }}>
         <FormProgressSidebar currentStep={4} />
       </div>
     </div>
   );
 };
 
-export default PaymentForm; 
+export default PaymentForm;
