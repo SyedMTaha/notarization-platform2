@@ -401,43 +401,42 @@ const PaymentForm = () => {
                         {errors.address && <div className="invalid-feedback">{errors.address}</div>}
                       </div>
 
-                      <div className="col-md-6" >
-                      <label className="form-label" style={{ color: '#4A5568', fontWeight: '500' }}>City</label>
+                      <div className="rounded-2xl" >
+                      <label className={labelClasses}>City</label>
                       <input
                         type="text"
                         name="city"
                         value={formData.city}
                         onChange={handleInputChange}
-                        className={`form-control ${errors.city ? 'is-invalid' : ''}`}
-                        style={{
-                            border: errors.city ? '1px solid #dc3545' : '1px solid #E2E8F0',
-                            borderRadius: '6px',
-                            padding: '10px'
-                          }}
+                        className={inputClasses(errors.city)}
+                        // style={{ 
+                        //     padding: '10px',
+                        //     borderRadius: '6px'   
+                        // }}
+                        
                       />
-                      {errors.city &&
-                       <div className="invalid-feedback">{errors.city}
-                        </div>}
+                      {errors.city && (
+                        <p className={errorMessageClasses}>{errors.city}</p>
+                      )}
                     </div>
 
-                    <div className="col-md-6">
-                      <label className="form-label" style={{ color: '#4A5568', fontWeight: '500' }}>ZIP Code</label>
+                    <div>
+                      <label className={labelClasses}>ZIP Code</label>
                       <input
                         type="text"
                         name="zipCode"
                         value={formData.zipCode}
                         onChange={handleInputChange}
                         maxLength="10"
-                        className={`form-control ${errors.zipCode ? 'is-invalid' : ''}`}
-                        style={{
-                            border: errors.zipCode ? '1px solid #dc3545' : '1px solid #E2E8F0',
-                            borderRadius: '6px',
-                            padding: '10px'
-                          }}
+                        className={inputClasses(errors.zipCode)}
+                        // style={{ 
+                        //     padding: '10px',
+                        //     borderRadius: '6px'  
+                        // }}
                       />
-                      {errors.zipCode && 
-                      <div className="invalid-feedback">{errors.zipCode}
-                      </div>}
+                      {errors.zipCode && (
+                        <p className={errorMessageClasses}>{errors.zipCode}</p>
+                      )}
                     </div>
                       
                     </div>
