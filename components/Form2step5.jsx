@@ -14,27 +14,36 @@ const Form2step5 = () => {
   const [deliveryMethod, setDeliveryMethod] = useState('download');
   const [email, setEmail] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [formData, setFormData] = useState(null);
 
   // Load saved data when component mounts
   useEffect(() => {
-    const savedData = getFormData().step5;
+    const savedData = getFormData();
+    console.log('Initial form data loaded:', savedData);
     if (savedData) {
-      setDeliveryMethod(savedData.deliveryMethod || 'download');
-      setEmail(savedData.email || '');
+      setFormData(savedData);
+      if (savedData.step5) {
+        setDeliveryMethod(savedData.step5.deliveryMethod || 'download');
+        setEmail(savedData.step5.email || '');
+      }
     }
   }, []);
 
   // Save data when values change
   useEffect(() => {
-    saveFormData(5, {
-      deliveryMethod,
-      email: deliveryMethod === 'email' ? email : ''
-    });
-  }, [deliveryMethod, email]);
+    if (formData) {
+      const step5Data = {
+        deliveryMethod,
+        email: deliveryMethod === 'email' ? email : ''
+      };
+      console.log('Saving step 5 data:', step5Data);
+      saveFormData(5, step5Data);
+    }
+  }, [deliveryMethod, email, formData]);
 
   const handleSubmit = async () => {
     if (deliveryMethod === 'email' && !email) {
-      toast.error('Please enter your email address');
+      toast.error(t('Please enter your email address'));
       return;
     }
 
@@ -43,9 +52,25 @@ const Form2step5 = () => {
       // Get all form data from localStorage
       const allFormData = getFormData();
       
-      // Validate that we have data from all previous steps
-      if (!allFormData.step1 || !allFormData.step2 || !allFormData.step3 || !allFormData.step4) {
-        throw new Error('Please complete all previous steps first');
+      // Detailed logging of form data
+      console.log('Form data at submission:', {
+        step1: allFormData.step1,
+        step2: allFormData.step2,
+        step3: allFormData.step3,
+        step4: allFormData.step4,
+        step5: allFormData.step5
+      });
+      
+      // Check each step individually and provide specific feedback
+      const missingSteps = [];
+      if (!allFormData.step1) missingSteps.push('Step 1 (Personal Information)');
+      if (!allFormData.step2) missingSteps.push('Step 2 (Document Information)');
+      if (!allFormData.step3) missingSteps.push('Step 3 (Signature Information)');
+      if (!allFormData.step4) missingSteps.push('Step 4 (Payment Information)');
+
+      if (missingSteps.length > 0) {
+        console.error('Missing steps:', missingSteps);
+        throw new Error(`Please complete the following steps first: ${missingSteps.join(', ')}`);
       }
 
       // Prepare the final payload
@@ -62,6 +87,8 @@ const Form2step5 = () => {
         status: 'pending'
       };
 
+      console.log('Submitting payload:', payload);
+
       // Submit to API
       const response = await fetch('/api/form2/submit', {
         method: 'POST',
@@ -74,19 +101,19 @@ const Form2step5 = () => {
       const result = await response.json();
 
       if (!result.success) {
-        throw new Error(result.error || 'Failed to submit form');
+        throw new Error(result.error || t('Failed to submit form'));
       }
 
       // Clear form data from localStorage after successful submission
       clearFormData();
       
-      toast.success('Form submitted successfully!');
+      toast.success(t('Form submitted successfully!'));
       
-      // Redirect to success page
-      router.push('/success');
+      // Redirect to success page with reference number
+      router.push(`/success?ref=${result.data.referenceNumber}`);
     } catch (error) {
       console.error('Form submission error:', error);
-      toast.error(error.message || 'Failed to submit form. Please try again.');
+      toast.error(error.message || t('Failed to submit form. Please try again.'));
     } finally {
       setIsSubmitting(false);
     }
@@ -153,7 +180,7 @@ const Form2step5 = () => {
                         }}
                       >
                         <h5 style={{ color: '#2D3748', marginBottom: '10px' }}>{t('Email')}</h5>
-                        <p style={{ color: '#718096', margin: 0 }}>{t('Receive your document via email')}</p>
+                        <p style={{ color: '#718096', margin: 0 }}>{t('form2_receive_via_email')}</p>
                       </div>
                     </div>
                   </div>
@@ -164,7 +191,7 @@ const Form2step5 = () => {
                   <div className="row justify-content-center mb-5">
                     <div className="col-md-8">
                       <div className="form-group">
-                        <label className="form-label" style={{ color: '#4A5568', fontWeight: '500', marginBottom: '8px' }}>Email Address</label>
+                        <label className="form-label" style={{ color: '#4A5568', fontWeight: '500', marginBottom: '8px' }}>{t('Email Address')}</label>
                         <input
                           type="email"
                           className="form-control"
@@ -203,7 +230,7 @@ const Form2step5 = () => {
                           left: '20px'
                         }}
                       >
-                        <i className="fa fa-arrow-left"></i> Back
+                        <i className="fa fa-arrow-left"></i> {t('Back')}
                       </span>
                     </Link>
                     <button
@@ -224,7 +251,7 @@ const Form2step5 = () => {
                         cursor: isSubmitting ? 'not-allowed' : 'pointer'
                       }}
                     >
-                      {isSubmitting ? 'Submitting...' : 'Submit'} <i className="fa fa-arrow-right"></i>
+                      {isSubmitting ? t('Submitting...') : t('Submit')} <i className="fa fa-arrow-right"></i>
                     </button>
                   </div>
                 </div>

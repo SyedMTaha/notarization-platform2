@@ -1,10 +1,14 @@
 import { NextResponse } from 'next/server';
 import { db } from '@/firebase';
 import { collection, addDoc } from 'firebase/firestore';
+import { v4 as uuidv4 } from 'uuid';
 
 export async function POST(request) {
   try {
     const formData = await request.json();
+
+    // Generate UUID reference number
+    const referenceNumber = uuidv4();
 
     // Upload files to Cloudinary if they exist
     const uploadFileToCloudinary = async (file, folder = '') => {
@@ -60,6 +64,7 @@ export async function POST(request) {
 
     // Prepare the data for Firestore
     const formSubmissionData = {
+      referenceNumber,
       personal_info: {
         firstName: formData.firstName || '',
         middleName: formData.middleName || '',
@@ -71,14 +76,14 @@ export async function POST(request) {
         dateOfIssue: formData.dateOfIssue || '',
         licenseIdNumber: formData.licenseIdNumber || '',
         jurisdictionOfDocumentUse: formData.jurisdictionOfDocumentUse || '',
-        identificationImage: identificationImageUrl || '', // fallback to empty URL
+        identificationImage: identificationImageUrl || '',
       },
       document_info: {
         documentType: formData.documentType || 'other',
       },
       signature_info: {
         signatureMethod: formData.signatureMethod || 'drawn',
-        signatureImage: signatureImageUrl || '', // fallback to empty URL
+        signatureImage: signatureImageUrl || '',
       },
       payment_info: {
         paymentMethod: formData.paymentMethod || 'credit_card',
@@ -102,9 +107,10 @@ export async function POST(request) {
         email: formData.deliveryEmail || formData.email || '',
       },
       status: 'pending',
+      approvalStatus: 'pending',
       createdAt: new Date().toISOString(),
+      updatedAt: new Date().toISOString(),
     };
-    
 
     // Add the document to Firestore
     const docRef = await addDoc(collection(db, 'form_submissions'), formSubmissionData);
@@ -113,6 +119,7 @@ export async function POST(request) {
       success: true, 
       data: {
         id: docRef.id,
+        referenceNumber,
         ...formSubmissionData
       },
       message: 'Form submitted successfully' 

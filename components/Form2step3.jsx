@@ -1,25 +1,49 @@
 "use client";
 
-import React, { useState } from 'react';
+import React, { useEffect } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { useTranslations } from 'next-intl';
 import FormProgressSidebar from './FormProgressSidebar';
+import { saveFormData, getFormData } from '@/utils/formStorage';
 
 const Form2step3 = () => {
   const router = useRouter();
   const t = useTranslations();
-  const [selectedOption, setSelectedOption] = useState(null);
-  const [uploadedDocument, setUploadedDocument] = useState(null);
+  const [selectedOption, setSelectedOption] = React.useState(null);
+  const [uploadedFile, setUploadedFile] = React.useState(null);
 
-  const handleOptionSelect = (option) => {
-    setSelectedOption(option);
+  // Load saved data when component mounts
+  useEffect(() => {
+    const savedData = getFormData().step3;
+    if (savedData) {
+      if (savedData.signingOption) {
+        setSelectedOption(savedData.signingOption);
+      }
+      if (savedData.uploadedFile) {
+        setUploadedFile(savedData.uploadedFile);
+      }
+    }
+  }, []);
+
+  const handleOptionSelect = (optionId) => {
+    setSelectedOption(optionId);
+    // Save to localStorage
+    saveFormData(3, {
+      signingOption: optionId,
+      uploadedFile: uploadedFile
+    });
   };
 
-  const handleDocumentUpload = (event) => {
+  const handleFileUpload = (event) => {
     const file = event.target.files[0];
     if (file) {
-      setUploadedDocument(file);
+      setUploadedFile(file);
+      // Save to localStorage
+      saveFormData(3, {
+        signingOption: selectedOption,
+        uploadedFile: file
+      });
     }
   };
 
@@ -59,15 +83,12 @@ const Form2step3 = () => {
   };
 
   const handleNext = () => {
-    if (!selectedOption) {
+    if (selectedOption) {
+      router.push('/form2-page4');
+    } else {
+      // Show error or notification that option selection is required
       alert('Please select a signing option to proceed');
-      return;
     }
-    if (!uploadedDocument) {
-      alert('Please upload your document to proceed');
-      return;
-    }
-    router.push('/form2-page4');
   };
 
   return (
@@ -169,7 +190,7 @@ const Form2step3 = () => {
                       <input
                         type="file"
                         id="document-upload"
-                        onChange={handleDocumentUpload}
+                        onChange={handleFileUpload}
                         style={{ display: 'none' }}
                         accept=".pdf,.doc,.docx"
                         disabled={!selectedOption}
@@ -192,8 +213,8 @@ const Form2step3 = () => {
                           }}
                         />
                         <h5 style={{ color: selectedOption ? '#2D3748' : '#718096' }}>Upload Document</h5>
-                        {uploadedDocument ? (
-                          <p className="text-success">File uploaded: {uploadedDocument.name}</p>
+                        {uploadedFile ? (
+                          <p className="text-success">File uploaded: {uploadedFile.name}</p>
                         ) : (
                           <p style={{ color: '#718096', fontSize: '14px' }}>
                             {selectedOption 

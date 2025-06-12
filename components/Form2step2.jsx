@@ -1,10 +1,11 @@
 'use client';
 
-import React from 'react';
+import React, { useEffect } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { useTranslations } from 'next-intl';
 import FormProgressSidebar from './FormProgressSidebar';
+import { saveFormData, getFormData } from '@/utils/formStorage';
 
 const documentTypes = [
   {
@@ -68,8 +69,20 @@ const Form2step2 = () => {
   const t = useTranslations();
   const [selectedDocument, setSelectedDocument] = React.useState(null);
 
+  // Load saved data when component mounts
+  useEffect(() => {
+    const savedData = getFormData().step2;
+    if (savedData && savedData.documentType) {
+      setSelectedDocument(savedData.documentType);
+    }
+  }, []);
+
   const handleDocumentSelect = (documentId) => {
     setSelectedDocument(documentId);
+    // Save to localStorage
+    saveFormData(2, {
+      documentType: documentId
+    });
   };
 
   const handleNext = () => {

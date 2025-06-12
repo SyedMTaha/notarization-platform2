@@ -726,5 +726,6 @@
   "form2_step2_subtitle": "Please choose the form you would like to apply for",
   "form2_step2_option_selected": "Selected",
   "form2_step2_back_button": "Back",
-  "form2_step2_next_button": "Next"
+  "form2_step2_next_button": "Next",
+  "form2_receive_via_email": "Reciba su documento por correo electrónico"
 }
