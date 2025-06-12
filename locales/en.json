@@ -738,5 +738,13 @@
   "Email Address": "Email Address",
   "Back": "Back",
   "Submit": "Submit",
-  "Submitting...": "Submitting..."
+  "Submitting...": "Submitting...",
+  "Submission Successful": "Submission Successful",
+  "Your document has been submitted successfully": "Your document has been submitted successfully",
+  "Reference Number": "Reference Number",
+  "Copy to clipboard": "Copy to clipboard",
+  "Copied to clipboard!": "Copied to clipboard!",
+  "Please save this reference number for future reference": "Please save this reference number for future reference",
+  "Return to Home": "Return to Home",
+  "Submit Another Document": "Submit Another Document"
 }

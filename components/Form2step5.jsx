@@ -75,15 +75,15 @@ const Form2step5 = () => {
 
       // Prepare the final payload
       const payload = {
-        personal_info: allFormData.step1,
-        document_info: allFormData.step2,
-        signature_info: allFormData.step3,
-        payment_info: allFormData.step4,
-        delivery_info: {
-          method: deliveryMethod,
-          email: deliveryMethod === 'email' ? email : null
+        step1: allFormData.step1,
+        step2: allFormData.step2,
+        step3: allFormData.step3,
+        step4: allFormData.step4,
+        step5: {
+          deliveryMethod,
+          email: deliveryMethod === 'email' ? email : ''
         },
-        created_at: new Date().toISOString(),
+        submittedAt: new Date().toISOString(),
         status: 'pending'
       };
 
@@ -104,16 +104,15 @@ const Form2step5 = () => {
         throw new Error(result.error || t('Failed to submit form'));
       }
 
-      // Clear form data from localStorage after successful submission
+      // Clear form data after successful submission
       clearFormData();
-      
-      toast.success(t('Form submitted successfully!'));
-      
+
       // Redirect to success page with reference number
-      router.push(`/success?ref=${result.data.referenceNumber}`);
+      router.push(`/form2-success?reference=${result.data.referenceNumber}`);
+
     } catch (error) {
       console.error('Form submission error:', error);
-      toast.error(error.message || t('Failed to submit form. Please try again.'));
+      toast.error(error.message);
     } finally {
       setIsSubmitting(false);
     }
@@ -165,7 +164,7 @@ const Form2step5 = () => {
                         <h5 style={{ color: '#2D3748', marginBottom: '10px' }}>{t('Download')}</h5>
                         <p style={{ color: '#718096', margin: 0 }}>{t('Download your document directly')}</p>
                       </div>
-
+                      
                       <div
                         className={`delivery-option ${deliveryMethod === 'email' ? 'selected' : ''}`}
                         onClick={() => setDeliveryMethod('email')}
@@ -259,18 +258,18 @@ const Form2step5 = () => {
             </div>
           </div>
         </div>
-      </div>
 
-      <div style={{ 
-        width: '300px', 
-        position: 'fixed', 
-        right: 0, 
-        top: 0, 
-        height: '100vh',
-        borderLeft: '1px solid rgba(0,0,0,0.1)',
-        backgroundColor: '#091534'
-      }}>
-        <FormProgressSidebar currentStep={5} />
+        <div style={{ 
+          width: '300px', 
+          position: 'fixed', 
+          right: 0, 
+          top: 0, 
+          height: '100vh',
+          borderLeft: '1px solid rgba(0,0,0,0.1)',
+          backgroundColor: '#091534'
+        }}>
+          <FormProgressSidebar currentStep={5} />
+        </div>
       </div>
     </div>
   );

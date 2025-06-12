@@ -6,6 +6,7 @@ import { v4 as uuidv4 } from 'uuid';
 export async function POST(request) {
   try {
     const formData = await request.json();
+    console.log('Received form data:', formData);
 
     // Generate UUID reference number
     const referenceNumber = uuidv4();
@@ -65,55 +66,19 @@ export async function POST(request) {
     // Prepare the data for Firestore
     const formSubmissionData = {
       referenceNumber,
-      personal_info: {
-        firstName: formData.firstName || '',
-        middleName: formData.middleName || '',
-        lastName: formData.lastName || '',
-        dateOfBirth: formData.dateOfBirth || '',
-        countryOfResidence: formData.countryOfResidence || '',
-        email: formData.email || '',
-        identificationType: formData.identificationType || 'other',
-        dateOfIssue: formData.dateOfIssue || '',
-        licenseIdNumber: formData.licenseIdNumber || '',
-        jurisdictionOfDocumentUse: formData.jurisdictionOfDocumentUse || '',
-        identificationImage: identificationImageUrl || '',
-      },
-      document_info: {
-        documentType: formData.documentType || 'other',
-      },
-      signature_info: {
-        signatureMethod: formData.signatureMethod || 'drawn',
-        signatureImage: signatureImageUrl || '',
-      },
-      payment_info: {
-        paymentMethod: formData.paymentMethod || 'credit_card',
-        cardNumber: formData.cardNumber || '',
-        cardholderName: formData.cardholderName || '',
-        expiryMonth: formData.expiryMonth || '',
-        expiryYear: formData.expiryYear || '',
-        cvv: formData.cvv || '',
-        paymentFirstName: formData.paymentFirstName || '',
-        paymentLastName: formData.paymentLastName || '',
-        paymentEmail: formData.paymentEmail || '',
-        phone: formData.phone || '',
-        country: formData.country || '',
-        province: formData.province || '',
-        zip: formData.zip || '',
-        address: formData.address || '',
-        city: formData.city || '',
-      },
-      delivery_info: {
-        method: formData.deliveryMethod || 'email',
-        email: formData.deliveryEmail || formData.email || '',
-      },
+      step1: formData.step1 || {},
+      step2: formData.step2 || {},
+      step3: formData.step3 || {},
+      step4: formData.step4 || {},
+      step5: formData.step5 || {},
       status: 'pending',
-      approvalStatus: 'pending',
-      createdAt: new Date().toISOString(),
-      updatedAt: new Date().toISOString(),
+      submittedAt: new Date().toISOString()
     };
 
+    console.log('Saving to Firestore:', formSubmissionData);
+
     // Add the document to Firestore
-    const docRef = await addDoc(collection(db, 'form_submissions'), formSubmissionData);
+    const docRef = await addDoc(collection(db, 'formSubmissions'), formSubmissionData);
 
     return NextResponse.json({ 
       success: true, 
