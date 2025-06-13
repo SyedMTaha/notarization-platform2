@@ -161,7 +161,7 @@ export default function Dashboard() {
               </Card>
             </Col>
 
-            <Col md={4}>
+            {/* <Col md={4}>
               <Card className="h-100 shadow-sm" style={{borderRadius:'15px'}}>
                 <Card.Body>
                   <Card.Title className="d-flex align-items-center mb-3" style={{fontFamily:'Jost, sans-serif'}}>
@@ -184,7 +184,7 @@ export default function Dashboard() {
                   </Card.Text>
                 </Card.Body>
               </Card>
-            </Col>
+            </Col> */}
 
             <Col md={4}>
               <Card className="h-100 shadow-sm"style={{borderRadius:'15px'}}>

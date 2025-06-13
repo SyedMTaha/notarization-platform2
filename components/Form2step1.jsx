@@ -172,7 +172,7 @@ const Form2step1 = ({ totalSteps }) => {
     console.log("Form validation result:", validationResult);
     
     if (!validationResult) {
-      console.log("Form validation failed - showing errors");
+      console.log("Please fill all the required fields");
       return;
     }
 
@@ -180,8 +180,44 @@ const Form2step1 = ({ totalSteps }) => {
     const formValues = getValues();
     console.log("Form values after validation:", formValues);
 
+    // Validate all required fields
+    const requiredFields = {
+      firstName: t("form2_first_name_required"),
+      lastName: t("form2_last_name_required"),
+      dateOfBirth: t("form2_date_of_birth_required"),
+      countryOfResidence: t("form2_country_of_residence_required"),
+      email: t("form2_email_required"),
+      identificationType: t("form2_identification_type_required"),
+      dateOfIssue: t("form2_date_of_issue_required"),
+      licenseIdNumber: t("form2_license_id_required"),
+      jurisdictionOfDocumentUse: t("form2_jurisdiction_required")
+    };
+
+    // Check each required field
+    for (const [field, errorMessage] of Object.entries(requiredFields)) {
+      if (!formValues[field]) {
+        console.log("Please fill all the required fields");
+        setError(field, {
+          type: "manual",
+          message: errorMessage
+        });
+        return; // Stop if any required field is empty
+      }
+    }
+
+    // Validate email format
+    const emailRegex = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i;
+    if (!emailRegex.test(formValues.email)) {
+      console.log("Please fill all the required fields");
+      setError("email", {
+        type: "manual",
+        message: t("form2_invalid_email")
+      });
+      return;
+    }
+
     if (!identificationImage) {
-      console.log("No identification image found");
+      console.log("Please fill all the required fields");
       setError("identificationImage", {
         type: "manual",
         message: t("form2_please_upload_identification_image"),
@@ -246,6 +282,7 @@ const Form2step1 = ({ totalSteps }) => {
         const result = await response.json();
         console.log('Database save result:', result);
 
+        // Only redirect if all validations pass and data is saved successfully
         router.push('/form2-page2');
       } catch (error) {
         console.error('Error saving to database:', error);
@@ -616,126 +653,7 @@ const Form2step1 = ({ totalSteps }) => {
                     />
                   </div>
 
-                  {/* Upload Image Field */}
-                  {/* <Row className="mb-3 flex-nowrap align-items-center">
-                    <Col className="col-3">
-                    <span style={{
-                        fontSize: "20px",
-                        fontWeight: "500",
-                        color: "#4A5568",
-                        display: "inline-block",
-                        marginRight: "15px",
-                        marginBottom: "120px"
-                      }}>
-                          {t("form2_upload_image")}
-                          </span>
-                    </Col>
-
-                    <Col className="col-6">
-                      <div className="upload-container">
-                        <div
-                          style={{
-                            border: "1px solid #000000",
-                            borderRadius: "8px",
-                            padding: "20px",
-                            maxWidth: "120px",
-                            backgroundColor: "#fff",
-                            boxShadow: "0 1px 3px rgba(0,0,0,0.1)",
-                            cursor: "pointer",
-                            textAlign: "center",
-                            height: "100px",
-                            marginBottom: "50px",
-                            display: "flex",
-                            flexDirection: "column",
-                            justifyContent: "space-between",
-                            alignItems: "center"
-                          }}
-                          onClick={() => document.getElementById('new_identification_image').click()}
-                        >
-                          <div className="preview-container">
-                            <img
-                              id="preview-image"
-                              src={identificationImage ? URL.createObjectURL(identificationImage) : "/assets/v3/img/pf1.png"}
-                              alt="Preview"
-                              style={{
-                                maxWidth: "100%",
-                                height: "60px",
-                                borderRadius: "4px"
-                              }}
-                            />
-                          </div>
-                          
-                          <div 
-                            style={{
-                              backgroundColor: "#274171",
-                              color: "white",
-                              padding: "6px",
-                              borderRadius: "6px",
-                              display: "inline-flex",
-                              alignItems: "center",
-                              gap: "6px",
-                              fontSize: "9px",
-                              marginTop: "-10px",
-                              width: "100px",
-                              justifyContent: "center",
-                              position: "relative",
-                              left: "50%",
-                              transform: "translateX(-40%)"
-                            }}
-                          >
-                            <i className="fa fa-upload"></i>
-                            <span style={{ whiteSpace: "nowrap" }}>
-                              {identificationImage ? 'Change Image' : t("form2_upload_identification")}
-                            </span>
-                          </div>
-                          
-                          <input
-                            id="new_identification_image"
-                            type="file"
-                            accept="image/*"
-                            style={{ display: "none" }}
-                            onChange={(e) => {
-                              const file = e.target.files[0];
-                              if (file) {
-                                if (file.size > 5 * 1024 * 1024) { // 5MB limit
-                                  setError("identificationImage", {
-                                    type: "manual",
-                                    message: t("form2_image_too_large"),
-                                  });
-                                  return;
-                                }
-                                setIdentificationImage(file);
-                                readURL(e, "preview-image"); // Make sure this matches your preview image ID
-                              }
-                            }}
-                            {...register("identificationImage")}
-                          />
-                        </div>
-                        
-                        {identificationImage && (
-                          <div 
-                            style={{ 
-                              marginTop: "10px",
-                              fontSize: "14px",
-                              color: "#4A5568"
-                            }}
-                          >
-                            {identificationImage.name}
-                          </div>
-                        )}
-                        
-                        {errors.identificationImage && (
-                          <p style={{ 
-                            color: "#E53E3E",
-                            marginTop: "8px",
-                            fontSize: "14px"
-                          }}>
-                            {errors.identificationImage.message}
-                          </p>
-                        )}
-                      </div>
-                    </Col>
-                  </Row> */}
+                
 
                    {/* Image Upload */}
                 <div>
@@ -751,10 +669,7 @@ const Form2step1 = ({ totalSteps }) => {
                         className="border-2 border-gray-900 rounded-lg p-3 cursor-pointer bg-white shadow-sm hover:shadow-md transition-all duration-200 text-center"
                       >
                        
-                        {/* <div className="bg-[#274171] text-white px-3 py-2 rounded text-xs font-medium inline-flex items-center space-x-2">
-                          <Upload className="w-3 h-3" />
-                          <span>{formData.identificationImage ? 'Change Image' : 'Upload ID'}</span>
-                        </div> */}
+                        
                         <input
                           id="identification-image"
                           type="file"
@@ -797,23 +712,22 @@ const Form2step1 = ({ totalSteps }) => {
                       <i className="fa fa-arrow-left"></i> Back
                     </span>
                   
-                  <Link href="/form2-page2" className="text-decoration-none">
-                    <span
-                      className="btn"
-                      style={{ 
-                        backgroundColor: "#274171",
-                        color: 'white',
-                        padding: '10px 30px',
-                        display: 'inline-flex',
-                        alignItems: 'center',
-                        gap: '8px',
-                        marginBottom: '-90px',
-                      }}
-                      onClick={nextHandler}
-                    >
-                      Next <i className="fa fa-arrow-right"></i>
-                    </span>
-                  </Link>
+                  <span
+                    className="btn"
+                    style={{ 
+                      backgroundColor: "#274171",
+                      color: 'white',
+                      padding: '10px 30px',
+                      display: 'inline-flex',
+                      alignItems: 'center',
+                      gap: '8px',
+                      cursor: 'pointer',
+                      marginBottom: '-90px',
+                    }}
+                    onClick={handleNext}
+                  >
+                    Next <i className="fa fa-arrow-right"></i>
+                  </span>
                 </div>
               </div>
 
