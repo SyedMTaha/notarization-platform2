@@ -53,7 +53,7 @@ export default function Dashboard() {
               <Nav.Link href="/dashboard/profile" className="text-white mb-2 d-flex align-items-center ">
                 <FiUser className="me-2" style={{ fontSize: '20px' }} /> Profile
               </Nav.Link>
-              <Nav.Link href="/dashboard/documents" className="text-white mb-2 d-flex align-items-center">
+              <Nav.Link href="/dashboard/document" className="text-white mb-2 d-flex align-items-center">
                 <FiFileText className="me-2" style={{ fontSize: '20px' }} /> Documents
               </Nav.Link>
               <Nav.Link href="/dashboard/calender" className="text-white mb-2 d-flex align-items-center">

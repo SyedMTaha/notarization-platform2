@@ -20,7 +20,7 @@ export default function Profile() {
   }, []);
 
   return (
-    <div className="p-4" style={{ fontFamily: "Poppins, sans-serif", backgroundColor: "#f8f9fa", minHeight: "100vh" }}>
+    <div className="p-4" style={{ fontFamily: "Poppins, sans-serif", backgroundColor: "#f8f9fa", minHeight: "100vh", minWidth: "100vh" }}>
       <h2 className="mb-4" style={{ fontFamily: "Jost, sans-serif", fontWeight: 600, fontSize: "2rem", color: "#012E6D" }}>
         Profile Settings
       </h2>

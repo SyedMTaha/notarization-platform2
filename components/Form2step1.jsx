@@ -22,6 +22,7 @@ const identificationOptions = [
 ];
 
 const Form2step1 = ({ totalSteps }) => {
+  // All hooks must be called unconditionally at the top level
   const router = useRouter();
   const t = useTranslations();
   const [isOpen, setIsOpen] = useState(false);
@@ -44,23 +45,56 @@ const Form2step1 = ({ totalSteps }) => {
   const [errors, setErrors] = useState({});
   const [isUploading, setIsUploading] = useState(false);
 
+  // Define error class name
+  const errorClassName = "mt-2 text-sm text-red-600";
+
+  // Initialize form steps and get methods
+  useFormSteps();
+  const { methods, getValidateStep } = useForm2store();
+  const nextBtnRef = useRef(null);
+
   // Load saved data when component mounts
   useEffect(() => {
-    const savedData = getFormData().step1;
-    if (savedData) {
+    if (!methods) return;
+    
+    const savedData = getFormData();
+    console.log("Loading saved data in useEffect:", savedData);
+    
+    if (savedData.step1) {
+      console.log("Found saved step1 data:", savedData.step1);
+      // Update local state
       setFormData(prev => ({
         ...prev,
-        ...savedData
+        ...savedData.step1
       }));
+      
+      // Update React Hook Form values
+      Object.entries(savedData.step1).forEach(([key, value]) => {
+        methods.setValue(key, value);
+      });
     }
-  }, []);
+  }, [methods]);
 
   // Save data when it changes
   useEffect(() => {
+    console.log("Saving form data:", formData);
     const dataToSave = { ...formData };
     delete dataToSave.identificationImage; // Don't save the file object
-    saveFormData(1, dataToSave);
+    const saveResult = saveFormData(1, dataToSave);
+    console.log("Save result:", saveResult);
   }, [formData]);
+
+  // Early return if methods is not available
+  if (!methods) return null;
+
+  const {
+    register,
+    control,
+    setError,
+    trigger,
+    getValues,
+    setValue
+  } = methods;
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -68,6 +102,8 @@ const Form2step1 = ({ totalSteps }) => {
       ...prev,
       [name]: value
     }));
+    // Update React Hook Form value
+    setValue(name, value);
     // Clear error when user types
     if (errors[name]) {
       setErrors(prev => ({
@@ -128,28 +164,24 @@ const Form2step1 = ({ totalSteps }) => {
     }
   };
 
-  // Initialize form steps
-  useFormSteps();
-
-  const { methods, getValidateStep } = useForm2store();
-  const nextBtnRef = useRef(null);
-  if (!methods) return null;
-
-  const {
-    register,
-    control,
-    setError,
-    trigger,
-    getValues,
-   
-  } = methods;
-
   const nextHandler = async () => {
-    const validateStep = await getValidateStep(1);
-    const { isValid, data } = await validateStep();
-    if (!isValid) return;
+    console.log("Starting nextHandler...");
+    
+    // First trigger validation on all fields
+    const validationResult = await trigger();
+    console.log("Form validation result:", validationResult);
+    
+    if (!validationResult) {
+      console.log("Form validation failed - showing errors");
+      return;
+    }
+
+    // Get all form values after validation
+    const formValues = getValues();
+    console.log("Form values after validation:", formValues);
 
     if (!identificationImage) {
+      console.log("No identification image found");
       setError("identificationImage", {
         type: "manual",
         message: t("form2_please_upload_identification_image"),
@@ -157,43 +189,85 @@ const Form2step1 = ({ totalSteps }) => {
       return;
     }
 
-    const formValues = getValues();
-    if (!formValues.identificationType) {
-      setError("identificationType", {
-        type: "manual",
-        message: t("form2_identification_type_required"),
-      });
-      return;
-    }
-
     try {
+      console.log("Starting image upload...");
       // Upload image to Cloudinary
       const imageUrl = await uploadToCloudinary(identificationImage, 'identification');
+      console.log("Image uploaded successfully:", imageUrl);
       
       if (!imageUrl) {
         throw new Error('Failed to upload image');
       }
 
-      // Ensure all required fields are present
-      const payload = {
-        ...data,
-        identificationImage: imageUrl,
-        document_info: {
-          ...data.document_info,
-          documentType: formValues.identificationType || 'other', // Provide a default value
-        }
+      // Create step1 data with all form fields
+      const step1Data = {
+        firstName: formValues.firstName || '',
+        middleName: formValues.middleName || '',
+        lastName: formValues.lastName || '',
+        dateOfBirth: formValues.dateOfBirth || '',
+        countryOfResidence: formValues.countryOfResidence || '',
+        email: formValues.email || '',
+        identificationType: formValues.identificationType || '',
+        dateOfIssue: formValues.dateOfIssue || '',
+        licenseIdNumber: formValues.licenseIdNumber || '',
+        jurisdictionOfDocumentUse: formValues.jurisdictionOfDocumentUse || '',
+        identificationImageUrl: imageUrl
       };
+      
+      console.log("Step1 data prepared for saving:", step1Data);
+      
+      // Save to localStorage
+      const saveResult = saveFormData(1, step1Data);
+      console.log("Save to localStorage result:", saveResult);
 
-      console.log("validated data →", payload);
-      console.log("All data", formValues);
-      router.push('/form2-page2');
+      // Verify the data was saved
+      const savedData = getFormData();
+      console.log("Verified saved data:", savedData);
+
+      // Save to database
+      try {
+        const response = await fetch('/api/submissions', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            step1: step1Data,
+            status: 'pending',
+            referenceNumber: generateReferenceNumber(),
+            createdAt: new Date().toISOString()
+          }),
+        });
+
+        if (!response.ok) {
+          throw new Error('Failed to save to database');
+        }
+
+        const result = await response.json();
+        console.log('Database save result:', result);
+
+        router.push('/form2-page2');
+      } catch (error) {
+        console.error('Error saving to database:', error);
+        setError("submit", {
+          type: "manual",
+          message: "Failed to save form data. Please try again.",
+        });
+      }
     } catch (error) {
-      console.error('Error uploading image:', error);
+      console.error('Error in nextHandler:', error);
       setError("identificationImage", {
         type: "manual",
         message: t("form2_error_uploading_image"),
       });
     }
+  };
+
+  // Add generateReferenceNumber function
+  const generateReferenceNumber = () => {
+    const timestamp = Date.now().toString(36);
+    const randomStr = Math.random().toString(36).substring(2, 8);
+    return `WS-${timestamp}-${randomStr}`.toUpperCase();
   };
 
   const readURL = (event, previewId) => {
@@ -273,8 +347,10 @@ const Form2step1 = ({ totalSteps }) => {
                         <input
                           style={inputStyle}
                           type="text"
-                          {...register("firstName")}
-                          
+                          {...register("firstName", { 
+                            required: t("form2_first_name_required"),
+                            onChange: handleInputChange 
+                          })}
                         />
                         {errors.firstName && (
                           <p style={errorStyle}>{errors.firstName.message}</p>
@@ -287,8 +363,9 @@ const Form2step1 = ({ totalSteps }) => {
                         <input
                           style={inputStyle}
                           type="text"
-                          {...register("middleName")}
-                          
+                          {...register("middleName", {
+                            onChange: handleInputChange 
+                          })}
                         />
                         {errors.middleName && (
                           <p style={errorStyle}>{errors.middleName.message}</p>
@@ -303,8 +380,10 @@ const Form2step1 = ({ totalSteps }) => {
                     <input
                       style={inputStyle}
                       type="text"
-                      {...register("lastName")}
-                    
+                      {...register("lastName", { 
+                        required: t("form2_last_name_required"),
+                        onChange: handleInputChange 
+                      })}
                     />
                     {errors.lastName && (
                       <p style={errorStyle}>{errors.lastName.message}</p>
@@ -317,7 +396,10 @@ const Form2step1 = ({ totalSteps }) => {
                     <input
                       style={inputStyle}
                       type="date"
-                      {...register("dateOfBirth")}
+                      {...register("dateOfBirth", { 
+                        required: t("form2_date_of_birth_required"),
+                        onChange: handleInputChange 
+                      })}
                     />
                     {errors.dateOfBirth && (
                       <p style={errorStyle}>{errors.dateOfBirth.message}</p>
@@ -330,9 +412,19 @@ const Form2step1 = ({ totalSteps }) => {
                     <Controller
                       name="countryOfResidence"
                       control={control}
+                      rules={{ required: t("form2_country_of_residence_required") }}
                       render={({ field, fieldState }) => (
                         <>
-                          <CountrySelect {...field} />
+                          <CountrySelect 
+                            {...field} 
+                            onChange={(value) => {
+                              field.onChange(value);
+                              setFormData(prev => ({
+                                ...prev,
+                                countryOfResidence: value
+                              }));
+                            }}
+                          />
                           {fieldState.error?.message && (
                             <p className="text-danger">{fieldState.error.message}</p>
                           )}
@@ -347,8 +439,14 @@ const Form2step1 = ({ totalSteps }) => {
                     <input
                       style={inputStyle}
                       type="email"
-                      {...register("email")}
-                      
+                      {...register("email", { 
+                        required: t("form2_email_required"),
+                        pattern: {
+                          value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
+                          message: t("form2_invalid_email")
+                        },
+                        onChange: handleInputChange 
+                      })}
                     />
                     {errors.email && (
                       <p style={errorStyle}>{errors.email.message}</p>
@@ -362,6 +460,7 @@ const Form2step1 = ({ totalSteps }) => {
                       <Controller
                         name="identificationType"
                         control={control}
+                        rules={{ required: t("form2_identification_type_required") }}
                         render={({ field, fieldState }) => (
                           <div style={{ position: "relative" }}>
                             <div
@@ -407,6 +506,10 @@ const Form2step1 = ({ totalSteps }) => {
                                     key={option.value}
                                     onClick={() => {
                                       field.onChange(option.value);
+                                      setFormData(prev => ({
+                                        ...prev,
+                                        identificationType: option.value
+                                      }));
                                       setIsOpen(false);
                                       trigger("identificationType");
                                     }}
@@ -454,7 +557,10 @@ const Form2step1 = ({ totalSteps }) => {
                               paddingRight: "15px",
                             }}
                             type="date"
-                            {...register("dateOfIssue")}
+                            {...register("dateOfIssue", { 
+                              required: t("form2_date_of_issue_required"),
+                              onChange: handleInputChange 
+                            })}
                             className="custom-date-input"
                           />
                           
@@ -470,8 +576,10 @@ const Form2step1 = ({ totalSteps }) => {
                         <input
                           style={inputStyle}
                           type="text"
-                          {...register("licenseIdNumber")}
-                          
+                          {...register("licenseIdNumber", { 
+                            required: t("form2_license_id_required"),
+                            onChange: handleInputChange 
+                          })}
                         />
                         {errors.licenseIdNumber && (
                           <p style={errorStyle}>{errors.licenseIdNumber.message}</p>
@@ -486,9 +594,19 @@ const Form2step1 = ({ totalSteps }) => {
                     <Controller
                       name="jurisdictionOfDocumentUse"
                       control={control}
+                      rules={{ required: t("form2_jurisdiction_required") }}
                       render={({ field, fieldState }) => (
                         <>
-                          <CountrySelect {...field} />
+                          <CountrySelect 
+                            {...field} 
+                            onChange={(value) => {
+                              field.onChange(value);
+                              setFormData(prev => ({
+                                ...prev,
+                                jurisdictionOfDocumentUse: value
+                              }));
+                            }}
+                          />
                           {fieldState.error?.message && (
                             <p className="text-danger">{fieldState.error.message}</p>
                           )}
@@ -629,14 +747,14 @@ const Form2step1 = ({ totalSteps }) => {
                     </div>
                     <div className="flex-1 ">
                       <div
-                        onClick={() => document.getElementById('identification-image')?.click()}
+                        onClick={() => document.getElementById('identification-image')}
                         className="border-2 border-gray-900 rounded-lg p-3 cursor-pointer bg-white shadow-sm hover:shadow-md transition-all duration-200 text-center"
                       >
                        
-                        <div className="bg-[#274171] text-white px-3 py-2 rounded text-xs font-medium inline-flex items-center space-x-2">
+                        {/* <div className="bg-[#274171] text-white px-3 py-2 rounded text-xs font-medium inline-flex items-center space-x-2">
                           <Upload className="w-3 h-3" />
                           <span>{formData.identificationImage ? 'Change Image' : 'Upload ID'}</span>
-                        </div>
+                        </div> */}
                         <input
                           id="identification-image"
                           type="file"

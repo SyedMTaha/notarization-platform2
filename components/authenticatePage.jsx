@@ -152,6 +152,7 @@ const AuthenticatePage = () => {
 
                       <button
                         className="btn"
+                        disabled={true}
                         style={{
                           backgroundColor: '#274171',
                           color: 'white',

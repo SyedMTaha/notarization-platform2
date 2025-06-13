@@ -8,11 +8,17 @@ import Form2step4 from "../../../components/Form2step4";
 import Form2step5 from "../../../components/Form2step5";
 import useForm2store from "@/store/form2store";
 import { useEffect } from "react";
-import { useTranslations } from "next-intl";
+import { useTranslations, useMessages } from "next-intl";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
+import { NextIntlClientProvider } from "next-intl";
+import { usePathname } from "next/navigation";
 
 export default function V3() {
+  const pathname = usePathname();
+  const locale = pathname.split("/")[1]; // Extract locale from the URL
+  const messages = useMessages(); // Auto-fetch messages
+
   const { createSchema, setMethods } = useForm2store();
   const t = useTranslations();
   const methods = useForm({
@@ -37,9 +43,9 @@ export default function V3() {
   }, [methods]);
   
   return (
-    <>
+    <NextIntlClientProvider locale={locale} messages={messages}>
       <Form2step1/>
       {/* <Form2step2/> */}
-    </>
+    </NextIntlClientProvider>
   );
 }

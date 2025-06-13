@@ -173,7 +173,8 @@ const VideoCallPage = () => {
                   <i className="fa fa-arrow-left"></i> Back
                 </button>
 
-                <button
+                {/* Next Button */}
+                {/* <button
                   onClick={handleNext}
                   className="btn"
                   style={{ 
@@ -188,7 +189,8 @@ const VideoCallPage = () => {
                   }}
                 >
                   Next <i className="fa fa-arrow-right"></i>
-                </button>
+                </button> */}
+                
               </div>
             </div>
           </div>
