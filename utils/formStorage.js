@@ -56,6 +56,7 @@ export const uploadToCloudinary = async (file, folder = '') => {
       formData.append('folder', folder);
     }
 
+    // Cloudinary Key
     const response = await fetch(
       'https://api.cloudinary.com/v1_1/dvhrg7bkp/image/upload',
       {

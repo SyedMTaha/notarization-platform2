@@ -136,8 +136,8 @@ const uploadFileToCloudinary = async (file, folder = '') => {
   try {
     const formData = new FormData();
     formData.append('file', file);
-    formData.append('upload_preset', 'WiScribbles');
-    formData.append('cloud_name', 'dvhrg7bkp');
+    formData.append('upload_preset', process.env.NEXT_PUBLIC_CLOUDINARY_UPLOAD_PRESET);
+    formData.append('cloud_name', process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME);
     
     // Optional: Add folder structure
     if (folder) {

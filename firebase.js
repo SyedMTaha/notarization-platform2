@@ -7,13 +7,13 @@ import { doc, setDoc, getDoc } from 'firebase/firestore';
 import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
 
 const firebaseConfig = {
-    apiKey: "AIzaSyC_ZARLcZDuu7Cj0J7pol7DwLP_iB8Em6o",
-    authDomain: "wiscribbles-2f919.firebaseapp.com",
-    projectId: "wiscribbles-2f919",
-    storageBucket: "wiscribbles-2f919.firebasestorage.app",
-    messagingSenderId: "429402625193",
-    appId: "1:429402625193:web:5616f9cb87ac936267c5b8",
-    measurementId: "G-37LZNPM781"
+    apiKey: process.env.NEXT_PUBLIC_FIREBASE_API_KEY,
+    authDomain: process.env.NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN,
+    projectId: process.env.NEXT_PUBLIC_FIREBASE_PROJECT_ID,
+    storageBucket: process.env.NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET,
+    messagingSenderId: process.env.NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID,
+    appId: process.env.NEXT_PUBLIC_FIREBASE_APP_ID,
+    measurementId: process.env.NEXT_PUBLIC_FIREBASE_MEASUREMENT_ID
 };
 
 const app = initializeApp(firebaseConfig);
