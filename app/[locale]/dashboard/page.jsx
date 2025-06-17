@@ -26,12 +26,18 @@ export default function Dashboard() {
       if (user) {
         const { success, data } = await getUserData(user.uid);
         if (success) {
+          console.log('User Data:', data);
           setUserData(data);
         }
       }
     };
     fetchUserData();
   }, []);
+
+  // Function to check if user is a notary - case insensitive comparison
+  const isNotary = userData?.signUpAs?.toLowerCase() === 'notary';
+  console.log('Is Notary:', isNotary);
+  console.log('SignUpAs Value:', userData?.signUpAs);
 
   return (
     <Container fluid className='p-0' style={{backgroundColor:'#1c2434'}} >
@@ -53,9 +59,12 @@ export default function Dashboard() {
               <Nav.Link href="/dashboard/profile" className="text-white mb-2 d-flex align-items-center ">
                 <FiUser className="me-2" style={{ fontSize: '20px' }} /> Profile
               </Nav.Link>
-              <Nav.Link href="/dashboard/document" className="text-white mb-2 d-flex align-items-center">
-                <FiFileText className="me-2" style={{ fontSize: '20px' }} /> Documents
-              </Nav.Link>
+              {/* Only show Documents link for notary users */}
+              {isNotary && (
+                <Nav.Link href="/dashboard/document" className="text-white mb-2 d-flex align-items-center">
+                  <FiFileText className="me-2" style={{ fontSize: '20px' }} /> Documents
+                </Nav.Link>
+              )}
               <Nav.Link href="/dashboard/calender" className="text-white mb-2 d-flex align-items-center">
                 <FiCalendar className="me-2" style={{ fontSize: '20px' }} /> Calender
               </Nav.Link>

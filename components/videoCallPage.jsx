@@ -174,7 +174,7 @@ const VideoCallPage = () => {
                 </button>
 
                 {/* Next Button */}
-                {/* <button
+                <button
                   onClick={handleNext}
                   className="btn"
                   style={{ 
@@ -189,7 +189,7 @@ const VideoCallPage = () => {
                   }}
                 >
                   Next <i className="fa fa-arrow-right"></i>
-                </button> */}
+                </button>
                 
               </div>
             </div>

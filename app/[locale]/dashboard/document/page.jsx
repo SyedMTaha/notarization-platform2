@@ -6,6 +6,10 @@ import { collection, getDocs, doc, updateDoc } from 'firebase/firestore';
 import { db } from '@/firebase';
 import { useRouter } from 'next/navigation';
 import { ArrowLeft, Download, Check, X, Eye, Clock, AlertCircle, CheckCircle, XCircle } from 'lucide-react';
+import emailjs from '@emailjs/browser';
+
+// Initialize EmailJS
+emailjs.init("nWH88iJVBzhSqWLzz");
 
 const styles = {
   container: {
@@ -63,7 +67,9 @@ const styles = {
   },
   documentsGrid: {
     display: "grid",
+    gridTemplateColumns: "repeat(3, 1fr)",
     gap: "24px",
+    padding: "0 24px",
   },
   userCard: {
     backgroundColor: "white",
@@ -71,9 +77,12 @@ const styles = {
     boxShadow: "0 1px 3px rgba(0, 0, 0, 0.1)",
     border: "1px solid #e5e7eb",
     overflow: "hidden",
+    height: "100%",
+    display: "flex",
+    flexDirection: "column",
   },
   userHeader: {
-    padding: "20px",
+    padding: "16px",
     borderBottom: "1px solid #e5e7eb",
     display: "flex",
     alignItems: "center",
@@ -106,16 +115,19 @@ const styles = {
     margin: 0,
   },
   documentsContainer: {
-    padding: "20px",
-    display: "grid",
-    gridTemplateColumns: "repeat(auto-fit, minmax(300px, 1fr))",
-    gap: "20px",
+    padding: "16px",
+    flex: 1,
+    display: "flex",
+    flexDirection: "column",
   },
   documentCard: {
     border: "1px solid #e5e7eb",
     borderRadius: "8px",
     padding: "16px",
     backgroundColor: "#f9fafb",
+    flex: 1,
+    display: "flex",
+    flexDirection: "column",
   },
   documentHeader: {
     display: "flex",
@@ -208,11 +220,65 @@ const getStatusIcon = (status) => {
   }
 };
 
+const generateReferenceNumber = () => {
+  const prefix = 'WIS';
+  const timestamp = Date.now().toString().slice(-6);
+  const random = Math.floor(Math.random() * 1000).toString().padStart(3, '0');
+  return `${prefix}${timestamp}${random}`;
+};
+
+const sendApprovalEmail = async (userEmail, referenceNumber, userName) => {
+  try {
+    // Create template parameters with all possible variable names
+    const templateParams = {
+      to_email: userEmail,  // Standard EmailJS recipient field
+      email: userEmail,     // Your template's email field
+      to_name: userName,
+      name: userName,       // Alternative name field
+      reference_number: referenceNumber,
+      ref_number: referenceNumber,
+      reference: referenceNumber,
+      code: referenceNumber,
+      verification_code: referenceNumber,
+      message: `Your document has been approved. Your reference number is: ${referenceNumber}`,
+      subject: `Document Approved - Reference Number: ${referenceNumber}`
+    };
+
+    console.log('Preparing to send email with these parameters:', {
+      serviceID: 'service_9wu43ho',
+      templateID: 'template_bu0fm8i',
+      templateParams: templateParams
+    });
+
+    const response = await emailjs.send(
+      'service_9wu43ho',
+      'template_bu0fm8i',
+      templateParams,
+      'nWH88iJVBzhSqWLzz'
+    );
+
+    console.log('EmailJS Response:', response);
+    if (response.status === 200) {
+      console.log('Email sent successfully with reference number:', referenceNumber);
+    }
+    return response;
+  } catch (error) {
+    console.error('Error sending email:', error);
+    console.error('Failed parameters:', {
+      email: userEmail,
+      referenceNumber: referenceNumber,
+      userName: userName
+    });
+    throw error;
+  }
+};
+
 const NotaryDashboard = () => {
   const t = useTranslations();
   const router = useRouter();
   const [submissions, setSubmissions] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [sendingEmail, setSendingEmail] = useState(false);
 
   useEffect(() => {
     fetchSubmissions();
@@ -233,16 +299,56 @@ const NotaryDashboard = () => {
     }
   };
 
-  const handleApprove = async (submissionId) => {
+  const handleApprove = async (submission) => {
     try {
-      const submissionRef = doc(db, 'formSubmissions', submissionId);
+      setSendingEmail(true);
+      const referenceNumber = generateReferenceNumber();
+      
+      // Debug logs
+      console.log('Full submission data:', JSON.stringify(submission, null, 2));
+      
+      // Get email from step1 data
+      const userEmail = submission.step1?.email;
+      console.log('Email from step1:', userEmail);
+      
+      // If email is not found in step1, try to find it in the submission data
+      if (!userEmail) {
+        console.log('Email not found in step1, checking submission data...');
+        // Log all keys in the submission to find where email might be stored
+        console.log('Available keys in submission:', Object.keys(submission));
+      }
+
+      // Validate email
+      if (!userEmail) {
+        throw new Error('No email address found in submission data. Please ensure the form includes an email field.');
+      }
+
+      const userName = `${submission.step1?.firstName || ''} ${submission.step1?.lastName || ''}`.trim() || 'User';
+
+      console.log('Sending email to:', userEmail);
+      console.log('Reference number:', referenceNumber);
+
+      // Send email with reference number
+      await sendApprovalEmail(userEmail, referenceNumber, userName);
+
+      // Update the submission in Firestore
+      const submissionRef = doc(db, 'formSubmissions', submission.id);
       await updateDoc(submissionRef, {
         status: 'approved',
-        approvedAt: new Date().toISOString()
+        approvedAt: new Date().toISOString(),
+        referenceNumber: referenceNumber
       });
-      fetchSubmissions();
+
+      // Refresh the submissions list
+      await fetchSubmissions();
+      
+      // Show success message
+      alert('Document approved and email sent successfully!');
     } catch (error) {
       console.error('Error approving submission:', error);
+      alert(`Error approving document: ${error.message || 'Unknown error occurred'}`);
+    } finally {
+      setSendingEmail(false);
     }
   };
 
@@ -277,7 +383,7 @@ const NotaryDashboard = () => {
     );
   }
 
-  // Calculate stats
+  // Calculate stats1
   const totalDocuments = submissions.length;
   const pendingDocuments = submissions.filter(doc => doc.status === 'pending').length;
   const approvedDocuments = submissions.filter(doc => doc.status === 'approved').length;
@@ -315,7 +421,7 @@ const NotaryDashboard = () => {
         </div>
       </div>
 
-      {/* Documents List */}
+      {/* Documents Grid */}
       <div style={styles.documentsGrid}>
         {submissions.map((submission) => (
           <div key={submission.id} style={styles.userCard}>
@@ -334,7 +440,7 @@ const NotaryDashboard = () => {
               </div>
             </div>
 
-            {/* Documents */}
+            {/* Document Card */}
             <div style={styles.documentsContainer}>
               <div style={styles.documentCard}>
                 <div style={styles.documentHeader}>
@@ -357,6 +463,11 @@ const NotaryDashboard = () => {
                   <p style={styles.documentDetail}>
                     <strong>Submitted:</strong> {new Date(submission.submittedAt).toLocaleDateString()}
                   </p>
+                  {submission.referenceNumber && (
+                    <p style={styles.documentDetail}>
+                      <strong>Reference Number:</strong> {submission.referenceNumber}
+                    </p>
+                  )}
                 </div>
 
                 <div style={styles.actionsContainer}>
@@ -376,10 +487,15 @@ const NotaryDashboard = () => {
                     <>
                       <button
                         style={{ ...styles.button, ...styles.successButton }}
-                        onClick={() => handleApprove(submission.id)}
+                        onClick={() => handleApprove(submission)}
+                        disabled={sendingEmail}
                       >
-                        <Check size={14} />
-                        Approve
+                        {sendingEmail ? 'Sending...' : (
+                          <>
+                            <Check size={14} />
+                            Approve
+                          </>
+                        )}
                       </button>
                       <button
                         style={{ ...styles.button, ...styles.dangerButton }}
