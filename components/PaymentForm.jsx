@@ -9,6 +9,10 @@ import { useTranslations } from 'next-intl';
 import FormProgressSidebar from './FormProgressSidebar';
 import CountrySelect from '@/components/CountrySelect';
 import { saveFormData, getFormData } from '@/utils/formStorage';
+import { v4 as uuidv4 } from 'uuid';
+import { doc, updateDoc } from "firebase/firestore";
+import { db } from "@/firebase";
+import { addDoc, collection } from "firebase/firestore";
 
 const PaymentForm = () => {
   const router = useRouter();
@@ -116,9 +120,47 @@ const PaymentForm = () => {
     return Object.keys(newErrors).length === 0;
   };
 
-  const handleNext = () => {
+  const handleNext = async () => {
     if (validateForm()) {
-      router.push('/video-call?from=form4');
+      setIsProcessing(true);
+      try {
+        let submissionId = getFormData().submissionId;
+        // If submissionId is missing, create a new submission
+        if (!submissionId) {
+          // Gather all form data from previous steps
+          const allFormData = getFormData();
+          const newSubmission = {
+            step1: allFormData.step1 || {},
+            step2: allFormData.step2 || {},
+            step3: allFormData.step3 || {},
+            step4: {
+              paymentMethod,
+              ...formData
+            },
+            status: 'pending',
+            createdAt: new Date().toISOString(),
+            submittedAt: new Date().toISOString()
+          };
+          const docRef = await addDoc(collection(db, 'formSubmissions'), newSubmission);
+          submissionId = docRef.id;
+          saveFormData('submissionId', submissionId);
+        } else {
+          // Update step4 in Firestore if needed
+          await updateDoc(doc(db, 'formSubmissions', submissionId), {
+            step4: {
+              paymentMethod,
+              ...formData
+            }
+          });
+        }
+        const meetingId = uuidv4();
+        await updateDoc(doc(db, 'formSubmissions', submissionId), { meetingId, status: 'pending' });
+        router.push(`/video-call?meetingId=${meetingId}`);
+      } catch (err) {
+        setErrors({ form: err.message });
+      } finally {
+        setIsProcessing(false);
+      }
     }
   };
 

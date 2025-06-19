@@ -3,7 +3,7 @@
 import { useState, useEffect } from "react"
 import { ArrowLeft } from "lucide-react"
 import Link from "next/link"
-import { collection, getDocs } from "firebase/firestore"
+import { collection, getDocs, query, where } from "firebase/firestore"
 import { db } from "@/firebase"
 import { useRouter } from 'next/navigation'
 
@@ -376,28 +376,25 @@ export default function CalendarPage() {
   }, [])
 
   const fetchMeetings = async () => {
-    try {
-      const querySnapshot = await getDocs(collection(db, 'formSubmissions'))
-      const meetingsList = querySnapshot.docs.map(doc => {
-        const data = doc.data()
-        return {
-          id: doc.id,
-          title: `${data.step1?.firstName || ''} ${data.step1?.lastName || ''}`.trim() || 'User Meeting',
-          time: data.meetingTime || '10:00 AM',
-          duration: '30 min',
-          attendees: [data.step1?.firstName || 'User'],
-          location: 'Virtual',
-          color: '#3b82f6',
-          date: data.meetingDate ? new Date(data.meetingDate) : new Date(),
-          status: data.status || 'pending'
-        }
-      })
-      setMeetings(meetingsList)
-      setLoading(false)
-    } catch (error) {
-      console.error('Error fetching meetings:', error)
-      setLoading(false)
-    }
+    const q = query(collection(db, "formSubmissions"), where("status", "==", "pending"));
+    const querySnapshot = await getDocs(q);
+    const meetingsList = querySnapshot.docs.map(doc => {
+      const data = doc.data();
+      return {
+        id: doc.id,
+        meetingId: data.meetingId,
+        title: `${data.step1?.firstName || ""} ${data.step1?.lastName || ""}`.trim() || "User Meeting",
+        time: data.meetingTime || '10:00 AM',
+        duration: '30 min',
+        attendees: [data.step1?.firstName || 'User'],
+        location: 'Virtual',
+        color: '#3b82f6',
+        date: data.meetingDate ? new Date(data.meetingDate) : new Date(),
+        status: data.status || 'pending'
+      };
+    });
+    setMeetings(meetingsList);
+    setLoading(false);
   }
 
   return (
@@ -638,6 +635,27 @@ export default function CalendarPage() {
                         )}
                       </div>
                     </div>
+
+                    {meeting.meetingId && (
+                      <Link href={`/video-call?meetingId=${meeting.meetingId}`}>
+                        <button
+                          style={{
+                            marginTop: "12px",
+                            padding: "8px 16px",
+                            backgroundColor: "#3b82f6",
+                            color: "white",
+                            border: "none",
+                            borderRadius: "6px",
+                            cursor: "pointer",
+                            fontSize: "14px",
+                            fontWeight: "500",
+                            width: "100%",
+                          }}
+                        >
+                          Start Meeting
+                        </button>
+                      </Link>
+                    )}
                   </div>
                 </div>
               ))

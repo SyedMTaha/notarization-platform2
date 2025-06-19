@@ -752,5 +752,12 @@
   "form2_invalid_email": "Please enter a valid email address",
   "submitting_status": "Submitting...",
   "choose_form_message": "Please choose the form you would like to apply for",
-  "standard_forms": "Standard Forms"
+  "standard_forms": "Standard Forms",
+  "dashboard": {
+    "welcome": "Welcome to your dashboard",
+    "profile": "Profile",
+    "documents": "Documents",
+    "settings": "Settings",
+    "logout": "Log Out"
+  }
 }

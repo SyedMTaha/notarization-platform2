@@ -4,41 +4,59 @@ import React, { useEffect, useState } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { ZegoUIKitPrebuilt } from '@zegocloud/zego-uikit-prebuilt';
 import Link from 'next/link';
+import { useAuthStore } from '@/store/authStore';
+import { getUserData } from '@/firebase';
 
 const VideoCallPage = () => {
   const router = useRouter();
   const searchParams = useSearchParams();
   const from = searchParams.get('from');
+  const meetingId = searchParams.get('meetingId');
   const [isLoading, setIsLoading] = useState(true);
   const [hasJoinedCall, setHasJoinedCall] = useState(false);
+  const user = useAuthStore((s) => s.user);
+  const [role, setRole] = useState(null);
 
   useEffect(() => {
-    // Generate a random meeting ID if not provided
-    const roomID = Math.floor(Math.random() * 10000).toString();
-    const userID = Math.floor(Math.random() * 10000).toString();
-    const userName = `User_${userID}`;
+    // Fetch user role if not present
+    const fetchRole = async () => {
+      if (user && user.uid) {
+        // If user object already has signUpAs, use it
+        if (user.signUpAs) {
+          setRole(user.signUpAs);
+        } else {
+          // Otherwise, fetch from Firestore
+          const { success, data } = await getUserData(user.uid);
+          if (success && data.signUpAs) {
+            setRole(data.signUpAs);
+          }
+        }
+      }
+    };
+    fetchRole();
+  }, [user]);
 
-    // Get the Zego Cloud instance
+  useEffect(() => {
+    if (!meetingId) return;
+    // Use meetingId from URL for ZegoCloud room
+    const userID = user && user.uid ? user.uid : Math.floor(Math.random() * 10000).toString();
+    const userName = user && user.email ? user.email : `User_${userID}`;
     const initializeCall = async () => {
       const appID = 350196793; // Replace with your Zego Cloud App ID
       const serverSecret = '7ce30a0e63c55b55eb4a204d82e3352a'; // Replace with your Zego Cloud Server Secret
-
       const kitToken = ZegoUIKitPrebuilt.generateKitTokenForTest(
         appID,
         serverSecret,
-        roomID,
+        meetingId,
         userID,
         userName
       );
-
       const zp = ZegoUIKitPrebuilt.create(kitToken);
-
-      // Join the call
       await zp.joinRoom({
         container: document.querySelector("#video-call-container"),
         sharedLinks: [{
           name: 'Personal link',
-          url: window.location.protocol + '//' + window.location.host + window.location.pathname + '?roomID=' + roomID,
+          url: window.location.protocol + '//' + window.location.host + window.location.pathname + '?meetingId=' + meetingId,
         }],
         scenario: {
           mode: ZegoUIKitPrebuilt.OneONoneCall,
@@ -48,27 +66,20 @@ const VideoCallPage = () => {
           setHasJoinedCall(true);
         },
         onLeaveRoom: () => {
-          // We don't need to disable the next button when leaving
           console.log('User left the room');
         },
       });
-
       setIsLoading(false);
     };
-
     initializeCall();
-  }, []);
+  }, [meetingId, user]);
 
   const handleNext = () => {
     router.push('/form2-page5');
   };
 
   const handleBack = () => {
-    if (from === 'calendar') {
-      router.push('/dashboard/calender');
-    } else if (from === 'form4') {
-      router.push('/form2-page4');
-    }
+    router.push('/dashboard/calender');
   };
 
   return (
@@ -166,41 +177,43 @@ const VideoCallPage = () => {
 
               {/* Navigation Buttons */}
               <div className="d-flex justify-content-between align-items-center mt-4">
-                <button
-                  onClick={handleBack}
-                  className="btn"
-                  style={{ 
-                    backgroundColor: "#274171",
-                    color: 'white',
-                    padding: '10px 30px',
-                    display: 'inline-flex',
-                    alignItems: 'center',
-                    gap: '8px',
-                    fontFamily: "'Jost', sans-serif",
-                    border: 'none'
-                  }}
-                >
-                  <i className="fa fa-arrow-left"></i> Back
-                </button>
-
-                {/* Next Button */}
-                <button
-                  onClick={handleNext}
-                  className="btn"
-                  style={{ 
-                    backgroundColor: '#274171',
-                    color: 'white',
-                    padding: '10px 30px',
-                    display: 'inline-flex',
-                    alignItems: 'center',
-                    gap: '8px',
-                    fontFamily: "'Jost', sans-serif",
-                    border: 'none'
-                  }}
-                >
-                  Next <i className="fa fa-arrow-right"></i>
-                </button>
-                
+                {/* Notary: show only Back button, User: show only Next button */}
+                {role === 'Notary' ? (
+                  <button
+                    onClick={handleBack}
+                    className="btn"
+                    style={{ 
+                      backgroundColor: "#274171",
+                      color: 'white',
+                      padding: '10px 30px',
+                      display: 'inline-flex',
+                      alignItems: 'center',
+                      gap: '8px',
+                      fontFamily: "'Jost', sans-serif",
+                      border: 'none'
+                    }}
+                  >
+                    <i className="fa fa-arrow-left"></i> Back
+                  </button>
+                ) : <div />}
+                {role !== 'Notary' && (
+                  <button
+                    onClick={handleNext}
+                    className="btn"
+                    style={{ 
+                      backgroundColor: '#274171',
+                      color: 'white',
+                      padding: '10px 30px',
+                      display: 'inline-flex',
+                      alignItems: 'center',
+                      gap: '8px',
+                      fontFamily: "'Jost', sans-serif",
+                      border: 'none'
+                    }}
+                  >
+                    Next <i className="fa fa-arrow-right"></i>
+                  </button>
+                )}
               </div>
             </div>
           </div>
