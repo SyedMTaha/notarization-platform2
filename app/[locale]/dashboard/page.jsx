@@ -5,7 +5,9 @@ import { useTranslations } from 'next-intl';
 import { auth, getUserData } from '@/firebase';
 import { FiHome, FiUser, FiFileText, FiSettings, FiLogOut, FiBell, FiCalendar } from 'react-icons/fi';
 import { LuLayoutDashboard } from "react-icons/lu";
+import { Poppins } from 'next/font/google';
 
+const poppins = Poppins({ subsets: ['latin'], weight: ['400', '500', '600', '700'] });
 
 export default function Dashboard() {
   const [userData, setUserData] = useState(null);
@@ -40,7 +42,7 @@ export default function Dashboard() {
   console.log('SignUpAs Value:', userData?.signUpAs);
 
   return (
-    <Container fluid className='p-0' style={{backgroundColor:'#1c2434'}} >
+    <Container fluid className={`p-0 ${poppins.className}`} style={{backgroundColor:'#1c2434'}} >
       <Row>
         {/* Sidebar */}
         <Col md={2} className="text-white min-vh-100 p-0 " style={{backgroundColor:"#1C2434"}}> 

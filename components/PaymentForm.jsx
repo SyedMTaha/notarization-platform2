@@ -118,7 +118,7 @@ const PaymentForm = () => {
 
   const handleNext = () => {
     if (validateForm()) {
-      router.push('/video-call');
+      router.push('/video-call?from=form4');
     }
   };
 
@@ -157,8 +157,8 @@ const PaymentForm = () => {
               <div className="form-card bg-white p-4 rounded-3">
                 {/* Page Title */}
                 <div className="text-center mb-5">
-                  <h2 style={{ color: '#2D3748', fontSize: '28px', fontWeight: '600' }}>{t('Payment Details')}</h2>
-                  <p style={{ color: '#718096', fontSize: '16px', marginTop: '8px' }}>{t('Please Select Your preferred form of Payment')}</p>
+                  <h2 style={{ color: '#2D3748', fontSize: '28px', fontWeight: '600' }}>{t('form2_step4_title')}</h2>
+                  <p style={{ color: '#718096', fontSize: '16px', marginTop: '8px' }}>{t('form2_step4_payment_selection_text')}</p>
                 </div>
 
                 {/* Payment Method Selection */}
@@ -208,7 +208,7 @@ const PaymentForm = () => {
                   <div className="card mb-4" style={{ border: '1px solid #E2E8F0', boxShadow: '0 1px 3px rgba(0,0,0,0.1)' }}>
                     <div className="card-body p-4">
                       <h5 style={{ color: '#2D3748', fontSize: '18px', fontWeight: '600', marginBottom: '20px' }}>
-                        {t('Enter your Credit Card Details')}
+                      {t('form2_step4_credit_card_details_text')}
                       </h5>
                       <div className="row g-3">
                         <div className="col-12">
@@ -309,7 +309,7 @@ const PaymentForm = () => {
                 <div className="card" style={{ border: '1px solid #E2E8F0', boxShadow: '0 1px 3px rgba(0,0,0,0.1)' }}>
                   <div className="card-body p-4">
                     <h5 style={{ color: '#2D3748', fontSize: '18px', fontWeight: '600', marginBottom: '20px' }}>
-                      {t('Enter your Billing Address')}
+                    {t('form2_step4_address_placeholder')}
                     </h5>
                     <div className="row g-3">
                       <div className="col-md-6">

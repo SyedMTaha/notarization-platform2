@@ -738,7 +738,7 @@
   "Email Address": "Email Address",
   "Back": "Back",
   "Submit": "Submit",
-  "Submitting...": "Submitting...",
+  "submitting": "Submitting...",
   "Submission Successful": "Submission Successful",
   "Your document has been submitted successfully": "Your document has been submitted successfully",
   "Reference Number": "Reference Number",
@@ -746,5 +746,11 @@
   "Copied to clipboard!": "Copied to clipboard!",
   "Please save this reference number for future reference": "Please save this reference number for future reference",
   "Return to Home": "Return to Home",
-  "Submit Another Document": "Submit Another Document"
+  "Submit Another Document": "Submit Another Document",
+  "form2_date_of_birth_required": "Date of birth is required",
+  "form2_country_of_residence_required": "Country of residence is required",
+  "form2_invalid_email": "Please enter a valid email address",
+  "submitting_status": "Submitting...",
+  "choose_form_message": "Please choose the form you would like to apply for",
+  "standard_forms": "Standard Forms"
 }

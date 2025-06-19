@@ -5,6 +5,7 @@ import { ArrowLeft } from "lucide-react"
 import Link from "next/link"
 import { collection, getDocs } from "firebase/firestore"
 import { db } from "@/firebase"
+import { useRouter } from 'next/navigation'
 
 // Sample meeting data
 const meetings = [
@@ -314,6 +315,7 @@ export default function CalendarPage() {
   const [selectedDate, setSelectedDate] = useState(new Date())
   const [meetings, setMeetings] = useState([])
   const [loading, setLoading] = useState(true)
+  const router = useRouter()
 
   const year = currentDate.getFullYear()
   const month = currentDate.getMonth()
@@ -406,7 +408,7 @@ export default function CalendarPage() {
           {/* Calendar Header */}
           <div style={styles.header}>
             <div style={{ display: "flex", alignItems: "center", gap: "16px" }}>
-              <button onClick={() => window.history.back()} style={styles.backButton}>
+              <button onClick={() => router.push('/dashboard')} style={styles.backButton}>
                 <ArrowLeft size={23} />              
               </button>
 
@@ -427,7 +429,7 @@ export default function CalendarPage() {
                   </svg>
                 </button>
 
-                <Link href="/video-call">
+                <Link href="/video-call?from=calendar">
                   <button style={styles.newMeetingButton}>
                     <svg
                       width="16"
@@ -548,7 +550,7 @@ export default function CalendarPage() {
                   />
                 </svg>
                 <p>No meetings scheduled</p>
-                <Link href="/video-call">
+                <Link href="/video-call?from=calendar">
                   <button style={styles.addMeetingButton}>
                     <svg
                       width="16"

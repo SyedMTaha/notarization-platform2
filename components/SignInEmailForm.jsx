@@ -8,7 +8,7 @@ import {
 } from "react-bootstrap";
 
 import { Controller } from "react-hook-form";
-import { forwardRef, useState } from "react";
+import { forwardRef, useState, useEffect } from "react";
 import { FiEye, FiEyeOff } from "react-icons/fi";
 
 import { useTranslations } from "next-intl";
@@ -17,6 +17,7 @@ import { useForm } from "react-hook-form";
 import { auth, getUserData } from "../firebase.js";
 import { signInWithEmailAndPassword } from "firebase/auth";
 import Feedback from "react-bootstrap/esm/Feedback.js";
+import { useAuthStore } from "@/store/authStore";
 
 const CustomCheckbox = forwardRef(
   ({ label, name, onChange, onBlur, checked }, ref) => (
@@ -47,6 +48,13 @@ const SignInEmailForm = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [serverError, setServerError] = useState(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const user = useAuthStore((s) => s.user);
+
+  useEffect(() => {
+    if (user) {
+      router.replace("/dashboard");
+    }
+  }, [user, router]);
 
   const onSubmit = async (data) => {
     setServerError(null);

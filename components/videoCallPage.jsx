@@ -1,12 +1,14 @@
 'use client';
 
 import React, { useEffect, useState } from 'react';
-import { useRouter } from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
 import { ZegoUIKitPrebuilt } from '@zegocloud/zego-uikit-prebuilt';
 import Link from 'next/link';
 
 const VideoCallPage = () => {
   const router = useRouter();
+  const searchParams = useSearchParams();
+  const from = searchParams.get('from');
   const [isLoading, setIsLoading] = useState(true);
   const [hasJoinedCall, setHasJoinedCall] = useState(false);
 
@@ -59,6 +61,14 @@ const VideoCallPage = () => {
 
   const handleNext = () => {
     router.push('/form2-page5');
+  };
+
+  const handleBack = () => {
+    if (from === 'calendar') {
+      router.push('/dashboard/calender');
+    } else if (from === 'form4') {
+      router.push('/form2-page4');
+    }
   };
 
   return (
@@ -157,7 +167,7 @@ const VideoCallPage = () => {
               {/* Navigation Buttons */}
               <div className="d-flex justify-content-between align-items-center mt-4">
                 <button
-                  onClick={() => router.push('/form2-page4')}
+                  onClick={handleBack}
                   className="btn"
                   style={{ 
                     backgroundColor: "#274171",

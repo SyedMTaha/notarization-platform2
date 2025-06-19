@@ -2,6 +2,9 @@
 import {
   Button, FormGroup, FormLabel, FormControl, FormCheck, Form, Row, Col,
 } from "react-bootstrap";
+import { useEffect } from "react";
+import { useRouter } from "next/navigation";
+import { useAuthStore } from "@/store/authStore";
 
 // components
 import { Controller, set, useForm } from "react-hook-form";
@@ -12,14 +15,10 @@ import { useTranslations } from "next-intl";
 import Link from "next/link";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
-import { useAuthStore } from "@/store/authStore";
-import CustomPhoneInput from "./CustomPhoneInput";
-import { useRouter } from 'next/navigation';
 import { storeUserData } from '../firebase';
 import { createUserWithEmailAndPassword } from 'firebase/auth';
 import { auth } from "/firebase.js"
-
-
+import CustomPhoneInput from "./CustomPhoneInput";
 
 const CustomCheckbox = forwardRef(
   ({ label, name, onChange, onBlur, checked }, ref) => (
@@ -48,6 +47,13 @@ const SignUpForm = () => {
   const router = useRouter();
   const [isLoading, setIsLoading] = useState(false);
   const [cardType, setCardType] = useState("");
+  const user = useAuthStore((s) => s.user); // or use your auth context/hook
+
+  useEffect(() => {
+    if (user) {
+      router.replace("/dashboard"); // or your home page
+    }
+  }, [user, router]);
 
   // Define validation schema
   const schema = yup.object({

@@ -201,8 +201,8 @@ const Form2step3 = () => {
             <div className="col-lg-10">
               <div className="form-card bg-white p-4 rounded-3">
                 <div className="text-center mb-5">
-                  <h2 style={{ color: '#2D3748', fontSize: '28px', fontWeight: '600' }}>{t('Signature & Notarization')}</h2>
-                  <p style={{ color: '#718096', fontSize: '16px', marginTop: '8px' }}>{t('Choose whether you want to connect to a Notary or use E-Sign')}</p>
+                  <h2 style={{ color: '#2D3748', fontSize: '28px', fontWeight: '600' }}>{t('form2_step3_signature_notarization_title')}</h2>
+                  <p style={{ color: '#718096', fontSize: '16px', marginTop: '8px' }}>{t('form2_step3_choose_signature_method')}</p>
                 </div>
 
                 {error && (

@@ -116,8 +116,8 @@ const Form2step2 = () => {
               <div className="form-card bg-white p-4 rounded-3">
                 {/* Form Header */}
                 <div className="text-center mb-5">
-                  <h2 style={{ color: '#2D3748', fontSize: '28px', fontWeight: '600' }}>{t('Standard Forms')}</h2>
-                  <p style={{ color: '#718096', fontSize: '16px', marginTop: '8px' }}>{t('Please choose the form you would like to apply for')}</p>
+                  <h2 style={{ color: '#2D3748', fontSize: '28px', fontWeight: '600' }}>{t('form2_step2_title')}</h2>
+                  <p style={{ color: '#718096', fontSize: '16px', marginTop: '8px' }}>{t('form2_step2_subtitle')}</p>
                 </div>
 
                 <div className="form-content">

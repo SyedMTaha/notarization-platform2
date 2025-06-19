@@ -164,6 +164,11 @@ const Form2step1 = ({ totalSteps }) => {
     }
   };
 
+  const handleBack = (e) => {
+         e.preventDefault();
+         router.push('/');
+       };
+
   const nextHandler = async () => {
     console.log("Starting nextHandler...");
     
@@ -707,6 +712,7 @@ const Form2step1 = ({ totalSteps }) => {
                   
                     <span
                       className="btn"
+                      onClick={handleBack}
                       style={{ 
                         backgroundColor: "#274171",
                         color: 'white',
