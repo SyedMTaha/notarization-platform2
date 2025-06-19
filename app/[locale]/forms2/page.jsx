@@ -1,11 +1,10 @@
+// using this forms page not any other, others are extra
+
+
 "use client";
 
 import Layout from "@/layout/Layout";
 import Form2step1 from "../../../components/Form2step1";
-import Form2step2 from "../../../components/Form2step2";
-import Form2step3 from "../../../components/Form2step3";
-import Form2step4 from "../../../components/Form2step4";
-import Form2step5 from "../../../components/Form2step5";
 import useForm2store from "@/store/form2store";
 import { useEffect } from "react";
 import { useTranslations, useMessages } from "next-intl";
@@ -45,7 +44,7 @@ export default function V3() {
   return (
     <NextIntlClientProvider locale={locale} messages={messages}>
       <Form2step1/>
-      {/* <Form2step2/> */}
+      
     </NextIntlClientProvider>
   );
 }

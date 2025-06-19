@@ -52,29 +52,32 @@ export default function Dashboard() {
                 style={{ maxWidth: "100px", height: "auto" }}
               />
             </div>
-            <Nav className="flex-column">
-              <Nav.Link href="/dashboard" className="text-white mb-2 d-flex align-items-center">
-                <LuLayoutDashboard  className="me-2"style={{ fontSize: '20px' }}  /> Dashboard
-              </Nav.Link>
-              <Nav.Link href="/dashboard/profile" className="text-white mb-2 d-flex align-items-center ">
-                <FiUser className="me-2" style={{ fontSize: '20px' }} /> Profile
-              </Nav.Link>
-              {/* Only show Documents link for notary users */}
-              {isNotary && (
-                <Nav.Link href="/dashboard/document" className="text-white mb-2 d-flex align-items-center">
-                  <FiFileText className="me-2" style={{ fontSize: '20px' }} /> Documents
+            <div style={{ display: "flex", flexDirection: "column", height: "100vh" }}>
+              <Nav className="flex-column">
+                <Nav.Link href="/dashboard" className="text-white mb-2 d-flex align-items-center">
+                  <LuLayoutDashboard  className="me-2"style={{ fontSize: '20px' }}  /> Dashboard
                 </Nav.Link>
-              )}
-              <Nav.Link href="/dashboard/calender" className="text-white mb-2 d-flex align-items-center">
-                <FiCalendar className="me-2" style={{ fontSize: '20px' }} /> Calender
-              </Nav.Link>
-              <Nav.Link href="/dashboard/settings" className="text-white mb-2d-flex align-items-center">
-                <FiSettings className="me-2" style={{ fontSize: '20px' }} /> Settings
-              </Nav.Link>
-              <Nav.Link href="/auth/signin" className="text-white mt-90">
+                <Nav.Link href="/dashboard/profile" className="text-white mb-2 d-flex align-items-center ">
+                  <FiUser className="me-2" style={{ fontSize: '20px' }} /> Profile
+                </Nav.Link>
+                {/* Only show Documents link for notary users */}
+                {isNotary && (
+                  <Nav.Link href="/dashboard/document" className="text-white mb-2 d-flex align-items-center">
+                    <FiFileText className="me-2" style={{ fontSize: '20px' }} /> Documents
+                  </Nav.Link>
+                )}
+                <Nav.Link href="/dashboard/calender" className="text-white mb-2 d-flex align-items-center">
+                  <FiCalendar className="me-2" style={{ fontSize: '20px' }} /> Calender
+                </Nav.Link>
+                <Nav.Link href="/dashboard/settings" className="text-white mb-2d-flex align-items-center">
+                  <FiSettings className="me-2" style={{ fontSize: '20px' }} /> Settings
+                </Nav.Link>
+              </Nav>
+              <div style={{ flexGrow: 1 }} />
+              <Nav.Link href="/auth/signin" className="text-white">
                 <FiLogOut className="me-2" style={{ fontSize: '20px' }} /> Logout
               </Nav.Link>
-            </Nav>
+            </div>
           </div>
         </Col>
 

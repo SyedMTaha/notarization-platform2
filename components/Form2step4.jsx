@@ -1,3 +1,5 @@
+//used earlier now usign PaymentForm component as Form2-Step4
+
 'use client';
 
 import React, { useState, useEffect } from 'react';
@@ -54,17 +56,29 @@ const Form2step4 = () => {
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
+    let newValue = value;
+
+    if (name === "phone") {
+      // If the value contains non-digits, set error
+      if (/[^0-9]/.test(value)) {
+        setErrors(prev => ({
+          ...prev,
+          phone: "Enter numbers only"
+        }));
+      } else {
+        setErrors(prev => ({
+          ...prev,
+          phone: ""
+        }));
+      }
+      // Always strip non-digits from the value
+      newValue = value.replace(/[^0-9]/g, "");
+    }
+
     setFormData(prev => ({
       ...prev,
-      [name]: value
+      [name]: newValue
     }));
-    // Clear error when user types
-    if (errors[name]) {
-      setErrors(prev => ({
-        ...prev,
-        [name]: ''
-      }));
-    }
   };
 
   const validateForm = () => {
@@ -87,6 +101,10 @@ const Form2step4 = () => {
     if (!formData.address) newErrors.address = 'Address is required';
     if (!formData.city) newErrors.city = 'City is required';
     if (!formData.zipCode) newErrors.zipCode = 'ZIP code is required';
+
+    if (!/^[0-9]+$/.test(formData.phone)) {
+      newErrors.phone = "Phone number must contain only digits";
+    }
 
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;

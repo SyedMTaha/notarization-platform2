@@ -1,3 +1,5 @@
+//using this as Forms2 Step4 not any other
+
 'use client';
 
 import React, { useState, useEffect } from 'react';
@@ -57,12 +59,31 @@ const PaymentForm = () => {
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
+    let newValue = value;
+
+    if (name === "phone") {
+      // If the value contains non-digits, set error
+      if (/[^0-9]/.test(value)) {
+        setErrors(prev => ({
+          ...prev,
+          phone: "Enter numbers only"
+        }));
+      } else {
+        setErrors(prev => ({
+          ...prev,
+          phone: ""
+        }));
+      }
+      // Always strip non-digits from the value
+      newValue = value.replace(/[^0-9]/g, "");
+    }
+
     setFormData(prev => ({
       ...prev,
-      [name]: value
+      [name]: newValue
     }));
-    // Clear error when user types
-    if (errors[name]) {
+    // Clear error when user types (for other fields)
+    if (name !== "phone" && errors[name]) {
       setErrors(prev => ({
         ...prev,
         [name]: ''

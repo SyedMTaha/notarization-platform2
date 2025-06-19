@@ -66,9 +66,9 @@ const Hero1 = () => {
           <div className="container">
             <div className="slider-content">
               <span className="sub-title">{t("slider_sub_title")}</span>
-              <h1>
+              <h1 style={{color: "#416976"}}>
                 {t("slider_main_title")}{" "}
-                <span style={{ color: "#416976" }}>
+                <span style={{ color: "#ffffff" }}>
                   {t("slider_main_title_highlight") + " "}
                 </span>
                 <span className="text-nowrap">
@@ -76,7 +76,7 @@ const Hero1 = () => {
                     .split(" ")
                     .map((str, num, arr) =>
                       arr.length / 2 <= num ? (
-                        <span style={{ color: "#416976" }}>{str + " "}</span>
+                        <span style={{ color: "#ffffff" }}>{str + " "}</span>
                       ) : (
                         str + " "
                       )

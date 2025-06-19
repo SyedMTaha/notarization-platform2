@@ -10,22 +10,63 @@ const SignUp = () => {
   const t = useTranslations();
 
   return (
-    <Container fluid className="d-flex align-items-center justify-content-center p-0 position-relative">
-      <Link href="/" className="position-absolute top-0 start-0 mt-4 ms-4 z-index-1">
-        <img
-          src="/assets/images/logos/logo-white.png"
-          alt={t("logo_alt")}
-          title={t("logo_alt")}
-          style={{ maxWidth: "100px" }}
-        />
-      </Link>
+    <div style={{ height: "100vh", display: "flex", flexDirection: "column" }}>
+      {/* Fixed Header */}
+      <header style={{ 
+        position: "fixed", 
+        top: 0, 
+        left: 0, 
+        right: 0, 
+        zIndex: 1000,
+        padding: "1rem",
+        backgroundColor: "white"
+      }}>
+        <Link href="/">
+          <img
+            src="/assets/images/logos/logo.png"
+            alt={t("logo_alt")}
+            title={t("logo_alt")}
+            style={{ maxWidth: "100px" }}
+          />
+        </Link>
+      </header>
 
-      <Row className="w-100 flex-row-reverse">
-        <Col
-          md={6}
-          className="d-flex mx-auto justify-content-center align-items-center"
-          style={{ minHeight: "100vh" }}
-        >
+      {/* Main Content */}
+      <div style={{ 
+        display: "flex", 
+        flex: 1, 
+        marginTop: "80px" // Add margin to account for fixed header
+      }}>
+        {/* Left Container - Fixed Image */}
+        <div style={{ 
+          width: "50%", 
+          height: "calc(100vh - 80px)",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          position: "fixed",
+          left: 0
+        }}>
+          <img
+            src="/assets/images/background/signup.png"
+            alt="Signup Illustration"
+            className="img-fluid"
+            style={{
+              maxHeight: "800px",
+              maxWidth: "100%",
+              marginRight: "65px",
+            }}
+          />
+        </div>
+
+        {/* Right Container - Scrollable Form */}
+        <div style={{ 
+          width: "50%", 
+          marginLeft: "55%",
+          padding: "2rem",
+          overflowY: "auto",
+          height: "calc(100vh - 80px)"
+        }}>
           <div className="signin-form-container">
             <h2 style={{ fontFamily: "Jost" }}>{st("title")}</h2>
             <p>{st("subtitle")}</p>
@@ -49,22 +90,9 @@ const SignUp = () => {
               </Col>
             </Row>
           </div>
-        </Col>
-
-        <Col md={6} className="d-flex vh-100 justify-content-center align-items-center ">
-          <img
-            src="/assets/images/background/signup.png"
-            alt="Signup Illustration"
-            className="img-fluid rounded sticky top-0"
-            style={{
-              maxHeight: "950px",
-              maxWidth: "1000px",
-              marginTop: "100px"
-            }}
-          />
-        </Col>
-      </Row>
-    </Container>
+        </div>
+      </div>
+    </div>
   );
 };
 

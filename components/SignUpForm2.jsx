@@ -46,6 +46,8 @@ const SignUpForm = () => {
   const signUp = useAuthStore((s) => s.signUp); // your existing wrapper
   const [submitting, setSubmitting] = useState(false);
   const router = useRouter();
+  const [isLoading, setIsLoading] = useState(false);
+  const [cardType, setCardType] = useState("");
 
   // Define validation schema
   const schema = yup.object({
@@ -74,9 +76,15 @@ const SignUpForm = () => {
         t("validation.payment_method.oneOf")
       )
       .required(t("validation.payment_method.required")),
-    card_number: yup.string().required(t("validation.card_number.required")),
+    card_number: yup
+      .string()
+      .required("Card number is required")
+      .matches(/^[0-9]{16}$/, "Card number must be exactly 16 digits"),
     name: yup.string().required(t("validation.name.required")),
-    expiry_date: yup.date().required(t("validation.expiry_date.required")),
+    expiry_date: yup
+      .date()
+      .required("Expiry date is required")
+      .min(new Date(), "Expiry date cannot be in the past"),
     CVV: yup.string().length(3, t("validation.CVV.length")),
     identification: yup.mixed().notRequired(),
     notary_certificate: yup.mixed().notRequired(),
@@ -98,10 +106,10 @@ const SignUpForm = () => {
       signUpAs: "Notary",
       termsAgreed: false,
       payment_method: "Credit Card",
-      card_number: "123",
+      card_number: "",
       name: "",
       expiry_date: new Date(),
-      CVV: "123",
+      CVV: "",
       identification: null,
       notary_certificate: null,
     },
@@ -166,6 +174,7 @@ const uploadFileToCloudinary = async (file, folder = '') => {
 };
 
   const onSubmit = async (data) => {
+    setIsLoading(true);
     try {
       console.log("Form data:", data);
       let hasError = false;
@@ -230,7 +239,7 @@ const uploadFileToCloudinary = async (file, folder = '') => {
       await storeUserData(userData);
 
       console.log("User signed up and data stored successfully!");
-      router.push('/auth/signin');
+      router.push('/signIn');
 
     } catch (error) {
       console.error('Signup error:', error);
@@ -249,6 +258,7 @@ const uploadFileToCloudinary = async (file, folder = '') => {
       }
     } finally {
       setSubmitting(false);
+      setIsLoading(false);
     }
   };
 
@@ -277,6 +287,12 @@ const uploadFileToCloudinary = async (file, folder = '') => {
     }
   };
 
+  function getCardType(number) {
+    if (/^4/.test(number)) return "Visa";
+    if (/^5[1-5]/.test(number) || /^2(2[2-9][1-9]|2[3-9][0-9]|[3-6][0-9]{2}|7[01][0-9]|720)/.test(number)) return "MasterCard";
+    return "";
+  }
+
   return (
     <>
       <form onSubmit={handleSubmit(onSubmit)}>
@@ -292,9 +308,11 @@ const uploadFileToCloudinary = async (file, folder = '') => {
                   id="signUpAs"
                   {...field}
                   isInvalid={Boolean(fieldState.error?.message)}
-                  // Optionally add styling here if needed
                   style={{
                     padding: "8px 10px",
+                    cursor: "pointer",
+                    appearance: "none",
+                    paddingRight: "30px",
                     position: "relative",
                     zIndex: 10,
                   }}
@@ -305,7 +323,9 @@ const uploadFileToCloudinary = async (file, folder = '') => {
                   <option value="Real Estate Agent">
                     {t("options.Real_Estate_Agent")}
                   </option>
+                  
                 </FormControl>
+                
                 {fieldState.error?.message && (
                   <Feedback type="invalid" className="text-danger">
                     {fieldState.error?.message}
@@ -372,6 +392,7 @@ const uploadFileToCloudinary = async (file, folder = '') => {
                     style={{ padding: "10px" }}
                     id="password"
                     type={showPassword ? "text" : "password"}
+                    
                     {...field}
                     isInvalid={Boolean(fieldState.error?.message)}
                   />
@@ -453,21 +474,48 @@ const uploadFileToCloudinary = async (file, folder = '') => {
             )}
           />
         </div>
-        <p>Payment Details</p>
+        
 
         <Form.Group controlId="payment_method" className="mb-3">
           <Form.Label>Payment Method</Form.Label>
-
-          <Form.Control
-            as="select"
-            {...register("payment_method")}
-            style={{ cursor: "pointer" }}
-          >
-            <option>Credit Card</option>
-            <option>PayPal</option>
-            <option>CashApp</option>
-          </Form.Control>
-
+          <div style={{ position: "relative" }}>
+            <Form.Control
+              as="select"
+              {...register("payment_method")}
+              style={{ 
+                cursor: "pointer",
+                appearance: "none",
+                paddingRight: "30px"
+              }}
+            >
+              <option>Credit Card</option>
+              <option>PayPal</option>
+              <option>CashApp</option>
+            </Form.Control>
+            <div style={{
+              position: "absolute",
+              right: "10px",
+              top: "50%",
+              transform: "translateY(-50%)",
+              pointerEvents: "none"
+            }}>
+              <svg 
+                width="12" 
+                height="12" 
+                viewBox="0 0 12 12" 
+                fill="none" 
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path 
+                  d="M2.5 4.5L6 8L9.5 4.5" 
+                  stroke="currentColor" 
+                  strokeWidth="1.5" 
+                  strokeLinecap="round" 
+                  strokeLinejoin="round"
+                />
+              </svg>
+            </div>
+          </div>
           {errors.payment_method && (
             <Form.Text className="text-danger">
               {errors.payment_method.message}
@@ -477,7 +525,7 @@ const uploadFileToCloudinary = async (file, folder = '') => {
 
         <Form.Group controlId="name" className="mb-3">
           <Form.Label>Name</Form.Label>
-          <Form.Control type="text" {...register("name")} />
+          <Form.Control type="text" placeholder="John Doe" {...register("name")} />
           {errors.name && (
             <Form.Text className="text-danger">{errors.name.message}</Form.Text>
           )}
@@ -491,7 +539,17 @@ const uploadFileToCloudinary = async (file, folder = '') => {
                 <>
                   <Form.Group controlId="card_number" className="mb-3">
                     <Form.Label>Card Number</Form.Label>
-                    <Form.Control type="text" {...register("card_number")} />
+                    <Form.Control
+                      type="text"
+                      placeholder="1234 ****"
+                      maxLength={16}
+                      {...register("card_number")}
+                      onInput={e => {
+                        e.target.value = e.target.value.replace(/[^0-9]/g, '');
+                        setCardType(getCardType(e.target.value));
+                      }}
+                    />
+                    {cardType && <div>Card Type: {cardType}</div>}
                     {errors.card_number && (
                       <Form.Text className="text-danger">
                         {errors.card_number.message}
@@ -502,7 +560,11 @@ const uploadFileToCloudinary = async (file, folder = '') => {
                     <Col>
                       <Form.Group controlId="expiry_date">
                         <Form.Label>Expiry Date</Form.Label>
-                        <Form.Control type="date" {...register("expiry_date")} />
+                        <Form.Control
+                          type="date"
+                          {...register("expiry_date")}
+                          min={new Date().toISOString().split("T")[0]}
+                        />
                         {errors.expiry_date && (
                           <Form.Text className="text-danger">
                             {errors.expiry_date.message}
@@ -513,7 +575,7 @@ const uploadFileToCloudinary = async (file, folder = '') => {
                     <Col>
                       <Form.Group controlId="CVV">
                         <Form.Label>CVV</Form.Label>
-                        <Form.Control type="text" {...register("CVV")} />
+                        <Form.Control type="text" placeholder="***" {...register("CVV")} />
                         {errors.CVV && (
                           <Form.Text className="text-danger">
                             {errors.CVV.message}
@@ -673,10 +735,19 @@ const uploadFileToCloudinary = async (file, folder = '') => {
           <Button
             style={{
               backgroundColor: "#0C1134",
+              minHeight: "45px"
             }}
             type="submit"
+            disabled={isLoading}
           >
-            {t("sign_up_button")}
+            {isLoading ? (
+              <span>
+                <span className="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>
+                Signing Up...
+              </span>
+            ) : (
+              t("sign_up_button")
+            )}
           </Button>
         </div>
       </form>

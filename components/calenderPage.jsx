@@ -1,8 +1,10 @@
 "use client"
 
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import { ArrowLeft } from "lucide-react"
 import Link from "next/link"
+import { collection, getDocs } from "firebase/firestore"
+import { db } from "@/firebase"
 
 // Sample meeting data
 const meetings = [
@@ -310,6 +312,8 @@ const styles = {
 export default function CalendarPage() {
   const [currentDate, setCurrentDate] = useState(new Date())
   const [selectedDate, setSelectedDate] = useState(new Date())
+  const [meetings, setMeetings] = useState([])
+  const [loading, setLoading] = useState(true)
 
   const year = currentDate.getFullYear()
   const month = currentDate.getMonth()
@@ -365,53 +369,80 @@ export default function CalendarPage() {
     return dateToCheck.toDateString() === selectedDate.toDateString()
   }
 
+  useEffect(() => {
+    fetchMeetings()
+  }, [])
+
+  const fetchMeetings = async () => {
+    try {
+      const querySnapshot = await getDocs(collection(db, 'formSubmissions'))
+      const meetingsList = querySnapshot.docs.map(doc => {
+        const data = doc.data()
+        return {
+          id: doc.id,
+          title: `${data.step1?.firstName || ''} ${data.step1?.lastName || ''}`.trim() || 'User Meeting',
+          time: data.meetingTime || '10:00 AM',
+          duration: '30 min',
+          attendees: [data.step1?.firstName || 'User'],
+          location: 'Virtual',
+          color: '#3b82f6',
+          date: data.meetingDate ? new Date(data.meetingDate) : new Date(),
+          status: data.status || 'pending'
+        }
+      })
+      setMeetings(meetingsList)
+      setLoading(false)
+    } catch (error) {
+      console.error('Error fetching meetings:', error)
+      setLoading(false)
+    }
+  }
+
   return (
     <div style={styles.container}>
       {/* Calendar Section */}
       <div style={styles.calendarSection}>
         <div style={styles.card}>
           {/* Calendar Header */}
-          
-           {/* Calendar Header */}
-           <div style={styles.header}>
+          <div style={styles.header}>
             <div style={{ display: "flex", alignItems: "center", gap: "16px" }}>
-              
-            <button onClick={() => window.history.back()} style={styles.backButton}>
+              <button onClick={() => window.history.back()} style={styles.backButton}>
                 <ArrowLeft size={23} />              
               </button>
 
               <h1 style={styles.title}>
                 {months[month]} {year}
               </h1>
-            </div>
-            <div style={styles.navButtons}>
-              <button onClick={() => navigateMonth("prev")} style={styles.navButton}>
-                <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
-                </svg>
-              </button>
+            
+              <div style={styles.navButtons}>
+                <button onClick={() => navigateMonth("prev")} style={styles.navButton}>
+                  <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+                  </svg>
+                </button>
 
-              <button onClick={() => navigateMonth("next")} style={styles.navButton}>
-                <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-                </svg>
-              </button>
+                <button onClick={() => navigateMonth("next")} style={styles.navButton}>
+                  <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                  </svg>
+                </button>
 
-              <Link href="/video-call">
-              <button style={styles.newMeetingButton}>
-                <svg
-                  width="16"
-                  height="16"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                  style={{ marginRight: "4px" }}
-                >
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
-                </svg>
-                New Meeting
-              </button>
-              </Link>
+                <Link href="/video-call">
+                  <button style={styles.newMeetingButton}>
+                    <svg
+                      width="16"
+                      height="16"
+                      fill="none"
+                      stroke="currentColor"
+                      viewBox="0 0 24 24"
+                      style={{ marginRight: "4px" }}
+                    >
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
+                    </svg>
+                    New Meeting
+                  </button>
+                </Link>
+              </div>
             </div>
           </div>
 
@@ -491,7 +522,6 @@ export default function CalendarPage() {
       {/* Meeting Details Sidebar */}
       <div style={styles.sidebar}>
         <div style={styles.card}>
-          {/* Sidebar Header */}
           <div style={styles.sidebarHeader}>
             <h2 style={styles.sidebarTitle}>
               {selectedDate.toLocaleDateString("en-US", {
@@ -503,7 +533,11 @@ export default function CalendarPage() {
           </div>
 
           <div style={styles.sidebarContent}>
-            {getSelectedDateMeetings().length === 0 ? (
+            {loading ? (
+              <div style={styles.emptyState}>
+                <p>Loading meetings...</p>
+              </div>
+            ) : getSelectedDateMeetings().length === 0 ? (
               <div style={styles.emptyState}>
                 <svg style={styles.emptyIcon} fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path
@@ -514,19 +548,21 @@ export default function CalendarPage() {
                   />
                 </svg>
                 <p>No meetings scheduled</p>
-                <button style={styles.addMeetingButton}>
-                  <svg
-                    width="16"
-                    height="16"
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
-                    style={{ marginRight: "4px", verticalAlign: "middle" }}
-                  >
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
-                  </svg>
-                  Add Meeting
-                </button>
+                <Link href="/video-call">
+                  <button style={styles.addMeetingButton}>
+                    <svg
+                      width="16"
+                      height="16"
+                      fill="none"
+                      stroke="currentColor"
+                      viewBox="0 0 24 24"
+                      style={{ marginRight: "4px", verticalAlign: "middle" }}
+                    >
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
+                    </svg>
+                    Schedule Meeting
+                  </button>
+                </Link>
               </div>
             ) : (
               getSelectedDateMeetings().map((meeting) => (
@@ -552,6 +588,9 @@ export default function CalendarPage() {
                         {meeting.time}
                       </div>
                       <span style={styles.badge}>{meeting.duration}</span>
+                      <span style={{...styles.badge, backgroundColor: meeting.status === 'approved' ? '#dcfce7' : '#fef3c7', color: meeting.status === 'approved' ? '#166534' : '#d97706'}}>
+                        {meeting.status}
+                      </span>
                     </div>
 
                     <div style={styles.locationRow}>

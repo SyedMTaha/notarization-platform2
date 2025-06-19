@@ -26,7 +26,6 @@ const Form2step1 = ({ totalSteps }) => {
   const router = useRouter();
   const t = useTranslations();
   const [isOpen, setIsOpen] = useState(false);
-  const [identificationImage, setIdentificationImage] = useState(null);
   const [imagePreview, setImagePreview] = useState(null);
   const [formData, setFormData] = useState({
     firstName: '',
@@ -93,7 +92,8 @@ const Form2step1 = ({ totalSteps }) => {
     setError,
     trigger,
     getValues,
-    setValue
+    setValue,
+    watch
   } = methods;
 
   const handleInputChange = (e) => {
@@ -216,7 +216,7 @@ const Form2step1 = ({ totalSteps }) => {
       return;
     }
 
-    if (!identificationImage) {
+    if (!formData.identificationImage) {
       console.log("Please fill all the required fields");
       setError("identificationImage", {
         type: "manual",
@@ -228,7 +228,7 @@ const Form2step1 = ({ totalSteps }) => {
     try {
       console.log("Starting image upload...");
       // Upload image to Cloudinary
-      const imageUrl = await uploadToCloudinary(identificationImage, 'identification');
+      const imageUrl = await uploadToCloudinary(formData.identificationImage, 'identification');
       console.log("Image uploaded successfully:", imageUrl);
       
       if (!imageUrl) {
@@ -653,8 +653,6 @@ const Form2step1 = ({ totalSteps }) => {
                     />
                   </div>
 
-                
-
                    {/* Image Upload */}
                 <div>
                   <div className="flex items-start space-x-6">
@@ -668,29 +666,40 @@ const Form2step1 = ({ totalSteps }) => {
                         onClick={() => document.getElementById('identification-image')}
                         className="border-2 border-gray-900 rounded-lg p-3 cursor-pointer bg-white shadow-sm hover:shadow-md transition-all duration-200 text-center"
                       >
-                       
-                        
                         <input
                           id="identification-image"
                           type="file"
                           accept="image/*"
-                          onChange={handleImageUpload}
+                          {...register("identificationImage", {
+                            required: t("form2_please_upload_identification_image"),
+                            validate: {
+                              fileSize: fileList => !fileList[0] || fileList[0].size <= 5 * 1024 * 1024 || "Image size must be less than 5MB"
+                            }
+                          })}
+                          onChange={e => {
+                            // For preview, you can set a local preview state if needed
+                            if (e.target.files[0]) {
+                              setImagePreview(URL.createObjectURL(e.target.files[0]));
+                            }
+                          }}
                           className="hidden"
                         />
                       </div>
-                      {formData.identificationImage && (
-                        <p className="mt-2 text-sm text-gray-600">{formData.identificationImage.name}</p>
+                      {watch("identificationImage") && watch("identificationImage")[0] && (
+                        <p className="mt-2 text-sm text-gray-600">
+                          {watch("identificationImage")[0].name}
+                        </p>
                       )}
-                      {errors.identificationImage && <p className={errorClassName}>{errors.identificationImage}</p>}
+                       {errors.identificationImage && (
+                         <p className={errorClassName}>{errors.identificationImage}</p>
+                       )}
                     </div>
                   </div>
                 </div>
-                
-              </div>
-                  {/* Upload Image Field */}
-
+                {/* Upload Image Field ends*/}
 
               </div>
+            </div>
 
               {/* Form Actions */}
               <div className="actions" style={{ marginTop: '220px' }}>
