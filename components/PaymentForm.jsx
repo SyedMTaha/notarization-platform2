@@ -80,6 +80,8 @@ const PaymentForm = () => {
       }
       // Always strip non-digits from the value
       newValue = value.replace(/[^0-9]/g, "");
+    } else if (name === "zipCode") {
+      newValue = value.replace(/[^0-9]/g, "");
     }
 
     setFormData(prev => ({

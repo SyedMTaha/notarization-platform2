@@ -5,6 +5,13 @@ import { useTranslations } from "next-intl";
 import { auth, getUserData } from "@/firebase";
 import { LuLayoutDashboard } from "react-icons/lu";
 import { FiUser, FiFileText, FiCalendar, FiSettings, FiLogOut } from "react-icons/fi";
+import { Poppins } from 'next/font/google';
+import NotificationBell from '@/components/NotificationBell';
+
+const poppins = Poppins({
+  subsets: ['latin'],
+  weight: ['400', '500', '600', '700']
+});
 
 export default function Profile() {
   const [userData, setUserData] = useState(null);
@@ -23,9 +30,9 @@ export default function Profile() {
   }, []);
 
   return (
-    <div className="d-flex" style={{ minHeight: "100vh", backgroundColor: "#f8f9fa" }}>
+    <div className={`d-flex ${poppins.className}`} style={{ minHeight: "100vh", backgroundColor: "#ffffff" }}>
       {/* Sidebar */}
-      <div className="d-none d-md-block position-fixed top-0 start-0" style={{ minWidth: 220, height: '100vh', backgroundColor: "#1C2434", color: "#fff", left: 0, zIndex: 1040 }}>
+      <div className="d-none d-md-block position-fixed top-0 start-0" style={{ minWidth: 220, height: '100vh', backgroundColor: "#1C2434", color: "#fff", left: 0, zIndex: 1040, fontFamily: poppins.style.fontFamily }}>
         <div className="p-4">
           <div className="text-center mb-4">
             <img
@@ -47,6 +54,11 @@ export default function Profile() {
                   <FiFileText className="me-2" style={{ fontSize: '20px' }} /> Documents
                 </Nav.Link>
               )}
+              {isNotary && (
+                  <Nav.Link href="/dashboard/member" className="text-white mb-2 d-flex align-items-center">
+                    <FiFileText className="me-2" style={{ fontSize: '20px' }} /> Members
+                  </Nav.Link>
+                )}
               <Nav.Link href="/dashboard/calender" className="text-white mb-2 d-flex align-items-center">
                 <FiCalendar className="me-2" style={{ fontSize: '20px' }} /> Calender
               </Nav.Link>
@@ -62,11 +74,14 @@ export default function Profile() {
         </div>
       </div>
       {/* Main Content */}
-      <div className="flex-grow-1 p-4" style={{ fontFamily: "Poppins, sans-serif", minHeight: "100vh", marginLeft: 220 }}>
-        <h2 className="mb-4" style={{ fontFamily: "Jost, sans-serif", fontWeight: 600, fontSize: "2rem", color: "#012E6D" }}>
-          Profile Settings
-        </h2>
-        <Card className="shadow-sm border-0 rounded-4" style={{ maxWidth: "900px" }}>
+      <div className="flex-grow-1 p-4" style={{ fontFamily: poppins.style.fontFamily, minHeight: "100vh", marginLeft: 220 }}>
+        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+          <h2 className="mb-4" style={{ fontFamily: "Jost, sans-serif", fontWeight: 600, fontSize: "2rem", color: "#000000" }}>
+            Profile Settings
+          </h2>
+          <NotificationBell />
+        </div>
+        <Card className="shadow-sm border-0 rounded-4" style={{ maxWidth: "900px" , marginTop:"20px"}}>
           <Card.Body className="p-4">
             <Form>
               <Row>

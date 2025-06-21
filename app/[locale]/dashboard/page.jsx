@@ -6,21 +6,17 @@ import { auth, getUserData } from '@/firebase';
 import { FiHome, FiUser, FiFileText, FiSettings, FiLogOut, FiBell, FiCalendar } from 'react-icons/fi';
 import { LuLayoutDashboard } from "react-icons/lu";
 import { Poppins } from 'next/font/google';
+import NotificationBell from '@/components/NotificationBell';
+import { collection, getDocs, query, where } from 'firebase/firestore';
+import { db } from '@/firebase';
 
 const poppins = Poppins({ subsets: ['latin'], weight: ['400', '500', '600', '700'] });
 
 export default function Dashboard() {
   const [userData, setUserData] = useState(null);
+  const [pendingMeetings, setPendingMeetings] = useState([]);
   const t = useTranslations('dashboard');
-  const [showNotifications, setShowNotifications] = useState(false);
-  const [notifications, setNotifications] = useState([
-    { id: 1, message: "Your ID verification is pending", time: "2 hours ago" },
-    { id: 2, message: "Please complete your profile", time: "1 day ago" },
-  ]);
-
-  const markAllAsRead = () => {
-    setNotifications([]);
-  };
+ 
 
   useEffect(() => {
     const fetchUserData = async () => {
@@ -35,6 +31,22 @@ export default function Dashboard() {
     };
     fetchUserData();
   }, []);
+
+  useEffect(() => {
+    // Only fetch if user is notary
+    if (userData?.signUpAs?.toLowerCase() === 'notary') {
+      const fetchPendingMeetings = async () => {
+        const q = query(
+          collection(db, 'formSubmissions'),
+          where('status', '==', 'pending')
+        );
+        const querySnapshot = await getDocs(q);
+        const meetings = querySnapshot.docs.map(doc => doc.data());
+        setPendingMeetings(meetings);
+      };
+      fetchPendingMeetings();
+    }
+  }, [userData?.signUpAs]);
 
   // Function to check if user is a notary - case insensitive comparison
   const isNotary = userData?.signUpAs?.toLowerCase() === 'notary';
@@ -68,12 +80,18 @@ export default function Dashboard() {
                     <FiFileText className="me-2" style={{ fontSize: '20px' }} /> Documents
                   </Nav.Link>
                 )}
+                {isNotary && (
+                  <Nav.Link href="/dashboard/member" className="text-white mb-2 d-flex align-items-center">
+                    <FiFileText className="me-2" style={{ fontSize: '20px' }} /> Members
+                  </Nav.Link>
+                )}
                 <Nav.Link href="/dashboard/calender" className="text-white mb-2 d-flex align-items-center">
                   <FiCalendar className="me-2" style={{ fontSize: '20px' }} /> Calender
                 </Nav.Link>
                 <Nav.Link href="/dashboard/settings" className="text-white mb-2d-flex align-items-center">
                   <FiSettings className="me-2" style={{ fontSize: '20px' }} /> Settings
                 </Nav.Link>
+                
               </Nav>
               <div style={{ flexGrow: 1 }} />
               <Nav.Link href="/auth/signin" className="text-white">
@@ -92,71 +110,29 @@ export default function Dashboard() {
             <h2 style={{fontFamily: 'Poppins, sans-serif'}}>Welcome back, {userData?.name}</h2>
             <p className="text-muted">Here's your dashboard overview</p>
           </div>
-            <div className="position-relative" style={{marginTop:'30px'}}>
-            <div style={{
-                height:'50px',
-                width:'50px',
-                borderRadius: '15px',
-                boxShadow: '0 2px 10px rgba(0,0,0,0.1)',
-                display: 'flex',
-                justifyContent: 'center',
-                alignItems: 'center',
-                backgroundColor: 'white'
-              }}>
-                <FiBell 
-                  className="text-muted" 
-                  style={{ fontSize: '24px', cursor: 'pointer' }} 
-                  onClick={() => setShowNotifications(!showNotifications)}
-                />
-              </div>
-      {notifications.length > 0 && (
-        <span className="position-absolute" style={{top: '5px',
-          right: '8px',
-          width: '11px',
-          height: '11px',
-          backgroundColor: '#dc3545',
-          borderRadius: '50%',
-          border: '2px solid white'}}>
-          <span className="visually-hidden">New notifications</span>
-        </span>
-      )}
-      
-      {/* Notification Dropdown */}
-      {showNotifications && (
-        <div className="position-absolute end-0 mt-2" style={{
-          width: '300px',
-          backgroundColor: 'white',
-          borderRadius: '10px',
-          boxShadow: '0 0 10px rgba(0,0,0,0.1)',
-          zIndex: 1000
-        }}>
-          <div className="p-3 border-bottom d-flex justify-content-between align-items-center">
-            <h6 className="m-0"style={{fontFamily:'Jost, sans-serif', fontSize:'17px'}} >Notifications</h6>
-            <button 
-              className="btn btn-link btn-sm text-decoration-none" style={{fontFamily:'Jost, sans-serif' , fontSize:'15px'}}
-              onClick={markAllAsRead}
-            >
-              Mark all as read
-            </button>
-          </div>
-          <div className="notification-list" style={{ maxHeight: '300px', overflowY: 'auto' }}>
-            {notifications.length > 0 ? (
-              notifications.map(notification => (
-                <div key={notification.id} className="p-3 border-bottom">
-                  <p className="mb-1">{notification.message}</p>
-                  <small className="text-muted">{notification.time}</small>
-                </div>
-              ))
-            ) : (
-              <div className="p-3 text-center text-muted">
-                No new notifications
-              </div>
-            )}
-          </div>
+          <NotificationBell />
         </div>
-      )}
-            </div>
+
+        {isNotary && pendingMeetings.length > 0 && (
+          <div style={{
+            background: '#fffbe6',
+            border: '1px solid #ffe58f',
+            borderRadius: '8px',
+            padding: '16px 24px',
+            marginBottom: '24px',
+            color: '#ad8b00',
+            fontWeight: 500,
+            display: 'flex',
+            alignItems: 'center',
+            gap: '16px'
+          }}>
+            <FiBell style={{ fontSize: 24 }} />
+            <span>
+              You have {pendingMeetings.length} new meeting request{pendingMeetings.length > 1 ? 's' : ''} from member{pendingMeetings.length > 1 ? 's' : ''}.
+              <a href="/dashboard/member" style={{ marginLeft: 12, color: '#ad8b00', textDecoration: 'underline' }}>View Members</a>
+            </span>
           </div>
+        )}
 
           <Row className="g-4">
             <Col md={4}>

@@ -2,7 +2,7 @@
 
 import React, { useEffect, useState } from 'react';
 import { useTranslations } from 'next-intl';
-import { collection, getDocs, doc, updateDoc } from 'firebase/firestore';
+import { collection, getDocs, doc, updateDoc, query, where, orderBy, limit } from 'firebase/firestore';
 import { db } from '@/firebase';
 import { useRouter } from 'next/navigation';
 import { ArrowLeft, Download, Check, X, Eye, Clock, AlertCircle, CheckCircle, XCircle } from 'lucide-react';
@@ -289,12 +289,19 @@ const NotaryDashboard = () => {
   const router = useRouter();
   const [submissions, setSubmissions] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [sendingEmail, setSendingEmail] = useState(false);
+  const [sendingEmailId, setSendingEmailId] = useState(null);
   const [isNotary, setIsNotary] = useState(true);
+  const [meetings, setMeetings] = useState({}); // { userEmail: meetingObj }
 
   useEffect(() => {
     fetchSubmissions();
   }, []);
+
+  useEffect(() => {
+    if (submissions.length > 0) {
+      fetchMeetingsForMembers();
+    }
+  }, [submissions]);
 
   const fetchSubmissions = async () => {
     try {
@@ -311,9 +318,51 @@ const NotaryDashboard = () => {
     }
   };
 
+  // Fetch the next meeting for each member (by email)
+  const fetchMeetingsForMembers = async () => {
+    const emails = submissions.map(sub => sub.step1?.email).filter(Boolean);
+    const meetingsObj = {};
+    for (const email of emails) {
+      // Remove orderBy to avoid composite index error
+      const q = query(
+        collection(db, 'formSubmissions'),
+        where('step1.email', '==', email),
+        where('status', '==', 'pending')
+      );
+      const querySnapshot = await getDocs(q);
+      if (!querySnapshot.empty) {
+        // Find the soonest meeting in JS
+        let soonestDoc = null;
+        querySnapshot.forEach(docSnap => {
+          const data = docSnap.data();
+          if (data.meetingDate) {
+            const date = new Date(data.meetingDate);
+            if (!soonestDoc || date < new Date(soonestDoc.meetingDate)) {
+              soonestDoc = data;
+            }
+          }
+        });
+        if (soonestDoc) {
+          meetingsObj[email] = {
+            meetingId: soonestDoc.meetingId,
+            meetingDate: soonestDoc.meetingDate ? new Date(soonestDoc.meetingDate) : null,
+            meetingStatus: soonestDoc.meetingStatus || 'pending',
+          };
+        }
+      }
+    }
+    setMeetings(meetingsObj);
+  };
+
+  const handleStartMeeting = (meetingId) => {
+    if (meetingId) {
+      router.push(`/video-call?meetingId=${meetingId}`);
+    }
+  };
+
   const handleApprove = async (submission) => {
+    setSendingEmailId(submission.id);
     try {
-      setSendingEmail(true);
       const referenceNumber = generateReferenceNumber();
       
       // Debug logs
@@ -360,7 +409,7 @@ const NotaryDashboard = () => {
       console.error('Error approving submission:', error);
       alert(`Error approving document: ${error.message || 'Unknown error occurred'}`);
     } finally {
-      setSendingEmail(false);
+      setSendingEmailId(null);
     }
   };
 
@@ -400,11 +449,6 @@ const NotaryDashboard = () => {
                 {isNotary && (
                   <Nav.Link href="/dashboard/document" className="text-white mb-3 d-flex align-items-center">
                     <FiFileText className="me-2" style={{ fontSize: '20px' }} /> Documents
-                  </Nav.Link>
-                )}
-                {isNotary && (
-                  <Nav.Link href="/dashboard/member" className="text-white mb-2 d-flex align-items-center">
-                    <FiFileText className="me-2" style={{ fontSize: '20px' }} /> Members
                   </Nav.Link>
                 )}
                 <Nav.Link href="/dashboard/calender" className="text-white mb-3 d-flex align-items-center">
@@ -465,6 +509,11 @@ const NotaryDashboard = () => {
                   <FiFileText className="me-2" style={{ fontSize: '20px' }} /> Documents
                 </Nav.Link>
               )}
+              {isNotary && (
+                  <Nav.Link href="/dashboard/member" className="text-white mb-2 d-flex align-items-center">
+                    <FiFileText className="me-2" style={{ fontSize: '20px' }} /> Members
+                  </Nav.Link>
+                )}
               <Nav.Link href="/dashboard/calender" className="text-white mb-2 d-flex align-items-center">
                 <FiCalendar className="me-2" style={{ fontSize: '20px' }} /> Calender
               </Nav.Link>
@@ -484,7 +533,7 @@ const NotaryDashboard = () => {
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
           <div style={styles.header}>
             <div style={{ display: "flex", alignItems: "center", gap: "16px" }}>
-              <h1 style={styles.title}>Notary Dashboard</h1>
+              <h1 style={styles.title}>Members</h1>
             </div>
           </div>
           <NotificationBell />
@@ -512,94 +561,111 @@ const NotaryDashboard = () => {
 
         {/* Documents Grid */}
         <div style={styles.documentsGrid}>
-          {submissions.map((submission) => (
-            <div key={submission.id} style={styles.userCard}>
-              {/* User Header */}
-              <div style={styles.userHeader}>
-                <div style={styles.avatar}>
-                  {submission.step1?.firstName?.[0]}{submission.step1?.lastName?.[0]}
+          {submissions.map((submission) => {
+            const email = submission.step1?.email;
+            const meeting = meetings[email];
+            return (
+              <div key={submission.id} style={styles.userCard}>
+                {/* User Header */}
+                <div style={styles.userHeader}>
+                  <div style={styles.avatar}>
+                    {submission.step1?.firstName?.[0]}{submission.step1?.lastName?.[0]}
+                  </div>
+                  <div style={styles.userInfo}>
+                    <h3 style={styles.userName}>
+                      {submission.step1 ? 
+                        `${submission.step1.firstName} ${submission.step1.middleName ? submission.step1.middleName + ' ' : ''}${submission.step1.lastName}` 
+                        : 'N/A'}
+                    </h3>
+                    <p style={styles.userEmail}>{submission.step1?.email || 'N/A'}</p>
+                  </div>
                 </div>
-                <div style={styles.userInfo}>
-                  <h3 style={styles.userName}>
-                    {submission.step1 ? 
-                      `${submission.step1.firstName} ${submission.step1.middleName ? submission.step1.middleName + ' ' : ''}${submission.step1.lastName}` 
-                      : 'N/A'}
-                  </h3>
-                  <p style={styles.userEmail}>{submission.step1?.email || 'N/A'}</p>
-                </div>
-              </div>
 
-              {/* Document Card */}
-              <div style={styles.documentsContainer}>
-                <div style={styles.documentCard}>
-                  <div style={styles.documentHeader}>
-                    <h4 style={styles.documentTitle}>
-                      {submission.step2?.documentType || 'Document'}
-                    </h4>
-                    <div style={{ ...styles.statusBadge, ...getStatusColor(submission.status) }}>
-                      {getStatusIcon(submission.status)}
-                      {submission.status?.charAt(0).toUpperCase() + submission.status?.slice(1) || 'Pending'}
+                {/* Document Card */}
+                <div style={styles.documentsContainer}>
+                  <div style={styles.documentCard}>
+                    <div style={styles.documentHeader}>
+                      <h4 style={styles.documentTitle}>
+                        {submission.step2?.documentType || 'Document'}
+                      </h4>
+                      <div style={{ ...styles.statusBadge, ...getStatusColor(submission.status) }}>
+                        {getStatusIcon(submission.status)}
+                        {submission.status?.charAt(0).toUpperCase() + submission.status?.slice(1) || 'Pending'}
+                      </div>
+                    </div>
+
+                    <div style={styles.documentInfo}>
+                      <p style={styles.documentDetail}>
+                        <strong>Type:</strong> {submission.step1?.identificationType || 'N/A'}
+                      </p>
+                      <p style={styles.documentDetail}>
+                        <strong>ID Number:</strong> {submission.step1?.licenseIdNumber || 'N/A'}
+                      </p>
+                      <p style={styles.documentDetail}>
+                        <strong>Submitted:</strong> {new Date(submission.submittedAt).toLocaleDateString()}
+                      </p>
+                      {submission.referenceNumber && (
+                        <p style={styles.documentDetail}>
+                          <strong>Reference Number:</strong> {submission.referenceNumber}
+                        </p>
+                      )}
+                    </div>
+
+                    <div style={styles.actionsContainer}>
+                      {submission.status !== 'approved' && submission.status !== 'rejected' && (
+                        <>
+                          <button
+                            style={{ ...styles.button, ...styles.successButton }}
+                            onClick={() => handleApprove(submission)}
+                            disabled={sendingEmailId === submission.id}
+                          >
+                            {sendingEmailId === submission.id ? 'Sending...' : (
+                              <>
+                                <Check size={14} />
+                                Approve
+                              </>
+                            )}
+                          </button>
+                          <button
+                            style={{ ...styles.button, ...styles.dangerButton }}
+                            onClick={() => handleReject(submission.id)}
+                          >
+                            <X size={14} />
+                            Reject
+                          </button>
+                        </>
+                      )}
+                      {/* Start Meeting button just below approve/reject */}
+                      <button
+                        style={{
+                          marginTop: "12px",
+                          padding: "8px 16px",
+                          backgroundColor: submission.status === 'approved' ? '#e5e7eb' : '#3b82f6',
+                          color: submission.status === 'approved' ? '#6b7280' : 'white',
+                          border: 'none',
+                          borderRadius: '6px',
+                          cursor: submission.status === 'approved' ? 'not-allowed' : 'pointer',
+                          fontSize: '14px',
+                          fontWeight: '500',
+                          width: '100%',
+                          opacity: submission.status === 'approved' ? 0.7 : 1,
+                        }}
+                        disabled={submission.status === 'approved'}
+                        onClick={() => {
+                          if (submission.status !== 'approved') {
+                            const uniqueMeetingId = `${submission.id}-${Date.now()}`;
+                            router.push(`/video-call?meetingId=${uniqueMeetingId}`);
+                          }
+                        }}
+                      >
+                        {submission.status === 'approved' ? 'Meeting Conducted' : 'Start Meeting'}
+                      </button>
                     </div>
                   </div>
-
-                  <div style={styles.documentInfo}>
-                    <p style={styles.documentDetail}>
-                      <strong>Type:</strong> {submission.step1?.identificationType || 'N/A'}
-                    </p>
-                    <p style={styles.documentDetail}>
-                      <strong>ID Number:</strong> {submission.step1?.licenseIdNumber || 'N/A'}
-                    </p>
-                    <p style={styles.documentDetail}>
-                      <strong>Submitted:</strong> {new Date(submission.submittedAt).toLocaleDateString()}
-                    </p>
-                    {submission.referenceNumber && (
-                      <p style={styles.documentDetail}>
-                        <strong>Reference Number:</strong> {submission.referenceNumber}
-                      </p>
-                    )}
-                  </div>
-
-                  <div style={styles.actionsContainer}>
-                    {submission.step1?.identificationImageUrl && (
-                      <button style={{ ...styles.button, ...styles.outlineButton }}>
-                        <Eye size={14} />
-                        View
-                      </button>
-                    )}
-                    {submission.step1?.identificationImageUrl && (
-                      <button style={{ ...styles.button, ...styles.outlineButton }}>
-                        <Download size={14} />
-                        Download
-                      </button>
-                    )}
-                    {submission.status !== 'approved' && submission.status !== 'rejected' && (
-                      <>
-                        <button
-                          style={{ ...styles.button, ...styles.successButton }}
-                          onClick={() => handleApprove(submission)}
-                          disabled={sendingEmail}
-                        >
-                          {sendingEmail ? 'Sending...' : (
-                            <>
-                              <Check size={14} />
-                              Approve
-                            </>
-                          )}
-                        </button>
-                        <button
-                          style={{ ...styles.button, ...styles.dangerButton }}
-                          onClick={() => handleReject(submission.id)}
-                        >
-                          <X size={14} />
-                          Reject
-                        </button>
-                      </>
-                    )}
-                  </div>
                 </div>
               </div>
-            </div>
-          ))}
+            );
+          })}
         </div>
       </div>
     </div>

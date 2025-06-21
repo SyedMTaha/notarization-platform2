@@ -3,7 +3,7 @@
 import React, { useRef, useState, useEffect } from "react";
 import Link from "next/link";
 import { useRouter } from 'next/navigation';
-import { Controller } from "react-hook-form";
+import { Controller, useForm } from "react-hook-form";
 import { useTranslations } from "next-intl";
 import { Col, FormLabel, Row } from "react-bootstrap";
 import CountrySelect from "@/components/CountrySelect";
@@ -49,7 +49,7 @@ const Form2step1 = ({ totalSteps }) => {
 
   // Initialize form steps and get methods
   useFormSteps();
-  const { methods, getValidateStep } = useForm2store();
+  const methods = useForm();
   const nextBtnRef = useRef(null);
 
   // Load saved data when component mounts
@@ -146,171 +146,20 @@ const Form2step1 = ({ totalSteps }) => {
     }
   };
 
-  const validateForm = () => {
-    const newErrors = {};
-    
-    // Add your validation logic here
-    if (!formData.firstName) newErrors.firstName = 'First name is required';
-    if (!formData.lastName) newErrors.lastName = 'Last name is required';
-    // ... add more validation rules
-
-    setErrors(newErrors);
-    return Object.keys(newErrors).length === 0;
-  };
-
-  const handleNext = () => {
-    if (validateForm()) {
-      router.push('/form2-page2');
+  const handleNext = async () => {
+    const result = await trigger();
+    console.log("Validation result:", result, "Values:", getValues());
+    if (!result) {
+      return;
     }
+    console.log("Navigating to /form2-page2");
+    router.push('/form2-page2');
   };
 
   const handleBack = (e) => {
          e.preventDefault();
          router.push('/');
        };
-
-  const nextHandler = async () => {
-    console.log("Starting nextHandler...");
-    
-    // First trigger validation on all fields
-    const validationResult = await trigger();
-    console.log("Form validation result:", validationResult);
-    
-    if (!validationResult) {
-      console.log("Please fill all the required fields");
-      return;
-    }
-
-    // Get all form values after validation
-    const formValues = getValues();
-    console.log("Form values after validation:", formValues);
-
-    // Validate all required fields
-    const requiredFields = {
-      firstName: t("form2_first_name_required"),
-      lastName: t("form2_last_name_required"),
-      dateOfBirth: t("form2_date_of_birth_required"),
-      countryOfResidence: t("form2_country_of_residence_required"),
-      email: t("form2_email_required"),
-      identificationType: t("form2_identification_type_required"),
-      dateOfIssue: t("form2_date_of_issue_required"),
-      licenseIdNumber: t("form2_license_id_required"),
-      jurisdictionOfDocumentUse: t("form2_jurisdiction_required")
-    };
-
-    // Check each required field
-    for (const [field, errorMessage] of Object.entries(requiredFields)) {
-      if (!formValues[field]) {
-        console.log("Please fill all the required fields");
-        setError(field, {
-          type: "manual",
-          message: errorMessage
-        });
-        return; // Stop if any required field is empty
-      }
-    }
-
-    // Validate email format
-    const emailRegex = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i;
-    if (!emailRegex.test(formValues.email)) {
-      console.log("Please fill all the required fields");
-      setError("email", {
-        type: "manual",
-        message: t("form2_invalid_email")
-      });
-      return;
-    }
-
-    if (!formData.identificationImage) {
-      console.log("Please fill all the required fields");
-      setError("identificationImage", {
-        type: "manual",
-        message: t("form2_please_upload_identification_image"),
-      });
-      return;
-    }
-
-    try {
-      console.log("Starting image upload...");
-      // Upload image to Cloudinary
-      const imageUrl = await uploadToCloudinary(formData.identificationImage, 'identification');
-      console.log("Image uploaded successfully:", imageUrl);
-      
-      if (!imageUrl) {
-        throw new Error('Failed to upload image');
-      }
-
-      // Create step1 data with all form fields
-      const step1Data = {
-        firstName: formValues.firstName || '',
-        middleName: formValues.middleName || '',
-        lastName: formValues.lastName || '',
-        dateOfBirth: formValues.dateOfBirth || '',
-        countryOfResidence: formValues.countryOfResidence || '',
-        email: formValues.email || '',
-        identificationType: formValues.identificationType || '',
-        dateOfIssue: formValues.dateOfIssue || '',
-        licenseIdNumber: formValues.licenseIdNumber || '',
-        jurisdictionOfDocumentUse: formValues.jurisdictionOfDocumentUse || '',
-        identificationImageUrl: imageUrl
-      };
-      
-      console.log("Step1 data prepared for saving:", step1Data);
-      
-      // Save to localStorage
-      const saveResult = saveFormData(1, step1Data);
-      console.log("Save to localStorage result:", saveResult);
-
-      // Verify the data was saved
-      const savedData = getFormData();
-      console.log("Verified saved data:", savedData);
-
-      // Save to database
-      try {
-        const response = await fetch('/api/submissions', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({
-            step1: step1Data,
-            status: 'pending',
-            referenceNumber: generateReferenceNumber(),
-            createdAt: new Date().toISOString()
-          }),
-        });
-
-        if (!response.ok) {
-          throw new Error('Failed to save to database');
-        }
-
-        const result = await response.json();
-        console.log('Database save result:', result);
-
-        // Only redirect if all validations pass and data is saved successfully
-        router.push('/form2-page2');
-      } catch (error) {
-        console.error('Error saving to database:', error);
-        setError("submit", {
-          type: "manual",
-          message: "Failed to save form data. Please try again.",
-        });
-      }
-    } catch (error) {
-      console.error('Error in nextHandler:', error);
-      setError("identificationImage", {
-        type: "manual",
-        message: t("form2_error_uploading_image"),
-      });
-    }
-  };
-
-  // Add generateReferenceNumber function
-  const generateReferenceNumber = () => {
-    const timestamp = Date.now().toString(36);
-    const randomStr = Math.random().toString(36).substring(2, 8);
-    return `WS-${timestamp}-${randomStr}`.toUpperCase();
-  };
 
   const readURL = (event, previewId) => {
     const file = event.target.files[0];
