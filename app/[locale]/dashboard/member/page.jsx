@@ -12,6 +12,7 @@ import { LuLayoutDashboard } from "react-icons/lu";
 import { FiUser, FiFileText, FiCalendar, FiSettings, FiLogOut } from "react-icons/fi";
 import { Poppins } from 'next/font/google';
 import NotificationBell from '@/components/NotificationBell';
+import { useAuthStore } from '@/store/authStore';
 
 const poppins = Poppins({
   subsets: ['latin'],
@@ -287,7 +288,9 @@ const sendApprovalEmail = async (userEmail, referenceNumber, userName) => {
 const NotaryDashboard = () => {
   const t = useTranslations();
   const router = useRouter();
+  const signOut = useAuthStore((state) => state.signOut);
   const [submissions, setSubmissions] = useState([]);
+  const [pendingMeetings, setPendingMeetings] = useState([]);
   const [loading, setLoading] = useState(true);
   const [sendingEmailId, setSendingEmailId] = useState(null);
   const [isNotary, setIsNotary] = useState(true);
@@ -295,6 +298,20 @@ const NotaryDashboard = () => {
 
   useEffect(() => {
     fetchSubmissions();
+  }, []);
+
+  useEffect(() => {
+    // Fetch pending meetings for notification bell
+    const fetchPendingMeetings = async () => {
+      const q = query(
+        collection(db, 'formSubmissions'),
+        where('status', '==', 'pending')
+      );
+      const querySnapshot = await getDocs(q);
+      const meetings = querySnapshot.docs.map(doc => doc.data());
+      setPendingMeetings(meetings);
+    };
+    fetchPendingMeetings();
   }, []);
 
   useEffect(() => {
@@ -459,7 +476,15 @@ const NotaryDashboard = () => {
                 </Nav.Link>
               </Nav>
               <div style={{ flexGrow: 1 }} />
-              <Nav.Link href="/auth/signin" className="text-white mb-2 d-flex align-items-center">
+              <Nav.Link
+                as="button"
+                className="text-white mb-2 d-flex align-items-center"
+                style={{ background: 'none', border: 'none', textAlign: 'left' }}
+                onClick={async () => {
+                  await signOut();
+                  router.push('/signIn');
+                }}
+              >
                 <FiLogOut className="me-2" style={{ fontSize: '20px' }} /> Logout
               </Nav.Link>
             </div>
@@ -484,6 +509,21 @@ const NotaryDashboard = () => {
   const pendingDocuments = submissions.filter(doc => doc.status === 'pending').length;
   const approvedDocuments = submissions.filter(doc => doc.status === 'approved').length;
   const rejectedDocuments = submissions.filter(doc => doc.status === 'rejected').length;
+
+  // After fetching all submissions, deduplicate by email and keep the soonest pending meeting
+  const dedupedSubmissions = Array.from(
+    submissions
+      .filter(sub => sub.step1?.email)
+      .reduce((map, sub) => {
+        const email = sub.step1.email;
+        // Only keep the soonest pending meeting per user
+        if (!map.has(email) || (sub.status === 'pending' && new Date(sub.meetingDate) < new Date(map.get(email).meetingDate))) {
+          map.set(email, sub);
+        }
+        return map;
+      }, new Map())
+      .values()
+  );
 
   return (
     <div className={poppins.className}>
@@ -522,7 +562,15 @@ const NotaryDashboard = () => {
               </Nav.Link>
             </Nav>
             <div style={{ flexGrow: 1 }} />
-            <Nav.Link href="/auth/signin" className="text-white mb-2 d-flex align-items-center">
+            <Nav.Link
+              as="button"
+              className="text-white mb-2 d-flex align-items-center"
+              style={{ background: 'none', border: 'none', textAlign: 'left' }}
+              onClick={async () => {
+                await signOut();
+                router.push('/signIn');
+              }}
+            >
               <FiLogOut className="me-2" style={{ fontSize: '20px' }} /> Logout
             </Nav.Link>
           </div>
@@ -536,7 +584,7 @@ const NotaryDashboard = () => {
               <h1 style={styles.title}>Members</h1>
             </div>
           </div>
-          <NotificationBell />
+          <NotificationBell pendingMeetings={[]} />
         </div>
 
         {/* Stats */}
@@ -561,7 +609,7 @@ const NotaryDashboard = () => {
 
         {/* Documents Grid */}
         <div style={styles.documentsGrid}>
-          {submissions.map((submission) => {
+          {dedupedSubmissions.map((submission) => {
             const email = submission.step1?.email;
             const meeting = meetings[email];
             return (
@@ -653,8 +701,7 @@ const NotaryDashboard = () => {
                         disabled={submission.status === 'approved'}
                         onClick={() => {
                           if (submission.status !== 'approved') {
-                            const uniqueMeetingId = `${submission.id}-${Date.now()}`;
-                            router.push(`/video-call?meetingId=${uniqueMeetingId}`);
+                            router.push(`/video-call?meetingId=${submission.meetingId}&from=member`);
                           }
                         }}
                       >

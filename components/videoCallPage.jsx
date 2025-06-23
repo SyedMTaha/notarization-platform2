@@ -79,7 +79,11 @@ const VideoCallPage = () => {
   };
 
   const handleBack = () => {
-    router.push('/dashboard/calender');
+    if (from === 'member') {
+      router.push('/dashboard/member');
+    } else {
+      router.push('/dashboard');
+    }
   };
 
   return (

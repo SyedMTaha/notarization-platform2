@@ -2,7 +2,7 @@
 
 import React, { useEffect, useState } from 'react';
 import { useTranslations } from 'next-intl';
-import { collection, getDocs, doc, updateDoc } from 'firebase/firestore';
+import { collection, getDocs, doc, updateDoc, query, where } from 'firebase/firestore';
 import { db } from '@/firebase';
 import { useRouter } from 'next/navigation';
 import { ArrowLeft, Download, Check, X, Eye, Clock, AlertCircle, CheckCircle, XCircle } from 'lucide-react';
@@ -12,6 +12,7 @@ import { LuLayoutDashboard } from "react-icons/lu";
 import { FiUser, FiFileText, FiCalendar, FiSettings, FiLogOut } from "react-icons/fi";
 import { Poppins } from 'next/font/google';
 import NotificationBell from '@/components/NotificationBell';
+import { useAuthStore } from '@/store/authStore';
 
 const poppins = Poppins({
   subsets: ['latin'],
@@ -287,13 +288,29 @@ const sendApprovalEmail = async (userEmail, referenceNumber, userName) => {
 const NotaryDashboard = () => {
   const t = useTranslations();
   const router = useRouter();
+  const signOut = useAuthStore((state) => state.signOut);
   const [submissions, setSubmissions] = useState([]);
+  const [pendingMeetings, setPendingMeetings] = useState([]);
   const [loading, setLoading] = useState(true);
   const [sendingEmail, setSendingEmail] = useState(false);
   const [isNotary, setIsNotary] = useState(true);
 
   useEffect(() => {
     fetchSubmissions();
+  }, []);
+
+  useEffect(() => {
+    // Fetch pending meetings for notification bell
+    const fetchPendingMeetings = async () => {
+      const q = query(
+        collection(db, 'formSubmissions'),
+        where('status', '==', 'pending')
+      );
+      const querySnapshot = await getDocs(q);
+      const meetings = querySnapshot.docs.map(doc => doc.data());
+      setPendingMeetings(meetings);
+    };
+    fetchPendingMeetings();
   }, []);
 
   const fetchSubmissions = async () => {
@@ -454,26 +471,39 @@ const NotaryDashboard = () => {
           </div>
           <div style={{ display: "flex", flexDirection: "column", height: "80vh" }}>
             <Nav className="flex-column">
-              <Nav.Link href="/dashboard" className="text-white mb-2 d-flex align-items-center">
+              <Nav.Link href="/dashboard" className="text-white mb-3 d-flex align-items-center">
                 <LuLayoutDashboard className="me-2" style={{ fontSize: '20px' }} /> Dashboard
               </Nav.Link>
-              <Nav.Link href="/dashboard/profile" className="text-white mb-2 d-flex align-items-center ">
+              <Nav.Link href="/dashboard/profile" className="text-white mb-3 d-flex align-items-center ">
                 <FiUser className="me-2" style={{ fontSize: '20px' }} /> Profile
               </Nav.Link>
               {isNotary && (
-                <Nav.Link href="/dashboard/document" className="text-white mb-2 d-flex align-items-center">
+                <Nav.Link href="/dashboard/document" className="text-white mb-3 d-flex align-items-center">
                   <FiFileText className="me-2" style={{ fontSize: '20px' }} /> Documents
                 </Nav.Link>
               )}
-              <Nav.Link href="/dashboard/calender" className="text-white mb-2 d-flex align-items-center">
+              {isNotary && (
+                <Nav.Link href="/dashboard/member" className="text-white mb-2 d-flex align-items-center">
+                  <FiFileText className="me-2" style={{ fontSize: '20px' }} /> Members
+                </Nav.Link>
+              )}
+              <Nav.Link href="/dashboard/calender" className="text-white mb-3 d-flex align-items-center">
                 <FiCalendar className="me-2" style={{ fontSize: '20px' }} /> Calender
               </Nav.Link>
-              <Nav.Link href="/dashboard/settings" className="text-white mb-2 d-flex align-items-center">
+              <Nav.Link href="/dashboard/settings" className="text-white mb-3 d-flex align-items-center">
                 <FiSettings className="me-2" style={{ fontSize: '20px' }} /> Settings
               </Nav.Link>
             </Nav>
             <div style={{ flexGrow: 1 }} />
-            <Nav.Link href="/auth/signin" className="text-white mb-2 d-flex align-items-center">
+            <Nav.Link
+              as="button"
+              className="text-white mb-2 d-flex align-items-center"
+              style={{ background: 'none', border: 'none', textAlign: 'left' }}
+              onClick={async () => {
+                await signOut();
+                router.push('/signIn');
+              }}
+            >
               <FiLogOut className="me-2" style={{ fontSize: '20px' }} /> Logout
             </Nav.Link>
           </div>
@@ -487,7 +517,7 @@ const NotaryDashboard = () => {
               <h1 style={styles.title}>Notary Dashboard</h1>
             </div>
           </div>
-          <NotificationBell />
+          <NotificationBell pendingMeetings={pendingMeetings} />
         </div>
 
         {/* Stats */}

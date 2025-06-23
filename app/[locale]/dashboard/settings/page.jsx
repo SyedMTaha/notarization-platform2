@@ -1,12 +1,16 @@
 "use client"
 
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import { ArrowLeft, Bell, Lock, CreditCard, User, Shield, Eye, EyeOff, Check } from "lucide-react"
 import { Poppins } from 'next/font/google'
 import { Nav } from 'react-bootstrap';
 import { LuLayoutDashboard } from "react-icons/lu";
 import { FiUser, FiFileText, FiCalendar, FiSettings, FiLogOut } from "react-icons/fi";
 import NotificationBell from '@/components/NotificationBell';
+import { useRouter } from 'next/navigation';
+import { useAuthStore } from '@/store/authStore';
+import { collection, getDocs, query, where } from 'firebase/firestore';
+import { db } from '@/firebase';
 
 const poppins = Poppins({
   subsets: ['latin'],
@@ -238,6 +242,7 @@ const styles = {
 
 export default function SettingsPage() {
   const [isNotary, setIsNotary] = useState(true);
+  const [pendingMeetings, setPendingMeetings] = useState([]);
   const [notifications, setNotifications] = useState({
     email: true,
     push: false,
@@ -261,6 +266,23 @@ export default function SettingsPage() {
     notifications: false,
     password: false,
   })
+
+  const signOut = useAuthStore((state) => state.signOut);
+  const router = useRouter();
+
+  useEffect(() => {
+    // Fetch pending meetings for notification bell
+    const fetchPendingMeetings = async () => {
+      const q = query(
+        collection(db, 'formSubmissions'),
+        where('status', '==', 'pending')
+      );
+      const querySnapshot = await getDocs(q);
+      const meetings = querySnapshot.docs.map(doc => doc.data());
+      setPendingMeetings(meetings);
+    };
+    fetchPendingMeetings();
+  }, []);
 
   const handleNotificationChange = (key) => {
     setNotifications((prev) => ({
@@ -340,10 +362,10 @@ export default function SettingsPage() {
                 </Nav.Link>
               )}
               {isNotary && (
-                  <Nav.Link href="/dashboard/member" className="text-white mb-2 d-flex align-items-center">
-                    <FiFileText className="me-2" style={{ fontSize: '20px' }} /> Members
-                  </Nav.Link>
-                )}
+                <Nav.Link href="/dashboard/member" className="text-white mb-2 d-flex align-items-center">
+                  <FiFileText className="me-2" style={{ fontSize: '20px' }} /> Members
+                </Nav.Link>
+              )}
               <Nav.Link href="/dashboard/calender" className="text-white mb-3 d-flex align-items-center">
                 <FiCalendar className="me-2" style={{ fontSize: '20px' }} /> Calender
               </Nav.Link>
@@ -352,7 +374,15 @@ export default function SettingsPage() {
               </Nav.Link>
             </Nav>
             <div style={{ flexGrow: 1 }} />
-            <Nav.Link href="/auth/signin" className="text-white mb-2 d-flex align-items-center">
+            <Nav.Link
+              as="button"
+              className="text-white mb-2 d-flex align-items-center"
+              style={{ background: 'none', border: 'none', textAlign: 'left' }}
+              onClick={async () => {
+                await signOut();
+                router.push('/signIn');
+              }}
+            >
               <FiLogOut className="me-2" style={{ fontSize: '20px' }} /> Logout
             </Nav.Link>
           </div>
@@ -366,7 +396,7 @@ export default function SettingsPage() {
               <h1 style={styles.title}>Account Settings</h1>
             </div>
           </div>
-          <NotificationBell />
+          <NotificationBell pendingMeetings={pendingMeetings} />
         </div>
 
         <div style={styles.grid}>
